@@ -1,299 +1,1317 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#fff1f7">
-<title>Whisper Envelope 💌</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#5b4260;--soft:#8c7390;--pink:#ee7fae;--glass:rgba(255,255,255,.72);--ui:"Nunito",system-ui,sans-serif;--head:"Fredoka","Nunito",system-ui,sans-serif;--hand:"Caveat","Segoe Print","Bradley Hand",cursive}
-*{margin:0;padding:0;box-sizing:border-box}[hidden]{display:none!important}
-body{min-height:100vh;font:600 16px/1.6 var(--ui);color:var(--ink);overflow-x:hidden;-webkit-tap-highlight-color:transparent;background:radial-gradient(circle at 12% 10%,#fff,transparent 28%),radial-gradient(circle at 88% 8%,rgba(255,190,215,.5),transparent 30%),radial-gradient(circle at 50% 95%,rgba(211,198,255,.55),transparent 35%),linear-gradient(135deg,#fff1f7,#f4ecff) fixed}
-h1,h2,h3{font-family:var(--head);font-weight:600;line-height:1.1}
-button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
-:focus-visible{outline:3px solid #a58ee0;outline-offset:3px}
-.bg{position:fixed;inset:0;pointer-events:none;overflow:hidden}
-.bg i{position:absolute;font-style:normal;color:rgba(238,127,174,.28);animation:drift 10s ease-in-out infinite}
-@keyframes drift{50%{transform:translateY(-26px) rotate(12deg)}}
-.nav{position:sticky;top:12px;z-index:50;width:min(1100px,calc(100% - 24px));margin:12px auto 0;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;background:var(--glass);backdrop-filter:blur(18px);border:1px solid #fff;border-radius:24px;box-shadow:0 12px 40px rgba(130,95,120,.12)}
-.logo{display:flex;align-items:center;gap:10px;font:600 20px var(--head);color:#8d577b}
-.logo b{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;color:#fff;background:linear-gradient(135deg,#ff9fc7,#caa7ff);box-shadow:0 8px 18px rgba(220,130,180,.3)}
-.tabs{display:flex;gap:6px}
-.tab{padding:9px 16px;border-radius:14px;color:var(--soft);font-weight:800;transition:.25s}
-.tab:hover{background:#fff;transform:translateY(-2px)}.tab.on{background:#fff;color:#c2578d;box-shadow:0 4px 14px rgba(190,110,160,.18)}
-body.receiving .nav{display:none}
-.screen{display:none;position:relative;width:min(1100px,100%);margin:0 auto;padding:30px 16px 70px}
-.screen.on{display:block;animation:in .55s both}
-@keyframes in{from{opacity:0;transform:translateY(16px)}}
-.screen.recv.on{display:grid;place-items:center;min-height:100vh;text-align:center;padding-top:56px}
-.soft{color:var(--soft)}
-.btn{padding:13px 20px;border-radius:16px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .2s,box-shadow .2s}
-.btn:hover{transform:translateY(-3px)}.btn:active{transform:scale(.97)}
-.pri{color:#fff;background:linear-gradient(135deg,#f08bb5,#a98ae0);box-shadow:0 10px 24px rgba(191,125,173,.3)}
-.sec{background:rgba(255,255,255,.88);border:1px solid #ecd3e3;color:#75566d}
-.dng{background:#fde7ee;color:#c4486f}
-.row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
-.wide{width:100%;margin-top:14px}
-.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:30px;align-items:center;min-height:calc(100vh - 150px)}
-h1{font-size:clamp(40px,6.4vw,72px);letter-spacing:-1px;color:#6b3f63;margin-bottom:18px}
-.hero p{font-size:18px;max-width:30em;color:var(--soft)}
-.tip{text-align:center;color:var(--soft);font-size:14px}
-/* envelope */
-.scene{width:min(var(--w,440px),100%);margin:auto;perspective:1100px}
-.tilt{padding-top:26%;transition:transform .2s ease-out}
-.env{position:relative;width:100%;aspect-ratio:3/2;container-type:inline-size;perspective:900px;filter:drop-shadow(0 22px 24px rgba(120,70,110,.22));cursor:pointer}
-.env.float{animation:bob 4s ease-in-out infinite}@keyframes bob{50%{transform:translateY(-10px) rotate(-1deg)}}
-.env>*{position:absolute}
-.eb{inset:0;background:var(--cd);border-radius:5%/7%;z-index:1}
-.sh{left:8%;right:8%;top:12%;bottom:5%;z-index:3;transition:transform 1s cubic-bezier(.3,1.3,.5,1) .55s}
-.open .sh{transform:translateY(-62%)}
-.sht{position:absolute;inset:0;border-radius:6px;display:grid;place-items:center;background:repeating-linear-gradient(transparent 0 9%,rgba(190,140,175,.16) 9% 9.8%),var(--p);box-shadow:0 -2px 10px rgba(70,50,70,.12);transform:translateY(calc(var(--i)*-2%)) rotate(var(--r))}
-.sht b{font-size:9cqw;color:rgba(238,127,174,.45)}
-.fr{inset:0;z-index:5;border-radius:5%/7%;overflow:hidden}
-.fr i{position:absolute;inset:0}
-.pb{background:var(--c);clip-path:polygon(0 0,50% 54%,100% 0,100% 100%,0 100%)}
-.pl,.pr{background:var(--cl)}.pl{clip-path:polygon(0 0,50% 54%,0 100%)}.pr{clip-path:polygon(100% 0,50% 54%,100% 100%)}
-.fl{left:0;right:0;top:0;height:60%;background:var(--cf);clip-path:polygon(0 0,100% 0,50% 100%);border-radius:5% 5% 0 0/10% 10% 0 0;transform-origin:top;z-index:6;transition:transform .9s cubic-bezier(.5,-.1,.3,1.15),background .5s .15s,z-index 0s .45s}
-.open .fl{transform:rotateX(180deg);z-index:2;background:var(--cd)}
-.seal{left:50%;top:55%;width:16%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:7cqw;z-index:8;border:.9cqw solid rgba(255,255,255,.65);background:radial-gradient(circle at 30% 30%,#ffb9d6,#d96899);box-shadow:0 8px 20px rgba(190,80,130,.4);transition:.4s;animation:beat 1.8s ease-in-out infinite}
-@keyframes beat{50%{scale:1.09}}
-.seal:hover{animation:none;scale:1.12;rotate:-6deg}
-.open .seal{opacity:0;scale:.4;pointer-events:none;animation:none}
-/* create */
-.glass{background:var(--glass);backdrop-filter:blur(20px);border:1px solid #fff;border-radius:28px;box-shadow:0 24px 70px rgba(125,93,125,.14);padding:clamp(20px,4vw,34px)}
-.make{display:grid;grid-template-columns:1fr 350px;gap:22px;align-items:start}
-.pv{position:sticky;top:90px;text-align:center}.pv h3{font-size:22px;margin:4px 0;overflow-wrap:anywhere}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}.full{grid-column:1/-1}
-label,.lb{display:flex;flex-direction:column;gap:7px;font-size:14px;font-weight:800;color:#725e6e}
-input,select,textarea{width:100%;border:2px solid #f0dcea;border-radius:15px;background:rgba(255,255,255,.92);padding:12px 14px;font:600 16px var(--ui);color:var(--ink);transition:.2s}
-input:focus,select:focus,textarea:focus{outline:0;border-color:#e59bbc;box-shadow:0 0 0 4px rgba(229,155,188,.2)}
-textarea{min-height:120px;resize:vertical;font:500 22px/1.4 var(--hand)}
-.shake{animation:shake .4s}@keyframes shake{25%{translate:-6px}75%{translate:6px}}
-.sw{display:flex;flex-wrap:wrap;gap:10px}
-.dot{width:36px;height:36px;border-radius:50%;border:3px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,.14);transition:.2s}
-.dot:hover{transform:scale(1.12)}.dot.on{outline:3px solid #b57ca3;outline-offset:1px;transform:scale(1.12)}.sm .dot{width:26px;height:26px}
-.pg{margin-bottom:14px;padding:16px;border-radius:20px;background:rgba(255,255,255,.7);border:1px solid #f0dcea;animation:in .4s}
-.pgh{display:flex;justify-content:space-between;font:600 17px var(--head);color:#9c6586;margin-bottom:8px}
-.pgc{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--soft)}
-/* dashboard */
-.dtop{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:24px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px}
-.card{background:var(--glass);border:1px solid #fff;border-radius:26px;padding:14px;box-shadow:0 18px 50px rgba(130,100,130,.12);transition:transform .3s,box-shadow .3s;animation:in .5s both}
-.card:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 26px 60px rgba(130,100,130,.2)}
-.thumb{display:grid;place-items:center;padding:30px 22px 22px;border-radius:20px}.thumb .env{width:min(230px,100%)}
-.card:hover .env:not(.open) .fl{transform:rotateX(30deg)}
-.info{padding:14px 6px 4px}.info h3{font-size:22px;color:#624e60;overflow-wrap:anywhere}
-.meta{display:flex;align-items:center;gap:10px;margin:8px 0 14px;font-size:13px;color:var(--soft)}
-.chip{background:#fde9f3;color:#b0568a;border-radius:99px;padding:3px 11px;font-weight:800}
-.acts{display:flex;gap:8px;flex-wrap:wrap}.acts .btn{padding:10px 15px}
-.empty{text-align:center;padding:60px 20px;border:2px dashed #e6cfe0;border-radius:28px;background:rgba(255,255,255,.55)}
-.empty .big{font-size:60px;animation:bob 3s infinite}.empty .btn{margin-top:18px}
-/* receiver */
-.rc{width:100%}
-#back{position:absolute;left:16px;top:16px}
-.badge{display:inline-block;padding:8px 16px;border-radius:99px;background:rgba(255,255,255,.8);border:1px solid #fff;color:#a06587;font-weight:800;font-size:14px;margin-bottom:16px}
-.rc h1{font-size:clamp(32px,6vw,54px);margin-bottom:8px;overflow-wrap:anywhere}
-.recv .scene{--w:460px}
-.scene.done{opacity:0;transform:translateY(70px) scale(.85);transition:.7s}.scene.gone{display:none}
-.hint{margin-top:14px;color:#9b6a88;animation:pulse 2s infinite}@keyframes pulse{50%{opacity:.4}}
-.reader{perspective:1500px;width:min(680px,100%);margin:26px auto 0;animation:rise .9s cubic-bezier(.2,.9,.2,1) both}
-@keyframes rise{from{opacity:0;transform:translateY(90px) rotateX(35deg) scale(.9)}}
-.page{position:relative;min-height:400px;text-align:left;padding:clamp(30px,6vw,54px) clamp(22px,6vw,56px);border-radius:8px;background:var(--paper,#fffaf2);box-shadow:0 1px 0 #fff,0 9px 0 -3px rgba(255,255,255,.75),0 18px 0 -6px rgba(255,255,255,.5),0 34px 60px rgba(90,60,90,.2);transform-origin:left center}
-.page::before{content:"";position:absolute;top:-14px;left:50%;width:110px;height:28px;translate:-50% 0;rotate:-3deg;background:rgba(238,127,174,.35);border-radius:3px}
-.page small{color:#b0789b;font-weight:800;font-size:14px}
-.txt{margin-top:14px;font:500 clamp(24px,4.2vw,31px)/1.65 var(--hand);white-space:pre-wrap;overflow-wrap:anywhere;background:repeating-linear-gradient(transparent 0 calc(1.65em - 1px),rgba(190,140,175,.25) calc(1.65em - 1px) 1.65em)}
-.sign{margin-top:16px;text-align:right;font:700 28px var(--hand);color:#b0568a}
-.fn{animation:fn .75s cubic-bezier(.2,.8,.2,1)}.fp{transform-origin:right center;animation:fp .75s cubic-bezier(.2,.8,.2,1)}
-@keyframes fn{from{opacity:0;transform:rotateY(-75deg) translateX(30px)}}@keyframes fp{from{opacity:0;transform:rotateY(75deg) translateX(-30px)}}
-.dots{display:flex;justify-content:center;gap:8px;margin-top:30px}.dots i{width:9px;height:9px;border-radius:9px;background:#e6cfe0;transition:.3s}.dots i.on{background:var(--pink);width:26px}
-.reader .row{justify-content:center;margin-top:18px}
-/* modal + toast + fx */
-.modal{position:fixed;inset:0;display:none;place-items:center;padding:18px;background:rgba(60,40,60,.38);backdrop-filter:blur(8px);z-index:100}
-.modal.show{display:grid;animation:fade .25s}@keyframes fade{from{opacity:0}}
-.mcard{width:min(480px,100%);background:#fff;border-radius:28px;padding:28px;text-align:center;box-shadow:0 30px 90px rgba(60,40,70,.3);animation:pop .45s cubic-bezier(.2,1.2,.3,1)}
-@keyframes pop{from{opacity:0;transform:translateY(30px) scale(.9)}}
-.mcard .big{font-size:58px}.mcard h2{font-size:26px;margin:6px 0 8px}.mcard p{color:var(--soft)}.mcard .row{justify-content:center}.mcard .row.nw{flex-wrap:nowrap;margin-top:18px}
-.mh{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left}.mh h2{margin:0}
-.x{width:36px;height:36px;flex:none;border-radius:50%;background:#f7e8f2;font-size:20px;color:#7a6073}
-.warn{font-size:13px;margin-top:12px}
-.toast{position:fixed;left:50%;bottom:25px;translate:-50% 100px;max-width:calc(100% - 30px);background:#5e4b5b;color:#fff;padding:12px 20px;border-radius:99px;font-size:14px;z-index:200;opacity:0;transition:.4s;text-align:center}
-.toast.show{opacity:1;translate:-50% 0}
-.fx{position:fixed;z-index:300;pointer-events:none;font-style:normal;color:var(--pink);animation:fly 2.2s ease-out both}
-@keyframes fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}15%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),var(--dy)) scale(var(--s)) rotate(25deg)}}
-@media(max-width:860px){.hero{grid-template-columns:1fr;text-align:center;min-height:0;gap:10px}.hero p{margin:auto}.row{justify-content:center}.make{grid-template-columns:1fr}.pv{position:static;order:-1}}
-@media(max-width:700px){.nav{backdrop-filter:none;top:8px}.tabs{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;padding:8px;background:rgba(255,255,255,.88);backdrop-filter:blur(18px);border:1px solid #fff;border-radius:24px;box-shadow:0 14px 40px rgba(130,95,120,.22)}body.receiving .tabs{display:none}.tab{flex:1;padding:11px 6px;font-size:14px}body{padding-bottom:84px}.grid{grid-template-columns:1fr}.toast{bottom:104px}.acts .btn{flex:1}}
-@media(prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.fx{display:none}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff1f7">
+  <title>W- ENVELOPE CUTE</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;800&family=Caveat:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --ink: #5b4260;
+      --soft: #8c7390;
+      --pink: #ee7fae;
+      --glass: rgba(255, 255, 255, .72);
+      --ui: "Nunito", system-ui, sans-serif;
+      --head: "Fredoka", "Nunito", system-ui, sans-serif;
+      --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    [hidden] {
+      display: none !important
+    }
+
+    body {
+      min-height: 100vh;
+      font: 600 16px/1.6 var(--ui);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-tap-highlight-color: transparent;
+      background: radial-gradient(circle at 12% 10%, #fff, transparent 28%), radial-gradient(circle at 88% 8%, rgba(255, 190, 215, .5), transparent 30%), radial-gradient(circle at 50% 95%, rgba(211, 198, 255, .55), transparent 35%), linear-gradient(135deg, #fff1f7, #f4ecff) fixed
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--head);
+      font-weight: 600;
+      line-height: 1.1
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+      border: 0;
+      color: inherit;
+      background: none
+    }
+
+    :focus-visible {
+      outline: 3px solid #a58ee0;
+      outline-offset: 3px
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden
+    }
+
+    .bg i {
+      position: absolute;
+      font-style: normal;
+      color: rgba(238, 127, 174, .28);
+      animation: drift 10s ease-in-out infinite
+    }
+
+    @keyframes drift {
+      50% {
+        transform: translateY(-26px) rotate(12deg)
+      }
+    }
+
+    .nav {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      width: min(1100px, calc(100% - 24px));
+      margin: 12px auto 0;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass);
+      backdrop-filter: blur(18px);
+      border: 1px solid #fff;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(130, 95, 120, .12)
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font: 600 20px var(--head);
+      color: #8d577b
+    }
+
+    .logo b {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      color: #fff;
+      background: linear-gradient(135deg, #ff9fc7, #caa7ff);
+      box-shadow: 0 8px 18px rgba(220, 130, 180, .3)
+    }
+
+    .tabs {
+      display: flex;
+      gap: 6px
+    }
+
+    .tab {
+      padding: 9px 16px;
+      border-radius: 14px;
+      color: var(--soft);
+      font-weight: 800;
+      transition: .25s
+    }
+
+    .tab:hover {
+      background: #fff;
+      transform: translateY(-2px)
+    }
+
+    .tab.on {
+      background: #fff;
+      color: #c2578d;
+      box-shadow: 0 4px 14px rgba(190, 110, 160, .18)
+    }
+
+    body.receiving .nav {
+      display: none
+    }
+
+    .screen {
+      display: none;
+      position: relative;
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      padding: 30px 16px 70px
+    }
+
+    .screen.on {
+      display: block;
+      animation: in .55s both
+    }
+
+    @keyframes in {
+      from {
+        opacity: 0;
+        transform: translateY(16px)
+      }
+    }
+
+    .screen.recv.on {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding-top: 56px
+    }
+
+    .soft {
+      color: var(--soft)
+    }
+
+    .btn {
+      padding: 13px 20px;
+      border-radius: 16px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .btn:hover {
+      transform: translateY(-3px)
+    }
+
+    .btn:active {
+      transform: scale(.97)
+    }
+
+    .pri {
+      color: #fff;
+      background: linear-gradient(135deg, #f08bb5, #a98ae0);
+      box-shadow: 0 10px 24px rgba(191, 125, 173, .3)
+    }
+
+    .sec {
+      background: rgba(255, 255, 255, .88);
+      border: 1px solid #ecd3e3;
+      color: #75566d
+    }
+
+    .dng {
+      background: #fde7ee;
+      color: #c4486f
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px
+    }
+
+    .wide {
+      width: 100%;
+      margin-top: 14px
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 30px;
+      align-items: center;
+      min-height: calc(100vh - 150px)
+    }
+
+    h1 {
+      font-size: clamp(40px, 6.4vw, 72px);
+      letter-spacing: -1px;
+      color: #6b3f63;
+      margin-bottom: 18px
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 30em;
+      color: var(--soft)
+    }
+
+    .tip {
+      text-align: center;
+      color: var(--soft);
+      font-size: 14px
+    }
+
+    /* envelope */
+    .scene {
+      width: min(var(--w, 440px), 100%);
+      margin: auto;
+      perspective: 1100px
+    }
+
+    .tilt {
+      padding-top: 26%;
+      transition: transform .2s ease-out
+    }
+
+    .env {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3/2;
+      container-type: inline-size;
+      perspective: 900px;
+      filter: drop-shadow(0 22px 24px rgba(120, 70, 110, .22));
+      cursor: pointer
+    }
+
+    .env.float {
+      animation: bob 4s ease-in-out infinite
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(-10px) rotate(-1deg)
+      }
+    }
+
+    .env>* {
+      position: absolute
+    }
+
+    .eb {
+      inset: 0;
+      background: var(--cd);
+      border-radius: 5%/7%;
+      z-index: 1
+    }
+
+    .sh {
+      left: 8%;
+      right: 8%;
+      top: 12%;
+      bottom: 5%;
+      z-index: 3;
+      transition: transform 1s cubic-bezier(.3, 1.3, .5, 1) .55s
+    }
+
+    .open .sh {
+      transform: translateY(-62%)
+    }
+
+    .sht {
+      position: absolute;
+      inset: 0;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      background: repeating-linear-gradient(transparent 0 9%, rgba(190, 140, 175, .16) 9% 9.8%), var(--p);
+      box-shadow: 0 -2px 10px rgba(70, 50, 70, .12);
+      transform: translateY(calc(var(--i)*-2%)) rotate(var(--r))
+    }
+
+    .sht b {
+      font-size: 9cqw;
+      color: rgba(238, 127, 174, .45)
+    }
+
+    .fr {
+      inset: 0;
+      z-index: 5;
+      border-radius: 5%/7%;
+      overflow: hidden
+    }
+
+    .fr i {
+      position: absolute;
+      inset: 0
+    }
+
+    .pb {
+      background: var(--c);
+      clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%)
+    }
+
+    .pl,
+    .pr {
+      background: var(--cl)
+    }
+
+    .pl {
+      clip-path: polygon(0 0, 50% 54%, 0 100%)
+    }
+
+    .pr {
+      clip-path: polygon(100% 0, 50% 54%, 100% 100%)
+    }
+
+    .fl {
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 60%;
+      background: var(--cf);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      border-radius: 5% 5% 0 0/10% 10% 0 0;
+      transform-origin: top;
+      z-index: 6;
+      transition: transform .9s cubic-bezier(.5, -.1, .3, 1.15), background .5s .15s, z-index 0s .45s
+    }
+
+    .open .fl {
+      transform: rotateX(180deg);
+      z-index: 2;
+      background: var(--cd)
+    }
+
+    .seal {
+      left: 50%;
+      top: 55%;
+      width: 16%;
+      aspect-ratio: 1;
+      translate: -50% -50%;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 7cqw;
+      z-index: 8;
+      border: .9cqw solid rgba(255, 255, 255, .65);
+      background: radial-gradient(circle at 30% 30%, #ffb9d6, #d96899);
+      box-shadow: 0 8px 20px rgba(190, 80, 130, .4);
+      transition: .4s;
+      animation: beat 1.8s ease-in-out infinite
+    }
+
+    @keyframes beat {
+      50% {
+        scale: 1.09
+      }
+    }
+
+    .seal:hover {
+      animation: none;
+      scale: 1.12;
+      rotate: -6deg
+    }
+
+    .open .seal {
+      opacity: 0;
+      scale: .4;
+      pointer-events: none;
+      animation: none
+    }
+
+    /* create */
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid #fff;
+      border-radius: 28px;
+      box-shadow: 0 24px 70px rgba(125, 93, 125, .14);
+      padding: clamp(20px, 4vw, 34px)
+    }
+
+    .make {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 22px;
+      align-items: start
+    }
+
+    .pv {
+      position: sticky;
+      top: 90px;
+      text-align: center
+    }
+
+    .pv h3 {
+      font-size: 22px;
+      margin: 4px 0;
+      overflow-wrap: anywhere
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 22px 0
+    }
+
+    .full {
+      grid-column: 1/-1
+    }
+
+    label,
+    .lb {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 14px;
+      font-weight: 800;
+      color: #725e6e
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 2px solid #f0dcea;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .92);
+      padding: 12px 14px;
+      font: 600 16px var(--ui);
+      color: var(--ink);
+      transition: .2s
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 0;
+      border-color: #e59bbc;
+      box-shadow: 0 0 0 4px rgba(229, 155, 188, .2)
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+      font: 500 22px/1.4 var(--hand)
+    }
+
+    .shake {
+      animation: shake .4s
+    }
+
+    @keyframes shake {
+      25% {
+        translate: -6px
+      }
+
+      75% {
+        translate: 6px
+      }
+    }
+
+    .sw {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px
+    }
+
+    .dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, .14);
+      transition: .2s
+    }
+
+    .dot:hover {
+      transform: scale(1.12)
+    }
+
+    .dot.on {
+      outline: 3px solid #b57ca3;
+      outline-offset: 1px;
+      transform: scale(1.12)
+    }
+
+    .sm .dot {
+      width: 26px;
+      height: 26px
+    }
+
+    .pg {
+      margin-bottom: 14px;
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, .7);
+      border: 1px solid #f0dcea;
+      animation: in .4s
+    }
+
+    .pgh {
+      display: flex;
+      justify-content: space-between;
+      font: 600 17px var(--head);
+      color: #9c6586;
+      margin-bottom: 8px
+    }
+
+    .pgc {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--soft)
+    }
+
+    /* dashboard */
+    .dtop {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 20px
+    }
+
+    .card {
+      background: var(--glass);
+      border: 1px solid #fff;
+      border-radius: 26px;
+      padding: 14px;
+      box-shadow: 0 18px 50px rgba(130, 100, 130, .12);
+      transition: transform .3s, box-shadow .3s;
+      animation: in .5s both
+    }
+
+    .card:hover {
+      transform: translateY(-6px) rotate(-.4deg);
+      box-shadow: 0 26px 60px rgba(130, 100, 130, .2)
+    }
+
+    .thumb {
+      display: grid;
+      place-items: center;
+      padding: 30px 22px 22px;
+      border-radius: 20px
+    }
+
+    .thumb .env {
+      width: min(230px, 100%)
+    }
+
+    .card:hover .env:not(.open) .fl {
+      transform: rotateX(30deg)
+    }
+
+    .info {
+      padding: 14px 6px 4px
+    }
+
+    .info h3 {
+      font-size: 22px;
+      color: #624e60;
+      overflow-wrap: anywhere
+    }
+
+    .meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0 14px;
+      font-size: 13px;
+      color: var(--soft)
+    }
+
+    .chip {
+      background: #fde9f3;
+      color: #b0568a;
+      border-radius: 99px;
+      padding: 3px 11px;
+      font-weight: 800
+    }
+
+    .acts {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .acts .btn {
+      padding: 10px 15px
+    }
+
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      border: 2px dashed #e6cfe0;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, .55)
+    }
+
+    .empty .big {
+      font-size: 60px;
+      animation: bob 3s infinite
+    }
+
+    .empty .btn {
+      margin-top: 18px
+    }
+
+    /* receiver */
+    .rc {
+      width: 100%
+    }
+
+    #back {
+      position: absolute;
+      left: 16px;
+      top: 16px
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, .8);
+      border: 1px solid #fff;
+      color: #a06587;
+      font-weight: 800;
+      font-size: 14px;
+      margin-bottom: 16px
+    }
+
+    .rc h1 {
+      font-size: clamp(32px, 6vw, 54px);
+      margin-bottom: 8px;
+      overflow-wrap: anywhere
+    }
+
+    .recv .scene {
+      --w: 460px
+    }
+
+    .scene.done {
+      opacity: 0;
+      transform: translateY(70px) scale(.85);
+      transition: .7s
+    }
+
+    .scene.gone {
+      display: none
+    }
+
+    .hint {
+      margin-top: 14px;
+      color: #9b6a88;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: .4
+      }
+    }
+
+    .reader {
+      perspective: 1500px;
+      width: min(680px, 100%);
+      margin: 26px auto 0;
+      animation: rise .9s cubic-bezier(.2, .9, .2, 1) both
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(90px) rotateX(35deg) scale(.9)
+      }
+    }
+
+    .page {
+      position: relative;
+      min-height: 400px;
+      text-align: left;
+      padding: clamp(30px, 6vw, 54px) clamp(22px, 6vw, 56px);
+      border-radius: 8px;
+      background: var(--paper, #fffaf2);
+      box-shadow: 0 1px 0 #fff, 0 9px 0 -3px rgba(255, 255, 255, .75), 0 18px 0 -6px rgba(255, 255, 255, .5), 0 34px 60px rgba(90, 60, 90, .2);
+      transform-origin: left center
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      width: 110px;
+      height: 28px;
+      translate: -50% 0;
+      rotate: -3deg;
+      background: rgba(238, 127, 174, .35);
+      border-radius: 3px
+    }
+
+    .page small {
+      color: #b0789b;
+      font-weight: 800;
+      font-size: 14px
+    }
+
+    .txt {
+      margin-top: 14px;
+      font: 500 clamp(24px, 4.2vw, 31px)/1.65 var(--hand);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      background: repeating-linear-gradient(transparent 0 calc(1.65em - 1px), rgba(190, 140, 175, .25) calc(1.65em - 1px) 1.65em)
+    }
+
+    .sign {
+      margin-top: 16px;
+      text-align: right;
+      font: 700 28px var(--hand);
+      color: #b0568a
+    }
+
+    .fn {
+      animation: fn .75s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    .fp {
+      transform-origin: right center;
+      animation: fp .75s cubic-bezier(.2, .8, .2, 1)
+    }
+
+    @keyframes fn {
+      from {
+        opacity: 0;
+        transform: rotateY(-75deg) translateX(30px)
+      }
+    }
+
+    @keyframes fp {
+      from {
+        opacity: 0;
+        transform: rotateY(75deg) translateX(-30px)
+      }
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 30px
+    }
+
+    .dots i {
+      width: 9px;
+      height: 9px;
+      border-radius: 9px;
+      background: #e6cfe0;
+      transition: .3s
+    }
+
+    .dots i.on {
+      background: var(--pink);
+      width: 26px
+    }
+
+    .reader .row {
+      justify-content: center;
+      margin-top: 18px
+    }
+
+    /* modal + toast + fx */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 18px;
+      background: rgba(60, 40, 60, .38);
+      backdrop-filter: blur(8px);
+      z-index: 100
+    }
+
+    .modal.show {
+      display: grid;
+      animation: fade .25s
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0
+      }
+    }
+
+    .mcard {
+      width: min(480px, 100%);
+      background: #fff;
+      border-radius: 28px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(60, 40, 70, .3);
+      animation: pop .45s cubic-bezier(.2, 1.2, .3, 1)
+    }
+
+    @keyframes pop {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(.9)
+      }
+    }
+
+    .mcard .big {
+      font-size: 58px
+    }
+
+    .mcard h2 {
+      font-size: 26px;
+      margin: 6px 0 8px
+    }
+
+    .mcard p {
+      color: var(--soft)
+    }
+
+    .mcard .row {
+      justify-content: center
+    }
+
+    .mcard .row.nw {
+      flex-wrap: nowrap;
+      margin-top: 18px
+    }
+
+    .mh {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      text-align: left
+    }
+
+    .mh h2 {
+      margin: 0
+    }
+
+    .x {
+      width: 36px;
+      height: 36px;
+      flex: none;
+      border-radius: 50%;
+      background: #f7e8f2;
+      font-size: 20px;
+      color: #7a6073
+    }
+
+    .warn {
+      font-size: 13px;
+      margin-top: 12px
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 25px;
+      translate: -50% 100px;
+      max-width: calc(100% - 30px);
+      background: #5e4b5b;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 99px;
+      font-size: 14px;
+      z-index: 200;
+      opacity: 0;
+      transition: .4s;
+      text-align: center
+    }
+
+    .toast.show {
+      opacity: 1;
+      translate: -50% 0
+    }
+
+    .fx {
+      position: fixed;
+      z-index: 300;
+      pointer-events: none;
+      font-style: normal;
+      color: var(--pink);
+      animation: fly 2.2s ease-out both
+    }
+
+    .nametag{
+      position: sticky;
+      bottom: 10px;
+      transform: translateX(45%);
+      font-size: 11px;
+    }
+
+    @keyframes fly {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.3)
+      }
+
+      15% {
+        opacity: 1
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)), var(--dy)) scale(var(--s)) rotate(25deg)
+      }
+    }
+
+    @media(max-width:860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        min-height: 0;
+        gap: 10px
+      }
+
+      .hero p {
+        margin: auto
+      }
+
+      .row {
+        justify-content: center
+      }
+
+      .make {
+        grid-template-columns: 1fr
+      }
+
+      .pv {
+        position: static;
+        order: -1
+      }
+    }
+
+    @media(max-width:700px) {
+      .nav {
+        backdrop-filter: none;
+        top: 8px
+      }
+
+      .tabs {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        z-index: 60;
+        padding: 8px;
+        background: rgba(255, 255, 255, .88);
+        backdrop-filter: blur(18px);
+        border: 1px solid #fff;
+        border-radius: 24px;
+        box-shadow: 0 14px 40px rgba(130, 95, 120, .22)
+      }
+
+      body.receiving .tabs {
+        display: none
+      }
+
+      .tab {
+        flex: 1;
+        padding: 11px 6px;
+        font-size: 14px
+      }
+
+      body {
+        padding-bottom: 84px
+      }
+
+      .grid {
+        grid-template-columns: 1fr
+      }
+
+      .toast {
+        bottom: 104px
+      }
+
+      .acts .btn {
+        flex: 1
+      }
+      .nametag{
+        display: inline-block;
+        position: absolute;
+        left: 25%;
+        bottom: -20%;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      ::before,
+      ::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important
+      }
+
+      .fx {
+        display: none
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="bg" id="bg" aria-hidden="true"></div>
-<header class="nav">
-  <div class="logo"><b>♡</b>Whisper Envelope</div>
-  <nav class="tabs" aria-label="Main"><button class="tab" data-go="home">Home</button><button class="tab" data-go="create">Create</button><button class="tab" data-go="dash">My envelopes</button></nav>
-</header>
-<main>
-<section class="screen" id="home"><div class="hero">
-  <div><h1>Send a secret<br>worth opening.</h1><p>Write a few pages, pick an envelope, and share a link. They get to break the seal themselves.</p>
-  <div class="row"><button class="btn pri" data-go="create">✨ Create envelope</button><button class="btn sec" data-go="dash">💌 My envelopes</button></div></div>
-  <div><div class="scene" data-tilt style="--w:430px"><div class="tilt" id="demo"></div></div><p class="tip">Tap the envelope to peek inside ♡</p></div>
-</div></section>
+  <div class="bg" id="bg" aria-hidden="true"></div>
+  <header class="nav">
+    <div class="logo"><b>♡</b>W - Envelope Cute</div>
+    <nav class="tabs" aria-label="Main"><button class="tab" data-go="home">Home</button><button class="tab"
+        data-go="create">Create</button><button class="tab" data-go="dash">My envelopes</button></nav>
+  </header>
+  <main>
+    <section class="screen" id="home">
+      <div class="hero">
+        <div>
+          <h1>Send a secret<br>worth opening.</h1>
+          <p>Write a few pages, pick an envelope, and share a link. They get to break the seal themselves.</p>
+          <div class="row"><button class="btn pri" data-go="create">✨ Create envelope</button><button class="btn sec"
+              data-go="dash">💌 My envelopes</button></div>
+        </div>
+        <div>
+          <div class="scene" data-tilt style="--w:430px">
+            <div class="tilt" id="demo"></div>
+          </div>
+          <p class="tip">Tap the envelope to peek inside ♡</p>
+        </div>
+      </div>
+    </section>
 
-<section class="screen" id="create"><div class="make">
-  <div class="glass"><h2>Design your envelope 💌</h2><p class="soft">Pick the colors, then write each page.</p>
-    <div class="grid">
-      <label class="full">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡" autocomplete="off"></label>
-      <label>From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
-      <label>Pages<select id="count"></select></label>
-      <div class="full"><span class="lb">Envelope color</span><div class="sw" id="envSw"></div></div>
-      <div class="full"><span class="lb">Paper color</span><div class="sw" id="paperSw"></div></div>
-    </div>
-    <div id="pages"></div>
-    <button class="btn pri wide" id="make">💌 Seal my envelope</button>
+    <section class="screen" id="create">
+      <div class="make">
+        <div class="glass">
+          <h2>Design your envelope 💌</h2>
+          <p class="soft">Pick the colors, then write each page.</p>
+          <div class="grid">
+            <label class="full">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡"
+                autocomplete="off"></label>
+            <label>From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
+            <label>Pages<select id="count"></select></label>
+            <div class="full"><span class="lb">Envelope color</span>
+              <div class="sw" id="envSw"></div>
+            </div>
+            <div class="full"><span class="lb">Paper color</span>
+              <div class="sw" id="paperSw"></div>
+            </div>
+          </div>
+          <div id="pages"></div>
+          <button class="btn pri wide" id="make">💌 Seal my envelope</button>
+        </div>
+        <aside class="glass pv">
+          <div class="scene" data-tilt style="--w:320px">
+            <div class="tilt" id="pvEnv"></div>
+          </div>
+          <h3 id="pvTitle">Your envelope</h3>
+          <p class="soft">Live preview. Tap it to peek.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="screen" id="dash">
+      <div class="dtop">
+        <div>
+          <h2>My envelopes 💌</h2>
+          <p class="soft" id="total"></p>
+        </div><button class="btn pri" data-go="create">+ New</button>
+      </div>
+      <div class="cards" id="list"></div>
+    </section>
+
+    <section class="screen recv" id="recv">
+      <button class="btn sec" id="back" data-go="dash" hidden>‹ My envelopes</button>
+      <div class="rc">
+        <div id="recvHead">
+          <div class="badge">💌 Someone left something for you</div>
+          <h1 id="recvTitle"></h1>
+          <p class="soft" id="recvSub"></p>
+        </div>
+        <div class="scene" id="recvScene" data-tilt></div>
+        <p class="hint" id="hint">Tap the heart to open ✨</p>
+        <div class="reader" id="reader" hidden>
+          <article class="page" id="page"><small id="pgNo"></small>
+            <div class="txt" id="pgTxt"></div>
+            <div class="sign" id="sign"></div>
+          </article>
+          <div class="dots" id="dots"></div>
+          <div class="row"><button class="btn sec" id="prev">‹ Back</button><button class="btn pri" id="next">Next
+              ›</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <div class="mcard" id="mc"></div>
   </div>
-  <aside class="glass pv"><div class="scene" data-tilt style="--w:320px"><div class="tilt" id="pvEnv"></div></div><h3 id="pvTitle">Your envelope</h3><p class="soft">Live preview. Tap it to peek.</p></aside>
-</div></section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<section class="screen" id="dash">
-  <div class="dtop"><div><h2>My envelopes 💌</h2><p class="soft" id="total"></p></div><button class="btn pri" data-go="create">+ New</button></div>
-  <div class="cards" id="list"></div>
-</section>
+  <p class="nametag">Made by <a style="color: var(--pink);">Wenxyz</a></p>
 
-<section class="screen recv" id="recv">
-  <button class="btn sec" id="back" data-go="dash" hidden>‹ My envelopes</button>
-  <div class="rc">
-    <div id="recvHead"><div class="badge">💌 Someone left something for you</div><h1 id="recvTitle"></h1><p class="soft" id="recvSub"></p></div>
-    <div class="scene" id="recvScene" data-tilt></div>
-    <p class="hint" id="hint">Tap the heart to open ✨</p>
-    <div class="reader" id="reader" hidden>
-      <article class="page" id="page"><small id="pgNo"></small><div class="txt" id="pgTxt"></div><div class="sign" id="sign"></div></article>
-      <div class="dots" id="dots"></div>
-      <div class="row"><button class="btn sec" id="prev">‹ Back</button><button class="btn pri" id="next">Next ›</button></div>
-    </div>
-  </div>
-</section>
-</main>
-<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="mcard" id="mc"></div></div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+    const ENV = ["#e994b7", "#f3a6a6", "#f2c879", "#a995d9", "#8db7d9", "#8dc7b0", "#d5aa76", "#d88383"];
+    const PAPER = ["#fffaf2", "#fff1f6", "#f5efff", "#edf8ff", "#effbf3", "#fff7df"];
+    const ROT = [-2, 2, -4, 3, -1], calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
+    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const hexOk = c => /^#[0-9a-f]{6}$/i.test(c), uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    const fmt = d => new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+    const shade = (h, p) => { const t = p < 0 ? 0 : 255, k = Math.abs(p); return "#" + [1, 3, 5].map(i => Math.round(parseInt(h.substr(i, 2), 16) * (1 - k) + t * k).toString(16).padStart(2, "0")).join("") };
+    const vars = c => `--c:${c};--cl:${shade(c, .3)};--cf:${shade(c, -.07)};--cd:${shade(c, -.2)}`;
+    function clean(d) {
+      if (!d || !Array.isArray(d.pages) || !d.pages.length) return null;
+      return {
+        id: String(d.id || uid()).replace(/\W/g, "").slice(0, 30), title: String(d.title || "A little surprise").slice(0, 80), from: String(d.from || "").slice(0, 40),
+        envelopeColor: hexOk(d.envelopeColor) ? d.envelopeColor : ENV[0], createdAt: d.createdAt || new Date().toISOString(),
+        pages: d.pages.slice(0, 8).map(p => ({ text: String(p && p.text || "").slice(0, 600), color: hexOk(p && p.color) ? p.color : PAPER[0] }))
+      }
+    }
+    let store = []; try { store = JSON.parse(localStorage.getItem(KEY) || "[]").map(clean).filter(Boolean) } catch { }
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(store)) } catch { toast("Couldn’t save on this browser") } };
+    let envColor = ENV[0], paper = PAPER[0], pages, recv = null, idx = 0, preview = false, created = null, tt;
+    const blank = () => Array.from({ length: 8 }, () => ({ text: "", color: paper })); pages = blank();
 
-<script>
-const KEY="whisper_envelopes_v1",$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const ENV=["#e994b7","#f3a6a6","#f2c879","#a995d9","#8db7d9","#8dc7b0","#d5aa76","#d88383"];
-const PAPER=["#fffaf2","#fff1f6","#f5efff","#edf8ff","#effbf3","#fff7df"];
-const ROT=[-2,2,-4,3,-1],calm=matchMedia("(prefers-reduced-motion:reduce)").matches;
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const hexOk=c=>/^#[0-9a-f]{6}$/i.test(c),uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const fmt=d=>new Date(d).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"});
-const shade=(h,p)=>{const t=p<0?0:255,k=Math.abs(p);return"#"+[1,3,5].map(i=>Math.round(parseInt(h.substr(i,2),16)*(1-k)+t*k).toString(16).padStart(2,"0")).join("")};
-const vars=c=>`--c:${c};--cl:${shade(c,.3)};--cf:${shade(c,-.07)};--cd:${shade(c,-.2)}`;
-function clean(d){if(!d||!Array.isArray(d.pages)||!d.pages.length)return null;
-  return{id:String(d.id||uid()).replace(/\W/g,"").slice(0,30),title:String(d.title||"A little surprise").slice(0,80),from:String(d.from||"").slice(0,40),
-  envelopeColor:hexOk(d.envelopeColor)?d.envelopeColor:ENV[0],createdAt:d.createdAt||new Date().toISOString(),
-  pages:d.pages.slice(0,8).map(p=>({text:String(p&&p.text||"").slice(0,600),color:hexOk(p&&p.color)?p.color:PAPER[0]}))}}
-let store=[];try{store=JSON.parse(localStorage.getItem(KEY)||"[]").map(clean).filter(Boolean)}catch{}
-const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(store))}catch{toast("Couldn’t save on this browser")}};
-let envColor=ENV[0],paper=PAPER[0],pages,recv=null,idx=0,preview=false,created=null,tt;
-const blank=()=>Array.from({length:8},()=>({text:"",color:paper}));pages=blank();
+    /* envelope component */
+    const sheets = cols => cols.slice(0, 5).map((p, i) => `<div class="sht" style="--p:${p};--i:${i};--r:${ROT[i]}deg"><b>♡</b></div>`).join("");
+    const envHTML = (c, cols, o = {}) => `<div class="env${o.float ? " float" : ""}" ${o.id ? `id="${o.id}"` : ""} ${o.play ? "data-play" : ""} style="${vars(c)}"><div class="eb"></div><div class="sh">${sheets(cols)}</div><div class="fr"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div><div class="fl"></div>${o.play ? '<button class="seal" aria-label="Open envelope">♡</button>' : '<span class="seal">♡</span>'}</div>`;
 
-/* envelope component */
-const sheets=cols=>cols.slice(0,5).map((p,i)=>`<div class="sht" style="--p:${p};--i:${i};--r:${ROT[i]}deg"><b>♡</b></div>`).join("");
-const envHTML=(c,cols,o={})=>`<div class="env${o.float?" float":""}" ${o.id?`id="${o.id}"`:""} ${o.play?"data-play":""} style="${vars(c)}"><div class="eb"></div><div class="sh">${sheets(cols)}</div><div class="fr"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div><div class="fl"></div>${o.play?'<button class="seal" aria-label="Open envelope">♡</button>':'<span class="seal">♡</span>'}</div>`;
+    /* nav */
+    function go(n) {
+      $$(".screen").forEach(s => s.classList.toggle("on", s.id === n)); $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.go === n));
+      document.body.classList.toggle("receiving", n === "recv"); scrollTo({ top: 0, behavior: calm ? "auto" : "smooth" }); if (n === "dash") renderDash()
+    }
+    function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2800) }
+    function modal(h) { $("#mc").innerHTML = h; $("#modal").classList.add("show"); setTimeout(() => { const f = $("#mc .btn,#mc input"); f && f.focus() }, 60) }
+    const closeModal = () => $("#modal").classList.remove("show");
+    function burst(el, n = 14) {
+      const r = el ? el.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 }, S = ["♡", "♥", "💗", "💖", "✦", "✧"];
+      for (let i = 0; i < n; i++) {
+        const h = document.createElement("i"); h.className = "fx"; h.textContent = S[i % S.length];
+        h.style.cssText = `left:${r.left + r.width / 2}px;top:${r.top + r.height / 2}px;font-size:${16 + Math.random() * 14}px;--dx:${Math.random() * 260 - 130}px;--dy:${-90 - Math.random() * 230}px;--s:${.8 + Math.random()};animation-delay:${i * 45}ms`;
+        document.body.append(h); setTimeout(() => h.remove(), 2800 + i * 45)
+      }
+    }
 
-/* nav */
-function go(n){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===n));$$(".tab").forEach(t=>t.classList.toggle("on",t.dataset.go===n));
-  document.body.classList.toggle("receiving",n==="recv");scrollTo({top:0,behavior:calm?"auto":"smooth"});if(n==="dash")renderDash()}
-function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2800)}
-function modal(h){$("#mc").innerHTML=h;$("#modal").classList.add("show");setTimeout(()=>{const f=$("#mc .btn,#mc input");f&&f.focus()},60)}
-const closeModal=()=>$("#modal").classList.remove("show");
-function burst(el,n=14){const r=el?el.getBoundingClientRect():{left:innerWidth/2,top:innerHeight/2,width:0,height:0},S=["♡","♥","💗","💖","✦","✧"];
-  for(let i=0;i<n;i++){const h=document.createElement("i");h.className="fx";h.textContent=S[i%S.length];
-  h.style.cssText=`left:${r.left+r.width/2}px;top:${r.top+r.height/2}px;font-size:${16+Math.random()*14}px;--dx:${Math.random()*260-130}px;--dy:${-90-Math.random()*230}px;--s:${.8+Math.random()};animation-delay:${i*45}ms`;
-  document.body.append(h);setTimeout(()=>h.remove(),2800+i*45)}}
+    /* create */
+    function swatches(el, list, cur, fn) {
+      el.innerHTML = list.map(c => `<button type="button" class="dot${c === cur ? " on" : ""}" style="background:${c}" aria-label="Color ${c}" aria-pressed="${c === cur}"></button>`).join("");
+      [...el.children].forEach((b, i) => b.onclick = () => { [...el.children].forEach(x => { x.classList.remove("on"); x.setAttribute("aria-pressed", "false") }); b.classList.add("on"); b.setAttribute("aria-pressed", "true"); fn(list[i]) })
+    }
+    const n = () => +$("#count").value;
+    function updPreview() { const e = $("#pvEnv .env"); e.style.cssText = vars(envColor); e.querySelector(".sh").innerHTML = sheets(pages.slice(0, n()).map(p => p.color)); $("#pvTitle").textContent = $("#title").value.trim() || "Your envelope" }
+    function renderPages() {
+      $("#pages").innerHTML = pages.slice(0, n()).map((p, i) => `<div class="pg"><div class="pgh"><span>📄 Page ${i + 1}</span><small id="cc${i}">${p.text.length}/600</small></div><textarea maxlength="600" data-i="${i}" aria-label="Page ${i + 1} message" placeholder="${i ? "Keep going…" : "Write something sweet…"}">${esc(p.text)}</textarea><div class="pgc"><span>Paper</span><div class="sw sm" data-i="${i}"></div></div></div>`).join("");
+      $$("#pages .sw").forEach(el => { const i = +el.dataset.i; swatches(el, PAPER, pages[i].color, c => { pages[i].color = c; updPreview() }) });
+      $$("#pages textarea").forEach(t => t.oninput = () => { const i = +t.dataset.i; pages[i].text = t.value; $("#cc" + i).textContent = t.value.length + "/600" }); updPreview()
+    }
+    function create() {
+      const t = $("#title").value.trim();
+      if (!t) { const i = $("#title"); i.classList.remove("shake"); void i.offsetWidth; i.classList.add("shake"); i.focus(); return toast("Give your envelope a title first 💌") }
+      const e = clean({
+        id: uid(), title: t, from: $("#from").value.trim(), envelopeColor: envColor, createdAt: new Date().toISOString(),
+        pages: pages.slice(0, n()).map(p => ({ text: p.text.trim() || "A little message just for you. ♡", color: p.color }))
+      });
+      store.unshift(e); save(); created = e; renderDash(); $("#title").value = $("#from").value = ""; pages = blank(); renderPages();
+      modal(`<div class="big">💌</div><h2>Envelope sealed!</h2><p>It’s ready. Peek at it first, or send it right away.</p><div class="row"><button class="btn sec" onclick="closeModal();previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button></div>`); burst(null, 20)
+    }
 
-/* create */
-function swatches(el,list,cur,fn){el.innerHTML=list.map(c=>`<button type="button" class="dot${c===cur?" on":""}" style="background:${c}" aria-label="Color ${c}" aria-pressed="${c===cur}"></button>`).join("");
-  [...el.children].forEach((b,i)=>b.onclick=()=>{[...el.children].forEach(x=>{x.classList.remove("on");x.setAttribute("aria-pressed","false")});b.classList.add("on");b.setAttribute("aria-pressed","true");fn(list[i])})}
-const n=()=>+$("#count").value;
-function updPreview(){const e=$("#pvEnv .env");e.style.cssText=vars(envColor);e.querySelector(".sh").innerHTML=sheets(pages.slice(0,n()).map(p=>p.color));$("#pvTitle").textContent=$("#title").value.trim()||"Your envelope"}
-function renderPages(){$("#pages").innerHTML=pages.slice(0,n()).map((p,i)=>`<div class="pg"><div class="pgh"><span>📄 Page ${i+1}</span><small id="cc${i}">${p.text.length}/600</small></div><textarea maxlength="600" data-i="${i}" aria-label="Page ${i+1} message" placeholder="${i?"Keep going…":"Write something sweet…"}">${esc(p.text)}</textarea><div class="pgc"><span>Paper</span><div class="sw sm" data-i="${i}"></div></div></div>`).join("");
-  $$("#pages .sw").forEach(el=>{const i=+el.dataset.i;swatches(el,PAPER,pages[i].color,c=>{pages[i].color=c;updPreview()})});
-  $$("#pages textarea").forEach(t=>t.oninput=()=>{const i=+t.dataset.i;pages[i].text=t.value;$("#cc"+i).textContent=t.value.length+"/600"});updPreview()}
-function create(){const t=$("#title").value.trim();
-  if(!t){const i=$("#title");i.classList.remove("shake");void i.offsetWidth;i.classList.add("shake");i.focus();return toast("Give your envelope a title first 💌")}
-  const e=clean({id:uid(),title:t,from:$("#from").value.trim(),envelopeColor:envColor,createdAt:new Date().toISOString(),
-    pages:pages.slice(0,n()).map(p=>({text:p.text.trim()||"A little message just for you. ♡",color:p.color}))});
-  store.unshift(e);save();created=e;renderDash();$("#title").value=$("#from").value="";pages=blank();renderPages();
-  modal(`<div class="big">💌</div><h2>Envelope sealed!</h2><p>It’s ready. Peek at it first, or send it right away.</p><div class="row"><button class="btn sec" onclick="closeModal();previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button></div>`);burst(null,20)}
+    /* dashboard */
+    function renderDash() {
+      const L = $("#list"); $("#total").textContent = store.length ? `${store.length} sealed and waiting` : "Nothing sealed yet";
+      if (!store.length) { L.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="big">💌</div><h3>No envelopes yet</h3><p class="soft">Write your first little message.</p><button class="btn pri" data-go="create">✨ Create envelope</button></div>`; return }
+      L.innerHTML = store.map(e => `<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor, .72)}">${envHTML(e.envelopeColor, e.pages.map(p => p.color))}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} page${e.pages.length > 1 ? "s" : ""}</span><small>${fmt(e.createdAt)}</small></div><div class="acts"><button class="btn sec" onclick="previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button><button class="btn dng" onclick="askDelete('${e.id}')" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join("")
+    }
+    function askDelete(id) { modal(`<div class="big">🥺</div><h2>Delete this envelope?</h2><p>Links you already shared will still work, but it will disappear from this list.</p><div class="row"><button class="btn sec" onclick="closeModal()">Keep it</button><button class="btn dng" onclick="delEnv('${id}')">Delete</button></div>`) }
+    function delEnv(id) { store = store.filter(e => e.id !== id); save(); renderDash(); closeModal(); toast("Envelope deleted") }
 
-/* dashboard */
-function renderDash(){const L=$("#list");$("#total").textContent=store.length?`${store.length} sealed and waiting`:"Nothing sealed yet";
-  if(!store.length){L.innerHTML=`<div class="empty" style="grid-column:1/-1"><div class="big">💌</div><h3>No envelopes yet</h3><p class="soft">Write your first little message.</p><button class="btn pri" data-go="create">✨ Create envelope</button></div>`;return}
-  L.innerHTML=store.map(e=>`<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor,.72)}">${envHTML(e.envelopeColor,e.pages.map(p=>p.color))}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} page${e.pages.length>1?"s":""}</span><small>${fmt(e.createdAt)}</small></div><div class="acts"><button class="btn sec" onclick="previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button><button class="btn dng" onclick="askDelete('${e.id}')" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join("")}
-function askDelete(id){modal(`<div class="big">🥺</div><h2>Delete this envelope?</h2><p>Links you already shared will still work, but it will disappear from this list.</p><div class="row"><button class="btn sec" onclick="closeModal()">Keep it</button><button class="btn dng" onclick="delEnv('${id}')">Delete</button></div>`)}
-function delEnv(id){store=store.filter(e=>e.id!==id);save();renderDash();closeModal();toast("Envelope deleted")}
+    /* sharing */
+    const enc = e => { const j = JSON.stringify({ title: e.title, from: e.from, envelopeColor: e.envelopeColor, pages: e.pages }); return btoa(String.fromCharCode(...new TextEncoder().encode(j))).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "") };
+    const dec = s => { try { s = s.replace(/-/g, "+").replace(/_/g, "/"); while (s.length % 4) s += "="; return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)))) } catch { return null } };
+    function shareEnv(id) {
+      const e = store.find(x => x.id === id); if (!e) return; const url = location.href.split("#")[0] + "#envelope=" + enc(e);
+      modal(`<div class="mh"><h2>Send it to someone 💌</h2><button class="x" aria-label="Close" onclick="closeModal()">×</button></div><p style="text-align:left;margin:10px 0 16px">Copy this link. They’ll only see the sealed envelope until they open it.</p><div class="row nw"><input id="shareIn" readonly value="${url}" aria-label="Share link"><button class="btn pri" id="cp">Copy</button></div>${navigator.share ? '<button class="btn sec wide" id="nat">Share via…</button>' : ""}${location.protocol === "file:" ? '<p class="warn">Tip: this link only works on this device while the page is opened from a file. Host index.html online (Netlify Drop or GitHub Pages) so others can open it.</p>' : ""}${url.length > 6000 ? '<p class="warn">This is a long link. Some chat apps may cut it off, so try shorter pages.</p>' : ""}`);
+      $("#shareIn").onfocus = e => e.target.select();
+      $("#cp").onclick = async () => { try { await navigator.clipboard.writeText(url) } catch { $("#shareIn").select(); document.execCommand("copy") } toast("Link copied 🔗💌") };
+      if ($("#nat")) $("#nat").onclick = () => navigator.share({ title: e.title, text: "I sealed something for you 💌", url }).catch(() => { })
+    }
 
-/* sharing */
-const enc=e=>{const j=JSON.stringify({title:e.title,from:e.from,envelopeColor:e.envelopeColor,pages:e.pages});return btoa(String.fromCharCode(...new TextEncoder().encode(j))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")};
-const dec=s=>{try{s=s.replace(/-/g,"+").replace(/_/g,"/");while(s.length%4)s+="=";return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0))))}catch{return null}};
-function shareEnv(id){const e=store.find(x=>x.id===id);if(!e)return;const url=location.href.split("#")[0]+"#envelope="+enc(e);
-  modal(`<div class="mh"><h2>Send it to someone 💌</h2><button class="x" aria-label="Close" onclick="closeModal()">×</button></div><p style="text-align:left;margin:10px 0 16px">Copy this link. They’ll only see the sealed envelope until they open it.</p><div class="row nw"><input id="shareIn" readonly value="${url}" aria-label="Share link"><button class="btn pri" id="cp">Copy</button></div>${navigator.share?'<button class="btn sec wide" id="nat">Share via…</button>':""}${location.protocol==="file:"?'<p class="warn">Tip: this link only works on this device while the page is opened from a file. Host index.html online (Netlify Drop or GitHub Pages) so others can open it.</p>':""}${url.length>6000?'<p class="warn">This is a long link. Some chat apps may cut it off, so try shorter pages.</p>':""}`);
-  $("#shareIn").onfocus=e=>e.target.select();
-  $("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(url)}catch{$("#shareIn").select();document.execCommand("copy")}toast("Link copied 🔗💌")};
-  if($("#nat"))$("#nat").onclick=()=>navigator.share({title:e.title,text:"I sealed something for you 💌",url}).catch(()=>{})}
+    /* receiver */
+    function setup(e, prev) {
+      recv = e; idx = 0; preview = prev; $("#recvTitle").textContent = e.title;
+      $("#recvSub").textContent = e.from ? `From ${e.from}` : "Someone prepared a little surprise for you.";
+      const s = $("#recvScene"); s.className = "scene"; s.innerHTML = `<div class="tilt">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { float: 1, play: 1, id: "recvEnv" })}</div>`;
+      $("#hint").style.display = ""; $("#reader").hidden = true; $("#back").hidden = !prev; go("recv")
+    }
+    function previewEnv(id) { const e = store.find(x => x.id === id); if (e) { closeModal(); setup(e, true) } }
+    function openRecv() {
+      const env = $("#recvEnv"); if (!env || env.classList.contains("open")) return; env.classList.remove("float"); env.classList.add("open"); $("#hint").style.display = "none"; burst(env, 18);
+      setTimeout(() => $("#recvScene").classList.add("done"), 1900);
+      setTimeout(() => { $("#recvScene").classList.add("gone"); $("#reader").hidden = false; show(0, 1) }, 2550)
+    }
+    function show(i, dir) {
+      idx = i; const p = recv.pages[i], el = $("#page"), last = i === recv.pages.length - 1;
+      el.style.setProperty("--paper", p.color); el.className = "page"; void el.offsetWidth; el.className = "page " + (dir > 0 ? "fn" : "fp");
+      $("#pgTxt").textContent = p.text; $("#pgNo").textContent = `Page ${i + 1} of ${recv.pages.length}`;
+      $("#dots").innerHTML = recv.pages.map((_, k) => `<i class="${k === i ? "on" : ""}"></i>`).join("");
+      $("#prev").style.visibility = i ? "visible" : "hidden"; $("#next").textContent = last ? "Finish ♡" : "Next ›";
+      $("#sign").textContent = last && recv.from ? `— ${recv.from}` : ""
+    }
+    const prev = () => idx > 0 && show(idx - 1, -1);
+    function next() {
+      if (idx < recv.pages.length - 1) return show(idx + 1, 1); burst(null, 26);
+      modal(`<div class="big">💌</div><h2>That was the last page</h2><p>${recv.from ? "With love, " + esc(recv.from) : "Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview ? '<button class="btn pri" onclick="leave()">Back to my envelopes</button>' : '<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)
+    }
+    function leave(c) { closeModal(); history.replaceState(null, "", location.pathname + location.search); recv = null; go(c ? "create" : "dash") }
+    function checkHash() {
+      const h = location.hash; if (!h.startsWith("#envelope=")) return false; const d = clean(dec(h.slice(10)));
+      if (!d) { toast("This envelope link looks broken"); return false } setup(d, false); return true
+    }
 
-/* receiver */
-function setup(e,prev){recv=e;idx=0;preview=prev;$("#recvTitle").textContent=e.title;
-  $("#recvSub").textContent=e.from?`From ${e.from}`:"Someone prepared a little surprise for you.";
-  const s=$("#recvScene");s.className="scene";s.innerHTML=`<div class="tilt">${envHTML(e.envelopeColor,e.pages.map(p=>p.color),{float:1,play:1,id:"recvEnv"})}</div>`;
-  $("#hint").style.display="";$("#reader").hidden=true;$("#back").hidden=!prev;go("recv")}
-function previewEnv(id){const e=store.find(x=>x.id===id);if(e){closeModal();setup(e,true)}}
-function openRecv(){const env=$("#recvEnv");if(!env||env.classList.contains("open"))return;env.classList.remove("float");env.classList.add("open");$("#hint").style.display="none";burst(env,18);
-  setTimeout(()=>$("#recvScene").classList.add("done"),1900);
-  setTimeout(()=>{$("#recvScene").classList.add("gone");$("#reader").hidden=false;show(0,1)},2550)}
-function show(i,dir){idx=i;const p=recv.pages[i],el=$("#page"),last=i===recv.pages.length-1;
-  el.style.setProperty("--paper",p.color);el.className="page";void el.offsetWidth;el.className="page "+(dir>0?"fn":"fp");
-  $("#pgTxt").textContent=p.text;$("#pgNo").textContent=`Page ${i+1} of ${recv.pages.length}`;
-  $("#dots").innerHTML=recv.pages.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("");
-  $("#prev").style.visibility=i?"visible":"hidden";$("#next").textContent=last?"Finish ♡":"Next ›";
-  $("#sign").textContent=last&&recv.from?`— ${recv.from}`:""}
-const prev=()=>idx>0&&show(idx-1,-1);
-function next(){if(idx<recv.pages.length-1)return show(idx+1,1);burst(null,26);
-  modal(`<div class="big">💌</div><h2>That was the last page</h2><p>${recv.from?"With love, "+esc(recv.from):"Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview?'<button class="btn pri" onclick="leave()">Back to my envelopes</button>':'<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)}
-function leave(c){closeModal();history.replaceState(null,"",location.pathname+location.search);recv=null;go(c?"create":"dash")}
-function checkHash(){const h=location.hash;if(!h.startsWith("#envelope="))return false;const d=clean(dec(h.slice(10)));
-  if(!d){toast("This envelope link looks broken");return false}setup(d,false);return true}
+    /* events */
+    document.addEventListener("click", e => {
+      const g = e.target.closest("[data-go]"); if (g) return go(g.dataset.go);
+      const v = e.target.closest(".env[data-play]"); if (!v) return;
+      if (v.id === "recvEnv") return openRecv();
+      const o = v.classList.toggle("open"); if (o) burst(v, 10)
+    });
+    document.addEventListener("pointermove", e => {
+      if (calm || e.pointerType === "touch") return; const s = e.target.closest("[data-tilt]");
+      if (!s || !s.firstElementChild) return; const r = s.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      s.firstElementChild.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`
+    });
+    document.addEventListener("pointerout", e => { const s = e.target.closest && e.target.closest("[data-tilt]"); if (s && s.firstElementChild && !s.contains(e.relatedTarget)) s.firstElementChild.style.transform = "" });
+    addEventListener("keydown", e => {
+      if (e.key === "Escape") return closeModal();
+      if (!recv || $("#reader").hidden || $("#modal").classList.contains("show") || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
+      if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev()
+    });
+    let tx = 0; $("#page").addEventListener("touchstart", e => tx = e.touches[0].clientX, { passive: true });
+    $("#page").addEventListener("touchend", e => { const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) d < 0 ? next() : prev() });
+    $("#modal").onclick = e => { if (e.target.id === "modal") closeModal() };
+    $("#prev").onclick = prev; $("#next").onclick = next; $("#make").onclick = create;
+    $("#title").oninput = updPreview; $("#count").onchange = renderPages;
+    addEventListener("hashchange", checkHash);
 
-/* events */
-document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g)return go(g.dataset.go);
-  const v=e.target.closest(".env[data-play]");if(!v)return;
-  if(v.id==="recvEnv")return openRecv();
-  const o=v.classList.toggle("open");if(o)burst(v,10)});
-document.addEventListener("pointermove",e=>{if(calm||e.pointerType==="touch")return;const s=e.target.closest("[data-tilt]");
-  if(!s||!s.firstElementChild)return;const r=s.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
-  s.firstElementChild.style.transform=`rotateY(${x*14}deg) rotateX(${-y*10}deg)`});
-document.addEventListener("pointerout",e=>{const s=e.target.closest&&e.target.closest("[data-tilt]");if(s&&s.firstElementChild&&!s.contains(e.relatedTarget))s.firstElementChild.style.transform=""});
-addEventListener("keydown",e=>{if(e.key==="Escape")return closeModal();
-  if(!recv||$("#reader").hidden||$("#modal").classList.contains("show")||/INPUT|TEXTAREA/.test(document.activeElement.tagName))return;
-  if(e.key==="ArrowRight")next();if(e.key==="ArrowLeft")prev()});
-let tx=0;$("#page").addEventListener("touchstart",e=>tx=e.touches[0].clientX,{passive:true});
-$("#page").addEventListener("touchend",e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)d<0?next():prev()});
-$("#modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
-$("#prev").onclick=prev;$("#next").onclick=next;$("#make").onclick=create;
-$("#title").oninput=updPreview;$("#count").onchange=renderPages;
-addEventListener("hashchange",checkHash);
-
-/* init */
-const bg=$("#bg");for(let i=0;i<9;i++){const s=document.createElement("i");s.textContent=["♡","✦","♥","✧"][i%4];
-  s.style.cssText=`left:${(i*37+8)%96}%;top:${(i*53+10)%88}%;font-size:${14+i%4*8}px;animation-delay:${-i*1.3}s;animation-duration:${9+i%4*3}s`;bg.append(s)}
-$("#count").innerHTML=[1,2,3,4,5,6,7,8].map(k=>`<option value="${k}"${k===3?" selected":""}>${k} page${k>1?"s":""}</option>`).join("");
-swatches($("#envSw"),ENV,envColor,c=>{envColor=c;updPreview()});
-swatches($("#paperSw"),PAPER,paper,c=>{paper=c;pages.forEach(p=>p.color=c);renderPages()});
-$("#demo").innerHTML=envHTML(ENV[0],PAPER.slice(0,3),{float:1,play:1});
-$("#pvEnv").innerHTML=envHTML(envColor,[paper],{play:1});
-renderPages();renderDash();
-if(!checkHash())go("home");
-</script>
+    /* init */
+    const bg = $("#bg"); for (let i = 0; i < 9; i++) {
+      const s = document.createElement("i"); s.textContent = ["♡", "✦", "♥", "✧"][i % 4];
+      s.style.cssText = `left:${(i * 37 + 8) % 96}%;top:${(i * 53 + 10) % 88}%;font-size:${14 + i % 4 * 8}px;animation-delay:${-i * 1.3}s;animation-duration:${9 + i % 4 * 3}s`; bg.append(s)
+    }
+    $("#count").innerHTML = [1, 2, 3, 4, 5, 6, 7, 8].map(k => `<option value="${k}"${k === 3 ? " selected" : ""}>${k} page${k > 1 ? "s" : ""}</option>`).join("");
+    swatches($("#envSw"), ENV, envColor, c => { envColor = c; updPreview() });
+    swatches($("#paperSw"), PAPER, paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
+    $("#demo").innerHTML = envHTML(ENV[0], PAPER.slice(0, 3), { float: 1, play: 1 });
+    $("#pvEnv").innerHTML = envHTML(envColor, [paper], { play: 1 });
+    renderPages(); renderDash();
+    if (!checkHash()) go("home");
+  </script>
 </body>
+
 </html>
