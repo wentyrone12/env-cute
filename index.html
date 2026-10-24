@@ -5,9 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#fff1f7">
-  <title>W- ENVELOPE CUTE · 4.3</title>
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+  <title>W-Envelope Cute</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -19,15 +18,20 @@
 <body>
   <div class="bg" id="bg" aria-hidden="true"></div>
   <header class="nav">
-    <div class="logo"><b>♡</b><span>W - Envelope Cute</span></div>
+    <div class="logo"><img class="brand-mark" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"><span>W - Envelope Cute</span></div>
     <nav class="tabs" aria-label="Main">
       <button class="tab" data-go="home">Home</button>
       <button class="tab" data-go="create">Create</button>
       <button class="tab" data-go="dash">My envelopes</button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
     </nav>
-    <div class="nav-user" title="Signed-in Google account"><img class="nav-avatar" id="navAvatar" alt="Account photo"
-        referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span></div>
+    <div class="nav-user" title="Signed-in Google account">
+      <a class="admin-quick-link" id="adminQuickLink" href="admin.html" hidden aria-label="Open Admin Dashboard" title="Open Admin Dashboard">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Admin</span>
+      </a>
+      <img class="nav-avatar" id="navAvatar" alt="Account photo" referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span>
+    </div>
   </header>
   <main>
     <section class="screen" id="home">
@@ -68,8 +72,8 @@
           </div>
           <section class="cover-customizer" aria-labelledby="coverTextTitle">
             <div class="cover-customizer-heading">
-              <div><h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3>
-              </div>
+              <div><h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3></div>
+              <span id="coverPlanLabel" class="cover-plan-label">Free default</span>
             </div>
             <label for="coverText">Greeting on the envelope sheets</label>
             <div class="cover-input-row">
@@ -77,6 +81,7 @@
                 aria-describedby="coverTextNote" disabled />
               <button type="button" class="btn sec cover-upgrade" id="coverUpgrade">✦ Unlock</button>
             </div>
+            <p class="soft cover-note" id="coverTextNote">Subscribe to Premium to customize the greeting.</p>
           </section>
           <section class="letter-page-switcher" aria-label="Letter page editor navigation">
             <div class="letter-page-heading">
@@ -146,12 +151,15 @@
           <h2>Settings</h2>
         </div>
       </div>
+      <p class="settings-swipe-hint" aria-hidden="true">Swipe tabs sideways to see more <span>→</span></p>
       <div class="settings-shell">
-        <aside class="glass settings-menu" aria-label="Settings categories">
+        <aside class="glass settings-menu" id="settingsMenu" aria-label="Settings categories" tabindex="0">
           <button class="settings-nav on" data-settings="appearance" aria-pressed="true">Appearance</button>
           <button class="settings-nav" data-settings="account" aria-pressed="false">Account & Data</button>
           <button class="settings-nav settings-premium-nav" data-settings="subscription" aria-pressed="false">✦
             Subscription <span class="settings-premium-pill" id="settingsPlanStatus">Free</span></button>
+          <button class="settings-nav" data-settings="support" aria-pressed="false">Contact Support</button>
+          <button class="settings-nav" data-settings="feedback" aria-pressed="false">Feedback</button>
           <button class="settings-nav" data-settings="about" aria-pressed="false">About</button>
         </aside>
         <div>
@@ -212,7 +220,6 @@
           <section class="settings-panel" id="settings-subscription" aria-label="Subscription plans">
             <div class="subscription-hero"><span class="premium-chip">✦ W - Envelope Cute Premium</span>
               <h2>Make your sweetest letters even more magical.</h2>
-              <p>Unlock more pages, expressive photo designs, personal greetings, custom links, animated effects, and flexible signature placement. Choose Maya or GoTyme to request Premium access.</p>
             </div>
             <div class="plan-grid">
               <article class="plan-card"><span class="plan-name">Free</span>
@@ -242,31 +249,55 @@
                 </ul><button class="btn pri wide" id="premiumPlanBtn" type="button">Choose payment method</button>
               </article>
             </div>
-            <div class="glass premium-status-area"><h3>Payment status</h3><p id="premiumAccountStatus" aria-live="polite">Sign in to view your payment status.</p><div id="paymentRequestList" class="payment-request-list"></div><p class="payment-honesty">Bank transfers are reviewed manually. Submitting a reference is not proof of payment, and Premium is never activated before owner approval.</p></div>
+            <div class="glass premium-status-area"><h3>Payment status</h3><p id="premiumAccountStatus" aria-live="polite">Sign in to view your payment status.</p><div id="paymentRequestList" class="payment-request-list"></div></div>
           </section>
 
+          <section class="settings-panel" id="settings-support" aria-label="Contact support">
+            <div class="glass settings-section inquiry-panel">
+              <span class="inquiry-eyebrow">WE’RE HERE TO HELP</span><h2>Contact Support</h2>
+              <form id="supportForm" class="inquiry-form">
+                <label>What do you need help with?
+                  <select id="supportTopic" required><option value="Account & Login">Account & Login</option><option value="My Envelopes">My Envelopes</option><option value="Sharing Links">Sharing Links</option><option value="Premium & Payments">Premium & Payments</option><option value="Bug / Technical Issue">Bug / Technical Issue</option><option value="Other">Other</option></select></label>
+                <label>Subject <input id="supportSubject" required minlength="3" maxlength="90" placeholder="A quick summary" autocomplete="off"></label>
+                <label>Your message <textarea id="supportMessage" required minlength="10" maxlength="1500" rows="4" placeholder="Describe what happened and what you need help with…"></textarea></label>
+                <button type="submit" class="btn pri inquiry-submit" id="supportSubmit">Send support request</button><p class="inquiry-status" id="supportStatus" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+            <div class="glass settings-section inquiry-panel"><h3>Your support requests</h3><p>Check the status and responses from our team.</p><div class="inquiry-history" id="supportHistory"><p class="soft">Checking for your messages…</p></div></div>
+          </section>
+          <section class="settings-panel" id="settings-feedback" aria-label="Feedback">
+            <div class="glass settings-section inquiry-panel">
+              <span class="inquiry-eyebrow">YOUR VOICE MATTERS</span><h2>Share Feedback</h2>
+              <form id="feedbackForm" class="inquiry-form">
+                <label>Feedback category<select id="feedbackTopic" required><option value="Feature Suggestion">Feature Suggestion</option><option value="Design & Experience">Design & Experience</option><option value="Bug Report">Bug Report</option><option value="General Feedback">General Feedback</option></select></label>
+                <label>How is your experience?<select id="feedbackRating" required><option value="5">5 — Love it!</option><option value="4">4 — Pretty good</option><option value="3">3 — Okay</option><option value="2">2 — Needs work</option><option value="1">1 — Not great</option></select></label>
+                <label>Your feedback<textarea id="feedbackMessage" required minlength="10" maxlength="1200" rows="4" placeholder="Your ideas and suggestions…"></textarea></label>
+                <button type="submit" class="btn pri inquiry-submit" id="feedbackSubmit">Submit feedback</button><p class="inquiry-status" id="feedbackStatus" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+            <div class="glass settings-section inquiry-panel"><h3>Your feedback history</h3><p>Thank you for helping us improve.</p><div class="inquiry-history" id="feedbackHistory"><p class="soft">Checking for your feedback…</p></div></div>
+          </section>
           <section class="settings-panel" id="settings-about" aria-label="About W Envelope Cute">
             <div class="glass settings-section">
-              <div class="about-symbol">💌</div>
+              <div class="about-symbol brand-about brand-about-wide"><img src="assets/w-envelope-cute-logo.png" alt="W-Envelope Cute full logo"></div>
               <h2>W - Envelope Cute</h2>
-              <p>A cozy digital space for sending little surprises, heartfelt letters, and words worth keeping.</p>
               <div class="about-features">
-                <div class="about-feature"><span aria-hidden="true">✍️</span>
+                <div class="about-feature">
                   <div><b>Personal letters</b>
                     <p>Up to 10 pages, photos and signature styles.</p>
                   </div>
                 </div>
-                <div class="about-feature"><span aria-hidden="true">💌</span>
+                <div class="about-feature">
                   <div><b>Share your memories</b>
                     <p>Short links for everyone, plus custom link names, photo frames and opening effects with Premium.</p>
                   </div>
                 </div>
-                <div class="about-feature"><span aria-hidden="true">🎨</span>
+                <div class="about-feature">
                   <div><b>Your own aesthetic</b>
                     <p>Gradients, fonts, accent colors and accessibility settings.</p>
                   </div>
                 </div>
-                <div class="about-feature"><span aria-hidden="true">☁️</span>
+                <div class="about-feature">
                   <div><b>Keep letters safe</b>
                     <p>Google sign-in sync across devices.</p>
                   </div>
@@ -286,7 +317,7 @@
       <button class="btn sec" id="back" data-go="dash" hidden>‹ My envelopes</button>
       <div class="rc">
         <div id="recvHead">
-          <div class="badge">💌 Someone left something for you</div>
+          <div class="badge badge-branded"><img src="assets/w-envelope-icon.png" alt=""> Someone left something for you</div>
           <h1 id="recvTitle"></h1>
           <p class="soft" id="recvSub"></p>
         </div>
@@ -332,7 +363,7 @@
   <!-- Auth gate is visible from the first paint; page content stays hidden until Firebase confirms login. -->
   <section class="auth-gate" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <div class="auth-card">
-      <div class="auth-icon" aria-hidden="true">💌</div>
+      <div class="auth-icon"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"></div>
       <h1 id="authTitle">Welcome to<br>W - Envelope Cute</h1>
       <p>Sign in to create, collect, and share the sweetest digital envelopes.</p>
       <button type="button" class="google-button" id="googleSignIn" disabled><span class="google-mark"

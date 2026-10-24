@@ -7,17 +7,20 @@
   <title>W-Envelope Cute · Admin Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body class="authenticated admin-page">
   <div class="admin-shell">
     <aside class="admin-sidebar" aria-label="Admin navigation">
-      <a class="admin-brand" href="index.html"><span class="admin-brand-mark">💌</span><span><strong>W-Envelope Cute</strong><small>Owner workspace</small></span></a>
+      <a class="admin-brand" href="index.html"><span class="admin-brand-mark"><img src="assets/w-envelope-icon.png" alt=""></span><span><strong>W-Envelope Cute</strong><small>Owner workspace</small></span></a>
       <p class="admin-sidebar-heading">MANAGEMENT</p>
       <nav class="admin-navigation" aria-label="Payment sections">
         <button class="admin-nav active" type="button" data-section="dashboard" aria-current="page"><span class="admin-nav-icon">▦</span><span>Dashboard</span></button>
-        <button class="admin-nav" type="button" data-section="maya"><span class="admin-nav-icon">💜</span><span>Maya</span><span id="mayaBadge" class="admin-nav-badge" hidden>0</span></button>
-        <button class="admin-nav" type="button" data-section="gotyme"><span class="admin-nav-icon">💙</span><span>GoTyme</span><span id="gotymeBadge" class="admin-nav-badge" hidden>0</span></button>
+        <button class="admin-nav" type="button" data-section="maya"><span class="admin-nav-icon"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Maya_logo.svg/960px-Maya_logo.svg.png" alt="" class="bank-nav-logo"></span><span style="margin-left: 10px;">Maya</span><span id="mayaBadge" class="admin-nav-badge" hidden>0</span></button>
+        <button class="admin-nav" type="button" data-section="gotyme"><span class="admin-nav-icon"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/GoTyme_Bank_logo.svg/1280px-GoTyme_Bank_logo.svg.png" alt="" class="bank-nav-logo"></span><span style="margin-left: 10px;">GoTyme</span><span id="gotymeBadge" class="admin-nav-badge" hidden>0</span></button>
         <button class="admin-nav" type="button" data-section="all"><span class="admin-nav-icon">☷</span><span>All Payments</span></button>
+        <button class="admin-nav" type="button" data-section="support"><span class="admin-nav-icon">✉</span><span>Contact Support</span><span class="admin-nav-badge" id="supportBadge" hidden>0</span></button>
+        <button class="admin-nav" type="button" data-section="feedback"><span class="admin-nav-icon">✧</span><span>Feedback</span><span class="admin-nav-badge" id="feedbackBadge" hidden>0</span></button>
       </nav>
       <div class="admin-sidebar-bottom">
         <div class="admin-mini-note"><span>🔒</span><span>Payments are only activated after you verify the bank transaction.</span></div>
@@ -46,7 +49,7 @@
         </section>
 
         <section id="adminDashboard" hidden aria-label="Administrator workspace">
-          <div class="admin-welcome"><div><span class="admin-welcome-eyebrow">YOUR WORKSPACE</span><h2 id="adminWelcomeName">Welcome back ✨</h2><p>Review incoming payments and keep Premium access up to date.</p></div><span class="admin-welcome-art" aria-hidden="true">✉️</span></div>
+          <div class="admin-welcome"><div><span class="admin-welcome-eyebrow">YOUR WORKSPACE</span><h2 id="adminWelcomeName">Welcome back ✨</h2><p>Review incoming payments and keep Premium access up to date.</p></div><span class="admin-welcome-art" aria-hidden="true"><img src="assets/w-envelope-icon.png" alt=""></span></div>
           <div id="adminStats" class="admin-stats" aria-label="Payment overview">
             <article class="admin-stat"><span class="admin-stat-icon purple">◷</span><p>Pending Review</p><strong id="statPending">0</strong><small>Needs bank verification</small></article>
             <article class="admin-stat"><span class="admin-stat-icon green">✓</span><p>Approved</p><strong id="statApproved">0</strong><small>Premium activations</small></article>
@@ -55,15 +58,20 @@
           </div>
 
           <section id="adminMethodSummary" class="admin-method-summary" aria-label="Payment methods">
-            <button class="admin-method-card" type="button" data-open-method="maya"><span class="admin-method-icon maya">💜</span><span><strong>Maya payments</strong><small id="mayaSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
-            <button class="admin-method-card" type="button" data-open-method="gotyme"><span class="admin-method-icon gotyme">💙</span><span><strong>GoTyme payments</strong><small id="gotymeSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
+            <button class="admin-method-card" type="button" data-open-method="maya"><span class="admin-method-icon maya"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Maya_logo.svg/960px-Maya_logo.svg.png" alt="Maya logo" class="bank-card-logo"></span><span><strong>Maya payments</strong><small id="mayaSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
+            <button class="admin-method-card" type="button" data-open-method="gotyme"><span class="admin-method-icon gotyme"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/GoTyme_Bank_logo.svg/1280px-GoTyme_Bank_logo.svg.png" alt="GoTyme logo" class="bank-card-logo"></span><span><strong>GoTyme payments</strong><small id="gotymeSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
           </section>
 
-          <section class="admin-worklist" aria-labelledby="adminListHeading">
+          <section class="admin-worklist" id="adminPaymentWorklist" aria-labelledby="adminListHeading">
             <div class="admin-list-heading"><div><p class="admin-kicker" id="adminListEyebrow">RECENT ACTIVITY</p><h2 id="adminListHeading">Recent payment requests</h2><p id="adminListSubtitle">Review the latest incoming transfers.</p></div><span id="resultCount" class="admin-count">0 requests</span></div>
             <div id="adminToolbar" class="admin-toolbar"><label class="admin-search-wrap"><span aria-hidden="true">⌕</span><span class="sr-only">Search payment requests</span><input id="adminSearch" type="search" placeholder="Search email or reference..." autocomplete="off"></label><label class="admin-filter-wrap"><span class="sr-only">Filter status</span><select id="adminFilter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label></div>
             <div id="adminList" class="admin-list" aria-live="polite"></div>
             <button id="loadMorePayments" type="button" class="admin-load-more" hidden>Show more requests ↓</button>
+          </section>
+          <section class="admin-worklist admin-inbox-section" id="adminInboxSection" hidden aria-labelledby="adminInboxHeading">
+            <div class="admin-list-heading"><div><p class="admin-kicker" id="adminInboxEyebrow">INBOX</p><h2 id="adminInboxHeading">Contact support requests</h2><p id="adminInboxSubtitle">Messages from signed-in users.</p></div><span id="inboxCount" class="admin-count">0 messages</span></div>
+            <div class="admin-inbox-tools"><label class="admin-search-wrap"><span aria-hidden="true">⌕</span><span class="sr-only">Search messages</span><input id="adminInboxSearch" type="search" placeholder="Search subject or email…" autocomplete="off"></label><label class="admin-filter-wrap"><span class="sr-only">Filter inbox status</span><select id="adminInboxFilter"><option value="all">All statuses</option><option value="open">Open</option><option value="resolved">Resolved</option></select></label></div>
+            <div class="admin-list admin-inbox-list" id="adminInboxList" aria-live="polite"></div>
           </section>
         </section>
 
@@ -89,7 +97,7 @@
   <div class="admin-dialog-overlay" id="reviewDialog" hidden role="presentation">
     <section class="admin-dialog" role="dialog" aria-modal="true" aria-labelledby="reviewDialogTitle" aria-describedby="reviewDialogDescription" tabindex="-1">
       <button id="reviewDialogClose" type="button" class="admin-dialog-close" aria-label="Close dialog">×</button>
-      <span id="reviewDialogIcon" class="admin-dialog-icon">💌</span>
+      <span id="reviewDialogIcon" class="admin-dialog-icon"><img src="assets/w-envelope-icon.png" alt=""/></span>
       <h2 id="reviewDialogTitle">Review payment</h2>
       <p id="reviewDialogDescription">Please check the real transfer before continuing.</p>
       <div class="admin-dialog-details" id="reviewDialogDetails"></div>

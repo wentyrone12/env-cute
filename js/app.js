@@ -68,11 +68,46 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     let store = [], receivedStore = [], currentUser = null, accountKey = null;
     let mailboxView = 'recent', editingId = null, premiumApproved = false, premiumPayments = [];
     let stopReceived = () => { }, stopSubscription = () => { };
+    let stopSupport = () => {}, stopFeedback = () => {}, supportInbox = {}, feedbackInbox = {};
+    const inquiryDate = ts => {const d = new Date(Number(ts)); return Number.isFinite(d.getTime()) ? d.toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'}) : 'Date unknown';};
+    function renderInquiryHistory(kind) {
+      const support = kind === 'support';
+      const target = $(support ? '#supportHistory' : '#feedbackHistory');
+      const raw = support ? supportInbox : feedbackInbox;
+      const items = Object.entries(raw || {}).map(([id,v]) => ({id,...v})).sort((a,b) => Number(b.createdAt||0)-Number(a.createdAt||0));
+      if (!items.length) {target.innerHTML='<p class="inquiry-empty">Nothing here yet. Your submissions will appear here.</p>'; return;}
+      target.innerHTML = items.slice(0,40).map(item => `<article class="inquiry-entry"><div class="inquiry-entry-top"><strong>${esc(item.subject || item.topic || 'Message')}</strong><span class="inquiry-pill ${item.status === 'resolved' ? 'resolved' : ''}">${item.status === 'resolved' ? 'Resolved' : 'Open'}</span></div><small>${esc(inquiryDate(item.createdAt))}${support?'':' · '+esc(String(item.rating || 5))+'/5 stars'}</small><p>${esc(item.message || '')}</p>${item.adminReply ? `<div class="inquiry-reply"><b>Reply from support</b><p>${esc(item.adminReply)}</p></div>` : ''}</article>`).join('');
+    }
+    function watchInquiries(uid) {
+      stopSupport(); stopFeedback(); supportInbox={}; feedbackInbox={};
+      renderInquiryHistory('support'); renderInquiryHistory('feedback');
+      stopSupport = window.WENV_DB.subscribeInquiries('support',uid, data=>{if(currentUser?.uid!==uid)return; supportInbox=data; renderInquiryHistory('support');},err=>{$('#supportHistory').textContent='Could not load requests. Check Firebase rules.';console.warn(err)});
+      stopFeedback = window.WENV_DB.subscribeInquiries('feedback',uid, data=>{if(currentUser?.uid!==uid)return; feedbackInbox=data; renderInquiryHistory('feedback');},err=>{$('#feedbackHistory').textContent='Could not load feedback. Check Firebase rules.';console.warn(err)});
+    }
+    function wireInquiryForm(kind) {
+      const support = kind === 'support', form=$(support?'#supportForm':'#feedbackForm'), button=$(support?'#supportSubmit':'#feedbackSubmit'), status=$(support?'#supportStatus':'#feedbackStatus');
+      form.addEventListener('submit',async event=>{
+        event.preventDefault();
+        if(!form.reportValidity()||!currentUser)return;
+        const topic=$(support?'#supportTopic':'#feedbackTopic').value;
+        const message=$(support?'#supportMessage':'#feedbackMessage').value.trim();
+        const subject=support?$('#supportSubject').value.trim():'';
+        if(message.length<10||message.length>(support?1500:1200)||(support&&(subject.length<3||subject.length>90))){status.textContent='Please check your subject and message length.';return;}
+        const payload={ uid:currentUser.uid, email:String(currentUser.email||'').slice(0,150), name:String(currentUser.displayName||'User').slice(0,80), topic, message, status:'open', createdAt:Date.now() };
+        if(support) payload.subject=subject; else payload.rating=Number($('#feedbackRating').value);
+        button.disabled=true;button.textContent='Sending…';status.textContent='Saving your message securely…';
+        try {await window.WENV_DB.submitInquiry(kind,currentUser.uid,payload);form.reset();status.textContent='✓ Received! Your message is saved and visible to the admin.';toast(support?'Support request submitted':'Feedback submitted');}
+        catch(err){console.error('Inquiry save error:',err);status.textContent='Could not send. Check your connection and publish the new Firebase rules.';}
+        finally{button.disabled=false;button.textContent=support?'Send support request':'Submit feedback';}
+      });
+    }
+    wireInquiryForm('support'); wireInquiryForm('feedback');
+
     const isPremium = () => premiumApproved === true;
     const pageLimit = () => isPremium() ? 10 : 8;
     const photoLimit = () => isPremium() ? 4 : 2;
     function updatePageOptions() {
-      const old = Number($('#count').value) || 3;
+      const old = Number($('#count').value) || 1;
       const max = Math.max(pageLimit(), editingId && store.find(e => e.id === editingId)?.pages.length || 0);
       $('#count').innerHTML = Array.from({ length: max }, (_, i) => `<option value="${i + 1}">${i + 1} page${i ? 's' : ''}</option>`).join('');
       $('#count').value = String(Math.min(old, max));
@@ -134,7 +169,9 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       const target = $('#paymentRequestList'); if (!target) return;
       target.innerHTML = premiumPayments.slice(0,5).map(p => `<div class="payment-request-item"><span>${p.method==='maya'?'Maya':'GoTyme'} • ${esc(p.reference || '')}</span><b class="payment-state">${p.status === 'approved' ? '✓ Approved' : p.status === 'rejected' ? '✕ Rejected' : '⏳ Pending'}</b></div>`).join('');
     }
-    const paymentMethods = { maya: { label: 'Maya (PayMaya)', icon: '💜' }, gotyme: {label: 'GoTyme Bank', icon: '💙'} };
+    const paymentMethods = { maya: { label: 'Maya (PayMaya)', logo: 'maya' }, gotyme: {label: 'GoTyme Bank', logo: 'gotyme'} };
+    const payLogo = method => `<img class="payment-brand-logo" src="${method === 'maya' ? PAYMENT_LOGOS.maya : PAYMENT_LOGOS.gotyme}" alt="${method === 'maya' ? 'Maya logo' : 'GoTyme Bank logo'}" loading="lazy" referrerpolicy="no-referrer">`;
+    const PAYMENT_LOGOS = {maya: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Maya_logo.svg/960px-Maya_logo.svg.png',gotyme: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/GoTyme_Bank_logo.svg/1280px-GoTyme_Bank_logo.svg.png'};
     function paymentReady(method) {
       const cfg = window.WENV_PAYMENT || {}, dest = cfg[method] || {};
       return Number.isFinite(Number(cfg.premiumPricePHP)) && Number(cfg.premiumPricePHP) > 0 &&
@@ -142,14 +179,14 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     }
     function paymentPicker() {
       if (isPremium()) return toast('Your Premium plan is already active ♡');
-      modal(`<div class="pay-dialog"><div class="mh"><h2>Choose your payment 💌</h2><button class="x" onclick="closeModal()" aria-label="Close">×</button></div><p class="pay-intro">Select a payment method. A transfer is reviewed by the website owner before Premium becomes active.</p><div class="pay-methods"><button class="pay-method" onclick="paymentDetails('maya')"><span>💜</span><b>Maya</b><small>PayMaya wallet transfer</small></button><button class="pay-method" onclick="paymentDetails('gotyme')"><span>💙</span><b>GoTyme</b><small>GoTyme Bank transfer</small></button></div><p class="pay-note">Never enter your PIN, OTP, or bank password on this website.</p></div>`);
+      modal(`<div class="pay-dialog"><div class="mh"><h2>Choose your payment 💌</h2><button class="x" onclick="closeModal()" aria-label="Close">×</button></div><p class="pay-intro">Select a payment method. A transfer is reviewed by the website owner before Premium becomes active.</p><div class="pay-methods"><button class="pay-method" onclick="paymentDetails('maya')"><span class="pay-logo-wrap">${payLogo('maya')}</span><b>Maya</b><small>PayMaya wallet transfer</small></button><button class="pay-method" onclick="paymentDetails('gotyme')"><span class="pay-logo-wrap">${payLogo('gotyme')}</span><b>GoTyme</b><small>GoTyme Bank transfer</small></button></div><p class="pay-note">Never enter your PIN, OTP, or bank password on this website.</p></div>`);
     }
     function paymentDetails(method) {
       if (!paymentMethods[method]) return;
       const dest = window.WENV_PAYMENT?.[method] || {}, amount = Number(window.WENV_PAYMENT?.premiumPricePHP || 0);
       const ready = paymentReady(method);
       const amountText = amount > 0 ? '₱' + amount.toLocaleString('en-PH',{minimumFractionDigits:2,maximumFractionDigits:2}) : 'Not configured';
-      modal(`<div class="pay-dialog"><div class="mh"><h2>${paymentMethods[method].icon} ${paymentMethods[method].label}</h2><button class="x" onclick="closeModal()" aria-label="Close">×</button></div><div class="payment-step"><b>1. Review payment details</b><div class="payment-destination"><small>Premium price</small><strong>${esc(amountText)}</strong><small>Recipient name</small><strong>${esc(dest.accountName || 'Not yet configured')}</strong><small>Recipient ${method==='maya'?'wallet number':'account number'}</small><div class="pay-copy-row"><strong>${esc(dest.accountNumber || 'Not yet configured')}</strong>${ready?`<button class="btn sec" type="button" onclick="copyPaymentNumber('${method}')">Copy</button>`:''}</div></div></div><div class="payment-step"><b>2. Send using your official ${paymentMethods[method].label} app</b><p>Check the recipient details and amount inside your banking app before sending money. Never pay if the destination is missing or unverified.</p></div><div class="payment-step"><b>3. Submit the transaction reference</b><label class="payment-reference-label">Transaction / receipt reference<input id="paymentReference" maxlength="64" autocomplete="off" placeholder="Enter the reference from your bank receipt" ${ready?'':'disabled'} /></label><button class="btn pri wide" id="paymentSubmit" type="button" ${ready?'':'disabled'}>Submit for manual verification</button><small class="pay-note">Submitting does not activate Premium or confirm payment.</small></div>${!ready?'<p class="pay-config-warning">⚠️ Payments are not available yet. The site owner must set a real price and recipient details in js/payment-config.js.</p>':''}<button class="btn sec wide" onclick="paymentPicker()" type="button">← Change payment method</button></div>`);
+      modal(`<div class="pay-dialog"><div class="mh"><h2>${payLogo(method)} ${paymentMethods[method].label}</h2><button class="x" onclick="closeModal()" aria-label="Close">×</button></div><div class="payment-step"><b>1. Review payment details</b><div class="payment-destination"><small>Premium price</small><strong>${esc(amountText)}</strong><small>Recipient name</small><strong>${esc(dest.accountName || 'Not yet configured')}</strong><small>Recipient ${method==='maya'?'wallet number':'account number'}</small><div class="pay-copy-row"><strong>${esc(dest.accountNumber || 'Not yet configured')}</strong>${ready?`<button class="btn sec" type="button" onclick="copyPaymentNumber('${method}')">Copy</button>`:''}</div></div></div><div class="payment-step"><b>2. Send using your official ${paymentMethods[method].label} app</b><p>Check the recipient details and amount inside your banking app before sending money. Never pay if the destination is missing or unverified.</p></div><div class="payment-step"><b>3. Submit the transaction reference</b><label class="payment-reference-label">Transaction / receipt reference<input id="paymentReference" maxlength="64" autocomplete="off" placeholder="Enter the reference from your bank receipt" ${ready?'':'disabled'} /></label><button class="btn pri wide" id="paymentSubmit" type="button" ${ready?'':'disabled'}>Submit for manual verification</button><small class="pay-note">Submitting does not activate Premium or confirm payment.</small></div>${!ready?'<p class="pay-config-warning">⚠️ Payments are not available yet. The site owner must set a real price and recipient details in js/payment-config.js.</p>':''}<button class="btn sec wide" onclick="paymentPicker()" type="button">← Change payment method</button></div>`);
       if (ready) $('#paymentSubmit').onclick = () => submitPaymentRequest(method);
     }
     function copyPaymentNumber(method) {
@@ -544,10 +581,13 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $('#editorTitle').textContent = 'Design your envelope';
       $('#editorSubtitle').textContent = 'Pick the colors, then write each page.';
       $('#editBanner').hidden = true; $('#make').textContent = '💌 Seal my envelope';
-      updatePageOptions(); $('#count').value = '3'; renderPages(); renderSignatureStyles(); updateCoverEditorLock();
+      updatePageOptions(); $('#count').value = '1'; renderPages(); renderSignatureStyles(); updateCoverEditorLock();
     }
     function editEnv(id) {
-      const e = store.find(v => v.id === id); if (!e) return toast('Envelope not found');
+      if (!currentUser) return toast('Please sign in before editing.');
+      const e = store.find(v => v.id === id);
+      if (!e) return toast('Envelope not found. Please refresh My Envelopes.');
+      try {
       closeModal(); editingId = e.id; envColor = e.envelopeColor;
       pages = blank(); e.pages.forEach((p, i) => { pages[i] = { text: p.text, color: p.color, photos: [...(p.photos || [])], effect: p.effect || 'none', photoStyle: safePhotoStyle(p.photoStyle), photoLayout: safePhotoLayout(p.photoLayout) } });
       $('#title').value = e.title; $('#from').value = e.from || ''; $('#coverText').value = safeCoverText(e.coverText);
@@ -560,6 +600,12 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       swatches($('#envSw'), ENV, envColor, c => { envColor = c; updPreview() });
       swatches($('#paperSw'), PAPER, pages[0].color, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
       renderPages(); renderSignatureStyles(); updateCoverEditorLock(); go('create');
+      // A visible and accessible edit state confirms the correct record was loaded.
+      $('#editBanner').scrollIntoView({ block: 'nearest', behavior: 'auto' });
+      } catch (error) {
+        console.error('Failed to open envelope editor:', error);
+        toast('Could not open editor. Please refresh and try again.');
+      }
     }
     $('#cancelEdit').onclick = () => { resetLetterEditor(); go('dash') };
     async function refreshPublishedLinks(e) {
@@ -595,7 +641,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
         store = [e, ...store.filter(v => v.id !== e.id)]; renderDash(); created = e;
         const wasEditing = !!editingId;
         resetLetterEditor();
-        modal(`<div class="big">💌</div><h2>${wasEditing ? 'Changes saved!' : 'Envelope saved to the cloud!'}</h2><p>${wasEditing ? 'Your existing envelope was updated.' : 'Your envelope is stored under your Google account.'} ${linksUpdated ? 'Existing short links are up to date.' : 'Some older links could not be refreshed; check your Firebase rules.'}</p><div class="row"><button class="btn sec" onclick="closeModal();previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Short link</button></div>`);
+        modal(`<div class="big brand-big"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>${wasEditing ? 'Changes saved!' : 'Envelope saved to the cloud!'}</h2><p>${wasEditing ? 'Your existing envelope was updated.' : 'Your envelope is stored under your Google account.'} ${linksUpdated ? 'Existing short links are up to date.' : 'Some older links could not be refreshed; check your Firebase rules.'}</p><div class="row"><button class="btn sec" onclick="closeModal();previewEnv('${e.id}')">View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Short link</button></div>`);
         cloudState('☁️ Envelopes synced', 'ok');
         burst(null, 20);
       } catch (err) {
@@ -616,11 +662,11 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $('#recentTab').setAttribute('aria-selected', String(mailboxView === 'recent')); $('#receivedTab').setAttribute('aria-selected', String(mailboxView === 'received'));
       $('#mailboxNote').textContent = mailboxView === 'recent' ? 'Letters you created. Edit them anytime, then share the same short link.' : 'Letters people sent you through shared links. Open them here without searching old chats.';
       if (mailboxView === 'recent') {
-        if (!store.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big">💌</div><h3>No recent envelopes</h3><p class="soft">Start with your first letter.</p><button class="btn pri" data-go="create">Create envelope</button></div>'; return }
-        L.innerHTML = store.map(e => `<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor, .72)}">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { coverText: e.coverText })}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} pages</span><small>${fmt(e.updatedAt || e.createdAt)}</small></div><div class="acts"><button class="btn sec" onclick="previewEnv('${e.id}')">👀 View</button><button class="btn sec" onclick="editEnv('${e.id}')">✏️ Edit</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button><button class="btn dng" onclick="askDelete('${e.id}')" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join('');
+        if (!store.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big brand-big"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h3>No recent envelopes</h3><p class="soft">Start with your first letter.</p><button class="btn pri" data-go="create">Create envelope</button></div>'; return }
+        L.innerHTML = store.map(e => `<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor, .72)}">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { coverText: e.coverText })}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} pages</span><small>${fmt(e.updatedAt || e.createdAt)}</small></div><div class="acts"><button type="button" class="btn sec" data-envelope-action="view" data-envelope-id="${esc(e.id)}">View</button><button type="button" class="btn sec edit-envelope-btn" data-envelope-action="edit" data-envelope-id="${esc(e.id)}" aria-label="Edit ${esc(e.title)}">Edit</button><button type="button" class="btn pri" data-envelope-action="share" data-envelope-id="${esc(e.id)}">Share</button><button type="button" class="btn dng" data-envelope-action="delete" data-envelope-id="${esc(e.id)}" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join('');
       } else {
         if (!receivedStore.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big">📭</div><h3>No received envelopes yet</h3><p class="soft">Open a shared envelope link and it will be saved to this collection.</p></div>'; return }
-        L.innerHTML = receivedStore.map(e => `<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><div style="font-size:65px">💌</div></div><div class="info"><h3>${esc(e.title || 'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from || 'Someone')}</span><small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">💌 Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
+        L.innerHTML = receivedStore.map(e => `<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><img class="received-brand-logo" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"></div><div class="info"><h3>${esc(e.title || 'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from || 'Someone')}</span><small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
       }
     }
     function setMailbox(view) { mailboxView = view; renderDash(); }
@@ -704,7 +750,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       }
       $('#cp').onclick = async () => {
         if (!activeCode) return;
-        try { await navigator.clipboard.writeText(shortUrl(activeCode)); toast('Short link copied! 💌') }
+        try { await navigator.clipboard.writeText(shortUrl(activeCode)); toast('Short link copied!') }
         catch { const field = $('#shareIn'); field.focus(); field.select(); document.execCommand('copy'); toast('Link selected for copying') }
       };
       if ($('#nat')) $('#nat').onclick = () => { if (activeCode && navigator.share) navigator.share({ title: e.title, text: 'A little surprise for you 💌', url: shortUrl(activeCode) }).catch(() => { }) };
@@ -776,7 +822,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     const prev = () => idx > 0 && show(idx - 1, -1);
     function next() {
       if (idx < recv.pages.length - 1) return show(idx + 1, 1); burst(null, 26);
-      modal(`<div class="big">💌</div><h2>That was the last page</h2><p>${recv.from ? "With love, " + esc(recv.from) : "Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview ? '<button class="btn pri" onclick="leave()">Back to my envelopes</button>' : '<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)
+      modal(`<div class="big brand-big"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>That was the last page</h2><p>${recv.from ? "With love, " + esc(recv.from) : "Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview ? '<button class="btn pri" onclick="leave()">Back to my envelopes</button>' : '<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)
     }
     function leave(c) { closeModal(); history.replaceState(null, '', location.pathname + location.search); recv = null; go(c ? 'create' : 'dash') }
     let hashRequest = 0;
@@ -868,6 +914,18 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     function setSettingsPage(id) {
       $$(".settings-nav").forEach(b => { const on = b.dataset.settings === id; b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)) });
       $$(".settings-panel").forEach(p => p.classList.toggle("on", p.id === "settings-" + id));
+      // Swipeable categories remain discoverable when navigating to a panel programmatically.
+      const selected = $$(".settings-nav").find(b => b.dataset.settings === id);
+      if (selected && matchMedia('(max-width: 860px)').matches) {
+        selected.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+      }
+    }
+    function updateAdminShortcut(user) {
+      // UID is checked against the configured owner account; a matching email alone
+      // never grants admin access. Firebase Rules are the actual security boundary.
+      const ownerUid = String(window.WENV_PAYMENT?.adminUid || '').trim();
+      const isOwner = Boolean(user?.uid && ownerUid && user.uid === ownerUid);
+      $('#adminQuickLink').hidden = !isOwner;
     }
     function safePhoto(url) {
       return typeof url === "string" && /^https:\/\//i.test(url) ? url : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23f5dbea'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='56'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E";
@@ -907,10 +965,11 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     function setSignedInUser(user) {
       const oldUid = currentUser && currentUser.uid;
       currentUser = user || null;
+      updateAdminShortcut(user);
       document.body.classList.toggle('authenticated', !!user);
       $('#authGate').hidden = !!user;
       if (!user) {
-        stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopCloud = stopReceived = stopSubscription = stopPayments = () => { }; cloudReady = false; cloudConnected = false; receivedStore = []; premiumApproved = false; premiumPayments = []; editingId = null;
+        stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopSupport(); stopFeedback(); stopCloud = stopReceived = stopSubscription = stopPayments = stopSupport = stopFeedback = () => { }; supportInbox = {}; feedbackInbox = {}; cloudReady = false; cloudConnected = false; receivedStore = []; premiumApproved = false; premiumPayments = []; editingId = null;
         accountKey = null; appearanceKey = null; store = []; recv = null; connectionUid = null;
         $('#googleRedirect').hidden = true;
         updateSubscriptionUI(); showAuthControls(); return;
@@ -918,7 +977,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       if (oldUid !== user.uid) {
         premiumApproved = false; premiumPayments = [];
         loadAccount(user.uid); loadAppearance(user.uid); renderUser(user); renderDash();
-        watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid);
+        watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid); watchInquiries(user.uid);
         if (!checkHash()) go('home');
         watchCloud(user.uid);
       }
@@ -1000,6 +1059,16 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
 
     /* events */
     document.addEventListener("click", e => {
+      const actionButton = e.target.closest('[data-envelope-action][data-envelope-id]');
+      if (actionButton) {
+        e.preventDefault(); e.stopPropagation();
+        const { envelopeAction: action, envelopeId: id } = actionButton.dataset;
+        if (action === 'view') return previewEnv(id);
+        if (action === 'edit') return editEnv(id);
+        if (action === 'share') return shareEnv(id);
+        if (action === 'delete') return askDelete(id);
+        return;
+      }
       const g = e.target.closest("[data-go]"); if (g) { if (g.dataset.go === 'create' && editingId) resetLetterEditor(); return go(g.dataset.go) }
       const v = e.target.closest(".env[data-play]"); if (!v) return;
       if (v.id === "recvEnv") return openRecv();
@@ -1046,7 +1115,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       const s = document.createElement("i"); s.textContent = ["♡", "✦", "♥", "✧"][i % 4];
       s.style.cssText = `left:${(i * 37 + 8) % 96}%;top:${(i * 53 + 10) % 88}%;font-size:${14 + i % 4 * 8}px;animation-delay:${-i * 1.3}s;animation-duration:${9 + i % 4 * 3}s`; bg.append(s)
     }
-    updatePageOptions(); $('#count').value = '3';
+    updatePageOptions(); $('#count').value = '1';
     swatches($("#envSw"), ENV, envColor, c => { envColor = c; updPreview() });
     swatches($("#paperSw"), PAPER, paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
     $("#demo").innerHTML = envHTML(ENV[0], PAPER.slice(0, 3), { float: 1, play: 1 });

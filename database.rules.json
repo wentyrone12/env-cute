@@ -47,6 +47,26 @@
           ".validate": "newData.hasChildren(['uid','method','reference','amount','status','submittedAt','email']) && newData.child('uid').val() === $uid && (newData.child('method').val() === 'maya' || newData.child('method').val() === 'gotyme') && newData.child('reference').isString() && newData.child('reference').val().length >= 6 && newData.child('reference').val().length <= 64 && newData.child('amount').isNumber() && newData.child('amount').val() > 0 && (newData.child('status').val() === 'pending' || newData.child('status').val() === 'approved' || newData.child('status').val() === 'rejected') && newData.child('submittedAt').isNumber() && newData.child('email').isString()"
         }
       }
+    },
+    "supportTickets": {
+      ".read": "auth !== null && auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42'",
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$entryId": {
+          ".write": "auth !== null && (auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42' || (auth.uid === $uid && !data.exists() && newData.child('uid').val() === auth.uid && newData.child('status').val() === 'open' && !newData.child('adminReply').exists()))",
+          ".validate": "newData.hasChildren(['uid','email','topic','message','status','createdAt','subject']) && newData.child('uid').val() === $uid && newData.child('uid').isString() && newData.child('email').isString() && newData.child('email').val().length <= 150 && newData.child('topic').isString() && newData.child('topic').val().length <= 60 && newData.child('message').isString() && newData.child('message').val().length >= 10 && newData.child('message').val().length <= 1500 && (newData.child('status').val() === 'open' || newData.child('status').val() === 'resolved') && newData.child('createdAt').isNumber() && (!newData.child('adminReply').exists() || (newData.child('adminReply').isString() && newData.child('adminReply').val().length <= 1600)) && newData.child('subject').isString() && newData.child('subject').val().length >= 3 && newData.child('subject').val().length <= 90"
+        }
+      }
+    },
+    "feedbackEntries": {
+      ".read": "auth !== null && auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42'",
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$entryId": {
+          ".write": "auth !== null && (auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42' || (auth.uid === $uid && !data.exists() && newData.child('uid').val() === auth.uid && newData.child('status').val() === 'open' && !newData.child('adminReply').exists()))",
+          ".validate": "newData.hasChildren(['uid','email','topic','message','status','createdAt','rating']) && newData.child('uid').val() === $uid && newData.child('uid').isString() && newData.child('email').isString() && newData.child('email').val().length <= 150 && newData.child('topic').isString() && newData.child('topic').val().length <= 60 && newData.child('message').isString() && newData.child('message').val().length >= 10 && newData.child('message').val().length <= 1200 && (newData.child('status').val() === 'open' || newData.child('status').val() === 'resolved') && newData.child('createdAt').isNumber() && (!newData.child('adminReply').exists() || (newData.child('adminReply').isString() && newData.child('adminReply').val().length <= 1600)) && newData.child('rating').isNumber() && newData.child('rating').val() >= 1 && newData.child('rating').val() <= 5"
+        }
+      }
     }
   }
 }

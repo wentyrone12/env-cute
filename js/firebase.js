@@ -16,6 +16,14 @@
           subscribePremium(uid, next, fail) { return dbModule.onValue(dbModule.ref(db,'users/' + uid + '/subscription/paidPremium'),snap=>next(snap.val()),fail) },
           subscribePayments(uid, next, fail) { return dbModule.onValue(dbModule.ref(db,'premiumPayments/' + uid),snap=>next(snap.val()||{}),fail) },
           submitPayment(uid, request) { return dbModule.set(dbModule.push(dbModule.ref(db,'premiumPayments/' + uid)),request) },
+          subscribeInquiries(kind, uid, next, fail) {
+            const key = kind === 'support' ? 'supportTickets' : 'feedbackEntries';
+            return dbModule.onValue(dbModule.ref(db,key + '/' + uid),snapshot=>next(snapshot.val()||{}),fail);
+          },
+          submitInquiry(kind, uid, entry) {
+            const key = kind === 'support' ? 'supportTickets' : 'feedbackEntries';
+            return dbModule.set(dbModule.push(dbModule.ref(db,key + '/' + uid)),entry);
+          },
           subscribe(uid, next, fail) { return dbModule.onValue(dbModule.ref(db, 'users/' + uid + '/envelopes'), snap => next(snap.val() || {}), fail) },
           put(uid, envelope) { return dbModule.set(dbModule.ref(db, 'users/' + uid + '/envelopes/' + envelope.id), envelope) },
           remove(uid, id) { return dbModule.remove(dbModule.ref(db, 'users/' + uid + '/envelopes/' + id)) },

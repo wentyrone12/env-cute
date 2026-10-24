@@ -3548,3 +3548,157 @@
 .pay-note{font-size:12px!important;line-height:1.5;color:#876b82;margin-top:5px}
 .pay-config-warning{padding:12px;border-radius:12px;background:#fff0e7;color:#924b37!important}
 @media(max-width:400px){.pay-methods{gap:8px}.pay-method{padding:15px 8px}.mcard:has(.pay-dialog){padding:18px}.sig-position{font-size:11px;min-height:42px}.sig-lock{font-size:9px}}
+
+
+/* W-Envelope Cute 4.7 — branded logo assets & reliable card actions */
+.logo .brand-mark{width:43px;height:43px;flex:none;object-fit:contain;display:block;filter:drop-shadow(0 3px 7px rgba(210,128,185,.17))}
+.auth-icon:has(img){padding:0;background:transparent;box-shadow:none;overflow:visible}
+.auth-icon img{display:block;width:100%;height:100%;object-fit:contain}
+.about-symbol.brand-about{padding:0;background:transparent;box-shadow:none;overflow:visible}
+.brand-about img{width:100%;height:100%;object-fit:contain}
+.badge-branded{display:inline-flex;align-items:center;gap:6px;max-width:100%;flex-wrap:wrap;justify-content:center}
+.badge-branded img{width:24px;height:24px;object-fit:contain}
+.brand-big{display:flex;justify-content:center;align-items:center;line-height:1}
+.brand-big img{width:76px;height:76px;object-fit:contain}
+.received-brand-logo{width:min(148px,68%);height:142px;object-fit:contain}
+.card .info{position:relative;z-index:2;min-width:0}
+.card .acts{position:relative;z-index:3}
+.card .acts button{touch-action:manipulation;pointer-events:auto;position:relative;white-space:nowrap}
+.card .thumb{position:relative;z-index:1;isolation:isolate}
+.card .edit-envelope-btn{border-color:color-mix(in srgb,var(--accent,#ee7fae),white 60%);background:rgba(255,248,253,.98)}
+.card .edit-envelope-btn:hover,.card .edit-envelope-btn:focus-visible{box-shadow:0 5px 16px rgba(204,117,166,.2)}
+@media(max-width:700px){.logo .brand-mark{width:34px;height:34px}}
+
+.brand-about-wide{width:min(230px,100%);height:auto;aspect-ratio:3/2;max-width:100%;margin-bottom:10px}
+.brand-about-wide img{width:100%;height:100%;object-fit:contain}
+
+/* v4.8 — branded payment options and compact support + feedback forms */
+.pay-logo-wrap{display:grid;place-items:center;width:100%;height:47px;padding:4px 8px;border-radius:12px;background:#fff;overflow:hidden}
+.payment-brand-logo{display:inline-block;object-fit:contain;width:min(170px,100%);max-height:42px;vertical-align:middle;filter:none}
+.pay-dialog .mh .payment-brand-logo{width:88px;max-height:29px;margin-right:6px}
+.pay-method .payment-brand-logo{width:130px;max-height:40px}
+.inquiry-panel{min-width:0;overflow-wrap:anywhere}
+.inquiry-eyebrow{font-size:11px;letter-spacing:.13em;color:var(--pink);font-weight:900;display:block;margin-bottom:7px}
+.inquiry-form{display:grid;gap:15px;margin-top:20px}
+.inquiry-form label{min-width:0;display:grid;gap:7px;font-weight:800}
+.inquiry-form input,.inquiry-form select,.inquiry-form textarea{min-width:0;width:100%;max-width:100%;}
+.inquiry-form textarea{font-family:var(--ui);font-size:15px;line-height:1.5;min-height:110px}
+.inquiry-form .inquiry-help{font-size:12px;color:var(--soft)}
+.inquiry-submit{width:fit-content;max-width:100%}
+.inquiry-status{font-size:13px!important;color:var(--ink)!important;font-weight:800;min-height:18px;overflow-wrap:anywhere}
+.inquiry-history{display:grid;gap:12px;margin-top:18px}
+.inquiry-entry{background:#ffffffc9;border:1px solid #eeddeb;border-radius:16px;padding:15px;min-width:0;overflow-wrap:anywhere}
+.inquiry-entry-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.inquiry-entry strong{font-size:14px;color:var(--ink)}.inquiry-entry small{display:block;color:var(--soft);font-size:11px;margin:7px 0}
+.inquiry-entry p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px!important;color:var(--ink)!important}
+.inquiry-pill{display:inline-block;border-radius:999px;padding:4px 10px;font-size:10px;background:#fff3dc;color:#98701d;font-weight:900}
+.inquiry-pill.resolved{background:#e0f6e7;color:#327b4b}
+.inquiry-reply{background:#fcf0f8;border-left:3px solid var(--pink);padding:11px 13px;border-radius:10px;margin-top:12px}
+.inquiry-reply b{display:block;font-size:11px;margin-bottom:5px}
+.inquiry-empty{font-size:13px}
+@media(max-width:700px){.inquiry-panel{padding:19px!important}.inquiry-submit{width:100%}.settings-nav{white-space:nowrap;flex-shrink:0}}
+
+
+/* v4.9 — automatic owner shortcut and compact, swipeable Settings navigation */
+.admin-quick-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex: none;
+  min-height: 36px;
+  padding: 7px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  font-weight: 900;
+  font-size: 12px;
+  color: #76467f;
+  background: linear-gradient(135deg, #fff6fb, #f0e8ff);
+  border: 1px solid rgba(185, 122, 196, .28);
+  box-shadow: 0 3px 12px rgba(145, 95, 150, .09);
+  transition: transform .2s, box-shadow .2s;
+}
+.admin-quick-link:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(145,95,150,.16); }
+.admin-quick-link:focus-visible { outline: 3px solid var(--accent, #ee7fae); outline-offset: 2px; }
+.admin-quick-link[hidden] { display: none !important; }
+.admin-quick-link svg { flex: none; }
+.nav-user { flex-shrink: 0; }
+.settings-swipe-hint { display: none; }
+@media (max-width: 700px) {
+  /* Four categories fit the visible rail; remaining ones are a horizontal swipe away. */
+  #settingsMenu.settings-menu {
+    display: flex;
+    gap: 5px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 6px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 6px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  #settingsMenu.settings-menu::-webkit-scrollbar { display: none; }
+  #settingsMenu .settings-nav {
+    flex: 0 0 calc((100% - 15px - 12px) / 4);
+    width: calc((100% - 15px - 12px) / 4);
+    min-width: 0;
+    max-width: none;
+    min-height: 62px;
+    padding: 7px 3px;
+    margin: 0;
+    gap: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.2;
+    font-size: clamp(9px, 2.5vw, 11px);
+    font-weight: 800;
+    border-radius: 11px;
+    scroll-snap-align: start;
+  }
+  #settingsMenu .settings-premium-nav { justify-content: center; }
+  #settingsMenu .settings-premium-pill {
+    padding: 1px 5px;
+    font-size: 9px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .settings-swipe-hint {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--soft);
+    margin: -10px 5px 8px;
+    text-align: right;
+  }
+  .settings-swipe-hint span { color: var(--accent); }
+  .nav { gap: 5px; }
+  .nav-user { gap: 5px; }
+  .admin-quick-link { padding: 7px 9px; gap: 4px; font-size: 11px; }
+  .admin-quick-link svg { width: 14px; height: 14px; }
+}
+@media (max-width: 380px) {
+  .logo { font-size: 14px; gap: 5px; }
+  .logo .brand-mark { width: 29px; height: 29px; }
+  .nav { padding: 8px 10px; }
+  .admin-quick-link { min-height: 33px; padding: 5px 7px; font-size: 10px; }
+  .nav-avatar { width: 31px; height: 31px; }
+}
+
+/* Prevent the account name from pushing the admin shortcut off tablet navbars. */
+@media (min-width:701px) and (max-width:900px) {
+  .nav-name { display:none; }
+  .nav { gap:8px; }
+}

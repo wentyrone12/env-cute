@@ -49,3 +49,45 @@
 .admin-page .admin-search-wrap,.admin-page .admin-filter-wrap{flex-direction:row;gap:0}
 .admin-page .admin-nav{position:relative}
 @media(max-width:720px){.admin-page .admin-website-link{display:inline-flex;align-items:center;justify-content:center;width:27px;height:29px;font-size:0}.admin-page .admin-website-link::after{content:'↗';font-size:18px}}
+
+
+/* W-Envelope Cute brand icon replacements */
+.admin-brand-mark:has(img),.admin-dialog-icon:has(img){padding:0;background:transparent;overflow:hidden}
+.admin-brand-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.admin-welcome-art img{width:92px;height:92px;max-width:100%;object-fit:contain;display:block}
+.admin-dialog-icon img{width:100%;height:100%;object-fit:contain;display:block}
+@media(max-width:720px){.admin-welcome-art img{width:56px;height:56px}}
+
+/* v4.8 inbox and authentic bank artwork */
+.admin-nav-icon{display:grid;place-items:center;flex:none}
+.bank-nav-logo{width:37px;height:24px;max-width:none;object-fit:contain}
+.admin-method-icon:has(.bank-card-logo){background:#fff!important;border:1px solid #e9e2ea;border-radius:11px;width:72px;height:47px;flex:none;display:grid;place-items:center;padding:4px}
+.bank-card-logo{max-width:100%;max-height:100%;object-fit:contain}
+.admin-inbox-section{min-width:0}
+.admin-inbox-tools{display:grid;grid-template-columns:minmax(0,1fr) 155px;gap:10px;margin:16px 0}
+.admin-inbox-tools .admin-search-wrap,.admin-inbox-tools .admin-filter-wrap{display:flex;flex-direction:row;gap:0;min-width:0}
+.admin-inbox-tools input,.admin-inbox-tools select{width:100%;min-width:0;background:transparent;border:0;box-shadow:none!important;font:inherit;font-size:13px;padding:8px;outline:0}
+.admin-message-card{border:1px solid #eaddeb;border-radius:18px;background:#fff;padding:18px;min-width:0;overflow-wrap:anywhere}
+.admin-msg-head{display:flex;align-items:start;justify-content:space-between;gap:9px;flex-wrap:wrap}.admin-msg-head h3{font-size:16px;margin:4px 0}
+.admin-msg-by{font-size:11px!important;color:#97849a!important;margin:5px 0 12px!important;overflow-wrap:anywhere}
+.admin-msg-body{font-size:13px!important;white-space:pre-wrap;overflow-wrap:anywhere;background:#fdf8fd;border-radius:11px;padding:12px;margin:10px 0!important}
+.admin-reply-label{display:grid!important;gap:6px;font-size:12px!important;font-weight:900;color:#795d78}
+.admin-page .admin-reply-label textarea{width:100%;max-width:100%;min-width:0;min-height:75px;resize:vertical;font:600 13px/1.5 Nunito,system-ui,sans-serif;padding:11px;border:1px solid #ead7e6;border-radius:12px;background:#fff}
+.admin-msg-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.admin-msg-actions button{border-radius:11px;padding:10px 14px;font-size:12px;font-weight:900}
+.admin-reply-send{background:#f7e2f0;color:#995176}.admin-reply-state{background:#eaf4fb;color:#427da0}
+.admin-existing-reply{background:#f0f7ff;border-left:3px solid #9cbce1;border-radius:9px;padding:10px;margin-bottom:13px;font-size:12px}
+.admin-existing-reply p{white-space:pre-wrap;overflow-wrap:anywhere}
+.admin-msg-inline-status{display:block;min-height:17px;margin-top:7px;color:#7c6882}
+@media(max-width:720px){
+  .admin-page{padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+  .admin-sidebar{padding:7px 6px calc(7px + env(safe-area-inset-bottom))}
+  .admin-navigation{display:flex;gap:5px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:thin;padding:0 3px 2px}
+  .admin-nav{flex:0 0 84px;scroll-snap-align:start;min-width:84px;padding:7px 4px;font-size:10px;gap:2px}
+  .admin-nav-icon{width:auto;min-height:24px}.bank-nav-logo{width:49px;max-height:23px}
+  .admin-method-icon:has(.bank-card-logo){width:57px;height:41px}
+  .admin-inbox-tools{grid-template-columns:minmax(0,1fr) 117px;gap:6px}
+  .admin-message-card{padding:13px}.admin-msg-actions button{flex:1}
+}
+@media(max-width:360px){.admin-inbox-tools{grid-template-columns:1fr}}
+
+.admin-inline-bank-logo{object-fit:contain;width:40px;height:18px;max-width:100%;vertical-align:middle;margin-right:6px}.admin-method-tag{display:inline-flex;align-items:center;gap:3px}.admin-dialog-icon:has(.admin-review-bank-logo){width:95px;height:54px;border:1px solid #eae2ed;background:#fff!important;padding:7px}.admin-review-bank-logo{width:100%;height:100%;object-fit:contain}.admin-payment-head .admin-method-tag{max-width:100%}
