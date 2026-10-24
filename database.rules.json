@@ -1,0 +1,38 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      "$uid": {
+        "envelopes": {
+          ".read": "auth !== null && auth.uid === $uid",
+          ".write": "auth !== null && auth.uid === $uid",
+          "$envelopeId": {
+            ".validate": "newData.hasChildren(['id','title','pages','envelopeColor','createdAt']) && newData.child('id').val() === $envelopeId && newData.child('title').isString() && newData.child('title').val().length <= 80 && newData.child('pages').exists()"
+          }
+        },
+        "received": {
+          ".read": "auth !== null && auth.uid === $uid",
+          ".write": "auth !== null && auth.uid === $uid",
+          "$key": {
+            ".validate": "newData.hasChildren(['title','receivedAt']) && newData.child('title').isString() && newData.child('title').val().length <= 80 && newData.child('receivedAt').isString()"
+          }
+        },
+        "subscription": {
+          ".read": "auth !== null && auth.uid === $uid",
+          ".write": "auth !== null && auth.uid === $uid",
+          "demoPremium": {
+            ".validate": "newData.hasChildren(['enabled','updatedAt']) && newData.child('enabled').isBoolean() && newData.child('updatedAt').isNumber()"
+          }
+        }
+      }
+    },
+    "publicEnvelopes": {
+      "$code": {
+        ".read": true,
+        ".write": "auth !== null && ((!data.exists() && newData.child('ownerUid').val() === auth.uid) || (data.child('ownerUid').val() === auth.uid && newData.child('ownerUid').val() === auth.uid && data.child('envelope').child('id').val() === newData.child('envelope').child('id').val()))",
+        ".validate": "newData.hasChildren(['ownerUid','envelope','createdAt']) && newData.child('ownerUid').isString() && newData.child('envelope').child('pages').exists()"
+      }
+    }
+  }
+}
