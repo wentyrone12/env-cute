@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#fff1f7">
-  <title>W- ENVELOPE CUTE</title>
+  <title>W- ENVELOPE CUTE · 4.3</title>
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,1332 +13,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;800&family=Caveat:wght@500;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Pacifico&family=Satisfy&family=Allura&family=Sacramento&family=Parisienne&family=Kaushan+Script&family=Cormorant+Garamond:ital,wght@1,600&family=Playfair+Display:ital,wght@1,600&display=swap"
     rel="stylesheet">
-  <style>
-    :root {
-      --ink: #5b4260;
-      --soft: #8c7390;
-      --pink: #ee7fae;
-      --glass: rgba(255, 255, 255, .72);
-      --ui: "Nunito", system-ui, sans-serif;
-      --head: "Fredoka", "Nunito", system-ui, sans-serif;
-      --hand: "Caveat", "Segoe Print", "Bradley Hand", cursive
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box
-    }
-
-    [hidden] {
-      display: none !important
-    }
-
-    body {
-      min-height: 100vh;
-      font: 600 16px/1.6 var(--ui);
-      color: var(--ink);
-      overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
-      background: radial-gradient(circle at 12% 10%, #fff, transparent 28%), radial-gradient(circle at 88% 8%, rgba(255, 190, 215, .5), transparent 30%), radial-gradient(circle at 50% 95%, rgba(211, 198, 255, .55), transparent 35%), linear-gradient(135deg, #fff1f7, #f4ecff) fixed
-    }
-
-    h1,
-    h2,
-    h3 {
-      font-family: var(--head);
-      font-weight: 600;
-      line-height: 1.1
-    }
-
-    button {
-      font: inherit;
-      cursor: pointer;
-      border: 0;
-      color: inherit;
-      background: none
-    }
-
-    :focus-visible {
-      outline: 3px solid #a58ee0;
-      outline-offset: 3px
-    }
-
-    .bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden
-    }
-
-    .bg i {
-      position: absolute;
-      font-style: normal;
-      color: rgba(238, 127, 174, .28);
-      animation: drift 10s ease-in-out infinite
-    }
-
-    @keyframes drift {
-      50% {
-        transform: translateY(-26px) rotate(12deg)
-      }
-    }
-
-    .nav {
-      position: sticky;
-      top: 12px;
-      z-index: 50;
-      width: min(1100px, calc(100% - 24px));
-      margin: 12px auto 0;
-      padding: 10px 14px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--glass);
-      backdrop-filter: blur(18px);
-      border: 1px solid #fff;
-      border-radius: 24px;
-      box-shadow: 0 12px 40px rgba(130, 95, 120, .12)
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font: 600 20px var(--head);
-      color: #8d577b
-    }
-
-    .logo b {
-      width: 38px;
-      height: 38px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      color: #fff;
-      background: linear-gradient(135deg, #ff9fc7, #caa7ff);
-      box-shadow: 0 8px 18px rgba(220, 130, 180, .3)
-    }
-
-    .tabs {
-      display: flex;
-      gap: 6px
-    }
-
-    .tab {
-      padding: 9px 16px;
-      border-radius: 14px;
-      color: var(--soft);
-      font-weight: 800;
-      transition: .25s
-    }
-
-    .tab:hover {
-      background: #fff;
-      transform: translateY(-2px)
-    }
-
-    .tab.on {
-      background: #fff;
-      color: #c2578d;
-      box-shadow: 0 4px 14px rgba(190, 110, 160, .18)
-    }
-
-    body.receiving .nav {
-      display: none
-    }
-
-    .screen {
-      display: none;
-      position: relative;
-      width: min(1100px, 100%);
-      margin: 0 auto;
-      padding: 30px 16px 70px
-    }
-
-    .screen.on {
-      display: block;
-      animation: in .55s both
-    }
-
-    @keyframes in {
-      from {
-        opacity: 0;
-        transform: translateY(16px)
-      }
-    }
-
-    .screen.recv.on {
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      text-align: center;
-      padding-top: 56px
-    }
-
-    .soft {
-      color: var(--soft)
-    }
-
-    .btn {
-      padding: 13px 20px;
-      border-radius: 16px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: transform .2s, box-shadow .2s
-    }
-
-    .btn:hover {
-      transform: translateY(-3px)
-    }
-
-    .btn:active {
-      transform: scale(.97)
-    }
-
-    .pri {
-      color: #fff;
-      background: linear-gradient(135deg, #f08bb5, #a98ae0);
-      box-shadow: 0 10px 24px rgba(191, 125, 173, .3)
-    }
-
-    .sec {
-      background: rgba(255, 255, 255, .88);
-      border: 1px solid #ecd3e3;
-      color: #75566d
-    }
-
-    .dng {
-      background: #fde7ee;
-      color: #c4486f
-    }
-
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 26px
-    }
-
-    .wide {
-      width: 100%;
-      margin-top: 14px
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.05fr 1fr;
-      gap: 30px;
-      align-items: center;
-      min-height: calc(100vh - 150px)
-    }
-
-    h1 {
-      font-size: clamp(40px, 6.4vw, 72px);
-      letter-spacing: -1px;
-      color: #6b3f63;
-      margin-bottom: 18px
-    }
-
-    .hero p {
-      font-size: 18px;
-      max-width: 30em;
-      color: var(--soft)
-    }
-
-    .tip {
-      text-align: center;
-      color: var(--soft);
-      font-size: 14px
-    }
-
-    /* envelope */
-    .scene {
-      width: min(var(--w, 440px), 100%);
-      margin: auto;
-      perspective: 1100px
-    }
-
-    .tilt {
-      padding-top: 26%;
-      transition: transform .2s ease-out
-    }
-
-    .env {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 3/2;
-      container-type: inline-size;
-      perspective: 900px;
-      filter: drop-shadow(0 22px 24px rgba(120, 70, 110, .22));
-      cursor: pointer
-    }
-
-    .env.float {
-      animation: bob 4s ease-in-out infinite
-    }
-
-    @keyframes bob {
-      50% {
-        transform: translateY(-10px) rotate(-1deg)
-      }
-    }
-
-    .env>* {
-      position: absolute
-    }
-
-    .eb {
-      inset: 0;
-      background: var(--cd);
-      border-radius: 5%/7%;
-      z-index: 1
-    }
-
-    .sh {
-      left: 8%;
-      right: 8%;
-      top: 12%;
-      bottom: 5%;
-      z-index: 3;
-      transition: transform 1s cubic-bezier(.3, 1.3, .5, 1) .55s
-    }
-
-    .open .sh {
-      transform: translateY(-62%)
-    }
-
-    .sht {
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
-      display: grid;
-      place-items: center;
-      background: repeating-linear-gradient(transparent 0 9%, rgba(190, 140, 175, .16) 9% 9.8%), var(--p);
-      box-shadow: 0 -2px 10px rgba(70, 50, 70, .12);
-      transform: translateY(calc(var(--i)*-2%)) rotate(var(--r))
-    }
-
-    .sht b {
-      font-size: 9cqw;
-      color: rgba(238, 127, 174, .45)
-    }
-
-    .fr {
-      inset: 0;
-      z-index: 5;
-      border-radius: 5%/7%;
-      overflow: hidden
-    }
-
-    .fr i {
-      position: absolute;
-      inset: 0
-    }
-
-    .pb {
-      background: var(--c);
-      clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%)
-    }
-
-    .pl,
-    .pr {
-      background: var(--cl)
-    }
-
-    .pl {
-      clip-path: polygon(0 0, 50% 54%, 0 100%)
-    }
-
-    .pr {
-      clip-path: polygon(100% 0, 50% 54%, 100% 100%)
-    }
-
-    .fl {
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 60%;
-      background: var(--cf);
-      clip-path: polygon(0 0, 100% 0, 50% 100%);
-      border-radius: 5% 5% 0 0/10% 10% 0 0;
-      transform-origin: top;
-      z-index: 6;
-      transition: transform .9s cubic-bezier(.5, -.1, .3, 1.15), background .5s .15s, z-index 0s .45s
-    }
-
-    .open .fl {
-      transform: rotateX(180deg);
-      z-index: 2;
-      background: var(--cd)
-    }
-
-    .seal {
-      left: 50%;
-      top: 55%;
-      width: 16%;
-      aspect-ratio: 1;
-      translate: -50% -50%;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      font-size: 7cqw;
-      z-index: 8;
-      border: .9cqw solid rgba(255, 255, 255, .65);
-      background: radial-gradient(circle at 30% 30%, #ffb9d6, #d96899);
-      box-shadow: 0 8px 20px rgba(190, 80, 130, .4);
-      transition: .4s;
-      animation: beat 1.8s ease-in-out infinite
-    }
-
-    @keyframes beat {
-      50% {
-        scale: 1.09
-      }
-    }
-
-    .seal:hover {
-      animation: none;
-      scale: 1.12;
-      rotate: -6deg
-    }
-
-    .open .seal {
-      opacity: 0;
-      scale: .4;
-      pointer-events: none;
-      animation: none
-    }
-
-    /* create */
-    .glass {
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      border: 1px solid #fff;
-      border-radius: 28px;
-      box-shadow: 0 24px 70px rgba(125, 93, 125, .14);
-      padding: clamp(20px, 4vw, 34px)
-    }
-
-    .make {
-      display: grid;
-      grid-template-columns: 1fr 350px;
-      gap: 22px;
-      align-items: start
-    }
-
-    .pv {
-      position: sticky;
-      top: 90px;
-      text-align: center
-    }
-
-    .pv h3 {
-      font-size: 22px;
-      margin: 4px 0;
-      overflow-wrap: anywhere
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 22px 0
-    }
-
-    .full {
-      grid-column: 1/-1
-    }
-
-    label,
-    .lb {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      font-size: 14px;
-      font-weight: 800;
-      color: #725e6e
-    }
-
-    input,
-    select,
-    textarea {
-      width: 100%;
-      border: 2px solid #f0dcea;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, .92);
-      padding: 12px 14px;
-      font: 600 16px var(--ui);
-      color: var(--ink);
-      transition: .2s
-    }
-
-    input:focus,
-    select:focus,
-    textarea:focus {
-      outline: 0;
-      border-color: #e59bbc;
-      box-shadow: 0 0 0 4px rgba(229, 155, 188, .2)
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-      font: 500 22px/1.4 var(--hand)
-    }
-
-    .shake {
-      animation: shake .4s
-    }
-
-    @keyframes shake {
-      25% {
-        translate: -6px
-      }
-
-      75% {
-        translate: 6px
-      }
-    }
-
-    .sw {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px
-    }
-
-    .dot {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, .14);
-      transition: .2s
-    }
-
-    .dot:hover {
-      transform: scale(1.12)
-    }
-
-    .dot.on {
-      outline: 3px solid #b57ca3;
-      outline-offset: 1px;
-      transform: scale(1.12)
-    }
-
-    .sm .dot {
-      width: 26px;
-      height: 26px
-    }
-
-    .pg {
-      margin-bottom: 14px;
-      padding: 16px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, .7);
-      border: 1px solid #f0dcea;
-      animation: in .4s
-    }
-
-    .pgh {
-      display: flex;
-      justify-content: space-between;
-      font: 600 17px var(--head);
-      color: #9c6586;
-      margin-bottom: 8px
-    }
-
-    .pgc {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 10px;
-      font-size: 13px;
-      color: var(--soft)
-    }
-
-    /* dashboard */
-    .dtop {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 20px
-    }
-
-    .card {
-      background: var(--glass);
-      border: 1px solid #fff;
-      border-radius: 26px;
-      padding: 14px;
-      box-shadow: 0 18px 50px rgba(130, 100, 130, .12);
-      transition: transform .3s, box-shadow .3s;
-      animation: in .5s both
-    }
-
-    .card:hover {
-      transform: translateY(-6px) rotate(-.4deg);
-      box-shadow: 0 26px 60px rgba(130, 100, 130, .2)
-    }
-
-    .thumb {
-      display: grid;
-      place-items: center;
-      padding: 30px 22px 22px;
-      border-radius: 20px
-    }
-
-    .thumb .env {
-      width: min(230px, 100%)
-    }
-
-    .card:hover .env:not(.open) .fl {
-      transform: rotateX(30deg)
-    }
-
-    .info {
-      padding: 14px 6px 4px
-    }
-
-    .info h3 {
-      font-size: 22px;
-      color: #624e60;
-      overflow-wrap: anywhere
-    }
-
-    .meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin: 8px 0 14px;
-      font-size: 13px;
-      color: var(--soft)
-    }
-
-    .chip {
-      background: #fde9f3;
-      color: #b0568a;
-      border-radius: 99px;
-      padding: 3px 11px;
-      font-weight: 800
-    }
-
-    .acts {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap
-    }
-
-    .acts .btn {
-      padding: 10px 15px
-    }
-
-    .empty {
-      text-align: center;
-      padding: 60px 20px;
-      border: 2px dashed #e6cfe0;
-      border-radius: 28px;
-      background: rgba(255, 255, 255, .55)
-    }
-
-    .empty .big {
-      font-size: 60px;
-      animation: bob 3s infinite
-    }
-
-    .empty .btn {
-      margin-top: 18px
-    }
-
-    /* receiver */
-    .rc {
-      width: 100%
-    }
-
-    #back {
-      position: absolute;
-      left: 16px;
-      top: 16px
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 8px 16px;
-      border-radius: 99px;
-      background: rgba(255, 255, 255, .8);
-      border: 1px solid #fff;
-      color: #a06587;
-      font-weight: 800;
-      font-size: 14px;
-      margin-bottom: 16px
-    }
-
-    .rc h1 {
-      font-size: clamp(32px, 6vw, 54px);
-      margin-bottom: 8px;
-      overflow-wrap: anywhere
-    }
-
-    .recv .scene {
-      --w: 460px
-    }
-
-    .scene.done {
-      opacity: 0;
-      transform: translateY(70px) scale(.85);
-      transition: .7s
-    }
-
-    .scene.gone {
-      display: none
-    }
-
-    .hint {
-      margin-top: 14px;
-      color: #9b6a88;
-      animation: pulse 2s infinite
-    }
-
-    @keyframes pulse {
-      50% {
-        opacity: .4
-      }
-    }
-
-    .reader {
-      perspective: 1500px;
-      width: min(680px, 100%);
-      margin: 26px auto 0;
-      animation: rise .9s cubic-bezier(.2, .9, .2, 1) both
-    }
-
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(90px) rotateX(35deg) scale(.9)
-      }
-    }
-
-    .page {
-      position: relative;
-      min-height: 400px;
-      text-align: left;
-      padding: clamp(30px, 6vw, 54px) clamp(22px, 6vw, 56px);
-      border-radius: 8px;
-      background: var(--paper, #fffaf2);
-      box-shadow: 0 1px 0 #fff, 0 9px 0 -3px rgba(255, 255, 255, .75), 0 18px 0 -6px rgba(255, 255, 255, .5), 0 34px 60px rgba(90, 60, 90, .2);
-      transform-origin: left center
-    }
-
-    .page::before {
-      content: "";
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      width: 110px;
-      height: 28px;
-      translate: -50% 0;
-      rotate: -3deg;
-      background: rgba(238, 127, 174, .35);
-      border-radius: 3px
-    }
-
-    .page small {
-      color: #b0789b;
-      font-weight: 800;
-      font-size: 14px
-    }
-
-    .txt {
-      margin-top: 14px;
-      font: 500 clamp(24px, 4.2vw, 31px)/1.65 var(--hand);
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-      background: repeating-linear-gradient(transparent 0 calc(1.65em - 1px), rgba(190, 140, 175, .25) calc(1.65em - 1px) 1.65em)
-    }
-
-    .sign {
-      margin-top: 16px;
-      text-align: right;
-      font: 700 28px var(--hand);
-      color: #b0568a
-    }
-
-    .fn {
-      animation: fn .75s cubic-bezier(.2, .8, .2, 1)
-    }
-
-    .fp {
-      transform-origin: right center;
-      animation: fp .75s cubic-bezier(.2, .8, .2, 1)
-    }
-
-    @keyframes fn {
-      from {
-        opacity: 0;
-        transform: rotateY(-75deg) translateX(30px)
-      }
-    }
-
-    @keyframes fp {
-      from {
-        opacity: 0;
-        transform: rotateY(75deg) translateX(-30px)
-      }
-    }
-
-    .dots {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 30px
-    }
-
-    .dots i {
-      width: 9px;
-      height: 9px;
-      border-radius: 9px;
-      background: #e6cfe0;
-      transition: .3s
-    }
-
-    .dots i.on {
-      background: var(--pink);
-      width: 26px
-    }
-
-    .reader .row {
-      justify-content: center;
-      margin-top: 18px
-    }
-
-    /* modal + toast + fx */
-    .modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      place-items: center;
-      padding: 18px;
-      background: rgba(60, 40, 60, .38);
-      backdrop-filter: blur(8px);
-      z-index: 100
-    }
-
-    .modal.show {
-      display: grid;
-      animation: fade .25s
-    }
-
-    @keyframes fade {
-      from {
-        opacity: 0
-      }
-    }
-
-    .mcard {
-      width: min(480px, 100%);
-      background: #fff;
-      border-radius: 28px;
-      padding: 28px;
-      text-align: center;
-      box-shadow: 0 30px 90px rgba(60, 40, 70, .3);
-      animation: pop .45s cubic-bezier(.2, 1.2, .3, 1)
-    }
-
-    @keyframes pop {
-      from {
-        opacity: 0;
-        transform: translateY(30px) scale(.9)
-      }
-    }
-
-    .mcard .big {
-      font-size: 58px
-    }
-
-    .mcard h2 {
-      font-size: 26px;
-      margin: 6px 0 8px
-    }
-
-    .mcard p {
-      color: var(--soft)
-    }
-
-    .mcard .row {
-      justify-content: center
-    }
-
-    .mcard .row.nw {
-      flex-wrap: nowrap;
-      margin-top: 18px
-    }
-
-    .mh {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      text-align: left
-    }
-
-    .mh h2 {
-      margin: 0
-    }
-
-    .x {
-      width: 36px;
-      height: 36px;
-      flex: none;
-      border-radius: 50%;
-      background: #f7e8f2;
-      font-size: 20px;
-      color: #7a6073
-    }
-
-    .warn {
-      font-size: 13px;
-      margin-top: 12px
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 25px;
-      translate: -50% 100px;
-      max-width: calc(100% - 30px);
-      background: #5e4b5b;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 99px;
-      font-size: 14px;
-      z-index: 200;
-      opacity: 0;
-      transition: .4s;
-      text-align: center
-    }
-
-    .toast.show {
-      opacity: 1;
-      translate: -50% 0
-    }
-
-    .fx {
-      position: fixed;
-      z-index: 300;
-      pointer-events: none;
-      font-style: normal;
-      color: var(--pink);
-      animation: fly 2.2s ease-out both
-    }
-
-    .nametag{
-      position: sticky;
-      bottom: 10px;
-      transform: translateX(45%);
-      font-size: 11px;
-    }
-
-    @keyframes fly {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(.3)
-      }
-
-      15% {
-        opacity: 1
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate(calc(-50% + var(--dx)), var(--dy)) scale(var(--s)) rotate(25deg)
-      }
-    }
-
-    @media(max-width:860px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        min-height: 0;
-        gap: 10px
-      }
-
-      .hero p {
-        margin: auto
-      }
-
-      .row {
-        justify-content: center
-      }
-
-      .make {
-        grid-template-columns: 1fr
-      }
-
-      .pv {
-        position: static;
-        order: -1
-      }
-    }
-
-    @media(max-width:700px) {
-      .nav {
-        backdrop-filter: none;
-        top: 8px
-      }
-
-      .tabs {
-        position: fixed;
-        left: 12px;
-        right: 12px;
-        bottom: calc(12px + env(safe-area-inset-bottom));
-        z-index: 60;
-        padding: 8px;
-        background: rgba(255, 255, 255, .88);
-        backdrop-filter: blur(18px);
-        border: 1px solid #fff;
-        border-radius: 24px;
-        box-shadow: 0 14px 40px rgba(130, 95, 120, .22)
-      }
-
-      body.receiving .tabs {
-        display: none
-      }
-
-      .tab {
-        flex: 1;
-        padding: 11px 6px;
-        font-size: 14px
-      }
-
-      body {
-        padding-bottom: 84px
-      }
-
-      .grid {
-        grid-template-columns: 1fr
-      }
-
-      .toast {
-        bottom: 104px
-      }
-
-      .acts .btn {
-        flex: 1
-      }
-      .nametag{
-        display: inline-block;
-        position: absolute;
-        left: 25%;
-        bottom: -20%;
-      }
-    }
-
-    @media(prefers-reduced-motion:reduce) {
-
-      *,
-      ::before,
-      ::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important
-      }
-
-      .fx {
-        display: none
-      }
-    }
-
-    /* W-Envelope Cute 2.0: account gate, settings, and live appearance */
-    :root {
-      --gradient-start:#fff1f7;
-      --gradient-end:#f4ecff;
-      --accent:#ee7fae;
-      --accent-light:#a98ae0;
-      --theme-ink:#5b4260;
-      --theme-muted:#8c7390;
-      --text-scale:1;
-    }
-    body {
-      --ink:var(--theme-ink);
-      --soft:var(--theme-muted);
-      --pink:var(--accent);
-      font-size:calc(16px * var(--text-scale));
-      background:radial-gradient(circle at 10% 9%,rgba(255,255,255,.85),transparent 33%),
-        radial-gradient(circle at 89% 17%,rgba(255,255,255,.35),transparent 32%),
-        linear-gradient(132deg,var(--gradient-start),var(--gradient-end)) fixed;
-    }
-    h1, .hero h1, h2, h3, .info h3 { color:var(--ink); }
-    .logo { color:var(--ink); }
-    .logo b, .pri { background:linear-gradient(135deg,var(--accent),var(--accent-light)); }
-    .tab.on { color:var(--accent); }
-    .tab.on, .tab:hover { background:rgba(255,255,255,.94); }
-    .chip { color:var(--accent); }
-    .nav { gap:14px; }
-    .nav-user { display:flex; align-items:center; gap:8px; min-width:0; }
-    .nav-avatar { height:34px; width:34px; border-radius:12px; object-fit:cover; border:2px solid white; background:#f7e7f1; }
-    .nav-name { max-width:132px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:13px; font-weight:800; }
-    .tab { display:inline-flex; align-items:center; justify-content:center; gap:6px; }
-    .tab-icon { font-size:17px; line-height:1; }
-    .tab-settings { color:var(--soft); }
-    .settings-top { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:22px; }
-    .settings-top p { color:var(--soft); }
-    .settings-shell { display:grid; grid-template-columns:230px minmax(0,1fr); align-items:start; gap:20px; }
-    .settings-menu { position:sticky; top:92px; padding:12px; display:grid; gap:7px; }
-    .settings-nav { width:100%; display:flex; align-items:center; gap:10px; text-align:left; border-radius:16px; padding:13px 14px; font-weight:800; color:var(--soft); transition:.2s; }
-    .settings-nav:hover,.settings-nav.on { background:rgba(255,255,255,.96); color:var(--accent); box-shadow:0 5px 15px rgba(130,95,120,.1); }
-    .settings-panel { display:none; min-width:0; }
-    .settings-panel.on { display:block; animation:in .3s both; }
-    .settings-section { margin-bottom:18px; }
-    .settings-section h2 { font-size:22px; margin-bottom:5px; }
-    .settings-section h3 { font-size:18px; margin-bottom:6px; }
-    .settings-section p { color:var(--soft); font-size:14px; }
-    .theme-presets { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; margin-top:15px; }
-    .theme-preset { border-radius:17px; padding:8px; min-width:0; background:rgba(255,255,255,.85); border:2px solid transparent; text-align:left; transition:transform .2s; }
-    .theme-preset:hover { transform:translateY(-2px); }
-    .theme-preset.on { border-color:var(--accent); box-shadow:0 0 0 2px rgba(255,255,255,.8); }
-    .theme-preview { display:block; height:54px; border-radius:11px; border:1px solid rgba(50,30,60,.08); margin-bottom:6px; }
-    .theme-label { display:block; font-size:12px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .setting-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:16px; }
-    .color-field { display:flex; gap:10px; align-items:center; min-width:0; padding:10px 12px; border:1px solid #f0dcea; border-radius:15px; background:rgba(255,255,255,.66); }
-    .color-field input[type=color] { width:44px; height:41px; flex:none; padding:3px; border-radius:12px; cursor:pointer; }
-    .color-field span { font-size:12px; font-weight:800; color:#695265; overflow:hidden; text-overflow:ellipsis; }
-    .setting-field { display:flex; flex-direction:column; gap:8px; color:var(--ink); font-size:14px; font-weight:800; }
-    .setting-check { display:flex; flex-direction:row; align-items:center; gap:13px; padding:16px; background:rgba(255,255,255,.7); border-radius:17px; margin-top:12px; cursor:pointer; }
-    .setting-check input { width:19px; height:19px; flex:none; accent-color:var(--accent); }
-    .setting-check span { display:grid; line-height:1.35; }
-    .setting-check small { color:var(--soft); font-weight:600; font-size:12px; }
-    .settings-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:19px; }
-    .account-card { display:flex; align-items:center; gap:15px; margin-top:16px; background:rgba(255,255,255,.65); padding:17px; border-radius:19px; }
-    .account-card img { width:58px; height:58px; border-radius:18px; object-fit:cover; background:#eed8ed; }
-    .account-card strong { display:block; overflow-wrap:anywhere; }
-    .account-card small { color:var(--soft); overflow-wrap:anywhere; font-weight:600; }
-    .detail-note { padding:13px 16px; background:rgba(255,255,255,.5); border:1px solid rgba(255,255,255,.8); border-radius:15px; margin-top:16px; font-size:13px; color:var(--soft); }
-    .about-symbol { width:72px; height:72px; display:grid; place-items:center; margin-bottom:14px; border-radius:25px; color:white; font-size:39px; background:linear-gradient(130deg,var(--accent),var(--accent-light)); box-shadow:0 12px 30px rgba(200,110,150,.18); }
-    .about-feature { display:grid; grid-template-columns:34px minmax(0,1fr); gap:10px; margin-top:14px; align-items:start; }
-    .about-feature b { display:block; }
-    .about-feature p { font-size:13px; }
-    .credit { text-align:center; font-size:12px; color:var(--soft); padding:8px 12px 24px; position:relative; z-index:1; }
-    .credit strong { color:var(--accent); }
-    body.receiving .credit { display:none; }
-    .auth-gate { position:fixed; inset:0; z-index:900; min-height:100dvh; display:grid; place-items:center; overflow-y:auto; padding:22px 14px; background:radial-gradient(circle at 15% 15%,#fff 0,transparent 28%),radial-gradient(circle at 85% 88%,#f4d7fb 0,transparent 40%),linear-gradient(135deg,#fff1f7,#e7ddff); }
-    .auth-gate[hidden] { display:none !important; }
-    body:not(.authenticated) > .nav, body:not(.authenticated) > main, body:not(.authenticated) > .credit, body:not(.authenticated) > .bg { visibility:hidden; }
-    .auth-card { width:min(425px,100%); text-align:center; padding:clamp(24px,5vw,38px); border-radius:32px; background:rgba(255,255,255,.91); backdrop-filter:blur(20px); border:1px solid white; box-shadow:0 30px 90px rgba(133,84,130,.19); animation:pop .45s both; }
-    .auth-icon { width:86px; height:86px; background:linear-gradient(135deg,#ffa5c7,#ad98ec); box-shadow:0 12px 28px rgba(227,138,188,.3); border-radius:28px; margin:0 auto 17px; display:grid; place-items:center; font-size:46px; }
-    .auth-card h1 { font-size:clamp(30px,7vw,38px); letter-spacing:-.5px; margin-bottom:11px; }
-    .auth-card p { color:#8c7390; font-size:14px; }
-    .google-button { display:flex; justify-content:center; align-items:center; gap:11px; width:100%; margin-top:24px; padding:14px; font-size:15px; font-weight:800; border:2px solid #ecd7e7; border-radius:16px; background:#fff; color:#624c5d; transition:.2s; }
-    .google-button:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px rgba(130,95,120,.12); }
-    .google-button:disabled { opacity:.6; cursor:wait; }
-    .google-mark { font:bold 22px Arial,sans-serif; color:#4285f4; }
-    .auth-status { min-height:20px; margin-top:12px; font-size:13px !important; }
-    .auth-status.error { color:#b22e64; }
-    .auth-sub { margin-top:17px; font-size:12px !important; }
-    .auth-divider { margin-top:17px; padding-top:14px; border-top:1px solid #f2e5f0; font-size:12px; color:#9b819a; }
-    .auth-redirect { margin-top:7px; text-decoration:underline; text-underline-offset:3px; color:#865b91; font-size:12px; font-weight:800; }
-    .auth-redirect[hidden] { display:none; }
-    .settings-panel .glass { padding:clamp(18px,3vw,29px); }
-    body.no-fx .bg, body.no-fx .fx { display:none!important; }
-    body.reduce-motion *,body.reduce-motion *::before,body.reduce-motion *::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
-    @media(max-width:400px) {
-      .nav-name { display:none; }
-      .logo { font-size:17px; gap:7px; }
-      .logo b { width:34px; height:34px; }
-      .nav-avatar { width:34px; height:34px; }
-    }
-    @media(max-width:860px) {
-      .settings-shell { grid-template-columns:1fr; gap:14px; }
-      .settings-menu { position:static; display:flex; gap:5px; padding:7px; overflow-x:auto; scrollbar-width:thin; }
-      .settings-nav { min-width:max-content; justify-content:center; padding:10px 12px; font-size:13px; }
-    }
-    @media(max-width:700px) {
-      .nav { padding:10px 14px; }
-      .tabs { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); }
-      .tab { display:flex; flex-direction:column; gap:2px; padding:7px 2px; font-size:11px; white-space:nowrap; line-height:1.3; min-width:0; }
-      .tab-icon { font-size:20px; }
-      .nav-user { margin-left:auto; }
-      .nav-name { max-width:120px; }
-      .settings-top { margin-bottom:16px; }
-      .setting-grid { grid-template-columns:1fr; }
-      .theme-presets { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .settings-nav { font-size:12px; padding:10px; }
-      .credit { padding-bottom:16px; }
-      .settings-panel { padding-bottom:6px; }
-    }
-
-    /* 3.0 — paper photos, signature studio, share studio, cloud status */
-    .photo-tools { margin-top:13px; padding:13px; border:1px dashed #e7bed5; border-radius:15px; background:rgba(255,255,255,.65); }
-    .photo-toolbar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:9px; }
-    .photo-toolbar small { color:var(--soft); font-size:12px; }
-    .photo-add { display:inline-flex; align-items:center; gap:6px; padding:9px 13px; border-radius:12px; background:#fce6f1; color:#a64f88; font-size:13px; font-weight:800; cursor:pointer; }
-    .photo-add input { display:none; }
-    .photo-add.disabled { opacity:.5; cursor:not-allowed; }
-    /* v4.1: miniature Polaroid stack in the editor (no photo grid) */
-    .photo-previews { margin-top:7px; min-width:0; }
-    .photo-stack-area { min-width:0; text-align:center; }
-    .photo-stack-title { display:flex; justify-content:center; align-items:center; gap:7px; flex-wrap:wrap; font-size:12px; font-weight:800; color:var(--soft); margin-top:8px; }
-    .photo-stack-title .photo-bloom { color:var(--accent); }
-    .photo-stack { position:relative; width:min(370px,100%); height:250px; margin:0 auto; isolation:isolate; user-select:none; -webkit-user-select:none; touch-action:pan-y; }
-    .polaroid-card { position:absolute; width:clamp(137px,51%,178px); height:195px; top:15px; left:50%; transform:translateX(calc(-50% + var(--stack-x))) translateY(var(--stack-y)) rotate(var(--stack-r)); z-index:var(--order); padding:9px 9px 8px; border:1px solid #fff; border-radius:8px; background:linear-gradient(155deg,#fff,#fff9fc); box-shadow:0 9px 26px rgba(100,52,89,.23),0 2px 7px rgba(100,52,89,.08); display:flex; flex-direction:column; align-items:stretch; gap:5px; transition:transform .48s cubic-bezier(.2,1.35,.32,1), box-shadow .32s, filter .32s; cursor:zoom-in; transform-origin:50% 88%; will-change:transform; }
-    .polaroid-card .polaroid-image { flex:1; min-height:0; background:#f7e7f1; display:block; border-radius:4px; overflow:hidden; }
-    .polaroid-card img { height:100%; width:100%; object-fit:cover; display:block; pointer-events:none; }
-    .polaroid-card .polaroid-caption { display:flex; justify-content:space-between; align-items:center; gap:4px; font:700 13px var(--hand); color:#a57093; line-height:1.5; white-space:nowrap; }
-    .polaroid-card .polaroid-caption b { font:800 11px var(--ui); }
-    .photo-stack.is-spread .polaroid-card, .photo-stack-area:focus-within .polaroid-card { transform:translateX(calc(-50% + var(--fan-x))) translateY(var(--fan-y)) rotate(var(--fan-r)); }
-    @media (hover:hover) { .photo-stack-area:hover .polaroid-card { transform:translateX(calc(-50% + var(--fan-x))) translateY(var(--fan-y)) rotate(var(--fan-r)); } }
-    .photo-stack .polaroid-card:hover, .photo-stack .polaroid-card:focus-visible { z-index:15; transform:translateX(calc(-50% + var(--fan-x))) translateY(-17px) rotate(0deg) scale(1.08); box-shadow:0 20px 34px rgba(108,60,101,.3); outline:2px solid var(--accent); outline-offset:3px; }
-    .photo-stack-action { display:inline-flex; gap:6px; align-items:center; justify-content:center; margin:0 auto 8px; padding:6px 12px; border-radius:99px; border:1px solid #efd1e4; background:rgba(255,255,255,.84); font-size:12px; font-weight:800; color:#9d648d; }
-    .photo-stack-action[aria-expanded="true"] { color:#fff; background:var(--accent); border-color:var(--accent); }
-    .photo-index-picker { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:7px; margin:0 0 4px; }
-    .photo-index-picker button { width:31px; height:31px; border-radius:50%; background:rgba(255,255,255,.88); border:1px solid #efd1e4; color:#b06999; font-weight:900; font-size:12px; transition:transform .2s,background .2s; }
-    .photo-index-picker button:hover,.photo-index-picker button:focus-visible { background:#fbe3f0; transform:translateY(-3px); }
-    .photo-remove-list { display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:7px; margin-top:7px; }
-    .photo-remove-list button { font-size:12px; font-weight:800; padding:6px 9px; border-radius:12px; color:#b54c78; background:#fff2f7; border:1px solid #f0d3df; }
-    .photo-empty { text-align:center; font-size:12px; padding:13px 8px 5px; color:var(--soft); }
-    .signature-studio { margin:18px 0; }
-    .sig-heading { margin-bottom:13px; }
-    .sig-heading h3 { margin-bottom:4px; }
-    .sig-heading p { color:var(--soft); font-size:13px; }
-    .sig-styles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; margin:15px 0; }
-    .sig-style { min-height:67px; text-align:center; background:rgba(255,255,255,.73); border:2px solid transparent; border-radius:15px; display:flex; flex-direction:column; justify-content:center; padding:7px; transition:.2s; }
-    .sig-style.on { border-color:var(--accent); background:#fff; box-shadow:0 6px 18px rgba(230,132,181,.17); }
-    .sig-style b { display:block; font-size:24px; line-height:1.3; overflow-wrap:anywhere; font-weight:normal; }
-    .sig-style small { display:block; color:#95798e; font-size:11px; }
-    .sig-preview { padding:17px; border-radius:16px; background:#fff9fc; text-align:right; border:1px solid #f3dce9; margin-top:12px; font-size:33px; overflow-wrap:anywhere; }
-    .paper-photos { display:block; min-width:0; margin:12px auto 0; }
-    .paper-photos .photo-stack { height:266px; }
-    .paper-photos .photo-stack-title { margin-top:0; }
-    /* Fullscreen, focus-managed picture viewer */
-    .photo-lightbox { position:fixed; inset:0; z-index:1200; display:grid; place-items:center; padding:clamp(12px,3vw,24px); background:rgba(35,19,44,.72); backdrop-filter:blur(15px); }
-    .photo-lightbox[hidden] { display:none!important; }
-    .photo-lightbox-dialog { width:min(570px,100%); max-height:calc(100dvh - 24px); min-width:0; display:flex; flex-direction:column; padding:clamp(12px,3vw,22px); border-radius:28px; background:linear-gradient(145deg,#fff9fc,#f8efff); box-shadow:0 24px 80px rgba(18,12,33,.34); animation:photo-card-appear .35s cubic-bezier(.17,1.17,.4,1) both; }
-    @keyframes photo-card-appear { from { opacity:0; transform:translateY(28px) scale(.93) rotate(-3deg); } to { opacity:1; transform:translateY(0) scale(1) rotate(0); } }
-    .photo-lightbox-head { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:2px 3px 10px; }
-    .photo-lightbox-head strong { font-family:var(--head); font-size:20px; color:#765175; }
-    .photo-lightbox-head small { display:block; font-size:12px; color:#987991; }
-    .photo-lightbox-close { width:37px; height:37px; border-radius:50%; background:#f9e6f0; color:#975673; font-size:23px; flex:none; }
-    .photo-lightbox-frame { background:white; border:1px solid #f1e5ee; padding:clamp(8px,2vw,13px); border-radius:15px; box-shadow:0 8px 28px rgba(123,86,120,.15); overflow:hidden; text-align:center; }
-    .photo-lightbox-frame img { width:100%; height:min(56dvh,480px); max-height:480px; display:block; border-radius:8px; background:#f7eef5; object-fit:contain; animation:photo-swap .3s ease-out; }
-    @keyframes photo-swap { from { opacity:.6; transform:scale(.97); } }
-    .photo-lightbox-frame p { margin:7px 0 1px; font:700 24px var(--hand); color:#b16a96; }
-    .photo-lightbox-foot { display:flex; gap:10px; justify-content:space-between; align-items:center; padding-top:14px; }
-    .photo-lightbox-foot .btn { padding:9px 16px; font-size:13px; }
-    .photo-lightbox-count { font-size:13px; font-weight:800; color:#896a85; white-space:nowrap; }
-    @media (max-width:480px) { .photo-stack { width:min(100%,312px); height:237px; } .paper-photos .photo-stack { height:245px; } .polaroid-card { width:clamp(123px,46%,154px); height:176px; } .photo-lightbox-frame img { height:min(53dvh,410px); } .photo-lightbox-dialog { border-radius:22px; } }
-    @media (max-width:480px) { .photo-stack { --fan-scale:.44; } .photo-stack .polaroid-card:hover { transform:translateX(calc(-50% + var(--fan-x))) translateY(-12px) rotate(0deg) scale(1.045); } }
-    @media (max-width:350px) { .photo-stack { --fan-scale:.34; } .polaroid-card { width:clamp(112px,43%,139px); } }
-    @media (prefers-reduced-motion:reduce) { .polaroid-card, .photo-lightbox-dialog, .photo-lightbox-frame img { transition:none!important; animation:none!important; } }
-    .page { min-height:330px; }
-    .share-studio { text-align:left; }
-    .share-studio h2 { text-align:left; }
-    .share-studio label { margin:15px 0 8px; }
-    .share-studio input { min-width:0; }
-    .share-studio .share-row { display:flex; align-items:center; gap:8px; }
-    .share-studio .share-row input { flex:1; }
-    .share-studio .share-row .btn { white-space:nowrap; }
-    .share-studio .hint-small { font-size:12px; color:#8a7687; line-height:1.5; margin:9px 0 0; }
-    .share-studio #aliasStatus { min-height:18px; }
-    .share-actions { display:flex; gap:8px; margin-top:13px; flex-wrap:wrap; }
-    .share-actions .btn { flex:1; padding:10px 14px; }
-    .sync-line { color:var(--soft); font-size:12px; margin-top:3px; }
-    .sync-line[data-state=ok] { color:#31795e; }
-    .sync-line[data-state=error] { color:#bb4969; }
-    @media(max-width:480px) {
-      .sig-styles { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .sig-style b { font-size:20px; }
-      .share-studio .share-row { flex-wrap:wrap; }
-      .share-studio .share-row input { flex-basis:100%; }
-      .mcard { padding:19px; }
-    }
-
-    /* 3.1 — Single-page letter editor: the page rail never stacks editors vertically. */
-    .make > .glass { min-width:0; }
-    .letter-page-switcher { min-width:0; margin:8px 0 14px; }
-    .letter-page-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:10px; }
-    .letter-page-heading h3 { font-size:18px; color:var(--ink); }
-    .letter-page-count { font-size:12px; font-weight:800; color:var(--soft); white-space:nowrap; }
-    .letter-page-rail { display:flex; align-items:center; gap:8px; min-width:0; width:100%; }
-    .letter-page-tabs { display:flex; align-items:stretch; gap:7px; width:100%; min-width:0; flex:1; overflow-x:hidden; scroll-behavior:smooth; scrollbar-width:none; -webkit-overflow-scrolling:touch; overscroll-behavior-x:contain; scroll-snap-type:x proximity; }
-    .letter-page-tabs::-webkit-scrollbar { display:none; }
-    .letter-page-tabs.is-scrollable { overflow-x:auto; touch-action:pan-x; }
-    .letter-page-tab { flex:1 1 0; min-width:0; min-height:45px; padding:9px 5px; white-space:nowrap; border:1px solid #efd3e3; border-radius:13px; background:rgba(255,255,255,.76); color:var(--soft); font-size:13px; font-weight:800; transition:background .2s,color .2s,transform .2s,border-color .2s; scroll-snap-align:center; }
-    .letter-page-tab:hover { background:#fff; color:var(--ink); }
-    .letter-page-tab[aria-selected="true"] { background:linear-gradient(135deg,var(--accent),var(--accent-light)); border-color:transparent; color:#fff; box-shadow:0 6px 16px rgba(165,108,155,.18); }
-    .letter-page-tab:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
-    .letter-page-tab.has-content:not([aria-selected="true"])::after { content:" •"; color:var(--accent); }
-    .letter-page-tabs.is-scrollable .letter-page-tab { flex:0 0 calc((100% - 21px) / 4); min-width:77px; }
-    .letter-page-arrow { flex:0 0 32px; display:grid; place-items:center; width:32px; min-height:43px; border-radius:12px; background:rgba(255,255,255,.82); border:1px solid #efd3e3; font-size:24px; font-weight:700; color:var(--accent); }
-    .letter-page-arrow[hidden] { display:none !important; }
-    .letter-page-arrow:disabled { opacity:.28; cursor:default; }
-    .letter-page-hint { font-size:12px; color:var(--soft); margin-top:9px; }
-    #pages { min-width:0; }
-    #pages .pg { width:100%; min-width:0; margin-bottom:0; }
-    #pages textarea { display:block; resize:vertical; max-width:100%; min-height:150px; }
-    .letter-page-panel { animation:in .22s ease-out both; }
-    @media(max-width:700px) {
-      .letter-page-heading h3 { font-size:16px; }
-      .letter-page-tab { font-size:12px; padding:9px 2px; border-radius:12px; }
-      .letter-page-arrow { flex-basis:29px; width:29px; }
-    }
-    @media(prefers-reduced-motion:reduce) { .letter-page-tabs { scroll-behavior:auto; } .letter-page-panel { animation:none; } }
-
-    /* 4.0 — premium demo, two-box mailbox, edit studio, page effects */
-    .toast { pointer-events:none; }
-    .edit-banner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 14px; margin-top:12px; border-radius:16px; background:#fff4d8; border:1px solid #f0d69f; font-size:13px; color:#765229; }
-    .edit-banner .btn { padding:8px 12px; font-size:12px; flex-shrink:0; }
-    .mailbox-tabs { display:flex; gap:9px; padding:6px; background:rgba(255,255,255,.63); border:1px solid #fff; border-radius:18px; margin:16px 0 10px; }
-    .mailbox-tab { flex:1; min-width:0; padding:11px 12px; border-radius:14px; font-size:14px; font-weight:800; color:var(--soft); transition:.2s; }
-    .mailbox-tab.on { color:white; background:linear-gradient(135deg,var(--accent),var(--accent-light)); box-shadow:0 6px 16px rgba(173,116,159,.19); }
-    .mailbox-tab span { display:inline-block; font-size:11px; padding:0 6px; border-radius:8px; background:rgba(255,255,255,.32); }
-    .mailbox-note { font-size:13px; color:var(--soft); margin-bottom:20px; }
-    .subscription-hero { text-align:center; padding:24px 8px 22px; max-width:730px; margin:auto; }
-    .subscription-hero h2 { font-size:clamp(27px,4vw,40px); margin:15px 0 9px; }
-    .subscription-hero p { color:var(--soft); }
-    .premium-chip { display:inline-block; padding:8px 14px; border-radius:99px; font-size:12px; font-weight:800; color:#9963ab; background:#fff; }
-    .plan-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:860px; margin:10px auto 20px; }
-    .plan-card { min-width:0; padding:clamp(18px,3vw,28px); border:1px solid #fff; border-radius:26px; background:rgba(255,255,255,.84); box-shadow:0 12px 38px rgba(120,75,121,.12); }
-    .plan-card.featured { border:2px solid var(--accent); background:rgba(255,255,255,.92); }
-    .plan-name { font-size:12px; font-weight:800; color:var(--accent); }
-    .plan-card h3 { font-size:22px; margin-top:10px; }
-    .plan-cost { font-size:28px; color:var(--ink); font-family:var(--head); font-weight:800; margin:12px 0; }
-    .plan-cost small { font-size:13px; color:var(--soft); }
-    .plan-card ul { margin:12px 0 14px; padding-left:20px; color:var(--ink); font-size:14px; line-height:2; }
-    .subscription-warning { max-width:870px; margin:15px auto; color:var(--soft); font-size:12px; text-align:center; }
-    .premium-editor { margin:15px 0; background:rgba(255,255,255,.66); }
-    .premium-editor-head { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:5px; }
-    .premium-editor-head small { color:var(--accent); font-weight:800; }
-    .premium-editor p { font-size:13px; margin:7px 0 12px; }
-    .music-upload { display:inline-flex; width:auto; cursor:pointer; padding:10px 15px; background:#fce6f1; border-radius:14px; color:#915378; font-weight:800; }
-    .music-upload.locked { opacity:.55; }
-    .music-selected { margin:10px 0; font-size:12px; overflow-wrap:anywhere; color:var(--soft); }
-    .reader-music { padding:13px; margin:8px auto 12px; max-width:650px; border-radius:17px; background:rgba(255,255,255,.85); text-align:center; }
-    .reader-music span { display:block; font-size:13px; font-weight:800; margin-bottom:7px; }
-    .reader-music audio { width:100%; height:40px; }
-    .effect-picker { margin-top:13px; padding:12px; border-radius:15px; border:1px solid #eed9ed; background:rgba(255,255,255,.55); }
-    .effect-picker small { color:var(--soft); font-size:12px; }
-    .effect-picker select { margin-top:6px; }
-    .page { overflow:hidden; }
-    .emoji-overlay { pointer-events:none; overflow:hidden; position:absolute; inset:0; z-index:0; }
-    .page > :not(.emoji-overlay) { position:relative; z-index:1; }
-    .emoji-particle { position:absolute; font-size:23px; opacity:0; animation:paper-float 5s ease-out infinite; filter:drop-shadow(0 2px 2px rgba(0,0,0,.08)); }
-    @keyframes paper-float { 0%{ transform:translateY(32px) scale(.75) rotate(-12deg); opacity:0; } 20%{opacity:.65;} 85%{opacity:.43;} 100%{ transform:translateY(-92px) scale(1.25) rotate(16deg);opacity:0;} }
-    .tab-premium { color:#995aa3; }
-    @media(max-width:700px) { .tabs { grid-template-columns:repeat(5,minmax(0,1fr)); } .tab { font-size:10px; padding:8px 2px; } .nav { width:min(1100px,calc(100% - 16px)); } .mailbox-tab { font-size:12px; padding:11px 6px; } .plan-grid { grid-template-columns:1fr; } }
-    @media(max-width:390px) { .tab { font-size:9px; letter-spacing:-.2px; } .edit-banner { flex-wrap:wrap; } }
-    @media(prefers-reduced-motion:reduce) { .emoji-particle { animation:none !important; } }
-
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -1350,9 +25,9 @@
       <button class="tab" data-go="create">Create</button>
       <button class="tab" data-go="dash">My envelopes</button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
-      <button class="tab tab-premium" data-go="subscription">✦ Premium</button>
     </nav>
-    <div class="nav-user" title="Signed-in Google account"><img class="nav-avatar" id="navAvatar" alt="Account photo" referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span></div>
+    <div class="nav-user" title="Signed-in Google account"><img class="nav-avatar" id="navAvatar" alt="Account photo"
+        referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span></div>
   </header>
   <main>
     <section class="screen" id="home">
@@ -1376,8 +51,9 @@
       <div class="make">
         <div class="glass">
           <h2 id="editorTitle">Design your envelope</h2>
-          <p class="soft" id="editorSubtitle">Pick the colors, then write each page.</p>
-          <div class="edit-banner" id="editBanner" hidden><span>✏️ Editing your saved envelope — original link stays the same.</span><button class="btn sec" id="cancelEdit" type="button">Cancel edit</button></div>
+          <p class="soft" id="editorSubtitle"></p>
+          <div class="edit-banner" id="editBanner" hidden><span>Editing your saved envelope — original link stays the
+              same.</span><button class="btn sec" id="cancelEdit" type="button">Cancel edit</button></div>
           <div class="grid">
             <label class="full">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡"
                 autocomplete="off"></label>
@@ -1390,32 +66,48 @@
               <div class="sw" id="paperSw"></div>
             </div>
           </div>
+          <section class="cover-customizer" aria-labelledby="coverTextTitle">
+            <div class="cover-customizer-heading">
+              <div><h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3>
+              </div>
+            </div>
+            <label for="coverText">Greeting on the envelope sheets</label>
+            <div class="cover-input-row">
+              <input id="coverText" maxlength="64" value="Welcome to W-Envelope Cute" autocomplete="off"
+                aria-describedby="coverTextNote" disabled />
+              <button type="button" class="btn sec cover-upgrade" id="coverUpgrade">✦ Unlock</button>
+            </div>
+          </section>
           <section class="letter-page-switcher" aria-label="Letter page editor navigation">
             <div class="letter-page-heading">
               <h3>Your letter pages</h3>
               <span class="letter-page-count" id="letterPageCount" aria-live="polite"></span>
             </div>
             <div class="letter-page-rail">
-              <button type="button" class="letter-page-arrow" id="letterPageLeft" aria-label="Scroll page tabs left" hidden>‹</button>
-              <div class="letter-page-tabs" id="letterPageTabs" role="tablist" aria-label="Choose which page to edit"></div>
-              <button type="button" class="letter-page-arrow" id="letterPageRight" aria-label="Scroll page tabs right" hidden>›</button>
+              <button type="button" class="letter-page-arrow" id="letterPageLeft" aria-label="Scroll page tabs left"
+                hidden>‹</button>
+              <div class="letter-page-tabs" id="letterPageTabs" role="tablist" aria-label="Choose which page to edit">
+              </div>
+              <button type="button" class="letter-page-arrow" id="letterPageRight" aria-label="Scroll page tabs right"
+                hidden>›</button>
             </div>
             <p class="letter-page-hint" id="letterPageHint"></p>
           </section>
           <div id="pages"></div>
           <section class="glass signature-studio" aria-labelledby="signatureTitle">
-            <div class="sig-heading"><h3 id="signatureTitle">Signature studio</h3><p>Type your signature and choose 1 of 10 handwritten styles. Your signature appears on the last paper.</p></div>
-            <label>Signature text <input id="signatureText" maxlength="45" autocomplete="off" placeholder="e.g. Always yours, Wen" /></label>
-            <div class="sig-styles" id="signatureStyles" role="group" aria-label="Signature styles"></div>
+            <div class="sig-heading">
+              <h3 id="signatureTitle">Signature studio</h3>
+            </div>
+            <label>Signature text <input id="signatureText" maxlength="45" autocomplete="off"
+                placeholder="e.g. Always yours, Wen" /></label>
+            <div class="sig-nav"><button type="button" class="sig-arrow" id="signaturePrev"
+                aria-label="Scroll signature choices left">‹</button>
+              <div class="sig-styles" id="signatureStyles" role="tablist" aria-label="Choose a signature style"></div>
+              <button type="button" class="sig-arrow" id="signatureNext"
+                aria-label="Scroll signature choices right">›</button>
+            </div>
+            <div class="sig-placement"><div class="sig-placement-head"><b>Signature position</b><small id="sigAlignHint">Free: Right only</small></div><div class="sig-position-tabs" role="group" aria-label="Signature alignment"><button type="button" class="sig-position" data-align="left" aria-pressed="false">⇤ Left <span class="sig-lock">🔒</span></button><button type="button" class="sig-position" data-align="center" aria-pressed="false">↔ Center <span class="sig-lock">🔒</span></button><button type="button" class="sig-position active" data-align="right" aria-pressed="true">⇥ Right</button></div></div>
             <div class="sig-preview" id="signaturePreview">Your signature ♡</div>
-          </section>
-          <section class="glass premium-editor" id="premiumEditor">
-            <div class="premium-editor-head"><b>✦ Premium Soundtrack</b><small id="musicAccessLabel">Demo Premium feature</small></div>
-            <p class="soft">Attach one audio track (MP3, WAV, OGG or M4A; max 10 MB). The recipient can press play while reading any page.</p>
-            <label class="music-upload" id="musicUploadLabel">🎶 Choose music <input type="file" id="musicFile" accept="audio/mpeg,audio/mp3,audio/mp4,audio/wav,audio/x-wav,audio/ogg,audio/aac,.mp3,.m4a,.wav,.ogg,.aac" hidden></label>
-            <div class="music-selected" id="musicSelected">No music selected</div>
-            <button class="btn sec" type="button" id="removeMusic" hidden>Remove soundtrack</button>
-            <p class="hint-small">Music upload requires Firebase Storage (Blaze billing enabled). The preview plays only when the recipient clicks play.</p>
           </section>
           <button class="btn pri wide" id="make">Seal my envelope</button>
         </div>
@@ -1433,81 +125,157 @@
       <div class="dtop">
         <div>
           <h2>My envelopes</h2>
-          <p class="soft" id="total"></p><p class="sync-line" id="cloudStatus" data-state="loading">Connecting to cloud...</p>
+          <p class="soft" id="total"></p>
+          <p class="sync-line" id="cloudStatus" data-state="loading">Connecting to cloud...</p>
         </div><button class="btn pri" data-go="create">+ New</button>
       </div>
       <div class="mailbox-tabs" role="tablist" aria-label="Envelope collections">
-        <button class="mailbox-tab on" type="button" id="recentTab" role="tab" aria-selected="true">✍️ Recent Envelopes <span id="recentCount">0</span></button>
-        <button class="mailbox-tab" type="button" id="receivedTab" role="tab" aria-selected="false">💌 Received Envelopes <span id="receivedCount">0</span></button>
+        <button class="mailbox-tab on" type="button" id="recentTab" role="tab" aria-selected="true">Recent Envelopes
+          <span id="recentCount">0</span></button>
+        <button class="mailbox-tab" type="button" id="receivedTab" role="tab" aria-selected="false">Received
+          Envelopes <span id="receivedCount">0</span></button>
       </div>
       <p class="mailbox-note" id="mailboxNote">Letters you created. Open, edit, share or remove them.</p>
       <div class="cards" id="list" role="tabpanel"></div>
     </section>
 
 
-    <section class="screen" id="subscription">
-      <div class="subscription-hero"><span class="premium-chip">✦ W - Envelope Cute Premium</span><h2>Make your sweetest letters even more magical.</h2><p>Unlock more space, memories, music and animated effects. Preview the whole experience with the free demo subscription — no card, no actual charge.</p></div>
-      <div class="plan-grid">
-        <article class="plan-card"><span class="plan-name">Free</span><h3>Always sweet ♡</h3><p class="plan-cost">₱0 <small>/ demo</small></p><ul><li>8 pages per envelope</li><li>2 pictures per page</li><li>10 signature styles</li><li>Cloud synced envelopes & short links</li><li>Page tabs and existing paper designs</li></ul><button class="btn sec wide" id="freePlanBtn" type="button">Current free plan</button></article>
-        <article class="plan-card featured"><span class="plan-name">✦ Premium demo</span><h3>More room for feelings</h3><p class="plan-cost">Demo <small>· no payment</small></p><ul><li>Up to 10 pages per envelope</li><li>Up to 4 pictures on every page</li><li>Animated emoji / sparkle effects on any page</li><li>Upload a clickable music track (max 10 MB)</li><li>All free features + previous envelopes</li></ul><button class="btn pri wide" id="premiumPlanBtn" type="button">Activate Premium demo</button></article>
-      </div>
-      <p class="subscription-warning">Demo only: no billing, payment verification, paid entitlement or production subscription security. Cloud Storage for music needs separate Firebase setup and may incur Firebase infrastructure charges.</p>
-    </section>
-
     <section class="screen" id="settings">
       <div class="settings-top">
-        <div><h2>Settings</h2><p>Your little space, just the way you like it.</p></div>
+        <div>
+          <h2>Settings</h2>
+        </div>
       </div>
       <div class="settings-shell">
         <aside class="glass settings-menu" aria-label="Settings categories">
           <button class="settings-nav on" data-settings="appearance" aria-pressed="true">Appearance</button>
           <button class="settings-nav" data-settings="account" aria-pressed="false">Account & Data</button>
+          <button class="settings-nav settings-premium-nav" data-settings="subscription" aria-pressed="false">✦
+            Subscription <span class="settings-premium-pill" id="settingsPlanStatus">Free</span></button>
           <button class="settings-nav" data-settings="about" aria-pressed="false">About</button>
         </aside>
         <div>
           <section class="settings-panel on" id="settings-appearance" aria-label="Appearance">
             <div class="glass settings-section">
-              <h2>Appearance</h2><p>Choose a sweet gradient, or create your own. Changes appear instantly.</p>
+              <h2>Appearance</h2>
+              <p>Choose a sweet gradient, or create your own. Changes appear instantly.</p>
               <div class="theme-presets" id="themePresets"></div>
               <div class="setting-grid">
-                <label class="setting-field">Gradient start<div class="color-field"><input type="color" id="gradStart" value="#fff1f7"><span id="gradStartLabel">#FFF1F7</span></div></label>
-                <label class="setting-field">Gradient end<div class="color-field"><input type="color" id="gradEnd" value="#f4ecff"><span id="gradEndLabel">#F4ECFF</span></div></label>
-                <label class="setting-field">Text color<div class="color-field"><input type="color" id="textColor" value="#5b4260"><span id="textColorLabel">#5B4260</span></div></label>
-                <label class="setting-field">Accent color<div class="color-field"><input type="color" id="accentColor" value="#ee7fae"><span id="accentColorLabel">#EE7FAE</span></div></label>
-                <label class="setting-field">Interface font<select id="fontChoice"><option value="nunito">Nunito (original)</option><option value="fredoka">Fredoka (rounded)</option><option value="system">System UI (clean)</option><option value="georgia">Georgia (classic)</option><option value="trebuchet">Trebuchet (friendly)</option></select></label>
-                <label class="setting-field">Text size<select id="textSize"><option value="0.92">Compact</option><option value="1">Default</option><option value="1.1">Comfortable</option><option value="1.2">Large</option></select></label>
+                <label class="setting-field">Gradient start<div class="color-field"><input type="color" id="gradStart"
+                      value="#fff1f7"><span id="gradStartLabel">#FFF1F7</span></div></label>
+                <label class="setting-field">Gradient end<div class="color-field"><input type="color" id="gradEnd"
+                      value="#f4ecff"><span id="gradEndLabel">#F4ECFF</span></div></label>
+                <label class="setting-field">Text color<div class="color-field"><input type="color" id="textColor"
+                      value="#5b4260"><span id="textColorLabel">#5B4260</span></div></label>
+                <label class="setting-field">Accent color<div class="color-field"><input type="color" id="accentColor"
+                      value="#ee7fae"><span id="accentColorLabel">#EE7FAE</span></div></label>
+                <label class="setting-field">Interface font<select id="fontChoice">
+                    <option value="nunito">Nunito (original)</option>
+                    <option value="fredoka">Fredoka (rounded)</option>
+                    <option value="system">System UI (clean)</option>
+                    <option value="georgia">Georgia (classic)</option>
+                    <option value="trebuchet">Trebuchet (friendly)</option>
+                  </select></label>
+                <label class="setting-field">Text size<select id="textSize">
+                    <option value="0.92">Compact</option>
+                    <option value="1">Default</option>
+                    <option value="1.1">Comfortable</option>
+                    <option value="1.2">Large</option>
+                  </select></label>
               </div>
-              <label class="setting-check"><input type="checkbox" id="showHearts" checked><span>Floating hearts <small>Show the cute background decoration and celebration particles.</small></span></label>
-              <label class="setting-check"><input type="checkbox" id="reduceMotion"><span>Reduce animations <small>Minimize motion while browsing and opening envelopes.</small></span></label>
-              <div class="settings-actions"><button class="btn sec" id="resetAppearance">↺ Restore original theme</button></div>
+              <label class="setting-check"><input type="checkbox" id="showHearts" checked><span>Floating hearts
+                  <small>Show the cute background decoration and celebration particles.</small></span></label>
+              <div class="settings-actions"><button class="btn sec" id="resetAppearance">↺ Restore original
+                  theme</button></div>
             </div>
           </section>
           <section class="settings-panel" id="settings-account" aria-label="Account and data">
             <div class="glass settings-section">
-              <h2>Your account</h2><p>Connected securely through Google and Firebase Authentication.</p>
-              <div class="account-card"><img id="accountAvatar" alt="Google account profile photo" referrerpolicy="no-referrer"><div><strong id="accountName">Google account</strong><small id="accountEmail"></small></div></div>
+              <h2>Your account</h2>
+              <div class="account-card"><img id="accountAvatar" alt="Google account profile photo"
+                  referrerpolicy="no-referrer">
+                <div><strong id="accountName">Google account</strong><small id="accountEmail"></small></div>
+              </div>
               <div class="settings-actions"><button class="btn dng" id="signOutBtn">↪ Sign out of Google</button></div>
             </div>
             <div class="glass settings-section">
-              <h2>My envelope data</h2><p>Cloud-synced to your Google account using Firebase Realtime Database. You can also download or import a backup.</p>
+              <h2>My envelope data</h2>
               <div class="settings-actions">
                 <button class="btn sec" id="exportEnvelopes">⬇ Export JSON backup</button>
                 <button class="btn sec" id="importEnvelopes">⬆ Import backup</button>
-                <input id="importFile" type="file" accept=".json,application/json" hidden aria-label="Select envelope backup">
+                <input id="importFile" type="file" accept=".json,application/json" hidden
+                  aria-label="Select envelope backup">
                 <button class="btn dng" id="clearEnvelopes">Delete all envelopes</button>
               </div>
             </div>
           </section>
+          <section class="settings-panel" id="settings-subscription" aria-label="Subscription plans">
+            <div class="subscription-hero"><span class="premium-chip">✦ W - Envelope Cute Premium</span>
+              <h2>Make your sweetest letters even more magical.</h2>
+              <p>Unlock more pages, expressive photo designs, personal greetings, custom links, animated effects, and flexible signature placement. Choose Maya or GoTyme to request Premium access.</p>
+            </div>
+            <div class="plan-grid">
+              <article class="plan-card"><span class="plan-name">Free</span>
+                <h3>Always sweet ♡</h3>
+                <p class="plan-cost">₱0 <small>/ Free</small></p>
+                <ul>
+                  <li>8 pages per envelope</li>
+                  <li>2 pictures per page</li>
+                  <li>10 signature styles · right-aligned only</li>
+                  <li>Default Classic photo border and Stack layout</li>
+                  <li>Cloud synced envelopes & automatic short links</li>
+                  <li>Default envelope greeting and random link names</li>
+                </ul><button class="btn sec wide" id="freePlanBtn" type="button" disabled>Current free plan</button>
+              </article>
+              <article class="plan-card featured"><span class="plan-name">✦ Premium</span>
+                <h3>More room for feelings</h3>
+                <p class="plan-cost" id="premiumPriceDisplay">Set the price <small>in payment-config.js</small></p>
+                <ul>
+                  <li>Up to 10 pages per envelope</li>
+                  <li>Up to 4 pictures on every page</li>
+                  <li>Animated emoji / sparkle effects on any page</li>
+                  <li>5 Polaroid border styles + 5 photo layer layouts</li>
+                  <li>Position signatures Left, Center or Right</li>
+                  <li>Personalize the greeting on the envelope sheets</li>
+                  <li>Rename short links with your own custom alias</li>
+                  <li>All free features + previous envelopes</li>
+                </ul><button class="btn pri wide" id="premiumPlanBtn" type="button">Choose payment method</button>
+              </article>
+            </div>
+            <div class="glass premium-status-area"><h3>Payment status</h3><p id="premiumAccountStatus" aria-live="polite">Sign in to view your payment status.</p><div id="paymentRequestList" class="payment-request-list"></div><p class="payment-honesty">Bank transfers are reviewed manually. Submitting a reference is not proof of payment, and Premium is never activated before owner approval.</p></div>
+          </section>
+
           <section class="settings-panel" id="settings-about" aria-label="About W Envelope Cute">
             <div class="glass settings-section">
               <div class="about-symbol">💌</div>
               <h2>W - Envelope Cute</h2>
               <p>A cozy digital space for sending little surprises, heartfelt letters, and words worth keeping.</p>
-              <div class="about-feature"><div><b>Make your message personal</b><p>Write up to 8 pages on Free or 10 on Premium demo, with up to 4 photos per page and 10 signature styles.</p></div></div>
-              <div class="about-feature"><div><b>Seal, share, and open</b><p>Create short share links with optional custom names, playful opening effects, and photo-filled letters.</p></div></div>
-              <div class="about-feature"><div><b>A space that feels like you</b><p>Choose gradients, typefaces, accent colors, and accessibility preferences.</p></div></div>
-              <div class="about-feature"><div><b>Google sign-in</b><p>Firebase Authentication manages Google sign-in; Realtime Database syncs your envelopes across devices.</p></div></div>
-              <div class="detail-note"><strong>Made with ♡ by Wenxyz</strong><div>Creator and original design credit · W - Envelope Cute · Enhanced edition 4.0</div><div style="margin-top:5px">© <span id="copyrightYear"></span> Wenxyz. All rights reserved.</div></div>
+              <div class="about-features">
+                <div class="about-feature"><span aria-hidden="true">✍️</span>
+                  <div><b>Personal letters</b>
+                    <p>Up to 10 pages, photos and signature styles.</p>
+                  </div>
+                </div>
+                <div class="about-feature"><span aria-hidden="true">💌</span>
+                  <div><b>Share your memories</b>
+                    <p>Short links for everyone, plus custom link names, photo frames and opening effects with Premium.</p>
+                  </div>
+                </div>
+                <div class="about-feature"><span aria-hidden="true">🎨</span>
+                  <div><b>Your own aesthetic</b>
+                    <p>Gradients, fonts, accent colors and accessibility settings.</p>
+                  </div>
+                </div>
+                <div class="about-feature"><span aria-hidden="true">☁️</span>
+                  <div><b>Keep letters safe</b>
+                    <p>Google sign-in sync across devices.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="detail-note"><strong>Made by Wenxyz</strong>
+                <div>Creator and original design credit · W - Envelope Cute · Enhanced edition 4.5</div>
+                <div style="margin-top:5px">© <span id="copyrightYear"></span> Wenxyz. All rights reserved.</div>
+              </div>
             </div>
           </section>
         </div>
@@ -1526,10 +294,11 @@
         <p class="hint" id="hint">Tap the heart to open ✨</p>
         <div class="reader" id="reader" hidden>
           <article class="page" id="page"><small id="pgNo"></small>
-            <div class="txt" id="pgTxt"></div><div class="paper-photos" id="pgPhotos" hidden></div><div class="emoji-overlay" id="paperEmoji" aria-hidden="true"></div>
+            <div class="txt" id="pgTxt"></div>
+            <div class="paper-photos" id="pgPhotos" hidden></div>
+            <div class="emoji-overlay" id="paperEmoji" aria-hidden="true"></div>
             <div class="sign" id="sign"></div>
           </article>
-          <div class="reader-music" id="readerMusic" hidden><span>🎶 A little soundtrack</span><audio controls id="readerAudio" preload="none" playsinline></audio></div>
           <div class="dots" id="dots"></div>
           <div class="row"><button class="btn sec" id="prev">‹ Back</button><button class="btn pri" id="next">Next
               ›</button></div>
@@ -1542,9 +311,18 @@
   </div>
   <div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo gallery" hidden>
     <div class="photo-lightbox-dialog" role="document">
-      <div class="photo-lightbox-head"><div><strong>Our little memories ♡</strong><small id="photoLightboxSubtitle">A closer look at your photos</small></div><button type="button" class="photo-lightbox-close" id="photoLightboxClose" aria-label="Close photo viewer">×</button></div>
-      <div class="photo-lightbox-frame"><img id="photoLightboxImage" alt="Selected envelope photo"><p id="photoLightboxCaption">A sweet little moment ✨</p></div>
-      <div class="photo-lightbox-foot"><button class="btn sec" type="button" id="photoLightboxPrev" aria-label="Previous photo">‹ Previous</button><span class="photo-lightbox-count" id="photoLightboxCount" aria-live="polite"></span><button class="btn pri" type="button" id="photoLightboxNext" aria-label="Next photo">Next ›</button></div>
+      <div class="photo-lightbox-head">
+        <div><strong>Our little memories ♡</strong><small id="photoLightboxSubtitle">A closer look at your
+            photos</small></div><button type="button" class="photo-lightbox-close" id="photoLightboxClose"
+          aria-label="Close photo viewer">×</button>
+      </div>
+      <div class="photo-lightbox-frame"><img id="photoLightboxImage" alt="Selected envelope photo">
+        <p id="photoLightboxCaption">A sweet little moment ✨</p>
+      </div>
+      <div class="photo-lightbox-foot"><button class="btn sec" type="button" id="photoLightboxPrev"
+          aria-label="Previous photo">‹ Previous</button><span class="photo-lightbox-count" id="photoLightboxCount"
+          aria-live="polite"></span><button class="btn pri" type="button" id="photoLightboxNext"
+          aria-label="Next photo">Next ›</button></div>
     </div>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -1557,7 +335,8 @@
       <div class="auth-icon" aria-hidden="true">💌</div>
       <h1 id="authTitle">Welcome to<br>W - Envelope Cute</h1>
       <p>Sign in to create, collect, and share the sweetest digital envelopes.</p>
-      <button type="button" class="google-button" id="googleSignIn" disabled><span class="google-mark" aria-hidden="true">G</span><span id="googleButtonText">Continue with Google</span></button>
+      <button type="button" class="google-button" id="googleSignIn" disabled><span class="google-mark"
+          aria-hidden="true">G</span><span id="googleButtonText">Continue with Google</span></button>
       <p class="auth-status" id="authStatus" role="status" aria-live="polite">Checking your sign-in session…</p>
       <button type="button" class="auth-redirect" id="googleRedirect" hidden>Try Google sign-in by redirect</button>
       <p class="auth-sub">Your Google account is used for sign-in only. No email messages are sent.</p>
@@ -1565,975 +344,11 @@
     </div>
   </section>
 
-  <script>
-    const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
-    const ENV = ["#e994b7", "#f3a6a6", "#f2c879", "#a995d9", "#8db7d9", "#8dc7b0", "#d5aa76", "#d88383"];
-    const PAPER = ["#fffaf2", "#fff1f6", "#f5efff", "#edf8ff", "#effbf3", "#fff7df"];
-    const ROT = [-2, 2, -4, 3, -1], calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
-    const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-    const hexOk = c => /^#[0-9a-f]{6}$/i.test(c), uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-    const fmt = d => new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-    const shade = (h, p) => { const t = p < 0 ? 0 : 255, k = Math.abs(p); return "#" + [1, 3, 5].map(i => Math.round(parseInt(h.substr(i, 2), 16) * (1 - k) + t * k).toString(16).padStart(2, "0")).join("") };
-    const vars = c => `--c:${c};--cl:${shade(c, .3)};--cf:${shade(c, -.07)};--cd:${shade(c, -.2)}`;
-    const SIGNATURE_STYLES = [
-      { name:"Classic", font:'"Caveat",cursive' },
-      { name:"Dancing", font:'"Dancing Script",cursive' },
-      { name:"Elegant", font:'"Great Vibes",cursive' },
-      { name:"Playful", font:'"Pacifico",cursive' },
-      { name:"Flowing", font:'"Satisfy",cursive' },
-      { name:"Allura", font:'"Allura",cursive' },
-      { name:"Sacramento", font:'"Sacramento",cursive' },
-      { name:"Parisienne", font:'"Parisienne",cursive' },
-      { name:"Bold ink", font:'"Kaushan Script",cursive' },
-      { name:"Calligraphy", font:'"Cormorant Garamond",serif' }
-    ];
-    const safeImage = src => typeof src === 'string' && /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(src) && src.length < 190000 ? src : null;
-    const safeCode = code => typeof code === 'string' && /^[a-z0-9-]{4,32}$/.test(code) ? code : '';
-    function clean(d) {
-      if (!d || !Array.isArray(d.pages) || !d.pages.length) return null;
-      const signature = d.signature && typeof d.signature === 'object' ? d.signature : {};
-      return {
-        id: String(d.id || uid()).replace(/\W/g, '').slice(0,30),
-        title: String(d.title || 'A little surprise').slice(0,80),
-        from: String(d.from || '').slice(0,40),
-        envelopeColor: hexOk(d.envelopeColor) ? d.envelopeColor : ENV[0],
-        createdAt: String(d.createdAt || new Date().toISOString()).slice(0,40),
-        shortCode: safeCode(d.shortCode), customCode: safeCode(d.customCode),
-        linkCodes:[...new Set([...(Array.isArray(d.linkCodes)?d.linkCodes.slice(0,50):[]),d.shortCode,d.customCode].map(safeCode).filter(Boolean))].slice(0,50),
-        signature: { text: String(signature.text || '').slice(0,45), style: Number.isInteger(+signature.style) ? Math.max(0,Math.min(9,+signature.style)) : 0 },
-        music: (d.music && typeof d.music==='object' && /^https:\/\//.test(d.music.url||'')) ? { url:String(d.music.url).slice(0,1800), name:String(d.music.name||'Soundtrack').slice(0,90), path:String(d.music.path||'').slice(0,250) } : null,
-        updatedAt: String(d.updatedAt || d.createdAt || new Date().toISOString()).slice(0,40),
-        pages: d.pages.slice(0,10).map(p => ({
-          text: String(p && p.text || '').slice(0,600),
-          color: hexOk(p && p.color) ? p.color : PAPER[0],
-          photos: Array.isArray(p && p.photos) ? p.photos.slice(0,4).map(safeImage).filter(Boolean) : [],
-          effect: ['none','hearts','sparkles','flowers','stars','butterflies'].includes(p && p.effect) ? p.effect : 'none'
-        }))
-      };
-    }
-    let store = [], receivedStore = [], currentUser = null, accountKey = null;
-    let mailboxView='recent', editingId=null, premiumDemo=false, pendingMusicFile=null, editingMusic=null;
-    let stopReceived=()=>{}, stopSubscription=()=>{};
-    const isPremium = () => premiumDemo === true;
-    const pageLimit = () => isPremium() ? 10 : 8;
-    const photoLimit = () => isPremium() ? 4 : 2;
-    function updatePageOptions() {
-      const old=Number($('#count').value)||3;
-      const max=Math.max(pageLimit(),editingId && store.find(e=>e.id===editingId)?.pages.length||0);
-      $('#count').innerHTML=Array.from({length:max},(_,i)=>`<option value="${i+1}">${i+1} page${i?'s':''}</option>`).join('');
-      $('#count').value=String(Math.min(old,max));
-      updateMusicUI();
-    }
-    function updateSubscriptionUI() {
-      $('#premiumPlanBtn').textContent=isPremium()?'✓ Premium demo active':'✦ Activate Premium demo';
-      $('#premiumPlanBtn').disabled=isPremium();
-      $('#freePlanBtn').textContent=isPremium()?'Switch to Free demo':'✓ Current free plan';
-      $('#freePlanBtn').disabled=!isPremium();
-      updatePageOptions();renderPages();
-    }
-    async function setSubscriptionDemo(enabled) {
-      if (!cloudReady) return toast('Cloud connection is required to change the demo plan');
-      try { await window.WENV_DB.setDemo(currentUser.uid,enabled);toast(enabled?'✦ Premium demo activated!':'Switched to Free demo'); }
-      catch(err) {console.error(err);toast('Could not update demo subscription');}
-    }
-    function recordReceived(key,e,code='') {
-      if(!currentUser || !e) return;
-      if (store.some(m=>m.id===e.id)) return; // your own letter, not a received letter
-      const item={title:e.title,from:e.from||'',createdAt:e.createdAt||'',receivedAt:new Date().toISOString(),code, envelope: code ? null : clean(e)};
-      window.WENV_DB.saveReceived(currentUser.uid,key,item).catch(err=>console.warn('Received history save:',err));
-    }
-    function watchReceived(uid) {stopReceived();stopReceived=window.WENV_DB.subscribeReceived(uid, data=>{if(currentUser?.uid!==uid)return;receivedStore=Object.entries(data||{}).map(([key,item])=>({...item,key})).sort((a,b)=>String(b.receivedAt||'').localeCompare(String(a.receivedAt||'')));renderDash()}, err=>console.warn('Received collection sync:',err));}
-    function watchDemo(uid) {stopSubscription();stopSubscription=window.WENV_DB.subscribeDemo(uid, data=>{if(currentUser?.uid!==uid)return;premiumDemo=!!(data&&data.enabled);updateSubscriptionUI()},err=>console.warn('Demo plan sync:',err));}
+  <script src="js/firebase-config.js" defer></script>
+  <script src="js/payment-config.js" defer></script>
+  <script src="js/app.js" defer></script>
 
-    let cloudReady = false, stopCloud = () => {}, connectionUid = null, cloudConnected = false;
-    function cloudState(msg, status='loading') {
-      $('#cloudStatus').textContent = msg;
-      $('#cloudStatus').dataset.state = status;
-    }
-    function loadAccount(uid) {
-      accountKey = 'wenvcute_envelopes_v2_' + uid;
-      try {
-        if (localStorage.getItem(accountKey) === null && localStorage.getItem(KEY) !== null) {
-          const legacy = JSON.parse(localStorage.getItem(KEY) || '[]');
-          if (Array.isArray(legacy)) localStorage.setItem(accountKey, JSON.stringify(legacy.map(clean).filter(Boolean)));
-          localStorage.removeItem(KEY);
-        }
-        const data = JSON.parse(localStorage.getItem(accountKey) || '[]');
-        store = Array.isArray(data) ? data.slice(0,500).map(clean).filter(Boolean) : [];
-      } catch {store = []}
-    }
-    async function watchCloud(uid) {
-      stopCloud(); stopCloud = () => {}; cloudReady = false;
-      cloudState('⏳ Syncing envelopes from Firebase...');
-      const legacy = store.slice();
-      let first = true;
-      stopCloud = window.WENV_DB.subscribe(uid, async remote => {
-        if (!currentUser || currentUser.uid !== uid) return;
-        const online = Object.values(remote || {}).map(clean).filter(Boolean).sort((a,b)=>(b.updatedAt||b.createdAt).localeCompare(a.updatedAt||a.createdAt));
-        store = online; cloudReady = true; cloudConnected = true;
-        cloudState('☁️ All envelopes synced to your Google account', 'ok'); renderDash();
-        if (first) {
-          first = false;
-          const existing = new Set(online.map(e => e.id));
-          const missing = legacy.filter(e => !existing.has(e.id));
-          if (missing.length) {
-            cloudState(`⏳ Importing ${missing.length} previously saved envelopes...`);
-            let errors = 0;
-            for (const e of missing) {
-              if (!currentUser || currentUser.uid !== uid) return;
-              try {await window.WENV_DB.put(uid,e)} catch(err) {errors++;console.error(err)}
-            }
-            if (errors) {cloudState(`${errors} old envelopes failed to upload. Check your database rules.`, 'error');return}
-          }
-          // Prevent deleted envelopes from reappearing on the next login.
-          try {localStorage.removeItem(accountKey)} catch {}
-          cloudState('☁️ All envelopes synced to your Google account', 'ok');
-        }
-      }, err => {
-        if (!currentUser || currentUser.uid !== uid) return;
-        cloudReady = false; cloudConnected = false;
-        cloudState('⚠️ Cloud sync unavailable. Check Firebase Database rules / connection.', 'error');
-        console.error('Realtime Database sync:',err);
-        toast('Cloud sync failed. Envelopes cannot be saved until connected.');
-      });
-    }
-    async function cloudPut(e) {
-      if (!currentUser || !cloudReady) throw Error('Cloud not ready');
-      await window.WENV_DB.put(currentUser.uid, clean(e));
-    }
-    async function cloudRemove(id) {
-      if (!currentUser || !cloudReady) throw Error('Cloud not ready');
-      await window.WENV_DB.remove(currentUser.uid,id);
-    }
-    let signatureStyle = 0, photoBusy = false;
-
-
-        let envColor = ENV[0], paper = PAPER[0], pages, recv = null, idx = 0, preview = false, created = null, tt;
-    const blank = () => Array.from({ length: 10 }, () => ({ text: '', color: paper, photos: [],effect:'none' })); pages = blank();
-
-    /* envelope component */
-    const sheets = cols => cols.slice(0, 5).map((p, i) => `<div class="sht" style="--p:${p};--i:${i};--r:${ROT[i]}deg"><b>Welcome to <br> W-Envelope Cute</b></div>`).join("");
-    const envHTML = (c, cols, o = {}) => `<div class="env${o.float ? " float" : ""}" ${o.id ? `id="${o.id}"` : ""} ${o.play ? "data-play" : ""} style="${vars(c)}"><div class="eb"></div><div class="sh">${sheets(cols)}</div><div class="fr"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div><div class="fl"></div>${o.play ? '<button class="seal" aria-label="Open envelope">♡</button>' : '<span class="seal">♡</span>'}</div>`;
-
-    /* nav */
-    function go(n) {
-      if (!currentUser) return;
-      $$(".screen").forEach(s => s.classList.toggle("on", s.id === n)); $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.go === n));
-      document.body.classList.toggle("receiving", n === "recv"); scrollTo({ top: 0, behavior: calm || document.body.classList.contains("reduce-motion") ? "auto" : "smooth" }); if (n === "dash") renderDash()
-    }
-    function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2800) }
-    function modal(h) { $("#mc").innerHTML = h; $("#modal").classList.add("show"); setTimeout(() => { const f = $("#mc .btn,#mc input"); f && f.focus() }, 60) }
-    const closeModal = () => $("#modal").classList.remove("show");
-    function burst(el, n = 14) {
-      if (!appearance.hearts || appearance.reduceMotion) return;
-      const r = el ? el.getBoundingClientRect() : { left: innerWidth / 2, top: innerHeight / 2, width: 0, height: 0 }, S = ["♡", "♥", "💗", "💖", "✦", "✧"];
-      for (let i = 0; i < n; i++) {
-        const h = document.createElement("i"); h.className = "fx"; h.textContent = S[i % S.length];
-        h.style.cssText = `left:${r.left + r.width / 2}px;top:${r.top + r.height / 2}px;font-size:${16 + Math.random() * 14}px;--dx:${Math.random() * 260 - 130}px;--dy:${-90 - Math.random() * 230}px;--s:${.8 + Math.random()};animation-delay:${i * 45}ms`;
-        document.body.append(h); setTimeout(() => h.remove(), 2800 + i * 45)
-      }
-    }
-
-    /* create */
-    function swatches(el, list, cur, fn) {
-      el.innerHTML = list.map(c => `<button type="button" class="dot${c === cur ? " on" : ""}" style="background:${c}" aria-label="Color ${c}" aria-pressed="${c === cur}"></button>`).join("");
-      [...el.children].forEach((b, i) => b.onclick = () => { [...el.children].forEach(x => { x.classList.remove("on"); x.setAttribute("aria-pressed", "false") }); b.classList.add("on"); b.setAttribute("aria-pressed", "true"); fn(list[i]) })
-    }
-    const n = () => +$("#count").value;
-    // These tabs switch the *editor*, never the stored page data. All page drafts
-    // remain in `pages[]` even when another tab is displayed or a page count changes.
-    let activeLetterPage = 0;
-    function pageTabHasContent(i) {
-      return Boolean((pages[i]?.text || '').trim() || (pages[i]?.photos || []).length || (pages[i]?.effect&&pages[i].effect!=='none'));
-    }
-    function refreshPageTabMarkers() {
-      $$('#letterPageTabs [data-letter-page]').forEach(b => {
-        b.classList.toggle('has-content', pageTabHasContent(+b.dataset.letterPage));
-      });
-    }
-    function updatePageTabArrows() {
-      const rail = $('#letterPageTabs');
-      if (!rail || !rail.classList.contains('is-scrollable')) return;
-      $('#letterPageLeft').disabled = rail.scrollLeft < 3;
-      $('#letterPageRight').disabled = rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 3;
-    }
-    function renderPageTabs() {
-      const count = n();
-      const rail = $('#letterPageTabs');
-      const priorScroll = rail.scrollLeft;
-      const scrollable = count >= 5;
-      activeLetterPage = Math.min(Math.max(activeLetterPage, 0), count - 1);
-      $('#letterPageCount').textContent = `Page ${activeLetterPage + 1} of ${count}`;
-      $('#letterPageHint').textContent = scrollable
-        ? ''
-        : '';
-      rail.classList.toggle('is-scrollable', scrollable);
-      $('#letterPageLeft').hidden = $('#letterPageRight').hidden = !scrollable;
-      rail.innerHTML = pages.slice(0, count).map((p, i) =>
-        `<button type="button" class="letter-page-tab${pageTabHasContent(i) ? ' has-content' : ''}" role="tab" id="letterPageTab${i}" data-letter-page="${i}" aria-controls="letterPagePanel" aria-selected="${i === activeLetterPage}" tabindex="${i === activeLetterPage ? 0 : -1}">Page ${i + 1}</button>`
-      ).join('');
-      rail.scrollLeft = scrollable ? priorScroll : 0;
-      rail.querySelectorAll('[data-letter-page]').forEach(btn => {
-        btn.onclick = () => selectLetterPage(+btn.dataset.letterPage);
-        btn.onkeydown = e => {
-          if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Home' && e.key !== 'End') return;
-          e.preventDefault();
-          const nextIndex = e.key === 'Home' ? 0 : e.key === 'End' ? count - 1
-            : Math.max(0, Math.min(count - 1, activeLetterPage + (e.key === 'ArrowRight' ? 1 : -1)));
-          selectLetterPage(nextIndex);
-          $('#letterPageTab' + nextIndex)?.focus({ preventScroll:true });
-        };
-      });
-      requestAnimationFrame(() => {
-        if (!scrollable) return;
-        const active = $('#letterPageTab' + activeLetterPage);
-        if (!active) return;
-        const left = active.getBoundingClientRect().left - rail.getBoundingClientRect().left;
-        rail.scrollBy({ left: left - (rail.clientWidth - active.clientWidth)/2,
-          behavior: calm || document.body.classList.contains('reduce-motion') ? 'instant' : 'smooth' });
-        updatePageTabArrows();
-      });
-      updatePageTabArrows();
-    }
-    function selectLetterPage(pageIndex) {
-      if (!Number.isInteger(pageIndex) || pageIndex < 0 || pageIndex >= n() || pageIndex === activeLetterPage) return;
-      activeLetterPage = pageIndex;
-      renderPages();
-    }
-    function updPreview() { const e = $("#pvEnv .env"); e.style.cssText = vars(envColor); e.querySelector(".sh").innerHTML = sheets(pages.slice(0, n()).map(p => p.color)); $("#pvTitle").textContent = $("#title").value.trim() || "Your envelope" }
-    function renderSignatureStyles() {
-      const text = $('#signatureText').value.trim() || 'With love ♡';
-      $('#signatureStyles').innerHTML = SIGNATURE_STYLES.map((s,i)=>`<button type="button" class="sig-style${i===signatureStyle?' on':''}" data-signature="${i}" aria-pressed="${i===signatureStyle}"><b style="font-family:${s.font}">${esc(text.slice(0,18))}</b><small>${s.name}</small></button>`).join('');
-      $('#signaturePreview').textContent = text;
-      $('#signaturePreview').style.fontFamily = SIGNATURE_STYLES[signatureStyle].font;
-      $('#signaturePreview').style.fontStyle = signatureStyle === 9 ? 'italic' : 'normal';
-      $('#signatureStyles').querySelectorAll('[data-signature]').forEach(b=> b.onclick=()=> {signatureStyle=+b.dataset.signature;renderSignatureStyles()});
-    }
-    /* v4.1: reusable layered photo stack in the creator AND the paper reader. */
-    function photoStackMarkup(srcs, context, pageIndex) {
-      const list=(srcs||[]).filter(safeImage);
-      if(!list.length) return '';
-      const count=list.length;
-      const cards=list.map((src,k)=>{
-        // Keep each photo slightly visible behind the one on top; fanning is responsive via CSS custom properties.
-        const middle=(count-1)/2;
-        const baseX=(k-middle)*11, baseY=k*6, baseR=(k-middle)*-7;
-        const fanX=(k-middle)*100, fanR=(k-middle)*-7, fanY=Math.abs(k-middle)*9+7;
-        return `<button type="button" class="polaroid-card" data-photo-open="${context}:${pageIndex}:${k}" aria-label="Open photo ${k+1} of ${count}" style="--stack-x:${baseX}px;--stack-y:${baseY}px;--stack-r:${baseR}deg;--fan-x:calc(${fanX}px * var(--fan-scale,1));--fan-r:${fanR}deg;--fan-y:${fanY}px;--order:${k+1}"><span class="polaroid-image"><img src="${src}" alt="Photo ${k+1} of ${count}" loading="lazy"></span><span class="polaroid-caption">♡ little memory <b>${String(k+1).padStart(2,'0')}</b></span></button>`;
-      }).join('');
-      return `<div class="photo-stack-area"><div class="photo-stack-title"><span class="photo-bloom">✧</span><span>${count} sweet ${count===1?'photo':'photos'} · hover or tap to explore</span><span class="photo-bloom">✧</span></div><div class="photo-stack" data-photo-stack="${context}" data-paper-index="${pageIndex}" aria-label="Stack of ${count} photos">${cards}</div><button type="button" class="photo-stack-action" data-photo-spread aria-expanded="false">↔ Spread photos</button><div class="photo-index-picker" role="group" aria-label="Open one of the photos">${list.map((_,k)=>`<button type="button" data-photo-open="${context}:${pageIndex}:${k}" aria-label="View photo ${k+1} of ${count}">${k+1}</button>`).join('')}</div></div>`;
-    }
-    const photoViewer={photos:[],index:0,opener:null};
-    function openPhotoViewer(source,pageIndex,index,opener) {
-      let imgs=source==='editor' ? pages[pageIndex]?.photos : recv?.pages[pageIndex]?.photos;
-      imgs=(imgs||[]).filter(safeImage);
-      if (!imgs.length || index<0 || index>=imgs.length) return;
-      photoViewer.photos=imgs;photoViewer.index=index;photoViewer.opener=opener||document.activeElement;
-      $('#photoLightbox').hidden=false;
-      document.body.style.overflow='hidden';
-      drawPhotoViewer();
-      $('#photoLightboxClose').focus({preventScroll:true});
-    }
-    function drawPhotoViewer() {
-      const i=photoViewer.index, l=photoViewer.photos.length, img=$('#photoLightboxImage');
-      img.src=photoViewer.photos[i];img.alt=`Envelope picture ${i+1} of ${l}`;
-      img.style.animation='none';void img.offsetWidth;img.style.animation='';
-      $('#photoLightboxCount').textContent=`${i+1} / ${l}`;
-      $('#photoLightboxSubtitle').textContent=l===1?'One lovely photo':`${l} precious memories`;
-      $('#photoLightboxCaption').textContent=['A sweet little moment ♡','Something worth keeping ✨','A lovely memory 💗','Made with love 🌸'][i%4];
-      $('#photoLightboxPrev').disabled=l<2;$('#photoLightboxNext').disabled=l<2;
-    }
-    function movePhotoViewer(dir) { const l=photoViewer.photos.length;if(l<2)return;photoViewer.index=(photoViewer.index+dir+l)%l;drawPhotoViewer(); }
-    function closePhotoViewer() {
-      if($('#photoLightbox').hidden)return;
-      $('#photoLightbox').hidden=true;document.body.style.overflow='';
-      $('#photoLightboxImage').removeAttribute('src');
-      if(photoViewer.opener?.isConnected) photoViewer.opener.focus({preventScroll:true});
-      photoViewer.photos=[];
-    }
-    document.addEventListener('click', e=>{
-      const spread=e.target.closest('[data-photo-spread]');
-      if(spread) {const wrap=spread.closest('.photo-stack-area');const stack=wrap?.querySelector('.photo-stack');if(stack){const open=stack.classList.toggle('is-spread');spread.setAttribute('aria-expanded',String(open));spread.textContent=open?'♡ Stack photos':'↔ Spread photos';}return;}
-      const photo=e.target.closest('[data-photo-open]');
-      if(photo) {const [kind,pi,idx]=photo.dataset.photoOpen.split(':');if(kind==='editor'||kind==='reader')openPhotoViewer(kind,+pi,+idx,photo);return;}
-    });
-    $('#photoLightboxClose').onclick=closePhotoViewer;
-    $('#photoLightboxPrev').onclick=()=>movePhotoViewer(-1);
-    $('#photoLightboxNext').onclick=()=>movePhotoViewer(1);
-    $('#photoLightbox').onclick=e=>{if(e.target.id==='photoLightbox')closePhotoViewer()};
-    let lightboxTouchX=0;
-    $('#photoLightboxImage').addEventListener('touchstart',e=>{lightboxTouchX=e.changedTouches[0].clientX},{passive:true});
-    $('#photoLightboxImage').addEventListener('touchend',e=>{const diff=e.changedTouches[0].clientX-lightboxTouchX;if(Math.abs(diff)>38)movePhotoViewer(diff<0?1:-1)},{passive:true});
-    function renderPages() {
-      activeLetterPage = Math.min(Math.max(activeLetterPage, 0), n() - 1);
-      renderPageTabs();
-      // Only render the *selected* paper. Other drafts stay in the pages array.
-      $('#pages').innerHTML = pages.slice(activeLetterPage, activeLetterPage + 1).map((p, offset)=>{
-        const i = activeLetterPage + offset;
-        return `
-        <div class="pg letter-page-panel" id="letterPagePanel" role="tabpanel" aria-labelledby="letterPageTab${i}">
-          <div class="pgh"><span>📄 Page ${i+1}</span><small id="cc${i}">${p.text.length}/600</small></div>
-          <textarea maxlength="600" data-i="${i}" aria-label="Page ${i+1} message" placeholder="${i?'Keep going…':'Write something sweet…'}">${esc(p.text)}</textarea>
-          <div class="pgc"><span>Paper</span><div class="sw sm" data-i="${i}"></div></div>
-          <div class="photo-tools">
-            <div class="photo-toolbar">
-              <label class="photo-add${p.photos.length>=photoLimit()?' disabled':''}">📷 Add picture<input type="file" accept="image/jpeg,image/png,image/webp" data-photo="${i}" multiple ${p.photos.length>=photoLimit()?'disabled':''} /></label>
-              <small>${p.photos.length}/${photoLimit()} pictures · JPG/PNG/WebP</small>
-            </div>
-            <div class="photo-previews">${photoStackMarkup(p.photos,'editor',i)}${!p.photos.length?'<p class="photo-empty">✨ Your cute little photo stack will appear here.</p>':''}${p.photos.length?`<div class="photo-remove-list">${p.photos.map((_,k)=>`<button type="button" data-remove-photo="${i}:${k}" aria-label="Remove photo ${k+1}">✕ Photo ${k+1}</button>`).join('')}</div>`:''}</div>
-          </div>
-          <div class="effect-picker"><b>✨ Page emoji transition</b><small>${isPremium()?' Choose an animation for this paper.':' Premium demo feature — activate to customize.'}</small>
-            <select data-effect="${i}" ${isPremium()?'':'disabled'}>
-              ${[['none','No effect'],['hearts','💗 Floating hearts'],['sparkles','✨ Sparkles'],['flowers','🌸 Floating flowers'],['stars','⭐ Twinkling stars'],['butterflies','🦋 Butterflies']].map(([v,t])=>`<option value="${v}" ${p.effect===v?'selected':''}>${t}</option>`).join('')}
-            </select>
-          </div>
-        </div>`;
-      }).join('');
-      $$('#pages [data-effect]').forEach(select=>select.onchange=()=>{pages[+select.dataset.effect].effect=select.value;refreshPageTabMarkers()});
-      $$('#pages .sw').forEach(el=> {const i=+el.dataset.i;swatches(el,PAPER,pages[i].color,c=>{pages[i].color=c;updPreview()})});
-      $$('#pages textarea').forEach(t=>t.oninput=()=>{const i=+t.dataset.i;pages[i].text=t.value;$('#cc'+i).textContent=t.value.length+'/600';refreshPageTabMarkers()});
-      $$('#pages [data-photo]').forEach(input=>input.onchange=async e=>{
-        if (photoBusy) {toast('Please finish uploading the current pictures first');return}
-        const i=+input.dataset.photo; const files=[...e.target.files]; input.value='';
-        if (pages[i].photos.length+files.length>photoLimit()) return toast(`Maximum of ${photoLimit()} pictures per paper`);
-        photoBusy=true;$('#make').disabled=true;toast('Preparing your pictures...');
-        try {for(const f of files) pages[i].photos.push(await compressPhoto(f));renderPages();toast('Picture added ♡')}
-        catch(err) {renderPages();toast(err.message || 'Could not read this picture')}
-        finally {photoBusy=false;$('#make').disabled=false}
-      });
-      $$('#pages [data-remove-photo]').forEach(b=>b.onclick=()=>{
-        const [i,k]=b.dataset.removePhoto.split(':').map(Number);
-        pages[i].photos.splice(k,1); renderPages();
-      });
-      updPreview();
-    }
-    async function compressPhoto(file) {
-      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw Error('Choose JPG, PNG or WebP only');
-      if (file.size>8*1024*1024) throw Error('Picture must be smaller than 8 MB');
-      const src=URL.createObjectURL(file);
-      try {
-        const img=new Image();img.src=src;await img.decode();
-        const ratio=Math.min(1,720/Math.max(img.naturalWidth,img.naturalHeight));
-        const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.naturalWidth*ratio));canvas.height=Math.max(1,Math.round(img.naturalHeight*ratio));
-        const ctx=canvas.getContext('2d'); if(!ctx)throw Error('Image editor unavailable');
-        ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(img,0,0,canvas.width,canvas.height);
-        let result='';
-        for(const q of [.78,.65,.50,.38]) {result=canvas.toDataURL('image/jpeg',q);if(result.length<125000)break}
-        if(result.length>=190000) throw Error('Image is still too large. Try a smaller photo');
-        return result;
-      } finally {URL.revokeObjectURL(src)}
-    }
-    function resetLetterEditor() {
-      editingId=null;envColor=ENV[0];paper=PAPER[0];pages=blank();activeLetterPage=0;
-      $('#title').value=$('#from').value=$('#signatureText').value='';signatureStyle=0;
-      pendingMusicFile=null;editingMusic=null;
-      $('#editorTitle').textContent='Design your envelope';
-      $('#editorSubtitle').textContent='Pick the colors, then write each page.';
-      $('#editBanner').hidden=true;$('#make').textContent='💌 Seal my envelope';
-      updatePageOptions();$('#count').value='3';renderPages();renderSignatureStyles();updateMusicUI();
-    }
-    function editEnv(id) {
-      const e=store.find(v=>v.id===id);if(!e)return toast('Envelope not found');
-      closeModal();editingId=e.id;envColor=e.envelopeColor;
-      pages=blank();e.pages.forEach((p,i)=>{pages[i]={text:p.text,color:p.color,photos:[...(p.photos||[])],effect:p.effect||'none'}});
-      $('#title').value=e.title;$('#from').value=e.from||'';
-      signatureStyle=e.signature?.style||0;$('#signatureText').value=e.signature?.text||'';
-      editingMusic=e.music||null;pendingMusicFile=null;activeLetterPage=0;
-      $('#editorTitle').textContent='Edit existing envelope ✏️';
-      $('#editorSubtitle').textContent='Make changes without creating a new envelope. Existing short links will be refreshed.';
-      $('#editBanner').hidden=false;$('#make').textContent='☁️ Save changes';
-      updatePageOptions();$('#count').value=String(e.pages.length);
-      swatches($('#envSw'),ENV,envColor,c=>{envColor=c;updPreview()});
-      swatches($('#paperSw'),PAPER,pages[0].color,c=>{paper=c;pages.forEach(p=>p.color=c);renderPages()});
-      renderPages();renderSignatureStyles();updateMusicUI();go('create');
-    }
-    function updateMusicUI() {
-      const enabled=isPremium();
-      $('#musicAccessLabel').textContent=enabled?'✓ Available':'Demo Premium feature';
-      $('#musicUploadLabel').classList.toggle('locked',!enabled);
-      $('#musicFile').disabled=!enabled;
-      $('#musicSelected').textContent=pendingMusicFile?`${pendingMusicFile.name} (${(pendingMusicFile.size/1048576).toFixed(1)} MB) · uploaded when saved`:editingMusic?`Current soundtrack: ${editingMusic.name}`:'No music selected';
-      $('#removeMusic').hidden=!pendingMusicFile&&!editingMusic;
-    }
-    $('#musicFile').onchange=e=>{
-      const file=e.target.files?.[0];e.target.value='';if(!file)return;
-      if(!isPremium())return toast('Activate the Premium demo to attach music.');
-      const mime=['audio/mpeg','audio/mp3','audio/mp4','audio/x-m4a','audio/wav','audio/x-wav','audio/ogg','audio/aac'];
-      if(!mime.includes(file.type) && !/\.(mp3|m4a|wav|ogg|aac)$/i.test(file.name)) return toast('Choose an MP3, M4A, WAV, OGG or AAC audio file');
-      if(file.size>10*1024*1024)return toast('Music is limited to 10 MB maximum');
-      pendingMusicFile=file;updateMusicUI();toast('Music selected. It will upload when you save.');
-    };
-    $('#removeMusic').onclick=()=>{pendingMusicFile=null;editingMusic=null;updateMusicUI();};
-    $('#cancelEdit').onclick=()=>{resetLetterEditor();go('dash')};
-    async function refreshPublishedLinks(e) {
-      const codes=[...new Set([...(e.linkCodes||[]),e.shortCode,e.customCode].filter(Boolean))];
-      if(!codes.length)return true;
-      let ok=true;
-      for (const code of codes)try {if(!await window.WENV_DB.claim(code,e,currentUser.uid))ok=false;}
-      catch(err){console.warn('Failed to update public link',code,err);ok=false}
-      return ok;
-    }
-    let creating = false;
-    async function create() {
-      if(!currentUser)return;
-      if(!cloudReady)return toast('Cloud sync is not connected yet. Please check Firebase settings.');
-      if(photoBusy || creating)return toast('Finish uploading your pictures first');
-      if (n()>pageLimit() && !editingId) return toast('Activate Premium demo for 9–10 pages');
-      const t=$('#title').value.trim();
-      if(!t) {const input=$('#title');input.classList.remove('shake');void input.offsetWidth;input.classList.add('shake');input.focus();return toast('Give your envelope a title first 💌')}
-      const original=editingId ? store.find(v=>v.id===editingId) : null;
-      if(editingId && !original)return toast('Original envelope not found. Refresh and try again.');
-      const e=clean({
-        id:original?.id||uid(), title:t, from:$('#from').value.trim(), envelopeColor:envColor,
-        createdAt:original?.createdAt||new Date().toISOString(),updatedAt:new Date().toISOString(),
-        shortCode:original?.shortCode, customCode:original?.customCode,linkCodes:original?.linkCodes,
-        signature:{text:$('#signatureText').value.trim(),style:signatureStyle},
-        music:editingMusic,
-        pages:pages.slice(0,n()).map(p=>({text:p.text.trim()||'A little message just for you. ♡',color:p.color,photos:p.photos,effect:p.effect||'none'}))
-      });
-      creating=true;let uploadingAudio=false;$('#make').disabled=true;$('#make').textContent=editingId?'☁️ Updating envelope...':'☁️ Saving envelope...';
-      try {
-        if(pendingMusicFile) {
-          if(!isPremium()) throw Error('Activate Premium demo first');
-          if(!window.WENV_DB.uploadMusic)throw Error('Firebase Storage is not ready');
-          cloudState('🎶 Uploading your music to Firebase Storage...');
-          uploadingAudio=true;
-          e.music=await window.WENV_DB.uploadMusic(currentUser.uid,e.id,pendingMusicFile);
-          uploadingAudio=false;
-        }
-        await cloudPut(e);
-        if(original?.music?.path && original.music.path!==e.music?.path)window.WENV_DB.deleteMusic(original.music.path).catch(console.warn);
-        const linksUpdated=await refreshPublishedLinks(e);
-        store=[e,...store.filter(v=>v.id!==e.id)];renderDash();created=e;
-        const wasEditing=!!editingId;
-        resetLetterEditor();
-        modal(`<div class="big">💌</div><h2>${wasEditing?'Changes saved!':'Envelope saved to the cloud!'}</h2><p>${wasEditing?'Your existing envelope was updated.': 'Your envelope is stored under your Google account.'} ${linksUpdated?'Existing short links are up to date.':'Some older links could not be refreshed; check your Firebase rules.'}</p><div class="row"><button class="btn sec" onclick="closeModal();previewEnv('${e.id}')">👀 View</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Short link</button></div>`);
-        cloudState('☁️ Envelopes synced', 'ok');
-        burst(null,20);
-      } catch(err) {
-        console.error(err);
-        cloudState('⚠️ Unable to save. Your unsaved draft is still in the editor.','error');
-        toast(uploadingAudio?'Music upload failed. Check Firebase Storage rules, Blaze plan and connection.':'Cloud save failed. Check Firebase rules. Your draft is still here.');
-      }
-      finally {creating=false;$('#make').disabled=false;$('#make').textContent=editingId?'☁️ Save changes':'💌 Seal my envelope'}
-    }
-
-
-        /* dashboard */
-    function renderDash() {
-      const L=$('#list');
-      $('#recentCount').textContent=store.length;$('#receivedCount').textContent=receivedStore.length;
-      $('#total').textContent=`${store.length} created · ${receivedStore.length} received`;
-      $('#recentTab').classList.toggle('on',mailboxView==='recent');$('#receivedTab').classList.toggle('on',mailboxView==='received');
-      $('#recentTab').setAttribute('aria-selected',String(mailboxView==='recent'));$('#receivedTab').setAttribute('aria-selected',String(mailboxView==='received'));
-      $('#mailboxNote').textContent=mailboxView==='recent'?'Letters you created. Edit them anytime, then share the same short link.':'Letters people sent you through shared links. Open them here without searching old chats.';
-      if(mailboxView==='recent') {
-        if(!store.length){L.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="big">💌</div><h3>No recent envelopes</h3><p class="soft">Start with your first letter.</p><button class="btn pri" data-go="create">Create envelope</button></div>';return}
-        L.innerHTML=store.map(e=>`<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor,.72)}">${envHTML(e.envelopeColor,e.pages.map(p=>p.color))}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} pages</span><small>${fmt(e.updatedAt||e.createdAt)}</small></div><div class="acts"><button class="btn sec" onclick="previewEnv('${e.id}')">👀 View</button><button class="btn sec" onclick="editEnv('${e.id}')">✏️ Edit</button><button class="btn pri" onclick="shareEnv('${e.id}')">🔗 Share</button><button class="btn dng" onclick="askDelete('${e.id}')" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join('');
-      } else {
-        if(!receivedStore.length){L.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="big">📭</div><h3>No received envelopes yet</h3><p class="soft">Open a shared envelope link and it will be saved to this collection.</p></div>';return}
-        L.innerHTML=receivedStore.map(e=>`<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><div style="font-size:65px">💌</div></div><div class="info"><h3>${esc(e.title||'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from||'Someone')}</span><small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">💌 Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
-      }
-    }
-    function setMailbox(view){mailboxView=view;renderDash();}
-    $('#recentTab').onclick=()=>setMailbox('recent');
-    $('#receivedTab').onclick=()=>setMailbox('received');
-    document.addEventListener('click',async event=>{
-      const view=event.target.closest('[data-received]');
-      if(view) {
-        const item=receivedStore.find(v=>v.key===view.dataset.received);if(!item)return;
-        if(item.code){location.hash='e='+encodeURIComponent(item.code);checkHash()}
-        else if(item.envelope){setup(clean(item.envelope),true)}
-        return;
-      }
-      const remove=event.target.closest('[data-remove-received]');
-      if(remove) {
-        const key=remove.dataset.removeReceived;
-        try{await window.WENV_DB.removeReceived(currentUser.uid,key);toast('Removed from received letters')}
-        catch(err){console.error(err);toast('Could not remove received letter')}
-      }
-    });
-    function askDelete(id) {
-      modal(`<div class="big">🥺</div><h2>Delete this envelope?</h2><p>Remove it from your synced collection? Existing shared links will keep working; only share envelopes you trust others to read.</p><div class="row"><button class="btn sec" onclick="closeModal()">Keep it</button><button class="btn dng" onclick="delEnv('${id}')">Delete</button></div>`)
-    }
-    async function delEnv(id) {
-      if(!cloudReady) return toast('Cloud unavailable. Try again when synced.');
-      try {const old=store.find(e=>e.id===id);await cloudRemove(id);if(old?.music?.path)window.WENV_DB.deleteMusic(old.music.path).catch(console.warn);closeModal();toast('Envelope removed from your cloud collection')}
-      catch(err){console.error(err);toast('Could not delete the envelope from Firebase')}
-    }
-
-    /* short links: Firebase stores envelope payload, never in the link itself */
-    const enc = e => { const j=JSON.stringify({title:e.title,from:e.from,envelopeColor:e.envelopeColor,pages:e.pages});return btoa(String.fromCharCode(...new TextEncoder().encode(j))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'') };
-    const dec = s => {try{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s),c=>c.charCodeAt(0))))}catch{return null}};
-    const shortUrl = code => location.href.split(/[?#]/)[0]+'#e='+encodeURIComponent(code);
-    const randomCode = () => {
-      const chars='abcdefghjkmnpqrstuvwxyz23456789', nums=new Uint8Array(12);crypto.getRandomValues(nums);
-      return Array.from(nums,b=>chars[b%chars.length]).join('');
-    };
-    async function publishCode(code,e) {
-      if(!currentUser || !cloudReady)throw Error('Cloud not ready');
-      const outcome=await window.WENV_DB.claim(code,e,currentUser.uid);
-      if(!outcome)throw Error('This link name is already taken');
-      return shortUrl(code);
-    }
-    async function ensureCode(e) {
-      if(e.shortCode) {
-        // Safe to retry publishing, especially for migrated envelopes.
-        await publishCode(e.shortCode,e);
-        return e.shortCode;
-      }
-      for(let attempt=0;attempt<4;attempt++) {
-        const code=randomCode();
-        if(!await window.WENV_DB.claim(code,e,currentUser.uid))continue;
-        e.shortCode=code;e.linkCodes=[...new Set([...(e.linkCodes||[]),code])];
-        try {await cloudPut(e)}catch(err){console.error('Could not remember alias:',err);}
-        return code;
-      }
-      throw Error('Could not generate a unique share link');
-    }
-    async function shareEnv(id) {
-      if(!currentUser)return;
-      if(!cloudReady)return toast('Connect to Firebase before sharing.');
-      const e=store.find(x=>x.id===id);if(!e)return toast('Envelope no longer available');
-      modal(`<div class="mh"><h2>Share your envelope 💌</h2><button class="x" aria-label="Close" onclick="closeModal()">×</button></div>
-        <div class="share-studio">
-          <p class="hint-small">Create a short, reusable link. Your letter and pictures stay in Firebase instead of the URL.</p>
-          <label>Short link</label><div class="share-row"><input id="shareIn" readonly value="Generating link..." aria-label="Shareable short link" /><button class="btn pri" id="cp" disabled>Copy</button></div>
-          <div class="share-actions"><button class="btn sec" id="nat" ${navigator.share?'':'hidden'} disabled>↗ Share link</button></div>
-          <label>Rename the link (optional)<input id="aliasInput" maxlength="32" placeholder="e.g. for-someone-special" autocomplete="off" /></label>
-          <p class="hint-small">4–32 characters: lowercase letters, numbers, or hyphens. A custom name is easier to guess; use the random short link for private messages.</p>
-          <button class="btn sec wide" id="saveAlias" disabled>✨ Save custom link name</button>
-          <p class="hint-small" id="aliasStatus" role="status"></p>
-          ${location.protocol==='file:'?'<p class="warn">Publish on Netlify or GitHub Pages. file:// links cannot be shared across devices.</p>':''}
-        </div>`);
-      let activeCode='';
-      function setLink(code) {
-        activeCode=code;$('#shareIn').value=shortUrl(code);$('#cp').disabled=false;
-        if($('#nat'))$('#nat').disabled=false;
-        $('#saveAlias').disabled=false;
-      }
-      $('#cp').onclick=async()=>{
-        if(!activeCode)return;
-        try{await navigator.clipboard.writeText(shortUrl(activeCode));toast('Short link copied! 💌')}
-        catch{const field=$('#shareIn');field.focus();field.select();document.execCommand('copy');toast('Link selected for copying')}
-      };
-      if($('#nat'))$('#nat').onclick=()=>{if(activeCode && navigator.share)navigator.share({title:e.title,text:'A little surprise for you 💌',url:shortUrl(activeCode)}).catch(()=>{})};
-      $('#aliasInput').value=e.customCode||'';
-      $('#saveAlias').onclick=async()=>{
-        const input=$('#aliasInput');const code=input.value.trim().toLowerCase().replace(/\s+/g,'-');input.value=code;
-        if(!safeCode(code))return $('#aliasStatus').textContent='Use 4–32 lowercase letters, digits, or hyphens.';
-        const b=$('#saveAlias');b.disabled=true;b.textContent='Saving...';$('#aliasStatus').textContent='Checking availability...';
-        try {
-          const link=await publishCode(code,e);e.customCode=code;e.linkCodes=[...new Set([...(e.linkCodes||[]),code])].slice(0,50);
-          await cloudPut(e);setLink(code);$('#aliasStatus').textContent='✓ Custom link saved! Previous links still work.';
-        } catch(err) {console.error(err);$('#aliasStatus').textContent=err.message==='This link name is already taken'?'This link name is taken. Try another.':'Could not save custom link. Check Firebase rules.';}
-        finally {b.disabled=false;b.textContent='✨ Save custom link name'}
-      };
-      try {
-        const code=e.customCode||await ensureCode(e);
-        await publishCode(code,e);
-        if($('#shareIn'))setLink(code);
-      } catch(err) {console.error(err);if($('#shareIn'))$('#shareIn').value='Unable to create short link';toast('Short links need Firebase Database access. Check your rules.');}
-    }
-
-
-        /* receiver */
-    function setup(e, prev) {
-      recv = e; idx = 0; preview = prev; $("#recvTitle").textContent = e.title;
-      $("#recvSub").textContent = e.from ? `From ${e.from}` : "Someone prepared a little surprise for you.";
-      const soundtrack=$('#readerMusic');
-      soundtrack.hidden=!(e.music&&e.music.url);
-      const audio=$('#readerAudio');audio.pause();audio.removeAttribute('src');audio.load();
-      if(e.music?.url && /^https:\/\//.test(e.music.url))audio.src=e.music.url;
-      const s = $("#recvScene"); s.className = "scene"; s.innerHTML = `<div class="tilt">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { float: 1, play: 1, id: "recvEnv" })}</div>`;
-      $("#hint").style.display = ""; $("#reader").hidden = true; $("#back").hidden = !prev; go("recv")
-    }
-    function previewEnv(id) { if (!currentUser) return; const e = store.find(x => x.id === id); if (e) { closeModal(); setup(e, true) } }
-    function openRecv() {
-      const env = $("#recvEnv"); if (!env || env.classList.contains("open")) return; env.classList.remove("float"); env.classList.add("open"); $("#hint").style.display = "none"; burst(env, 18);
-      setTimeout(() => $("#recvScene").classList.add("done"), 1900);
-      setTimeout(() => { $("#recvScene").classList.add("gone"); $("#reader").hidden = false; show(0, 1) }, 2550)
-    }
-    function show(i, dir) {
-      idx = i; const p = recv.pages[i], el = $("#page"), last = i === recv.pages.length - 1;
-      el.style.setProperty("--paper", p.color); el.className = "page"; void el.offsetWidth; el.className = "page " + (dir > 0 ? "fn" : "fp");
-      $('#pgTxt').textContent=p.text; $('#pgNo').textContent=`Page ${i+1} of ${recv.pages.length}`;
-      const photos=$('#pgPhotos');photos.innerHTML=photoStackMarkup(p.photos,'reader',i);
-      photos.hidden=!(p.photos||[]).length;
-      $("#dots").innerHTML = recv.pages.map((_, k) => `<i class="${k === i ? "on" : ""}"></i>`).join("");
-      $("#prev").style.visibility = i ? "visible" : "hidden"; $("#next").textContent = last ? "Finish ♡" : "Next ›";
-      const sig=recv.signature||{};
-      $('#sign').textContent=last?(sig.text ? '— '+sig.text : recv.from ? '— '+recv.from : ''):'';
-      $('#sign').style.fontFamily=SIGNATURE_STYLES[Number(sig.style)||0]?.font||SIGNATURE_STYLES[0].font;
-      $('#sign').style.fontStyle=(Number(sig.style)||0)===9?'italic':'normal';
-      renderPaperEffect(p.effect||'none'); 
-    }
-    function renderPaperEffect(effect) {
-      const layer=$('#paperEmoji');
-      layer.textContent='';
-      if(appearance.reduceMotion || !effect || effect==='none')return;
-      const icons={hearts:['💗','💕','💖'],sparkles:['✨','✧','✦'],flowers:['🌸','🌷','🌼'],stars:['⭐','🌟','✨'],butterflies:['🦋','🦋','✨']}[effect];
-      if(!icons)return;
-      for(let i=0;i<11;i++){
-        const el=document.createElement('span');el.className='emoji-particle';el.textContent=icons[i%icons.length];
-        el.style.left=`${5+(i*23)%91}%`;el.style.top=`${18+(i*17)%75}%`;
-        el.style.animationDelay=`${i*-.43}s`;el.style.animationDuration=`${4+(i%3)}s`;
-        layer.append(el);
-      }
-    }
-    const prev = () => idx > 0 && show(idx - 1, -1);
-    function next() {
-      if (idx < recv.pages.length - 1) return show(idx + 1, 1); burst(null, 26);
-      modal(`<div class="big">💌</div><h2>That was the last page</h2><p>${recv.from ? "With love, " + esc(recv.from) : "Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview ? '<button class="btn pri" onclick="leave()">Back to my envelopes</button>' : '<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)
-    }
-    function leave(c) { closeModal(); history.replaceState(null, '', location.pathname + location.search); recv=null;$('#readerAudio').pause();go(c ? 'create':'dash') }
-    let hashRequest = 0;
-    function checkHash() {
-      if(!currentUser)return false;
-      const h=location.hash;
-      if(h.startsWith('#e=')) {
-        const code=decodeURIComponent(h.slice(3));
-        const request=++hashRequest;
-        if(!safeCode(code)){toast('Invalid short link');go('home');return true}
-        go('recv');$('#recvHead').hidden=false;$('#recvTitle').textContent='Opening your letter...';$('#recvSub').textContent='Finding your envelope in Firebase 💌';
-        $('#recvScene').innerHTML='';$('#hint').style.display='none';$('#reader').hidden=true;$('#back').hidden=true;
-        window.WENV_DB.getPublic(code).then(raw=>{
-          if(request!==hashRequest || currentUser===null || location.hash!==h)return;
-          const obj=clean(raw&&raw.envelope);
-          if(!obj){toast('This short link does not exist');history.replaceState(null,'',location.pathname+location.search);go('home');return}
-          setup(obj,false);
-          recordReceived('link-'+code,obj,code);
-        }).catch(err=>{if(request!==hashRequest)return;console.error(err);toast('Could not load envelope. Check internet or public-link rules.');go('home')});
-        return true;
-      }
-      if(!h.startsWith('#envelope='))return false;
-      const d=clean(dec(h.slice(10)));
-      if(!d){toast('This older envelope link looks broken');return false}
-      setup(d,false);recordReceived('legacy-'+String(h).split('').reduce((v,c)=>(Math.imul(v,31)+c.charCodeAt(0))>>>0,7).toString(36),d,'');return true;
-    }
-
-
-        /* account-scoped appearance; persistence is local to this browser */
-    const DEFAULT_APPEARANCE = Object.freeze({start:"#fff1f7",end:"#f4ecff",text:"#5b4260",accent:"#ee7fae",font:"nunito",size:"1",hearts:true,reduceMotion:false});
-    const THEMES = [
-      {name:"Blush",start:"#fff1f7",end:"#f4ecff",text:"#5b4260",accent:"#ee7fae"},
-      {name:"Lavender",start:"#eee6ff",end:"#dff4ff",text:"#53426d",accent:"#a389d5"},
-      {name:"Peach",start:"#fff2df",end:"#ffe0eb",text:"#70475c",accent:"#e89280"},
-      {name:"Mint",start:"#e9fff2",end:"#dcefff",text:"#3a6262",accent:"#71b5ab"}
-    ];
-    const FONTS = {nunito:'"Nunito",system-ui,sans-serif',fredoka:'"Fredoka",system-ui,sans-serif',system:'system-ui,sans-serif',georgia:'Georgia,serif',trebuchet:'"Trebuchet MS",system-ui,sans-serif'};
-    let appearance = {...DEFAULT_APPEARANCE}, appearanceKey = null;
-    function validatedAppearance(raw) {
-      if (!raw || typeof raw !== "object") return {...DEFAULT_APPEARANCE};
-      const a = {...DEFAULT_APPEARANCE};
-      for (const name of ["start","end","text","accent"]) if (hexOk(raw[name])) a[name] = raw[name];
-      if (Object.hasOwn(FONTS,raw.font)) a.font = raw.font;
-      if (["0.92","1","1.1","1.2"].includes(String(raw.size))) a.size = String(raw.size);
-      if (typeof raw.hearts === "boolean") a.hearts = raw.hearts;
-      if (typeof raw.reduceMotion === "boolean") a.reduceMotion = raw.reduceMotion;
-      return a;
-    }
-    function loadAppearance(uid) {
-      appearanceKey = "wenvcute_appearance_v2_" + uid;
-      try { appearance = validatedAppearance(JSON.parse(localStorage.getItem(appearanceKey) || "null")) }
-      catch { appearance = {...DEFAULT_APPEARANCE} }
-      applyAppearance();
-    }
-    function applyAppearance() {
-      const root = document.documentElement.style;
-      root.setProperty("--gradient-start",appearance.start);
-      root.setProperty("--gradient-end",appearance.end);
-      root.setProperty("--theme-ink",appearance.text);
-      root.setProperty("--theme-muted",shade(appearance.text,.26));
-      root.setProperty("--accent",appearance.accent);
-      root.setProperty("--accent-light",shade(appearance.accent,.26));
-      root.setProperty("--text-scale",appearance.size);
-      root.setProperty("--ui",FONTS[appearance.font]);
-      document.body.classList.toggle("no-fx",!appearance.hearts);
-      document.body.classList.toggle("reduce-motion",appearance.reduceMotion);
-      for (const [name,id] of [["start","gradStart"],["end","gradEnd"],["text","textColor"],["accent","accentColor"]]) {
-        $("#"+id).value = appearance[name]; $("#"+id+"Label").textContent = appearance[name].toUpperCase();
-      }
-      $("#fontChoice").value = appearance.font;
-      $("#textSize").value = appearance.size;
-      $("#showHearts").checked = appearance.hearts;
-      $("#reduceMotion").checked = appearance.reduceMotion;
-      renderThemePresets();
-    }
-    function changeAppearance(patch) {
-      appearance = validatedAppearance({...appearance,...patch});
-      applyAppearance();
-      if (currentUser && appearanceKey) {
-        try {localStorage.setItem(appearanceKey,JSON.stringify(appearance))}
-        catch {toast("Could not save appearance preferences")}
-      }
-    }
-    function renderThemePresets() {
-      $("#themePresets").innerHTML = THEMES.map((t,i)=>{
-        const on = ["start","end","text","accent"].every(k=>t[k]===appearance[k]);
-        return `<button type="button" class="theme-preset${on?" on":""}" data-preset="${i}" aria-pressed="${on}"><span class="theme-preview" style="background:linear-gradient(135deg,${t.start},${t.end})"></span><span class="theme-label">${t.name}</span></button>`;
-      }).join("");
-    }
-    function setSettingsPage(id) {
-      $$(".settings-nav").forEach(b => {const on=b.dataset.settings===id;b.classList.toggle("on",on);b.setAttribute("aria-pressed",String(on))});
-      $$(".settings-panel").forEach(p=>p.classList.toggle("on",p.id==="settings-"+id));
-    }
-    function safePhoto(url) {
-      return typeof url === "string" && /^https:\/\//i.test(url) ? url : "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23f5dbea'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='56'%3E%F0%9F%92%97%3C/text%3E%3C/svg%3E";
-    }
-    function renderUser(user) {
-      const name = user.displayName || user.email?.split("@")[0] || "Envelope friend";
-      $("#navName").textContent = name;
-      $("#accountName").textContent = name;
-      $("#accountEmail").textContent = user.email || "Signed in with Google";
-      $("#navAvatar").src = $("#accountAvatar").src = safePhoto(user.photoURL);
-    }
-    function authStatus(message,error=false) {
-      $("#authStatus").textContent=message;
-      $("#authStatus").classList.toggle("error",error);
-    }
-    function authError(error) {
-      const code = error && error.code;
-      const msg = ({
-        "auth/popup-closed-by-user":"Sign-in window closed. Try again when you’re ready.",
-        "auth/cancelled-popup-request":"The sign-in attempt was cancelled. Please try again.",
-        "auth/popup-blocked":"Your browser blocked the Google popup. Allow popups or use redirect below.",
-        "auth/unauthorized-domain":"This website domain must be added to Firebase Authentication → Settings → Authorized domains.",
-        "auth/operation-not-allowed":"Enable Google as a sign-in provider in Firebase Authentication → Sign-in method.",
-        "auth/network-request-failed":"Network problem. Check your internet connection and try again.",
-        "auth/operation-not-supported-in-this-environment":"Open the site using localhost or HTTPS, not file://."
-      })[code];
-      authStatus(msg || "Could not sign in. Check Firebase Authentication configuration and try again.",true);
-      $("#googleRedirect").hidden = !(code==="auth/popup-blocked" || code==="auth/operation-not-supported-in-this-environment");
-    }
-    function showAuthControls() {
-      const ok = !!window.WENV_AUTH.signIn;
-      $("#googleSignIn").disabled = !ok;
-      $("#googleButtonText").textContent="Continue with Google";
-      if (ok && !currentUser) authStatus(location.protocol==="file:"?"Open this file via localhost or HTTPS for Google sign-in.":"Sign in with your Google account to continue.",location.protocol==="file:");
-      if (location.protocol==="file:") $("#googleRedirect").hidden=true;
-    }
-    function setSignedInUser(user) {
-      const oldUid=currentUser && currentUser.uid;
-      currentUser=user||null;
-      document.body.classList.toggle('authenticated',!!user);
-      $('#authGate').hidden=!!user;
-      if(!user) {
-        stopCloud();stopReceived();stopSubscription();stopCloud=stopReceived=stopSubscription=()=>{};cloudReady=false;cloudConnected=false;receivedStore=[];premiumDemo=false;editingId=null;pendingMusicFile=null;editingMusic=null;
-        accountKey=null;appearanceKey=null;store=[];recv=null;connectionUid=null;
-        $('#googleRedirect').hidden=true;
-        showAuthControls();return;
-      }
-      if(oldUid!==user.uid) {
-        loadAccount(user.uid);loadAppearance(user.uid);renderUser(user);renderDash();
-        watchReceived(user.uid);watchDemo(user.uid);
-        if(!checkHash())go('home');
-        watchCloud(user.uid);
-      }
-    }
-
-
-        window.WENV_AUTH = {
-      signIn:null, signOut:null, redirect:null,
-      ready(actions) { Object.assign(this,actions);showAuthControls() },
-      user:setSignedInUser,
-      fail(error) {$("#googleSignIn").disabled=true;authStatus("Firebase did not load. Check your connection and reload the site.",true);console.error("Firebase load failed:",error)},
-      redirectError:authError
-    };
-    $("#googleSignIn").onclick=async()=>{
-      if (!window.WENV_AUTH.signIn) return;
-      if (location.protocol==="file:") {authStatus("Google sign-in needs localhost or an HTTPS website. Run the HTML using a local web server.",true);return}
-      $("#googleSignIn").disabled=true;$("#googleButtonText").textContent="Opening Google…";authStatus("Choose your Google account in the popup.");
-      try {await window.WENV_AUTH.signIn()}
-      catch(e){authError(e)}
-      finally {$("#googleSignIn").disabled=false;$("#googleButtonText").textContent="Continue with Google"}
-    };
-    $("#googleRedirect").onclick=async()=>{
-      if (location.protocol==="file:" || !window.WENV_AUTH.redirect) return;
-      authStatus("Redirecting to Google…");
-      try {await window.WENV_AUTH.redirect()}catch(e){authError(e)}
-    };
-    document.addEventListener("click",e=>{
-      const b=e.target.closest("[data-settings]");if (b) setSettingsPage(b.dataset.settings);
-      const p=e.target.closest("[data-preset]");if (p) changeAppearance({...THEMES[Number(p.dataset.preset)]});
-    });
-    for (const [id,name] of [["gradStart","start"],["gradEnd","end"],["textColor","text"],["accentColor","accent"]]) {
-      $("#"+id).addEventListener("input",e=>changeAppearance({[name]:e.target.value}));
-    }
-    $("#fontChoice").onchange=e=>changeAppearance({font:e.target.value});
-    $("#textSize").onchange=e=>changeAppearance({size:e.target.value});
-    $("#showHearts").onchange=e=>changeAppearance({hearts:e.target.checked});
-    $("#reduceMotion").onchange=e=>changeAppearance({reduceMotion:e.target.checked});
-    $("#resetAppearance").onclick=()=>{changeAppearance({...DEFAULT_APPEARANCE});toast("Original appearance restored 💗")};
-    $('#premiumPlanBtn').onclick=()=>setSubscriptionDemo(true);
-    $('#freePlanBtn').onclick=()=>setSubscriptionDemo(false);
-    $("#signOutBtn").onclick=()=>modal(`<div class="big">👋</div><h2>Sign out?</h2><p>You can come back with the same Google account. Your envelopes will remain synced to your Google account in Firebase.</p><div class="row"><button class="btn sec" onclick="closeModal()">Stay here</button><button class="btn dng" onclick="confirmSignOut()">Sign out</button></div>`);
-    async function confirmSignOut() {
-      closeModal();
-      try {await window.WENV_AUTH.signOut()}catch {toast("Sign out failed. Please try again.")}
-    }
-    $("#exportEnvelopes").onclick=()=>{
-      if (!currentUser) return;
-      const contents=JSON.stringify({format:"wenvcute-backup",version:1,exportedAt:new Date().toISOString(),envelopes:store},null,2);
-      const url=URL.createObjectURL(new Blob([contents],{type:"application/json"}));
-      const a=document.createElement("a");a.href=url;a.download="w-envelope-cute-backup-"+new Date().toISOString().slice(0,10)+".json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),5000);
-      toast("Backup downloaded ♡");
-    };
-    $("#importEnvelopes").onclick=()=>$("#importFile").click();
-    $("#importFile").onchange=async e=>{
-      const file=e.target.files[0]; e.target.value="";if (!file) return;
-      if (file.size>8*1024*1024) return toast("Backup is too large (8 MB maximum)");
-      try {
-        const data=JSON.parse(await file.text());
-        if (!data || data.format!=="wenvcute-backup" || !Array.isArray(data.envelopes)) throw Error("invalid format");
-        const imported=data.envelopes.slice(0,500).map(clean).filter(Boolean);
-        if (!imported.length) return toast("No valid envelopes found in the backup");
-        const existing=new Set(store.map(v=>v.id));
-        const fresh=imported.filter(v=>!existing.has(v.id));
-        if(!cloudReady)return toast('Cloud not connected. Try again when synced.');
-        let succeeded=0;
-        for(const item of fresh) {await cloudPut(item);succeeded++}
-        toast(`${succeeded} envelopes imported to Firebase 💌`);
-      } catch {toast("Could not read this envelope backup")}
-    };
-    $("#clearEnvelopes").onclick=()=>{
-      if (!store.length) return toast("No envelopes to delete");
-      modal(`<div class="big">🗑️</div><h2>Delete all envelopes?</h2><p>This will delete ${store.length} synced envelope${store.length===1?"":"s"} from your Google account on all devices. Make a backup first if needed.</p><div class="row"><button class="btn sec" onclick="closeModal()">Cancel</button><button class="btn dng" onclick="confirmClear()">Delete all</button></div>`);
-    };
-    async function confirmClear(){
-      if(!cloudReady)return toast('Cloud is unavailable');
-      closeModal();
-      try{await window.WENV_DB.clear(currentUser.uid);toast('All synced envelopes deleted')}
-      catch(err){console.error(err);toast('Could not clear Firebase envelopes')}
-    }
-    $("#footerYear").textContent=$("#copyrightYear").textContent=new Date().getFullYear();
-
-    /* events */
-    document.addEventListener("click", e => {
-      const g = e.target.closest("[data-go]"); if (g) {if(g.dataset.go==='create'&&editingId)resetLetterEditor();return go(g.dataset.go)}
-      const v = e.target.closest(".env[data-play]"); if (!v) return;
-      if (v.id === "recvEnv") return openRecv();
-      const o = v.classList.toggle("open"); if (o) burst(v, 10)
-    });
-    document.addEventListener("pointermove", e => {
-      if (calm || e.pointerType === "touch") return; const s = e.target.closest("[data-tilt]");
-      if (!s || !s.firstElementChild) return; const r = s.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      s.firstElementChild.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 10}deg)`
-    });
-    document.addEventListener("pointerout", e => { const s = e.target.closest && e.target.closest("[data-tilt]"); if (s && s.firstElementChild && !s.contains(e.relatedTarget)) s.firstElementChild.style.transform = "" });
-    addEventListener("keydown", e => {
-      if (!$('#photoLightbox').hidden) {
-        if (e.key === 'Escape') {e.preventDefault();closePhotoViewer();}
-        else if(e.key==='ArrowRight'){e.preventDefault();movePhotoViewer(1);}
-        else if(e.key==='ArrowLeft'){e.preventDefault();movePhotoViewer(-1);}
-        else if(e.key==='Tab'){
-          const buttons=[$('#photoLightboxClose'),$('#photoLightboxPrev'),$('#photoLightboxNext')].filter(b=>!b.disabled);
-          if(e.shiftKey&&document.activeElement===buttons[0]){e.preventDefault();buttons[buttons.length-1].focus();}
-          else if(!e.shiftKey&&document.activeElement===buttons[buttons.length-1]){e.preventDefault();buttons[0].focus();}
-        }
-        return;
-      }
-      if (e.key === "Escape") return closeModal();
-      if (!recv || $("#reader").hidden || $("#modal").classList.contains("show") || /INPUT|TEXTAREA/.test(document.activeElement.tagName)) return;
-      if (e.key === "ArrowRight") next(); if (e.key === "ArrowLeft") prev()
-    });
-    let tx = 0; $("#page").addEventListener("touchstart", e => {tx = e.target.closest('.paper-photos') ? null : e.touches[0].clientX}, { passive: true });
-    $("#page").addEventListener("touchend", e => { if(tx===null || e.target.closest('.paper-photos'))return;const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 50) d < 0 ? next() : prev() });
-    $("#modal").onclick = e => { if (e.target.id === "modal") closeModal() };
-    $("#prev").onclick = prev; $("#next").onclick = next; $("#make").onclick = create;
-    $('#title').oninput=updPreview;
-    $('#count').onchange=()=> {activeLetterPage=0;renderPages()};
-    $('#letterPageTabs').addEventListener('scroll', updatePageTabArrows, {passive:true});
-    $('#letterPageLeft').onclick=()=>$('#letterPageTabs').scrollBy({left:-$('#letterPageTabs').clientWidth*.75,behavior:'smooth'});
-    $('#letterPageRight').onclick=()=>$('#letterPageTabs').scrollBy({left:$('#letterPageTabs').clientWidth*.75,behavior:'smooth'});
-    $('#signatureText').oninput=renderSignatureStyles;
-    addEventListener("hashchange", checkHash);
-
-    /* init */
-    const bg = $("#bg"); for (let i = 0; i < 9; i++) {
-      const s = document.createElement("i"); s.textContent = ["♡", "✦", "♥", "✧"][i % 4];
-      s.style.cssText = `left:${(i * 37 + 8) % 96}%;top:${(i * 53 + 10) % 88}%;font-size:${14 + i % 4 * 8}px;animation-delay:${-i * 1.3}s;animation-duration:${9 + i % 4 * 3}s`; bg.append(s)
-    }
-    updatePageOptions();$('#count').value='3';
-    swatches($("#envSw"), ENV, envColor, c => { envColor = c; updPreview() });
-    swatches($("#paperSw"), PAPER, paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
-    $("#demo").innerHTML = envHTML(ENV[0], PAPER.slice(0, 3), { float: 1, play: 1 });
-    $("#pvEnv").innerHTML = envHTML(envColor, [paper], { play: 1 });
-    renderPages(); renderSignatureStyles(); renderDash();
-    // Firebase observer decides when the app becomes visible and which account owns local data.
-  </script>
-
-  <script type="module">
-    (async () => {
-      try {
-        const [appModule,authModule,dbModule,storageModule] = await Promise.all([
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js"),
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js"),
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"),
-          import("https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js")
-        ]);
-        const firebaseConfig = {
-          apiKey: "AIzaSyBBUbQqpc74xE6ceoJ4mriM3M0Pvtogrs8",
-          authDomain: "w-envcute.firebaseapp.com",
-          databaseURL: "https://w-envcute-default-rtdb.asia-southeast1.firebasedatabase.app",
-          projectId: "w-envcute",
-          storageBucket: "w-envcute.firebasestorage.app",
-          messagingSenderId: "440675089617",
-          appId: "1:440675089617:web:4d974ac115aa464f0a19f0",
-          measurementId: "G-PT29YJT2W8"
-        };
-        const app = appModule.initializeApp(firebaseConfig);
-        const auth = authModule.getAuth(app);
-        const db = dbModule.getDatabase(app);
-        const storage=storageModule.getStorage(app);
-        window.WENV_DB = {
-          subscribeReceived(uid,next,fail){return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/received'),snap=>next(snap.val()||{}),fail)},
-          saveReceived(uid,key,item){return dbModule.set(dbModule.ref(db,'users/'+uid+'/received/'+key),item)},
-          removeReceived(uid,key){return dbModule.remove(dbModule.ref(db,'users/'+uid+'/received/'+key))},
-          subscribeDemo(uid,next,fail){return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/subscription/demoPremium'),snap=>next(snap.val()),fail)},
-          setDemo(uid,enabled){return dbModule.set(dbModule.ref(db,'users/'+uid+'/subscription/demoPremium'),{enabled:!!enabled,updatedAt:Date.now()})},
-          deleteMusic(path) {return storageModule.deleteObject(storageModule.ref(storage,path))},
-          async uploadMusic(uid,envelopeId,file){
-            const ext=(file.name.split('.').pop()||'mp3').toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,5);
-            const path=`music/${uid}/${envelopeId}/${Date.now()}-${Math.random().toString(36).slice(2,9)}.${ext}`;
-            const fileRef=storageModule.ref(storage,path);
-            await storageModule.uploadBytes(fileRef,file,{contentType:file.type||'audio/mpeg'});
-            return {url:await storageModule.getDownloadURL(fileRef),name:file.name.slice(0,90),path};
-          },
-          subscribe(uid,next,fail) {return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/envelopes'),snap=>next(snap.val()||{}),fail)},
-          put(uid,envelope) {return dbModule.set(dbModule.ref(db,'users/'+uid+'/envelopes/'+envelope.id),envelope)},
-          remove(uid,id) {return dbModule.remove(dbModule.ref(db,'users/'+uid+'/envelopes/'+id))},
-          clear(uid) {return dbModule.remove(dbModule.ref(db,'users/'+uid+'/envelopes'))},
-          async claim(code,envelope,uid) {
-            const path=dbModule.ref(db,'publicEnvelopes/'+code);
-            const snapshot=await dbModule.runTransaction(path,current=>{
-              if(current===null)return {ownerUid:uid,envelope:clean(envelope),createdAt:new Date().toISOString()};
-              if(current.ownerUid===uid && current.envelope?.id===envelope.id)return {...current,envelope:clean(envelope),updatedAt:new Date().toISOString()};
-              return;
-            },{applyLocally:false});
-            if(snapshot.committed)return true;
-            const existing=snapshot.snapshot.val();
-            return !!(existing && existing.ownerUid===uid && existing.envelope && existing.envelope.id===envelope.id);
-          },
-          async getPublic(code) {const snap=await dbModule.get(dbModule.ref(db,'publicEnvelopes/'+code));return snap.val()}
-        };
-        const provider = new authModule.GoogleAuthProvider();
-        provider.setCustomParameters({prompt:"select_account"});
-        window.WENV_AUTH.ready({
-          signIn:() => authModule.signInWithPopup(auth,provider),
-          redirect:() => authModule.signInWithRedirect(auth,provider),
-          signOut:() => authModule.signOut(auth)
-        });
-        authModule.onAuthStateChanged(auth,
-          user => window.WENV_AUTH.user(user),
-          error => window.WENV_AUTH.fail(error)
-        );
-        authModule.getRedirectResult(auth).catch(error=>window.WENV_AUTH.redirectError(error));
-      } catch (error) {
-        window.WENV_AUTH.fail(error);
-      }
-    })();
-  </script>
+  <script type="module" src="js/firebase.js"></script>
 </body>
 
 </html>

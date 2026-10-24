@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#fff2f8">
+  <title>W-Envelope Cute · Admin Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="authenticated admin-page">
+  <div class="admin-shell">
+    <aside class="admin-sidebar" aria-label="Admin navigation">
+      <a class="admin-brand" href="index.html"><span class="admin-brand-mark">💌</span><span><strong>W-Envelope Cute</strong><small>Owner workspace</small></span></a>
+      <p class="admin-sidebar-heading">MANAGEMENT</p>
+      <nav class="admin-navigation" aria-label="Payment sections">
+        <button class="admin-nav active" type="button" data-section="dashboard" aria-current="page"><span class="admin-nav-icon">▦</span><span>Dashboard</span></button>
+        <button class="admin-nav" type="button" data-section="maya"><span class="admin-nav-icon">💜</span><span>Maya</span><span id="mayaBadge" class="admin-nav-badge" hidden>0</span></button>
+        <button class="admin-nav" type="button" data-section="gotyme"><span class="admin-nav-icon">💙</span><span>GoTyme</span><span id="gotymeBadge" class="admin-nav-badge" hidden>0</span></button>
+        <button class="admin-nav" type="button" data-section="all"><span class="admin-nav-icon">☷</span><span>All Payments</span></button>
+      </nav>
+      <div class="admin-sidebar-bottom">
+        <div class="admin-mini-note"><span>🔒</span><span>Payments are only activated after you verify the bank transaction.</span></div>
+        <a class="admin-back" href="index.html">↗ &nbsp; Back to website</a>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div class="admin-heading"><p class="admin-kicker">PREMIUM PAYMENTS</p><h1 id="adminTitle">Dashboard</h1><p id="adminSubtitle">A clear view of your premium requests.</p></div>
+        <div class="admin-top-actions"><span id="adminConnection" class="admin-connection" role="status"><i></i> <span id="adminConnText">Connecting</span></span><a href="index.html" class="admin-website-link">↗ Website</a><span class="admin-user-icon" aria-hidden="true">♡</span></div>
+      </header>
+
+      <div class="admin-content">
+        <div id="adminNotice" class="admin-notice" role="status" aria-live="polite">
+          <span id="adminNoticeIcon" class="admin-notice-icon">◌</span>
+          <div class="admin-notice-copy"><strong id="adminNoticeTitle">Connecting to Firebase</strong><p id="adminStatus">Preparing Google sign-in…</p></div>
+          <button id="dismissNotice" type="button" class="admin-small-icon" aria-label="Dismiss message" hidden>×</button>
+        </div>
+
+        <section id="adminLoginPanel" class="admin-login-panel" aria-labelledby="loginHeadline">
+          <span class="admin-login-art" aria-hidden="true">🔐</span>
+          <h2 id="loginHeadline">Administrator sign in</h2>
+          <p>Sign in with the authorized Google account to review Maya and GoTyme premium payments.</p>
+          <button id="adminLogin" type="button" class="admin-primary-button" disabled>Continue with Google</button>
+        </section>
+
+        <section id="adminDashboard" hidden aria-label="Administrator workspace">
+          <div class="admin-welcome"><div><span class="admin-welcome-eyebrow">YOUR WORKSPACE</span><h2 id="adminWelcomeName">Welcome back ✨</h2><p>Review incoming payments and keep Premium access up to date.</p></div><span class="admin-welcome-art" aria-hidden="true">✉️</span></div>
+          <div id="adminStats" class="admin-stats" aria-label="Payment overview">
+            <article class="admin-stat"><span class="admin-stat-icon purple">◷</span><p>Pending Review</p><strong id="statPending">0</strong><small>Needs bank verification</small></article>
+            <article class="admin-stat"><span class="admin-stat-icon green">✓</span><p>Approved</p><strong id="statApproved">0</strong><small>Premium activations</small></article>
+            <article class="admin-stat"><span class="admin-stat-icon rose">✕</span><p>Rejected</p><strong id="statRejected">0</strong><small>Declined requests</small></article>
+            <article class="admin-stat"><span class="admin-stat-icon blue">₱</span><p>Approved Value</p><strong id="statRevenue">₱0</strong><small>Reported, manually verified</small></article>
+          </div>
+
+          <section id="adminMethodSummary" class="admin-method-summary" aria-label="Payment methods">
+            <button class="admin-method-card" type="button" data-open-method="maya"><span class="admin-method-icon maya">💜</span><span><strong>Maya payments</strong><small id="mayaSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
+            <button class="admin-method-card" type="button" data-open-method="gotyme"><span class="admin-method-icon gotyme">💙</span><span><strong>GoTyme payments</strong><small id="gotymeSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
+          </section>
+
+          <section class="admin-worklist" aria-labelledby="adminListHeading">
+            <div class="admin-list-heading"><div><p class="admin-kicker" id="adminListEyebrow">RECENT ACTIVITY</p><h2 id="adminListHeading">Recent payment requests</h2><p id="adminListSubtitle">Review the latest incoming transfers.</p></div><span id="resultCount" class="admin-count">0 requests</span></div>
+            <div id="adminToolbar" class="admin-toolbar"><label class="admin-search-wrap"><span aria-hidden="true">⌕</span><span class="sr-only">Search payment requests</span><input id="adminSearch" type="search" placeholder="Search email or reference..." autocomplete="off"></label><label class="admin-filter-wrap"><span class="sr-only">Filter status</span><select id="adminFilter"><option value="all">All statuses</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label></div>
+            <div id="adminList" class="admin-list" aria-live="polite"></div>
+            <button id="loadMorePayments" type="button" class="admin-load-more" hidden>Show more requests ↓</button>
+          </section>
+        </section>
+
+        <details class="admin-help" id="adminHelp">
+          <summary>🛠 Admin access & setup help</summary>
+          <div class="admin-help-content">
+            <p>The Google account must have the same UID configured in <code>js/payment-config.js</code>. Admin permissions are enforced by the <strong>published Firebase Realtime Database Rules</strong>, not by the interface alone.</p>
+            <div id="adminIdentity" hidden>
+              <p><strong>Signed-in email:</strong> <span id="adminEmail">—</span></p>
+              <p><strong>Your Firebase UID:</strong></p>
+              <div class="admin-idline"><code id="adminActualUid">—</code><button id="adminCopyUid" type="button" class="admin-copy-button">Copy UID</button></div>
+              <p><strong>Configured UID:</strong> <code id="adminExpectedUid">—</code></p>
+              <p><strong>Firebase project:</strong> <code id="adminProject">—</code></p>
+            </div>
+            <ol><li>Use the Google account in Firebase Console → Authentication → Users.</li><li>Check the admin UID in <code>js/payment-config.js</code>.</li><li>Publish <code>database.rules.json</code> in Firebase Console → Realtime Database → Rules.</li><li>Enable Google login and authorize your website domain.</li><li>Use HTTPS or localhost—not a <code>file://</code> URL.</li></ol>
+          </div>
+        </details>
+        <div class="admin-bottom-actions"><button id="adminSignOut" type="button" class="admin-signout" hidden>↪ Sign out from admin</button><p>Made with ♡ by Wenxyz · W-Envelope Cute Admin</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-dialog-overlay" id="reviewDialog" hidden role="presentation">
+    <section class="admin-dialog" role="dialog" aria-modal="true" aria-labelledby="reviewDialogTitle" aria-describedby="reviewDialogDescription" tabindex="-1">
+      <button id="reviewDialogClose" type="button" class="admin-dialog-close" aria-label="Close dialog">×</button>
+      <span id="reviewDialogIcon" class="admin-dialog-icon">💌</span>
+      <h2 id="reviewDialogTitle">Review payment</h2>
+      <p id="reviewDialogDescription">Please check the real transfer before continuing.</p>
+      <div class="admin-dialog-details" id="reviewDialogDetails"></div>
+      <label id="reviewVerificationRow" class="admin-verified-check"><input type="checkbox" id="reviewVerified"><span>I checked my official Maya/GoTyme transaction history and verified the exact transfer details.</span></label>
+      <p id="reviewDialogError" class="admin-dialog-error" role="alert" hidden></p>
+      <div class="admin-dialog-actions"><button id="reviewCancel" class="admin-dialog-secondary" type="button">Cancel</button><button id="reviewConfirm" class="admin-dialog-primary" type="button" disabled>Confirm</button></div>
+    </section>
+  </div>
+  <div id="adminToast" class="admin-toast" role="status" aria-live="polite"></div>
+
+  <script src="js/firebase-config.js"></script>
+  <script src="js/payment-config.js"></script>
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>

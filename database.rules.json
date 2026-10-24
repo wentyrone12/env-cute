@@ -20,9 +20,13 @@
         },
         "subscription": {
           ".read": "auth !== null && auth.uid === $uid",
-          ".write": "auth !== null && auth.uid === $uid",
           "demoPremium": {
-            ".validate": "newData.hasChildren(['enabled','updatedAt']) && newData.child('enabled').isBoolean() && newData.child('updatedAt').isNumber()"
+            ".write": false,
+            ".read": "auth !== null && auth.uid === $uid"
+          },
+          "paidPremium": {
+            ".write": "auth !== null && auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42'",
+            ".validate": "newData.hasChildren(['enabled','approvedAt','approvedBy']) && newData.child('enabled').isBoolean() && newData.child('approvedAt').isNumber() && newData.child('approvedBy').isString()"
           }
         }
       }
@@ -32,6 +36,16 @@
         ".read": true,
         ".write": "auth !== null && ((!data.exists() && newData.child('ownerUid').val() === auth.uid) || (data.child('ownerUid').val() === auth.uid && newData.child('ownerUid').val() === auth.uid && data.child('envelope').child('id').val() === newData.child('envelope').child('id').val()))",
         ".validate": "newData.hasChildren(['ownerUid','envelope','createdAt']) && newData.child('ownerUid').isString() && newData.child('envelope').child('pages').exists()"
+      }
+    },
+    "premiumPayments": {
+      ".read": "auth !== null && auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42'",
+      "$uid": {
+        ".read": "auth !== null && auth.uid === $uid",
+        "$paymentId": {
+          ".write": "auth !== null && (auth.uid === 'KIHS4JDAzacF8YMb9KcDrtM3cU42' || (auth.uid === $uid && !data.exists() && newData.child('uid').val() === auth.uid && newData.child('status').val() === 'pending'))",
+          ".validate": "newData.hasChildren(['uid','method','reference','amount','status','submittedAt','email']) && newData.child('uid').val() === $uid && (newData.child('method').val() === 'maya' || newData.child('method').val() === 'gotyme') && newData.child('reference').isString() && newData.child('reference').val().length >= 6 && newData.child('reference').val().length <= 64 && newData.child('amount').isNumber() && newData.child('amount').val() > 0 && (newData.child('status').val() === 'pending' || newData.child('status').val() === 'approved' || newData.child('status').val() === 'rejected') && newData.child('submittedAt').isNumber() && newData.child('email').isString()"
+        }
       }
     }
   }
