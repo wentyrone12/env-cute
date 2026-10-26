@@ -1,0 +1,147 @@
+
+/* PREMIUM PHOTO DESIGN STUDIO · 24 distinct frame finishes, mobile-safe previews */
+.photo-design-count{font-style:normal;display:inline-flex;align-items:center;border-radius:99px;padding:2px 7px;background:#f7e5f2;color:#a36a90;font-size:10px;font-weight:800;white-space:nowrap}
+.photo-design-side .polaroid-options{scrollbar-width:thin;scroll-padding-inline:4px;overscroll-behavior-inline:contain}
+.photo-design-side .polaroid-style-option{min-height:84px;flex:0 0 83px;max-width:83px}
+.photo-design-side .polaroid-style-option:focus-visible{outline:2px solid #b46c9a;outline-offset:-1px}
+.photo-design-side .layer-mini{width:54px;height:46px;overflow:visible}
+.photo-design-side .layer-mini i{width:19px;height:25px;border-bottom-width:5px;transition:transform .2s ease}
+.photo-design-duo{grid-template-columns:repeat(2,minmax(0,1fr))}
+.photo-stack-area .polaroid-card{max-width:calc(55% + 12px)}
+@media(max-width:520px){.photo-design-duo{gap:7px}.photo-design-side{padding:9px 5px 3px;border-radius:12px}.photo-design-side .polaroid-style-option{flex-basis:76px;max-width:76px;padding:7px 3px}.photo-design-side .polaroid-chooser-title{min-height:58px}.photo-design-count{font-size:9px}}
+
+.photo-variant--rose-gold .polaroid-card,
+.photo-variant--rose-gold .polaroid-mini-frame{background:#fff2ef;border:3px solid #c88d80;border-radius:13px;box-shadow:0 10px 26px #d1978145;}
+.photo-variant--rose-gold .polaroid-caption{color:#d19781;}
+.photo-variant--rose-gold .polaroid-image,.photo-variant--rose-gold .polaroid-mini-picture{border-radius:calc(13px / 2);}
+.photo-lightbox[data-photo-style="rose-gold"] .photo-lightbox-frame{background:#fff2ef;border:6px solid #c88d80;border-radius:13px;}
+
+.photo-variant--midnight .polaroid-card,
+.photo-variant--midnight .polaroid-mini-frame{background:#222d4d;border:3px double #9bb0e6;border-radius:11px;box-shadow:0 10px 26px #273b6845;}
+.photo-variant--midnight .polaroid-caption{color:#273b68;}
+.photo-variant--midnight .polaroid-image,.photo-variant--midnight .polaroid-mini-picture{border-radius:calc(11px / 2);}
+.photo-lightbox[data-photo-style="midnight"] .photo-lightbox-frame{background:#222d4d;border:6px double #9bb0e6;border-radius:11px;}
+
+.photo-variant--lavender .polaroid-card,
+.photo-variant--lavender .polaroid-mini-frame{background:#eee2ff;border:3px solid #bba6eb;border-radius:19px;box-shadow:0 10px 26px #8273c345;}
+.photo-variant--lavender .polaroid-caption{color:#8273c3;}
+.photo-variant--lavender .polaroid-image,.photo-variant--lavender .polaroid-mini-picture{border-radius:calc(19px / 2);}
+.photo-lightbox[data-photo-style="lavender"] .photo-lightbox-frame{background:#eee2ff;border:6px solid #bba6eb;border-radius:19px;}
+
+.photo-variant--sunflower .polaroid-card,
+.photo-variant--sunflower .polaroid-mini-frame{background:#fff5cb;border:3px dashed #ecc359;border-radius:15px;box-shadow:0 10px 26px #b3882045;}
+.photo-variant--sunflower .polaroid-caption{color:#b38820;}
+.photo-variant--sunflower .polaroid-image,.photo-variant--sunflower .polaroid-mini-picture{border-radius:calc(15px / 2);}
+.photo-lightbox[data-photo-style="sunflower"] .photo-lightbox-frame{background:#fff5cb;border:6px dashed #ecc359;border-radius:15px;}
+
+.photo-variant--ocean .polaroid-card,
+.photo-variant--ocean .polaroid-mini-frame{background:#dbf5fb;border:3px solid #79bbd9;border-radius:21px;box-shadow:0 10px 26px #348ab445;}
+.photo-variant--ocean .polaroid-caption{color:#348ab4;}
+.photo-variant--ocean .polaroid-image,.photo-variant--ocean .polaroid-mini-picture{border-radius:calc(21px / 2);}
+.photo-lightbox[data-photo-style="ocean"] .photo-lightbox-frame{background:#dbf5fb;border:6px solid #79bbd9;border-radius:21px;}
+
+.photo-variant--forest .polaroid-card,
+.photo-variant--forest .polaroid-mini-frame{background:#e1f1df;border:3px double #81a883;border-radius:10px;box-shadow:0 10px 26px #467b5445;}
+.photo-variant--forest .polaroid-caption{color:#467b54;}
+.photo-variant--forest .polaroid-image,.photo-variant--forest .polaroid-mini-picture{border-radius:calc(10px / 2);}
+.photo-lightbox[data-photo-style="forest"] .photo-lightbox-frame{background:#e1f1df;border:6px double #81a883;border-radius:10px;}
+
+.photo-variant--neon .polaroid-card,
+.photo-variant--neon .polaroid-mini-frame{background:#1a1731;border:3px solid #e25ed5;border-radius:16px;box-shadow:0 10px 26px #d34acd45;}
+.photo-variant--neon .polaroid-caption{color:#d34acd;}
+.photo-variant--neon .polaroid-image,.photo-variant--neon .polaroid-mini-picture{border-radius:calc(16px / 2);}
+.photo-lightbox[data-photo-style="neon"] .photo-lightbox-frame{background:#1a1731;border:6px solid #e25ed5;border-radius:16px;}
+
+.photo-variant--pearl .polaroid-card,
+.photo-variant--pearl .polaroid-mini-frame{background:#fffdf8;border:3px solid #d9bbdd;border-radius:24px;box-shadow:0 10px 26px #bc9bc945;}
+.photo-variant--pearl .polaroid-caption{color:#bc9bc9;}
+.photo-variant--pearl .polaroid-image,.photo-variant--pearl .polaroid-mini-picture{border-radius:calc(24px / 2);}
+.photo-lightbox[data-photo-style="pearl"] .photo-lightbox-frame{background:#fffdf8;border:6px solid #d9bbdd;border-radius:24px;}
+
+.photo-variant--vintage .polaroid-card,
+.photo-variant--vintage .polaroid-mini-frame{background:#efe0c5;border:3px double #ae8466;border-radius:3px;box-shadow:0 10px 26px #99704f45;}
+.photo-variant--vintage .polaroid-caption{color:#99704f;}
+.photo-variant--vintage .polaroid-image,.photo-variant--vintage .polaroid-mini-picture{border-radius:calc(3px / 2);}
+.photo-lightbox[data-photo-style="vintage"] .photo-lightbox-frame{background:#efe0c5;border:6px double #ae8466;border-radius:3px;}
+
+.photo-variant--minimal .polaroid-card,
+.photo-variant--minimal .polaroid-mini-frame{background:#fff;border:3px solid #343541;border-radius:2px;box-shadow:0 10px 26px #34354145;}
+.photo-variant--minimal .polaroid-caption{color:#343541;}
+.photo-variant--minimal .polaroid-image,.photo-variant--minimal .polaroid-mini-picture{border-radius:calc(2px / 2);}
+.photo-lightbox[data-photo-style="minimal"] .photo-lightbox-frame{background:#fff;border:6px solid #343541;border-radius:2px;}
+
+.photo-variant--comic .polaroid-card,
+.photo-variant--comic .polaroid-mini-frame{background:#fff6bd;border:3px solid #302a61;border-radius:4px;box-shadow:0 10px 26px #302a6145;}
+.photo-variant--comic .polaroid-caption{color:#302a61;}
+.photo-variant--comic .polaroid-image,.photo-variant--comic .polaroid-mini-picture{border-radius:calc(4px / 2);}
+.photo-lightbox[data-photo-style="comic"] .photo-lightbox-frame{background:#fff6bd;border:6px solid #302a61;border-radius:4px;}
+
+.photo-variant--lace .polaroid-card,
+.photo-variant--lace .polaroid-mini-frame{background:#fff4fa;border:3px dotted #d789b7;border-radius:23px;box-shadow:0 10px 26px #c47d9e45;}
+.photo-variant--lace .polaroid-caption{color:#c47d9e;}
+.photo-variant--lace .polaroid-image,.photo-variant--lace .polaroid-mini-picture{border-radius:calc(23px / 2);}
+.photo-lightbox[data-photo-style="lace"] .photo-lightbox-frame{background:#fff4fa;border:6px dotted #d789b7;border-radius:23px;}
+
+.photo-variant--galaxy .polaroid-card,
+.photo-variant--galaxy .polaroid-mini-frame{background:#252146;border:3px solid #b696f1;border-radius:18px;box-shadow:0 10px 26px #a78ddd45;}
+.photo-variant--galaxy .polaroid-caption{color:#a78ddd;}
+.photo-variant--galaxy .polaroid-image,.photo-variant--galaxy .polaroid-mini-picture{border-radius:calc(18px / 2);}
+.photo-lightbox[data-photo-style="galaxy"] .photo-lightbox-frame{background:#252146;border:6px solid #b696f1;border-radius:18px;}
+
+.photo-variant--polka .polaroid-card,
+.photo-variant--polka .polaroid-mini-frame{background:#fff0e9;border:3px dashed #e2879d;border-radius:16px;box-shadow:0 10px 26px #ae648645;}
+.photo-variant--polka .polaroid-caption{color:#ae6486;}
+.photo-variant--polka .polaroid-image,.photo-variant--polka .polaroid-mini-picture{border-radius:calc(16px / 2);}
+.photo-lightbox[data-photo-style="polka"] .photo-lightbox-frame{background:#fff0e9;border:6px dashed #e2879d;border-radius:16px;}
+
+.photo-variant--sunset .polaroid-card,
+.photo-variant--sunset .polaroid-mini-frame{background:#ffe4d2;border:3px solid #ef9776;border-radius:19px;box-shadow:0 10px 26px #d8756045;}
+.photo-variant--sunset .polaroid-caption{color:#d87560;}
+.photo-variant--sunset .polaroid-image,.photo-variant--sunset .polaroid-mini-picture{border-radius:calc(19px / 2);}
+.photo-lightbox[data-photo-style="sunset"] .photo-lightbox-frame{background:#ffe4d2;border:6px solid #ef9776;border-radius:19px;}
+
+.photo-variant--marble .polaroid-card,
+.photo-variant--marble .polaroid-mini-frame{background:#f5f5f8;border:3px double #b5aec2;border-radius:12px;box-shadow:0 10px 26px #76718745;}
+.photo-variant--marble .polaroid-caption{color:#767187;}
+.photo-variant--marble .polaroid-image,.photo-variant--marble .polaroid-mini-picture{border-radius:calc(12px / 2);}
+.photo-lightbox[data-photo-style="marble"] .photo-lightbox-frame{background:#f5f5f8;border:6px double #b5aec2;border-radius:12px;}
+
+.photo-variant--retro .polaroid-card,
+.photo-variant--retro .polaroid-mini-frame{background:#e7f1d0;border:3px solid #e998a7;border-radius:8px;box-shadow:0 10px 26px #ba577445;}
+.photo-variant--retro .polaroid-caption{color:#ba5774;}
+.photo-variant--retro .polaroid-image,.photo-variant--retro .polaroid-mini-picture{border-radius:calc(8px / 2);}
+.photo-lightbox[data-photo-style="retro"] .photo-lightbox-frame{background:#e7f1d0;border:6px solid #e998a7;border-radius:8px;}
+
+.photo-variant--gold .polaroid-card,
+.photo-variant--gold .polaroid-mini-frame{background:#fff9e3;border:3px double #cda044;border-radius:6px;box-shadow:0 10px 26px #9e792b45;}
+.photo-variant--gold .polaroid-caption{color:#9e792b;}
+.photo-variant--gold .polaroid-image,.photo-variant--gold .polaroid-mini-picture{border-radius:calc(6px / 2);}
+.photo-lightbox[data-photo-style="gold"] .photo-lightbox-frame{background:#fff9e3;border:6px double #cda044;border-radius:6px;}
+
+.photo-variant--frost .polaroid-card,
+.photo-variant--frost .polaroid-mini-frame{background:#ecfaff;border:3px solid #a3cfe4;border-radius:25px;box-shadow:0 10px 26px #6c9eb845;}
+.photo-variant--frost .polaroid-caption{color:#6c9eb8;}
+.photo-variant--frost .polaroid-image,.photo-variant--frost .polaroid-mini-picture{border-radius:calc(25px / 2);}
+.photo-lightbox[data-photo-style="frost"] .photo-lightbox-frame{background:#ecfaff;border:6px solid #a3cfe4;border-radius:25px;}
+
+.photo-variant--midnight .polaroid-caption,.photo-variant--neon .polaroid-caption,.photo-variant--galaxy .polaroid-caption{color:#fff}
+.photo-variant--neon .polaroid-card,.photo-variant--neon .polaroid-mini-frame{background:linear-gradient(125deg,#141327,#322752);box-shadow:0 0 17px #d661d488,0 12px 22px #44326655}
+.photo-variant--galaxy .polaroid-card,.photo-variant--galaxy .polaroid-mini-frame{background:radial-gradient(circle at 30% 20%,#5e5389,#221f3e 70%);box-shadow:0 0 18px #9f88cd88}
+.photo-variant--retro .polaroid-card,.photo-variant--retro .polaroid-mini-frame{background:linear-gradient(135deg,#ddf7be 0 50%,#ffd6de 50% 100%)}
+.photo-variant--pearl .polaroid-card,.photo-variant--pearl .polaroid-mini-frame{background:linear-gradient(130deg,#fdfbfd,#e3f5fc 48%,#f8e3f4)}
+.photo-variant--marble .polaroid-card,.photo-variant--marble .polaroid-mini-frame{background:repeating-linear-gradient(148deg,#f6f5f7 0 18px,#e2dce5 19px,#f9f7fa 23px,#f1eff4 45px)}
+.photo-variant--sunset .polaroid-card,.photo-variant--sunset .polaroid-mini-frame{background:linear-gradient(145deg,#ffbca8,#ffe6bd)}
+.photo-variant--frost .polaroid-card,.photo-variant--frost .polaroid-mini-frame{background:linear-gradient(135deg,#f9feffdd,#cfeeffcc);backdrop-filter:blur(8px)}
+.photo-variant--gold .polaroid-card,.photo-variant--gold .polaroid-mini-frame{background:linear-gradient(135deg,#fffdea,#e6cb7b 50%,#fff6d1 90%)}
+.photo-variant--polka .polaroid-card,.photo-variant--polka .polaroid-mini-frame{background:radial-gradient(#e9a6bd 1.8px,transparent 2px) 0 0/16px 16px,#fff1ee}
+.photo-variant--comic .polaroid-card,.photo-variant--comic .polaroid-mini-frame{box-shadow:6px 7px 0 #302a61}
+.photo-variant--minimal .polaroid-card,.photo-variant--minimal .polaroid-mini-frame{box-shadow:1px 5px 14px #14132420}
+.photo-variant--lace .polaroid-card,.photo-variant--lace .polaroid-mini-frame{outline:2px dotted #f0b7d3;outline-offset:-8px}
+.photo-variant--sunflower .polaroid-card::after{content:'✿';color:#c59e2b;position:absolute;top:-17px;right:-10px;font-size:24px;text-shadow:0 2px 3px #ffffffbb;pointer-events:none}
+.photo-variant--rose-gold .polaroid-card::after{content:'✦';color:#d49d85;position:absolute;top:-13px;right:9px;font-size:22px;pointer-events:none}
+.photo-variant--ocean .polaroid-card::after{content:'✧';color:#69aed9;position:absolute;top:-16px;left:-8px;font-size:23px;pointer-events:none}
+.photo-variant--forest .polaroid-card::after{content:'❀';color:#77a78e;position:absolute;top:-15px;right:-6px;font-size:23px;pointer-events:none}
+.photo-variant--vintage .polaroid-image{filter:sepia(.19)}
+.photo-variant--film .polaroid-card{height:181px}
+@media(max-width:480px){.photo-variant--film .polaroid-card{height:163px}}
+@media(prefers-reduced-motion:reduce){.photo-design-side .layer-mini i{transition:none}}

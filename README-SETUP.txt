@@ -99,3 +99,96 @@ TROUBLESHOOTING
   - Music error 402/403: Check Storage bucket and Firebase Blaze plan.
   - Audio unavailable: Check Storage rules, bucket, file type and network.
   - Received empty: Sign in then OPEN the shared link at least once.
+
+
+------------------------------------------------------------
+V5.0 — 24 PREMIUM BORDER STYLES + 24 PHOTO LAYOUTS + ADMIN CHARTS
+------------------------------------------------------------
+HOW TO USE THE NEW PHOTO DESIGN STUDIO
+1. Open Create -> Your letter pages -> Add picture.
+2. Swipe sideways through the Border and Layout designs in the editor.
+3. Premium accounts can select any of the 24 frames and 24 layouts.
+   Free accounts can still use Classic Border + Classic Stack.
+4. You can use a different border and layout on every envelope page.
+5. Changes show in the editor, the shared envelope reader and the photo gallery.
+   They are saved alongside each page and work with older envelopes.
+
+ADMIN STATISTICS
+1. Open admin.html on localhost or HTTPS.
+2. Sign in using the Google account matching js/payment-config.js adminUid.
+3. Dashboard displays live totals from premiumPayments, supportTickets,
+   and feedbackEntries, subject to your already-published Firebase Rules.
+4. View donuts: request status and Maya/GoTyme payment share.
+5. View the activity line and switch between Submitted requests and Approved
+   reported value, with Last 7 / 30 / 90 days options.
+6. Other metrics: total payment requests, unique payment request customers,
+   approval ratio, open support, open feedback, average feedback rating.
+
+IMPORTANT
+* Statistics are computed from actual Firebase records once available.
+* The dashboard does NOT claim to count ALL registered accounts, private
+  envelopes or site visitors: those are not available via current rules.
+* Approved value is the sum of manually approved user-submitted amounts;
+  it is not independent confirmation of money received in a bank account.
+* Existing database.rules.json and payment authentication are unchanged.
+* No charting CDN, extra npm packages, database migrations or demo entries.
+* If updates aren't showing, hard-refresh the browser (Ctrl + Shift + R).
+* New CSS: css/premium-gallery.css and css/admin-analytics.css.
+------------------------------------------------------------
+
+
+============================================================
+V6.0 — PREMIUM PAPER MAGIC (TYPEWRITER + 3D PAGE TURNS)
+============================================================
+NEW IN THIS VERSION
+- Premium creators can turn on Typewriter (one Unicode-aware character at a
+  time, from left to right) and Realistic page turning separately.
+- Three typewriter speed options: Gentle, Classic, and Quick.
+- Page turns animate like a 3D sheet with shadow, fold, and back-paper surface.
+- Back and Next both animate; rapid repeat taps cannot jumble page order.
+- The Show full text action reveals an animated message immediately.
+- Mobile touch swipes and keyboard arrows still navigate papers.
+- OS/browser Reduce Motion preference or the site's Reduce Motion setting
+  suppresses both effects for accessibility.
+- Creator selections are saved in a validated paperMagic object inside the
+  envelope. They are included in Firebase envelope backups, existing shared
+  link updates, and the recipient's view. Recipients do not need Premium.
+- Old envelopes keep their old appearance until a Premium user edits and
+  re-saves them with Paper Magic switched on.
+- New Free envelopes have both special effects off. Previously saved effects
+  are preserved if a creator later edits without Premium access.
+
+HOW TO ENABLE
+1. Sign in and make sure Premium has already been approved.
+2. Create (or edit) an envelope.
+3. Open the new "Paper Magic" section, located above "Your letter pages".
+4. Turn on Live typewriter and/or Realistic page turning.
+5. Choose typing speed; write at least two pages to see the page turn.
+6. Save envelope, choose View, click the envelope seal, then Next / Back.
+7. Sharing a newly saved short link also shares the animations.
+
+DEPLOYMENT
+- Upload/replace index.html, css/paper-magic.css, and js/app.js together.
+- The rest of the ZIP remains unchanged, including admin.html and the existing
+  24 border + 24 layout gallery and admin charts from v5.
+- No database schema migration or Firebase rules changes are required for
+  reading/saving these per-envelope effect fields under existing permissions.
+- Existing share URLs can be refreshed when editing if existing link update
+  permissions allow it. Embedded legacy URLs cannot be remotely updated.
+- After deploying, hard-refresh the page (Ctrl+Shift+R) to pick up JS/CSS.
+
+QUALITY CHECKS
+- JavaScript syntax checked with Node.js.
+- Browser smoke tested in Chromium at desktop (1280px) and mobile (390px),
+  including forward/back flipping, typewriter, skip, persistence, and reduced
+  motion; Firebase calls were mocked in browser tests.
+- A live Firebase end-to-end check is still needed on your deployed website.
+- This is a client-side Premium UI; enforce paid entitlement on a trusted
+  backend / Firebase Rules for stricter production purchase verification.
+
+VERSION NOTE: Older sections of this README document historical features and
+setup of past versions. The current code uses manually approved paidPremium
+rather than the old demo toggle described in the historical v4 section.
+
+
+New in v7: Premium bouquet intro overlay before the envelope appears, and anchored photo area while typewriter animation runs.

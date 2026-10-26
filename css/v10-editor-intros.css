@@ -1,0 +1,73 @@
+/* v10: functional mobile creator, draft-progress feedback and premium intro effects. */
+.intro-studio { margin-top:16px;padding:14px;border:1px solid #efdae9;border-radius:17px;background:linear-gradient(160deg,#fff9fc,#f8f0ff); }
+.intro-studio-head{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.intro-studio-head h4{font-size:16px;margin:0 0 4px;color:#6d456a}
+.intro-studio-head p{font-size:11px;color:#886a86;margin:0}
+.intro-total{font-size:10px;padding:3px 6px;border-radius:99px;background:#fce5f1;color:#a65786;white-space:nowrap}
+.intro-preview-btn{font-size:11px;padding:9px 10px;white-space:nowrap}
+.intro-preview-btn:disabled{opacity:.5;cursor:not-allowed}
+.intro-category-rail{display:flex;overflow-x:auto;gap:5px;margin:12px 0 9px;padding-bottom:4px;scrollbar-width:thin}
+.intro-category-rail button{flex:none;background:#fff;border:1px solid #edd6e7;color:#9b6d8a;border-radius:99px;padding:7px 11px;font-size:11px;font-weight:900}
+.intro-category-rail button.active{background:#a869a2;color:white;border-color:#a869a2}
+.intro-choice-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;max-height:275px;overflow-y:auto;padding:3px;overscroll-behavior:contain}
+.intro-card{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0;min-height:90px;padding:11px 5px 9px;border-radius:14px;border:1px solid #f1dbe8;background:#fff;color:#775e7b;transition:transform .16s,border-color .16s,box-shadow .16s;position:relative}
+.intro-card .intro-card-emoji{font-size:28px;line-height:1.2}
+.intro-card .intro-card-name{font-size:11px;text-align:center;font-weight:900;line-height:1.2}
+.intro-card .intro-card-category{font-size:9px;color:#ac8ca3}
+.intro-card[aria-pressed="true"]{border:2px solid #bc78a8;background:#fff2f9;box-shadow:0 6px 15px #aa81ad30;transform:translateY(-1px)}
+.intro-card[aria-pressed="true"]::after{content:"✓";position:absolute;top:4px;right:5px;background:#bc78a8;color:#fff;border-radius:50%;width:15px;height:15px;font-size:10px;display:grid;place-items:center}
+.intro-studio.intro-locked .intro-choice-grid{opacity:.55}
+.intro-studio.intro-locked .intro-card{cursor:not-allowed}
+.intro-current{font-size:12px;color:#9d598d;font-weight:900;margin:10px 0 0}
+.studio-draft-progress{display:none}
+@media(max-width:860px){
+  body.create-mobile-mode #create #studioDraftProgress:not([hidden]){display:grid;gap:5px;flex:none;padding:9px 13px 7px;border-top:1px solid #f2e0ec;background:#fffafc}
+  .studio-progress-meta{display:flex;justify-content:space-between;align-items:center;gap:7px;font-size:10px}
+  .studio-progress-meta b{color:#a0578b;font-weight:900}
+  .studio-progress-meta span{color:#987b90;font-size:10px;text-align:right}
+  .studio-progress-track{height:6px;background:#f0dce8;border-radius:99px;overflow:hidden}
+  #studioProgressFill{display:block;height:100%;width:7%;border-radius:99px;background:linear-gradient(90deg,#f08eb6,#a48ce2);transition:width .24s ease}
+  #studioLiveDetail{font-size:11px;line-height:1.25;color:#765d78;margin:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+  .studio-tool.edited .studio-tool-icon{position:relative}
+  .studio-tool.edited:not(.active) .studio-tool-icon::after{content:"✓";position:absolute;top:-3px;right:-4px;width:14px;height:14px;display:grid;place-items:center;border-radius:50%;background:#a56abe;color:white;font-size:9px}
+  body.create-mobile-mode #studioPanelScroll .intro-choice-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:205px}
+}
+/* The CSS heart is large and dimensional rather than a stretched emoji. */
+.bouquet-screen.intro-v10{--intro-bg1:#fff3f9;--intro-bg2:#eadffa;background:radial-gradient(ellipse at 50% 39%,#fffdfedd 3%,var(--intro-bg1) 47%,var(--intro-bg2) 110%)}
+.bouquet-screen.intro-v10 .intro-v10-center{position:relative;z-index:2;display:grid;justify-items:center;gap:12px;animation:introHeroEnter .85s cubic-bezier(.2,.85,.2,1.15) both;filter:drop-shadow(0 25px 35px #a87eaf4a)}
+.bouquet-screen.intro-v10 .intro-v10-hero{font-size:clamp(105px,25vw,210px);line-height:1;transform-origin:center;animation:var(--intro-hero-animation,introHeroPulse) 2.2s ease-in-out infinite}
+.bouquet-screen.intro-v10 .intro-giant-heart{height:clamp(112px,29vw,240px);width:clamp(112px,29vw,240px);position:relative;display:grid;place-items:center;filter:drop-shadow(0 17px 25px #ef799f55)}
+.bouquet-screen.intro-v10 .intro-giant-heart::before{content:"♥";color:#fc729f;font:900 clamp(148px,36vw,330px)/.9 Georgia,serif;text-shadow:inset 0 0 20px white,6px 9px 0 #dc5b88,0 0 40px #ffc3dc;animation:introHeartBeat 1.25s ease-in-out infinite}
+.bouquet-screen.intro-v10 .intro-v10-caption{font:900 clamp(16px,3.8vw,28px)/1.25 Nunito,system-ui,sans-serif;text-align:center;max-width:85vw;color:#885879;letter-spacing:.01em;background:#ffffffc7;border:1px solid #fff;padding:11px 22px;border-radius:24px;box-shadow:0 12px 30px #997aa824}
+.bouquet-screen.intro-v10 .intro-v10-particle{position:absolute;left:var(--intro-x);top:var(--intro-y);font-size:var(--intro-size);opacity:0;transform-origin:center;will-change:transform,opacity;text-shadow:0 7px 18px #cc8dac77;animation:var(--intro-motion,introFloatUp) var(--intro-duration,2.1s) ease-in-out var(--intro-delay,0s) infinite}
+.bouquet-screen.intro-v10[data-motion="rain"] .intro-v10-particle{animation-name:introRain}
+.bouquet-screen.intro-v10[data-motion="burst"] .intro-v10-particle{animation-name:introBurst;--intro-duration:1.65s}
+.bouquet-screen.intro-v10[data-motion="orbit"] .intro-v10-particle{animation-name:introOrbit;--intro-duration:2.8s}
+.bouquet-screen.intro-v10[data-motion="wave"] .intro-v10-particle{animation-name:introWave}
+.bouquet-screen.intro-v10[data-motion="spiral"] .intro-v10-particle{animation-name:introSpiral;--intro-duration:2.7s}
+.bouquet-screen.intro-v10[data-motion="curtain"] .intro-v10-particle{animation-name:introCurtain}
+.bouquet-screen.intro-v10[data-motion="float"] .intro-v10-particle{animation-name:introFloatUp}
+.bouquet-screen.intro-v10[data-hero-motion="spin"]{--intro-hero-animation:introHeroSpin}
+.bouquet-screen.intro-v10[data-hero-motion="bounce"]{--intro-hero-animation:introHeroBounce}
+.bouquet-screen.intro-v10[data-hero-motion="glow"]{--intro-hero-animation:introHeroGlow}
+.bouquet-screen.intro-v10[data-hero-motion="pulse"]{--intro-hero-animation:introHeroPulse}
+@keyframes introHeroEnter{from{opacity:0;transform:scale(.3) translateY(70px) rotate(-14deg)}to{opacity:1;transform:scale(1) translateY(0) rotate(0)}}
+@keyframes introHeartBeat{0%,100%{transform:scale(1)}40%{transform:scale(1.16)}60%{transform:scale(.98)}}
+@keyframes introHeroPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.13)}}
+@keyframes introHeroSpin{0%,100%{transform:rotate(-12deg) scale(1)}50%{transform:rotate(12deg) scale(1.15)}}
+@keyframes introHeroBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-25px) rotate(8deg)}}
+@keyframes introHeroGlow{0%,100%{filter:brightness(1) drop-shadow(0 0 4px #ffcde6)}50%{filter:brightness(1.22) drop-shadow(0 0 35px #e8a2fb)}}
+@keyframes introFloatUp{0%{opacity:0;transform:translateY(55px) scale(.3) rotate(-30deg)}30%{opacity:.95}100%{opacity:0;transform:translateY(-105px) scale(1.2) rotate(30deg)}}
+@keyframes introRain{0%{opacity:0;transform:translateY(-100px) rotate(-35deg) scale(.5)}20%{opacity:1}85%{opacity:.85}100%{opacity:0;transform:translateY(140px) rotate(55deg) scale(1.2)}}
+@keyframes introBurst{0%{opacity:0;transform:translate(0,0) scale(.1)}20%{opacity:1}100%{opacity:0;transform:translate(var(--intro-dx),var(--intro-dy)) scale(1.45) rotate(75deg)}}
+@keyframes introOrbit{0%{opacity:0;transform:rotate(0deg) translateX(8px) rotate(0deg)}25%{opacity:1}80%{opacity:1}100%{opacity:0;transform:rotate(360deg) translateX(100px) rotate(-360deg)}}
+@keyframes introWave{0%{opacity:0;transform:translate(-70px,35px) rotate(-20deg)}50%{opacity:1;transform:translate(15px,-35px) rotate(25deg)}100%{opacity:0;transform:translate(100px,30px) rotate(40deg)}}
+@keyframes introSpiral{0%{opacity:0;transform:rotate(0deg) translateX(0) scale(.2)}20%{opacity:.9}100%{opacity:0;transform:rotate(480deg) translateX(95px) scale(1.2)}}
+@keyframes introCurtain{0%{opacity:0;transform:translateY(-100vh) rotate(-25deg)}25%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translateY(100vh) rotate(25deg)}}
+@media(prefers-reduced-motion:reduce){.bouquet-screen.intro-v10 *, .intro-card{animation:none!important;transition:none!important}}
+body.reduce-motion .bouquet-screen.intro-v10 *{animation:none!important;transition:none!important}
+
+/* Full screen preview must float above the mobile editor, header and popups. */
+.bouquet-screen.show{z-index:1500;pointer-events:auto}
+.bouquet-screen.show .intro-skip{pointer-events:auto;position:absolute;z-index:15;right:clamp(12px,4vw,35px);top:calc(16px + env(safe-area-inset-top));padding:10px 15px;border-radius:999px;background:#ffffffdc;box-shadow:0 9px 28px #a885ac44;color:#8d6082;font:900 12px Nunito,system-ui,sans-serif;border:1px solid #fff}
+.bouquet-screen.leaving{pointer-events:none}

@@ -7,6 +7,7 @@
   <title>W-Envelope Cute · Admin Dashboard</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/admin-analytics.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body class="authenticated admin-page">
@@ -56,6 +57,42 @@
             <article class="admin-stat"><span class="admin-stat-icon rose">✕</span><p>Rejected</p><strong id="statRejected">0</strong><small>Declined requests</small></article>
             <article class="admin-stat"><span class="admin-stat-icon blue">₱</span><p>Approved Value</p><strong id="statRevenue">₱0</strong><small>Reported, manually verified</small></article>
           </div>
+
+          <!-- Firebase-backed analytics. No sample numbers or externally loaded chart library. -->
+          <section id="adminAnalytics" class="admin-analytics" aria-label="Analytics overview">
+            <div class="analytics-section-heading"><div><span class="admin-kicker">REAL-TIME ANALYTICS</span><h2>Workspace statistics</h2><p>Live totals from Premium payment requests, support tickets and user feedback.</p></div><span class="analytics-live">● Firebase synced</span></div>
+            <div class="analytics-quick-grid" aria-label="Additional key metrics">
+              <article class="analytics-quick"><span>All payment requests</span><strong id="statTotalRequests">0</strong><small>Submitted by customers</small></article>
+              <article class="analytics-quick"><span>Payment customers</span><strong id="statPaymentCustomers">0</strong><small>Distinct request owners, not all accounts</small></article>
+              <article class="analytics-quick"><span>Review approval rate</span><strong id="statApprovalRate">0%</strong><small>Of approved + rejected requests</small></article>
+              <article class="analytics-quick"><span>Open support</span><strong id="statOpenSupport">0</strong><small id="statSupportTotal">0 support tickets</small></article>
+              <article class="analytics-quick"><span>Open feedback</span><strong id="statOpenFeedback">0</strong><small id="statFeedbackTotal">0 feedback submissions</small></article>
+              <article class="analytics-quick"><span>Average rating</span><strong id="statAvgRating">—</strong><small>From submitted feedback / 5</small></article>
+            </div>
+            <div class="analytics-charts-grid">
+              <article class="analytics-panel analytics-trend-panel">
+                <div class="analytics-panel-head"><div><h3>Activity trends</h3><p>Recent submissions and manually approved value</p></div>
+                  <div class="analytics-filter-tools"><label><span class="sr-only">Trend metric</span><select id="analyticsMetric"><option value="requests">Payment requests</option><option value="revenue">Approved value</option></select></label><label><span class="sr-only">Date range</span><select id="analyticsRange"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select></label></div>
+                </div>
+                <div class="analytics-trend-summary"><strong id="analyticsPeriodValue">0</strong><span id="analyticsPeriodCaption">Requests in selected period</span></div>
+                <div class="analytics-svg-wrap"><svg id="analyticsLineChart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Payment requests over the last 30 days"></svg></div>
+                <div class="analytics-axis-caption" id="analyticsAxisCaption">Based on submission dates · all statuses</div>
+              </article>
+              <article class="analytics-panel analytics-status-panel">
+                <div class="analytics-panel-head"><div><h3>Payment status</h3><p>Distribution of all request outcomes</p></div></div>
+                <div class="analytics-donut-layout"><div id="analyticsStatusDonut" class="analytics-donut" role="img" aria-label="No payment requests"><div class="analytics-donut-inner"><strong id="analyticsStatusTotal">0</strong><span>requests</span></div></div>
+                  <div id="analyticsStatusLegend" class="analytics-donut-legend" aria-label="Payment status totals"></div></div>
+                <div class="analytics-panel-note" id="analyticsStatusNote">Waiting for payments</div>
+              </article>
+              <article class="analytics-panel analytics-method-panel">
+                <div class="analytics-panel-head"><div><h3>Payment channels</h3><p>Maya compared with GoTyme</p></div></div>
+                <div class="analytics-donut-layout"><div id="analyticsMethodDonut" class="analytics-donut" role="img" aria-label="No payment channels"><div class="analytics-donut-inner"><strong id="analyticsMethodTotal">0</strong><span>requests</span></div></div>
+                  <div id="analyticsMethodLegend" class="analytics-donut-legend" aria-label="Payment channel totals"></div></div>
+                <div class="analytics-panel-note">Totals include pending, approved and rejected</div>
+              </article>
+            </div>
+            <p class="analytics-source-note">Stats update from the records your admin account can access. All registered users, private envelopes, and website visits are not included because those totals are not available through current Firebase rules. Approved value sums reported payment amounts after administrator approval; it is not a bank settlement report.</p>
+          </section>
 
           <section id="adminMethodSummary" class="admin-method-summary" aria-label="Payment methods">
             <button class="admin-method-card" type="button" data-open-method="maya"><span class="admin-method-icon maya"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Maya_logo.svg/960px-Maya_logo.svg.png" alt="Maya logo" class="bank-card-logo"></span><span><strong>Maya payments</strong><small id="mayaSummary">0 pending · 0 total</small></span><span class="admin-method-arrow">→</span></button>
@@ -110,6 +147,6 @@
 
   <script src="js/firebase-config.js"></script>
   <script src="js/payment-config.js"></script>
-  <script type="module" src="js/admin.js"></script>
+  <script type="module" src="js/admin.js?v=5.0-statistics"></script>
 </body>
 </html>

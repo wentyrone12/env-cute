@@ -141,6 +141,7 @@ function setActiveSection(next) {
   $('#adminInboxSection').hidden = !inbox;
   $('#adminStats').hidden = next !== 'dashboard';
   $('#adminMethodSummary').hidden = next !== 'dashboard';
+  $('#adminAnalytics').hidden = next !== 'dashboard';
   $('.admin-welcome').hidden = next !== 'dashboard';
   render(); renderAdminInbox();
   if(window.innerWidth <= 720) window.scrollTo({top:0,behavior:'smooth'});
@@ -163,7 +164,112 @@ function render() {
     $('#' + method + 'Badge').hidden = pending === 0;
   }
   renderList();
+  renderAnalytics();
 }
+
+/* Accessible, dependency-free analytics visualizations powered only by Firebase snapshots. */
+const chartPalette = {pending:'#9b79df',approved:'#55b68c',rejected:'#ef91a4',maya:'#6c83e9',gotyme:'#e4a1bf'};
+const numberPH = n => n.toLocaleString('en-PH');
+function makeDonut(nodeId, legendId, totalId, entries) {
+  const total = entries.reduce((sum,item) => sum + item.value, 0);
+  let cursor = 0;
+  const stops = [];
+  for (const item of entries) {
+    if (!item.value || !total) continue;
+    const start = cursor / total * 100;
+    cursor += item.value;
+    const end = cursor / total * 100;
+    stops.push(`${item.color} ${start.toFixed(3)}% ${end.toFixed(3)}%`);
+  }
+  const node = $('#' + nodeId);
+  node.style.background = stops.length ? `conic-gradient(${stops.join(',')})` : 'conic-gradient(#eee8f2 0% 100%)';
+  node.setAttribute('aria-label', total ? entries.map(item => `${item.name}: ${item.value}`).join(', ') : 'No payment requests yet');
+  $('#' + totalId).textContent = numberPH(total);
+  $('#' + legendId).innerHTML = entries.map(item => `<div class="analytics-legend-row"><span><i style="background:${item.color}"></i>${escapeHTML(item.name)}</span><b>${numberPH(item.value)} <small>${total ? Math.round(100 * item.value / total) : 0}%</small></b></div>`).join('');
+}
+function localDateKey(date) {
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+}
+function renderAnalytics() {
+  const all = requests.length;
+  const approved = requests.filter(item => item.status==='approved');
+  const reviewed = approved.length + requests.filter(item => item.status==='rejected').length;
+  const distinctCustomers = new Set(requests.map(item => item.uid).filter(Boolean)).size;
+  $('#statTotalRequests').textContent = numberPH(all);
+  $('#statPaymentCustomers').textContent = numberPH(distinctCustomers);
+  $('#statApprovalRate').textContent = reviewed ? (100*approved.length/reviewed).toFixed(1)+'%' : '—';
+  const openSupport=supportRecords.filter(item=>item.status!=='resolved').length;
+  const openFeedback=feedbackRecords.filter(item=>item.status!=='resolved').length;
+  $('#statOpenSupport').textContent=numberPH(openSupport);
+  $('#statSupportTotal').textContent=numberPH(supportRecords.length)+' support tickets';
+  $('#statOpenFeedback').textContent=numberPH(openFeedback);
+  $('#statFeedbackTotal').textContent=numberPH(feedbackRecords.length)+' feedback submissions';
+  const ratings=feedbackRecords.map(item=>Number(item.rating)).filter(n=>Number.isFinite(n)&&n>=1&&n<=5);
+  $('#statAvgRating').textContent=ratings.length?(ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1)+' / 5':'—';
+  makeDonut('analyticsStatusDonut','analyticsStatusLegend','analyticsStatusTotal',[
+    {name:'Pending',value:requests.filter(x=>x.status==='pending').length,color:chartPalette.pending},
+    {name:'Approved',value:approved.length,color:chartPalette.approved},
+    {name:'Rejected',value:requests.filter(x=>x.status==='rejected').length,color:chartPalette.rejected}
+  ]);
+  makeDonut('analyticsMethodDonut','analyticsMethodLegend','analyticsMethodTotal',[
+    {name:'Maya',value:requests.filter(x=>x.method==='maya').length,color:chartPalette.maya},
+    {name:'GoTyme',value:requests.filter(x=>x.method==='gotyme').length,color:chartPalette.gotyme}
+  ]);
+  $('#analyticsStatusNote').textContent=all
+    ? `${numberPH(reviewed)} reviewed · ${numberPH(all-reviewed)} still pending or unclassified`
+    : 'No customer payment submissions yet';
+  renderAnalyticsLine();
+}
+function renderAnalyticsLine() {
+  const days = [7,30,90].includes(Number($('#analyticsRange').value)) ? Number($('#analyticsRange').value) : 30;
+  const revenue = $('#analyticsMetric').value === 'revenue';
+  const now = new Date(); now.setHours(0,0,0,0);
+  const start = new Date(now);start.setDate(now.getDate()-(days-1));
+  const grouped = new Map();
+  for(let i=0;i<days;i++) {const day = new Date(start);day.setDate(start.getDate()+i);grouped.set(localDateKey(day),0);}
+  for(const item of requests) {
+    if(revenue && item.status!=='approved') continue;
+    const timestamp = Number(revenue ? (item.reviewedAt || item.submittedAt) : item.submittedAt);
+    if(!Number.isFinite(timestamp) || timestamp <= 0) continue;
+    const date = new Date(timestamp);
+    if(!Number.isFinite(date.getTime())) continue;
+    const key = localDateKey(date);
+    if(grouped.has(key)) grouped.set(key,grouped.get(key)+(revenue?(Number(item.amount)||0):1));
+  }
+  const numbers = [...grouped.values()];
+  const sum = numbers.reduce((a,b)=>a+b,0);
+  $('#analyticsPeriodValue').textContent = revenue ? currency(sum) : numberPH(sum);
+  $('#analyticsPeriodCaption').textContent=revenue?'Approved reported value in period':'Requests submitted in period';
+  $('#analyticsAxisCaption').textContent=revenue?'Grouped by admin review date (fallback: submission date) · reported amount':'Grouped by submission date · all payment statuses';
+  const svg = $('#analyticsLineChart');
+  const W=720,H=280,left=61,right=16,top=20,bottom=46;
+  const usableW=W-left-right,usableH=H-top-bottom;
+  const maxVal=Math.max(1,...numbers);
+  const ceiling=revenue ? Math.ceil(maxVal/(Math.pow(10,Math.floor(Math.log10(maxVal))||0)))*(Math.pow(10,Math.floor(Math.log10(maxVal))||0)) : Math.max(1,Math.ceil(maxVal));
+  const x=i=>left+i/Math.max(1,days-1)*usableW;
+  const y=v=>top+usableH*(1-v/ceiling);
+  const coords=numbers.map((v,i)=>[x(i),y(v)]);
+  const line=coords.map(([xx,yy],i)=>`${i?'L':'M'}${xx.toFixed(2)},${yy.toFixed(2)}`).join(' ');
+  const area=line+` L${(left+usableW).toFixed(2)},${(top+usableH).toFixed(2)} L${left},${(top+usableH).toFixed(2)} Z`;
+  const color=revenue?'#51ad97':'#9b79df';
+  const fmtTick=value=>revenue?'₱'+(value>=1000?(value/1000).toFixed(value%1000?1:0)+'k':Math.round(value)):String(Math.round(value));
+  const grid=[0,1,2,3,4].map(i=>{
+    const val=ceiling*i/4,cy=y(val);
+    return `<line x1="${left}" x2="${left+usableW}" y1="${cy}" y2="${cy}" stroke="#ece5f1" stroke-dasharray="4 5"/><text x="${left-10}" y="${cy+4}" text-anchor="end" fill="#9487a0" font-size="12">${fmtTick(val)}</text>`;
+  }).join('');
+  const dates = [...grouped.keys()];
+  const indexes = [...new Set([0,Math.floor((days-1)/4),Math.floor((days-1)/2),Math.floor((days-1)*.75),days-1])];
+  const labels=indexes.map(i=>{const [yr,mo,da]=dates[i].split('-').map(Number);const d=new Date(yr,mo-1,da);return `<text x="${x(i)}" y="${H-15}" text-anchor="middle" fill="#95869b" font-size="11">${d.toLocaleDateString('en-PH',{month:'short',day:'numeric'})}</text>`;}).join('');
+  // Sparse dots keep a 90-day range legible while every date remains in the line.
+  const step=days<=7?1:days<=30?3:9;
+  const dots=coords.map(([xx,yy],i)=>i%step===0||i===days-1?`<circle cx="${xx}" cy="${yy}" r="3.1" stroke="white" stroke-width="1.8" fill="${color}"><title>${dates[i]}: ${revenue?currency(numbers[i]):numberPH(numbers[i])}</title></circle>`:'').join('');
+  svg.setAttribute('aria-label',`${revenue?'Approved reported value':'Payment requests'} over last ${days} days, total ${revenue?currency(sum):numberPH(sum)}`);
+  svg.innerHTML=`<defs><linearGradient id="analyticsLineFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity=".24"/><stop offset="100%" stop-color="${color}" stop-opacity=".01"/></linearGradient></defs>${grid}<path d="${area}" fill="url(#analyticsLineFill)"/><path d="${line}" fill="none" stroke="${color}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>${dots}${labels}`;
+  svg.classList.toggle('analytics-no-activity',sum===0);
+}
+$('#analyticsMetric').addEventListener('change',renderAnalyticsLine);
+$('#analyticsRange').addEventListener('change',renderAnalyticsLine);
+
 function matchingRequests() {
   return requests.filter(item => {
     if(section === 'maya' || section === 'gotyme') if(item.method !== section) return false;
@@ -225,6 +331,7 @@ function watchAdminInboxes({ref,onValue}) {
       const unread=rows.filter(item=>item.status!=='resolved').length;
       const badge=$('#'+kind+'Badge');badge.hidden=!unread; badge.textContent=unread>99?'99+':String(unread);
       renderAdminInbox();
+      renderAnalytics();
     }, error=>{
       if(!current) return;
       console.warn(kind+' inbox:',error);

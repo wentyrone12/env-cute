@@ -1,0 +1,162 @@
+/* W-Envelope Cute v6: per-envelope Premium Paper Magic, 3D sheets, and typewriter. */
+.paper-magic-editor {
+  margin: 22px 0 20px;
+  padding: clamp(17px, 3vw, 24px);
+  border: 1px solid rgba(182, 122, 156, .23);
+  border-radius: 23px;
+  background: linear-gradient(145deg, rgba(255,255,255,.93), rgba(255,241,248,.70) 57%, rgba(239,234,255,.82));
+  box-shadow: 0 14px 36px rgba(136, 85, 126, .075), inset 0 1px 0 rgba(255,255,255,.93);
+}
+.paper-magic-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:15px; }
+.paper-magic-heading h3 { margin: 3px 0 4px; font-size:clamp(19px, 2.5vw, 24px); }
+.paper-magic-heading p { margin:0; color:var(--soft, #876a82); font-size:13px; line-height:1.6; }
+.paper-magic-eyebrow { font-size:10px; font-weight:900; letter-spacing:.17em; color:#ba5588; }
+.paper-magic-badge { flex:none; border:1px solid rgba(174, 111, 155, .23); background:rgba(255,255,255,.77); border-radius:999px; padding:7px 11px; font-size:11px; font-weight:900; color:#925b85; }
+.paper-magic-options { display:grid; gap:9px; }
+.paper-magic-option {
+  display:flex; align-items:center; gap:13px; min-width:0; padding:13px 14px;
+  background:rgba(255,255,255,.85); border:1px solid rgba(179,115,153,.13);
+  border-radius:15px; cursor:pointer; margin:0;
+}
+.paper-magic-icon { display:grid; place-items:center; font-size:23px; flex:0 0 40px; width:40px; height:40px; border-radius:13px; background:linear-gradient(145deg,#ffe2ee,#eee2fc); color:#a54d81; }
+.paper-magic-option-copy { flex:1; display:grid; gap:4px; min-width:0; }
+.paper-magic-option-copy strong { font-size:14px; color:#684460; }
+.paper-magic-option-copy small { color:#937c92; font-size:12px; line-height:1.45; }
+.paper-magic-option input[type="checkbox"] { appearance:none; flex:0 0 41px; width:41px; height:24px; border-radius:30px; background:#d7c9d6; cursor:pointer; position:relative; border:1px solid #cdb6ca; transition:background .2s ease; margin:0; }
+.paper-magic-option input[type="checkbox"]::after { content:""; position:absolute; width:17px; height:17px; border-radius:50%; background:white; top:2px; left:3px; box-shadow:0 2px 5px #0002; transition:transform .2s ease; }
+.paper-magic-option input[type="checkbox"]:checked { background:linear-gradient(110deg,#e96d9e,#aa7dcb); border-color:#dc82a5; }
+.paper-magic-option input[type="checkbox"]:checked::after { transform:translateX(17px); }
+.paper-magic-option input[type="checkbox"]:disabled { opacity:.65; cursor:not-allowed; }
+.paper-magic-option:focus-within { outline:2px solid #bf75aa; outline-offset:2px; }
+.paper-magic-footer { display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:14px; }
+.paper-magic-footer > label { font-size:13px; font-weight:800; color:#73566c; }
+.paper-magic-footer > select { width:auto; min-width:155px; max-width:100%; padding:9px 12px; font-size:13px; border-radius:12px; background:white; }
+.paper-magic-footer > button { margin-left:auto; }
+.paper-magic-help { margin:13px 0 0; color:var(--soft,#906d84); font-size:12px; line-height:1.55; }
+
+/* The paper stage preserves room for both sheets as they turn, preventing layout jumps. */
+.reader .paper-stage {
+  position:relative;
+  width:100%;
+  perspective:1750px;
+  perspective-origin:50% 45%;
+  isolation:isolate;
+}
+.reader .paper-stage > #page { position:relative; z-index:1; }
+.reader .paper-stage > .paper-turn-sheet {
+  position:absolute;
+  inset:0 0 auto 0;
+  width:100%;
+  height:100%;
+  min-height:100%;
+  margin:0;
+  pointer-events:none;
+  overflow:hidden;
+  transform-style:preserve-3d;
+  backface-visibility:visible;
+  box-shadow:0 22px 50px rgba(59,32,49,.24), 5px 0 14px rgba(85,53,66,.10);
+  will-change:transform, filter;
+  isolation:isolate;
+}
+.reader .paper-stage > .paper-underlay { z-index:2; }
+.reader .paper-stage > .paper-turn-forward { z-index:4; transform-origin:0% 50%; animation:paperMagicForward 900ms cubic-bezier(.28,.04,.26,.97) both; }
+.reader .paper-stage > .paper-turn-back { z-index:5; transform-origin:0% 50%; animation:paperMagicBackward 900ms cubic-bezier(.25,.05,.23,1) both; }
+/* A distinct back face prevents mirrored letters showing through a turning sheet. */
+.reader .paper-turn-sheet > * { backface-visibility:hidden; }
+.reader .paper-turn-sheet::before {
+  content:"";
+  position:absolute;
+  inset:-2% -4% -3% 0;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:2;
+  opacity:0;
+  background:
+    radial-gradient(130% 88% at 0% 52%, rgba(53,34,49,.30) 0 10%, rgba(53,34,49,.16) 26%, rgba(53,34,49,.08) 44%, transparent 62%),
+    linear-gradient(90deg, rgba(78,48,65,.26), rgba(78,48,65,.10) 16%, rgba(255,255,255,.10) 41%, transparent 60%);
+  mix-blend-mode:multiply;
+  filter: blur(5px);
+  transform-origin:0% 50%;
+}
+.reader .paper-turn-forward::before { animation:paperCurlShadowForward 900ms cubic-bezier(.28,.04,.26,.97) both; }
+.reader .paper-turn-back::before { animation:paperCurlShadowBackward 900ms cubic-bezier(.25,.05,.23,1) both; }
+.reader .paper-turn-sheet::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,rgba(72,51,60,.18),transparent 18%,rgba(255,255,255,.25) 78%,rgba(71,43,56,.09)),var(--paper,#fffaf2);
+  border-radius:inherit;
+  transform:rotateY(180deg) translateZ(1px);
+  backface-visibility:hidden;
+}
+@keyframes paperMagicForward {
+  0% { transform:rotateY(0deg) skewY(0deg); filter:brightness(1); }
+  20% { transform:rotateY(-23deg) skewY(-.4deg); filter:brightness(.985); }
+  48% { transform:rotateY(-84deg) skewY(-1deg); filter:brightness(.84); }
+  75% { transform:rotateY(-144deg) skewY(-.4deg); filter:brightness(.95); }
+  100% { transform:rotateY(-174deg) skewY(0deg); filter:brightness(1); }
+}
+@keyframes paperMagicBackward {
+  0% { transform:rotateY(-174deg); filter:brightness(.96); }
+  25% { transform:rotateY(-144deg); filter:brightness(.94); }
+  52% { transform:rotateY(-84deg); filter:brightness(.83); }
+  80% { transform:rotateY(-21deg); filter:brightness(.99); }
+  100% { transform:rotateY(0deg); filter:brightness(1); }
+}
+@keyframes paperCurlShadowForward {
+  0% { opacity:0; transform: translateX(0) scaleX(.92); }
+  18% { opacity:.32; }
+  46% { opacity:.8; transform: translateX(6px) scaleX(1.05); }
+  72% { opacity:.54; }
+  100% { opacity:0; transform: translateX(10px) scaleX(1.12); }
+}
+@keyframes paperCurlShadowBackward {
+  0% { opacity:0; transform: translateX(10px) scaleX(1.12); }
+  28% { opacity:.58; }
+  54% { opacity:.86; transform: translateX(5px) scaleX(1.05); }
+  82% { opacity:.30; }
+  100% { opacity:0; transform: translateX(0) scaleX(.92); }
+}
+.paper-page-top { display:flex; align-items:center; justify-content:space-between; gap:10px; min-height:27px; }
+.page .skip-typing {
+  border:1px solid rgba(192,132,161,.27);
+  background:rgba(255,255,255,.82);
+  border-radius:999px;
+  color:#a55680;
+  padding:7px 12px;
+  font:800 11px/1.2 'Nunito',sans-serif;
+  cursor:pointer;
+  transition:background .15s ease, transform .15s ease;
+}
+.page .skip-typing:hover { background:white; transform:translateY(-1px); }
+.page .skip-typing:focus-visible { outline:2px solid #a85b96; outline-offset:2px; }
+.page .skip-typing[hidden] { display:none!important; }
+.page .txt.is-typing::after {
+  content:"";
+  display:inline-block;
+  width:2px;
+  height:.95em;
+  margin-left:3px;
+  border-radius:2px;
+  vertical-align:-.10em;
+  background:#b36c93;
+  animation:paperMagicCaret .75s steps(1,end) infinite;
+}
+@keyframes paperMagicCaret { 0%,50% {opacity:1} 51%,100% {opacity:0} }
+@media (max-width:600px) {
+  .paper-magic-heading {flex-wrap:wrap}
+  .paper-magic-heading p {font-size:12px}
+  .paper-magic-option {padding:12px 10px; gap:10px}
+  .paper-magic-option-copy strong {font-size:13px}
+  .paper-magic-icon {flex-basis:33px; width:33px; height:33px; font-size:18px}
+  .paper-magic-footer > select { flex:1; min-width:110px; }
+  .paper-magic-footer > button { width:100%; margin:4px 0 0; }
+  .reader .paper-stage { perspective:1300px; }
+  .page .skip-typing {padding:7px 9px; font-size:10px;}
+}
+@media(prefers-reduced-motion:reduce) {
+  .reader .paper-stage > .paper-turn-sheet { animation:none!important; }
+  .page .txt.is-typing::after { animation:none!important; }
+}
+body.reduce-motion .reader .paper-stage > .paper-turn-sheet { animation:none!important; }
+body.reduce-motion .page .txt.is-typing::after {animation:none!important;}

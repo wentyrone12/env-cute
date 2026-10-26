@@ -13,6 +13,10 @@
     href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@600;800&family=Caveat:wght@500;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Pacifico&family=Satisfy&family=Allura&family=Sacramento&family=Parisienne&family=Kaushan+Script&family=Cormorant+Garamond:ital,wght@1,600&family=Playfair+Display:ital,wght@1,600&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/premium-gallery.css">
+  <link rel="stylesheet" href="css/paper-magic.css">
+  <link rel="stylesheet" href="css/mobile-studio.css">
+  <link rel="stylesheet" href="css/v10-editor-intros.css">
 </head>
 
 <body>
@@ -21,7 +25,7 @@
     <div class="logo"><img class="brand-mark" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"><span>W - Envelope Cute</span></div>
     <nav class="tabs" aria-label="Main">
       <button class="tab" data-go="home">Home</button>
-      <button class="tab" data-go="create">Create</button>
+      <button class="tab tab-create" data-go="create" aria-label="Create an envelope"><span class="tab-create-text">Created</span></button>
       <button class="tab" data-go="dash">My envelopes</button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
     </nav>
@@ -53,24 +57,43 @@
 
     <section class="screen" id="create">
       <div class="make">
-        <div class="glass">
+        <div class="glass editor-workbench" id="editorWorkbench">
           <h2 id="editorTitle">Design your envelope</h2>
           <p class="soft" id="editorSubtitle"></p>
           <div class="edit-banner" id="editBanner" hidden><span>Editing your saved envelope — original link stays the
               same.</span><button class="btn sec" id="cancelEdit" type="button">Cancel edit</button></div>
-          <div class="grid">
-            <label class="full">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡"
+          <section class="create-mobile-wizard" id="createWizard" hidden aria-label="Mobile create flow">
+            <div class="create-mobile-wizard-shell">
+              <aside class="create-mobile-sidebar" aria-label="Create envelope steps">
+                <button type="button" class="create-step-btn active" data-create-step="0"><span>1</span><small>Basics</small></button>
+                <button type="button" class="create-step-btn" data-create-step="1"><span>2</span><small>Photos</small></button>
+                <button type="button" class="create-step-btn" data-create-step="2"><span>3</span><small>Finish</small></button>
+              </aside>
+              <div class="create-mobile-stage-head">
+                <span class="create-mobile-kicker">Mobile creator</span>
+                <h3 id="createStepTitle">Basics</h3>
+                <p id="createStepDesc">Start with the envelope title, sender name, page count, and colors.</p>
+              </div>
+            </div>
+          </section>
+          <div class="studio-panel-head" id="studioPanelHead" hidden>
+            <div><span class="studio-panel-eyebrow">✦ ENVELOPE DESIGN STUDIO</span><h3 id="studioToolTitle">Envelope title</h3><p id="studioToolDesc">Give your letter a lovely name.</p></div>
+            <button type="button" id="studioPanelCollapse" aria-label="Collapse editor" aria-expanded="true">⌄</button>
+          </div>
+          <div class="studio-panel-scroll" id="studioPanelScroll">
+          <div class="grid editor-step-block" data-editor-step="0">
+            <label class="full" data-mobile-field="title">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡"
                 autocomplete="off"></label>
-            <label>From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
-            <label>Pages<select id="count"></select></label>
-            <div class="full"><span class="lb">Envelope color</span>
+            <label data-mobile-field="from">From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
+            <label data-mobile-field="pages">Pages<select id="count"></select></label>
+            <div class="full" data-mobile-field="envelope"> <span class="lb">Envelope color</span>
               <div class="sw" id="envSw"></div>
             </div>
-            <div class="full"><span class="lb">Paper color</span>
+            <div class="full" data-mobile-field="paper"> <span class="lb">Paper color</span>
               <div class="sw" id="paperSw"></div>
             </div>
           </div>
-          <section class="cover-customizer" aria-labelledby="coverTextTitle">
+          <section class="cover-customizer editor-step-block" data-editor-step="0" aria-labelledby="coverTextTitle">
             <div class="cover-customizer-heading">
               <div><h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3></div>
               <span id="coverPlanLabel" class="cover-plan-label">Free default</span>
@@ -83,7 +106,27 @@
             </div>
             <p class="soft cover-note" id="coverTextNote">Subscribe to Premium to customize the greeting.</p>
           </section>
-          <section class="letter-page-switcher" aria-label="Letter page editor navigation">
+          <section class="paper-magic-editor editor-step-block" data-editor-step="2" aria-labelledby="paperMagicTitle">
+            <div class="paper-magic-heading">
+              <div><span class="paper-magic-eyebrow">✦ THE LETTER EXPERIENCE</span><h3 id="paperMagicTitle">Paper Magic</h3>
+                <p>Give your pages the feeling of a real handwritten letter.</p></div>
+              <span class="paper-magic-badge" id="paperMagicBadge">🔒 Premium</span>
+            </div>
+            <div class="paper-magic-options">
+              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">⌨</span><span class="paper-magic-option-copy"><strong>Live typewriter</strong><small>Words appear letter-by-letter, left to right.</small></span><input id="paperMagicTypewriter" type="checkbox" disabled></label>
+              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">📖</span><span class="paper-magic-option-copy"><strong>Realistic page turning</strong><small>3D folds, paper shadows and a book-like turn.</small></span><input id="paperMagicTurn" type="checkbox" disabled></label>
+              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">💐</span><span class="paper-magic-option-copy"><strong>Animated intro</strong><small>Choose from 36 different full-screen reveals before the envelope appears.</small></span><input id="paperMagicBouquet" type="checkbox" disabled></label>
+            </div>
+            <div class="intro-studio" id="introStudio" aria-labelledby="introStudioTitle">
+              <div class="intro-studio-head"><div><h4 id="introStudioTitle">Choose your intro <span class="intro-total">36 animations</span></h4><p>Tap a design to choose it, then Preview to watch it.</p></div><button type="button" class="btn sec intro-preview-btn" id="introPreview">▶ Preview</button></div>
+              <div class="intro-category-rail" id="introCategories" role="group" aria-label="Filter intro animations"></div>
+              <div class="intro-choice-grid" id="introChoices" role="group" aria-label="Premium intro animation choices"></div>
+              <p class="intro-current" id="introCurrent" aria-live="polite">Selected: Bouquet reveal</p>
+            </div>
+            <div class="paper-magic-footer"><label for="paperMagicSpeed">Typing speed</label><select id="paperMagicSpeed" disabled><option value="gentle">Gentle & romantic</option><option value="classic" selected>Classic</option><option value="quick">Quick</option></select><button type="button" class="btn sec" id="paperMagicUpgrade">✦ Unlock Premium</button></div>
+            <p class="paper-magic-help" id="paperMagicHelp">Available with Premium, and visible to everyone who opens your shared letter.</p>
+          </section>
+          <section class="letter-page-switcher editor-step-block" data-editor-step="1" aria-label="Letter page editor navigation">
             <div class="letter-page-heading">
               <h3>Your letter pages</h3>
               <span class="letter-page-count" id="letterPageCount" aria-live="polite"></span>
@@ -98,8 +141,8 @@
             </div>
             <p class="letter-page-hint" id="letterPageHint"></p>
           </section>
-          <div id="pages"></div>
-          <section class="glass signature-studio" aria-labelledby="signatureTitle">
+          <div id="pages" class="editor-step-block" data-editor-step="1"></div>
+          <section class="glass signature-studio editor-step-block" data-editor-step="2" aria-labelledby="signatureTitle">
             <div class="sig-heading">
               <h3 id="signatureTitle">Signature studio</h3>
             </div>
@@ -114,16 +157,43 @@
             <div class="sig-placement"><div class="sig-placement-head"><b>Signature position</b><small id="sigAlignHint">Free: Right only</small></div><div class="sig-position-tabs" role="group" aria-label="Signature alignment"><button type="button" class="sig-position" data-align="left" aria-pressed="false">⇤ Left <span class="sig-lock">🔒</span></button><button type="button" class="sig-position" data-align="center" aria-pressed="false">↔ Center <span class="sig-lock">🔒</span></button><button type="button" class="sig-position active" data-align="right" aria-pressed="true">⇥ Right</button></div></div>
             <div class="sig-preview" id="signaturePreview">Your signature ♡</div>
           </section>
-          <button class="btn pri wide" id="make">Seal my envelope</button>
+          <section class="studio-seal-summary" id="studioSealSummary" aria-live="polite">
+            <span class="studio-seal-heart">💌</span><h3>Ready to seal your letter?</h3>
+            <p id="studioSealDetails">Your envelope is ready for the finishing touch.</p>
+          </section>
+          <button class="btn pri wide editor-step-block" data-editor-step="2" id="make">💌 Seal my envelope</button>
+          </div>
+          <div class="studio-draft-progress" id="studioDraftProgress" hidden>
+            <div class="studio-progress-meta"><b id="studioProgressLabel">Step 1 of 14</b><span id="studioDraftStatus" aria-live="polite">Draft only · Not saved yet</span></div>
+            <div class="studio-progress-track" role="progressbar" aria-label="Creator step progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="1" id="studioProgressTrack"><span id="studioProgressFill"></span></div>
+            <p id="studioLiveDetail">Name your envelope to begin.</p>
+          </div>
+          <div class="studio-panel-footer" id="studioPanelFooter" hidden>
+            <button class="studio-flow-btn studio-flow-back" type="button" id="studioBack">‹ Back</button>
+            <span id="studioCounter" aria-live="polite">1 / 14</span>
+            <button class="studio-flow-btn studio-flow-next" type="button" id="studioNext">Next ›</button>
+          </div>
+          <div class="create-mobile-nav" id="createMobileNav" hidden>
+            <button type="button" class="btn sec" id="createStepBack">‹ Back</button>
+            <button type="button" class="btn pri" id="createStepNext">Next ›</button>
+          </div>
         </div>
         <aside class="glass pv">
           <div class="scene" data-tilt style="--w:320px">
             <div class="tilt" id="pvEnv"></div>
           </div>
+          <div class="studio-paper-canvas" id="studioPaperCanvas" hidden aria-label="Current page preview">
+            <div class="studio-paper-sheet"><div class="studio-paper-badge" id="studioPaperBadge">Page 1</div>
+              <div class="studio-paper-writing" id="studioPaperWriting">Your sweet message will appear here ♡</div>
+              <div class="studio-paper-pictures" id="studioPaperPictures"></div></div>
+          </div>
           <h3 id="pvTitle">Your envelope</h3>
-          <p class="soft">Live preview. Tap it to peek.</p>
+          <p class="soft" id="studioPreviewCaption">Live preview. Tap it to peek.</p>
         </aside>
       </div>
+      <nav class="studio-bottom-dock" id="studioBottomDock" aria-label="Envelope creation tools" hidden>
+        <div class="studio-tool-rail" id="studioToolRail"></div>
+      </nav>
     </section>
 
     <section class="screen" id="dash">
@@ -241,7 +311,9 @@
                   <li>Up to 10 pages per envelope</li>
                   <li>Up to 4 pictures on every page</li>
                   <li>Animated emoji / sparkle effects on any page</li>
-                  <li>5 Polaroid border styles + 5 photo layer layouts</li>
+                  <li>24 photo border styles + 24 creative photo layouts</li>
+                  <li>Letter-by-letter typewriter effect and adjustable typing speed</li>
+                  <li>Realistic 3D paper-turn transition between pages</li>
                   <li>Position signatures Left, Center or Right</li>
                   <li>Personalize the greeting on the envelope sheets</li>
                   <li>Rename short links with your own custom alias</li>
@@ -322,14 +394,17 @@
           <p class="soft" id="recvSub"></p>
         </div>
         <div class="scene" id="recvScene" data-tilt></div>
+        <div class="bouquet-screen" id="bouquetScreen" hidden aria-hidden="true"></div>
         <p class="hint" id="hint">Tap the heart to open ✨</p>
         <div class="reader" id="reader" hidden>
-          <article class="page" id="page"><small id="pgNo"></small>
-            <div class="txt" id="pgTxt"></div>
-            <div class="paper-photos" id="pgPhotos" hidden></div>
-            <div class="emoji-overlay" id="paperEmoji" aria-hidden="true"></div>
-            <div class="sign" id="sign"></div>
-          </article>
+          <div class="paper-stage" id="paperStage">
+            <article class="page" id="page"><div class="paper-page-top"><small id="pgNo"></small><button class="skip-typing" id="skipTyping" type="button" hidden>Show full text ↗</button></div>
+              <div class="txt" id="pgTxt" aria-live="off"></div>
+              <div class="paper-photos" id="pgPhotos" hidden></div>
+              <div class="emoji-overlay" id="paperEmoji" aria-hidden="true"></div>
+              <div class="sign" id="sign"></div>
+            </article>
+          </div>
           <div class="dots" id="dots"></div>
           <div class="row"><button class="btn sec" id="prev">‹ Back</button><button class="btn pri" id="next">Next
               ›</button></div>
@@ -377,7 +452,7 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js" defer></script>
+  <script src="js/app.js?v=10.0-intro-studio" defer></script>
 
   <script type="module" src="js/firebase.js"></script>
 </body>

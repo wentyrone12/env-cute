@@ -25,19 +25,131 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       { id: 'blush', name: 'Blush', desc: 'Soft pink ribbon' },
       { id: 'film', name: 'Film', desc: 'Vintage film' },
       { id: 'scrapbook', name: 'Scrapbook', desc: 'Washi-tape look' },
-      { id: 'modern', name: 'Dreamy', desc: 'Rounded glass' }
+      { id: 'modern', name: 'Dreamy', desc: 'Rounded glass' },
+      { id: 'rose-gold', name: 'Rose Gold', desc: 'Metallic rose frame' },
+      { id: 'midnight', name: 'Midnight', desc: 'Deep navy glow' },
+      { id: 'lavender', name: 'Lavender', desc: 'Pastel lilac border' },
+      { id: 'sunflower', name: 'Sunflower', desc: 'Warm yellow bloom' },
+      { id: 'ocean', name: 'Ocean', desc: 'Soft coastal blues' },
+      { id: 'forest', name: 'Forest', desc: 'Woodland greens' },
+      { id: 'neon', name: 'Neon Glow', desc: 'Electric gradient edge' },
+      { id: 'pearl', name: 'Pearl', desc: 'Iridescent finish' },
+      { id: 'vintage', name: 'Vintage', desc: 'Antique parchment' },
+      { id: 'minimal', name: 'Minimal', desc: 'Clean editorial lines' },
+      { id: 'comic', name: 'Comic Pop', desc: 'Bold graphic outline' },
+      { id: 'lace', name: 'Lace', desc: 'Delicate dotted edge' },
+      { id: 'galaxy', name: 'Galaxy', desc: 'Cosmic violet' },
+      { id: 'polka', name: 'Polka Dot', desc: 'Playful confetti' },
+      { id: 'sunset', name: 'Sunset', desc: 'Coral-to-gold glow' },
+      { id: 'marble', name: 'Marble', desc: 'Soft stone luxury' },
+      { id: 'retro', name: 'Retro 90s', desc: 'Color-block nostalgia' },
+      { id: 'gold', name: 'Golden Hour', desc: 'Golden framed edge' },
+      { id: 'frost', name: 'Frosted', desc: 'Icy translucent look' }
     ];
     const PHOTO_LAYOUTS = [
       { id: 'stack', name: 'Classic Stack', desc: 'Layered keepsakes' },
       { id: 'fan', name: 'Sweet Fan', desc: 'Fanned out cards' },
       { id: 'stair', name: 'Staircase', desc: 'Diagonal memories' },
       { id: 'ribbon', name: 'Ribbon', desc: 'Wavy overlapping row' },
-      { id: 'petal', name: 'Petal Bloom', desc: 'Petal-shaped collage' }
+      { id: 'petal', name: 'Petal Bloom', desc: 'Petal-shaped collage' },
+      { id: 'orbit', name: 'Orbit', desc: 'Photos circle the center' },
+      { id: 'diamond', name: 'Diamond', desc: 'Four-corner silhouette' },
+      { id: 'cascade', name: 'Cascade', desc: 'Falling photo layers' },
+      { id: 'zigzag', name: 'Zigzag', desc: 'Alternating left and right' },
+      { id: 'gallery', name: 'Gallery Wall', desc: 'Straight exhibition arrangement' },
+      { id: 'heart', name: 'Heart', desc: 'Heart-shaped cluster' },
+      { id: 'butterfly', name: 'Butterfly', desc: 'Mirrored angled wings' },
+      { id: 'cross', name: 'Cross', desc: 'Interlocking photo cross' },
+      { id: 'wave', name: 'Ocean Wave', desc: 'Flowing photo rhythm' },
+      { id: 'mosaic', name: 'Mosaic', desc: 'Offset tile formation' },
+      { id: 'book', name: 'Open Book', desc: 'Paired page spread' },
+      { id: 'pyramid', name: 'Pyramid', desc: 'Tiered center composition' },
+      { id: 'sunburst', name: 'Sunburst', desc: 'Radiating fan shape' },
+      { id: 'arc', name: 'Soft Arc', desc: 'Curved photo arrangement' },
+      { id: 'shelf', name: 'Photo Shelf', desc: 'Straight-line display' },
+      { id: 'twin', name: 'Twin Columns', desc: 'Paired column symmetry' },
+      { id: 'scatter', name: 'Confetti', desc: 'Playful scattered photos' },
+      { id: 'bridge', name: 'Bridge', desc: 'Arch between memories' },
+      { id: 'pinwheel', name: 'Pinwheel', desc: 'Rotating blossom layout' }
     ];
+    // Each premium layout defines card positions, rotation and layering.
+    // Keep the coordinates bounded for narrow mobile paper previews.
+    const EXTRA_PHOTO_LAYOUT_POSITIONS = {
+      orbit: [[-38,4,-17], [37,4,17], [-43,42,10], [39,43,-10]],
+      diamond: [[0,1,-3], [-49,24,-17], [49,24,17], [0,52,3]],
+      cascade: [[-47,0,-8], [-15,15,-4], [19,31,5], [49,46,9]],
+      zigzag: [[-44,2,-10], [44,15,11], [-42,32,-7], [44,46,9]],
+      gallery: [[-50,6,0], [50,6,0], [-50,44,0], [50,44,0]],
+      heart: [[-38,8,-19], [38,8,19], [-27,39,-8], [28,42,8]],
+      butterfly: [[-45,4,-25], [45,4,25], [-40,44,19], [40,44,-19]],
+      cross: [[0,0,0], [-48,24,-10], [48,24,10], [0,50,0]],
+      wave: [[-53,25,-13], [-19,2,3], [20,25,12], [52,4,-5]],
+      mosaic: [[-48,0,0], [38,12,4], [-36,36,-3], [47,46,0]],
+      book: [[-43,5,-13], [43,5,13], [-42,40,-7], [43,40,7]],
+      pyramid: [[0,0,0], [-50,39,-13], [50,39,13], [0,55,0]],
+      sunburst: [[-48,17,-26], [-18,1,-11], [19,1,11], [48,17,26]],
+      arc: [[-52,31,-19], [-19,5,-7], [19,5,7], [52,31,19]],
+      shelf: [[-53,22,-1], [-18,22,0], [18,22,0], [53,22,1]],
+      twin: [[-45,7,-8], [45,7,8], [-45,43,8], [45,43,-8]],
+      scatter: [[-49,5,18], [38,0,-13], [-22,44,-16], [53,36,16]],
+      bridge: [[-51,48,-17], [-17,12,-5], [17,12,5], [51,48,17]],
+      pinwheel: [[0,0,-22], [44,22,22], [0,49,-20], [-44,25,20]],
+    };
     const safePhotoStyle = style => PHOTO_STYLES.some(v => v.id === style) ? style : 'classic';
     const safePhotoLayout = layout => PHOTO_LAYOUTS.some(v => v.id === layout) ? layout : 'stack';
     const safeCode = code => typeof code === 'string' && /^[a-z0-9-]{4,32}$/.test(code) ? code : '';
     const DEFAULT_COVER_TEXT = 'Welcome to W-Envelope Cute';
+    const INTRO_PRESETS = Object.freeze([
+      { id: 'bouquet', name: 'Bouquet reveal', category: 'Flowers', emoji: '💐', particles: '💐 🌷 🌸 ✿', motion: 'burst', heroMotion: 'bounce', bg1: '#fff0f8', bg2: '#eadffa' },
+      { id: 'rose-rain', name: 'Rose rainfall', category: 'Flowers', emoji: '🌹', particles: '🌹 🌹 💗', motion: 'rain', heroMotion: 'bounce', bg1: '#ffe5ef', bg2: '#f8d1df' },
+      { id: 'sakura', name: 'Sakura breeze', category: 'Flowers', emoji: '🌸', particles: '🌸 🌺 🌸', motion: 'wave', heroMotion: 'spin', bg1: '#fff1fa', bg2: '#fae2ef' },
+      { id: 'tulip', name: 'Tulip garden', category: 'Flowers', emoji: '🌷', particles: '🌷 🌼 🌷', motion: 'float', heroMotion: 'bounce', bg1: '#fff0f5', bg2: '#dff6e9' },
+      { id: 'sunflower', name: 'Sunshine flowers', category: 'Flowers', emoji: '🌻', particles: '🌻 🌼 ✨', motion: 'burst', heroMotion: 'spin', bg1: '#fff9de', bg2: '#ffdcaa' },
+      { id: 'lavender', name: 'Lavender dreams', category: 'Flowers', emoji: '🪻', particles: '🪻 ✧ 💜', motion: 'orbit', heroMotion: 'glow', bg1: '#f8edff', bg2: '#d9d0fb' },
+      { id: 'wreath', name: 'Flower wreath', category: 'Flowers', emoji: '💐', particles: '🌸 🌷 🌼', motion: 'orbit', heroMotion: 'pulse', bg1: '#fff5f8', bg2: '#e9f2ff' },
+      { id: 'petal-whirl', name: 'Petal whirlwind', category: 'Flowers', emoji: '🌺', particles: '🌺 🌸 ✿', motion: 'spiral', heroMotion: 'spin', bg1: '#ffeafa', bg2: '#f5e2f3' },
+      { id: 'giant-heart', name: 'Giant beating heart', category: 'Hearts', emoji: '❤️', particles: '💗 💕 ❤️', motion: 'burst', heroMotion: 'pulse', bg1: '#ffe6ee', bg2: '#ffafcf' },
+      { id: 'heart-rain', name: 'Heart rain', category: 'Hearts', emoji: '💞', particles: '♥ 💗 💖', motion: 'rain', heroMotion: 'glow', bg1: '#fff0f5', bg2: '#ffd7e8' },
+      { id: 'heartburst', name: 'Love explosion', category: 'Hearts', emoji: '💖', particles: '💖 💘 ✨', motion: 'burst', heroMotion: 'bounce', bg1: '#fff0f5', bg2: '#ecc8fc' },
+      { id: 'pink-pulse', name: 'Pink heartbeat', category: 'Hearts', emoji: '💕', particles: '💕 💗 ♡', motion: 'float', heroMotion: 'pulse', bg1: '#ffe9f5', bg2: '#f5d7ff' },
+      { id: 'heart-orbit', name: 'Orbit of love', category: 'Hearts', emoji: '💝', particles: '♥ ♡ 💕', motion: 'orbit', heroMotion: 'spin', bg1: '#fff1f8', bg2: '#e6d9fd' },
+      { id: 'cupid', name: 'Cupid surprise', category: 'Hearts', emoji: '💘', particles: '💘 💕 ✨', motion: 'wave', heroMotion: 'bounce', bg1: '#fff4ef', bg2: '#ffdbed' },
+      { id: 'ribbon-love', name: 'Ribbon romance', category: 'Hearts', emoji: '🎀', particles: '🎀 💗 ♡', motion: 'curtain', heroMotion: 'spin', bg1: '#fff2f8', bg2: '#f1e4ff' },
+      { id: 'heart-balloon', name: 'Floating hearts', category: 'Hearts', emoji: '💗', particles: '💗 💜 💞', motion: 'float', heroMotion: 'bounce', bg1: '#ffeaf3', bg2: '#ddecff' },
+      { id: 'stardust', name: 'Stardust reveal', category: 'Magic', emoji: '✨', particles: '✦ ✧ ✨', motion: 'float', heroMotion: 'glow', bg1: '#fbf6ff', bg2: '#dad3fd' },
+      { id: 'sparkles', name: 'Sparkle burst', category: 'Magic', emoji: '🌟', particles: '✨ ✨ ⭐', motion: 'burst', heroMotion: 'glow', bg1: '#fff9e8', bg2: '#efe0ff' },
+      { id: 'moon', name: 'Moonlight wish', category: 'Magic', emoji: '🌙', particles: '🌙 ✦ ⭐', motion: 'orbit', heroMotion: 'glow', bg1: '#edf0ff', bg2: '#bfcce8' },
+      { id: 'galaxy', name: 'Mini galaxy', category: 'Magic', emoji: '🌌', particles: '🌠 ⭐ ✨', motion: 'spiral', heroMotion: 'spin', bg1: '#e3e2ff', bg2: '#b3addd' },
+      { id: 'aurora', name: 'Aurora dream', category: 'Magic', emoji: '🪄', particles: '✨ 💜 🌟', motion: 'wave', heroMotion: 'glow', bg1: '#e7f8f5', bg2: '#e2d9ff' },
+      { id: 'shooting-star', name: 'Shooting stars', category: 'Magic', emoji: '🌠', particles: '⭐ ✨ 🌠', motion: 'wave', heroMotion: 'bounce', bg1: '#e9e7ff', bg2: '#c8d3ff' },
+      { id: 'rainbow', name: 'Rainbow magic', category: 'Magic', emoji: '🌈', particles: '🌈 ✨ 🌼', motion: 'curtain', heroMotion: 'bounce', bg1: '#fff5dc', bg2: '#e8e4ff' },
+      { id: 'magic-wand', name: 'Magic wand', category: 'Magic', emoji: '🪄', particles: '✨ ✧ ⭐', motion: 'burst', heroMotion: 'spin', bg1: '#f4e5ff', bg2: '#c9d5ff' },
+      { id: 'butterfly', name: 'Butterfly kiss', category: 'Cute', emoji: '🦋', particles: '🦋 🌸 ✧', motion: 'wave', heroMotion: 'bounce', bg1: '#fff0fa', bg2: '#e3efff' },
+      { id: 'butterfly-dance', name: 'Butterfly dance', category: 'Cute', emoji: '🦋', particles: '🦋 🦋 ✨', motion: 'orbit', heroMotion: 'spin', bg1: '#e9f7ff', bg2: '#fbe5ff' },
+      { id: 'bubbles', name: 'Sweet bubbles', category: 'Cute', emoji: '🫧', particles: '🫧 ◯ ✧', motion: 'float', heroMotion: 'pulse', bg1: '#e4fbff', bg2: '#efecff' },
+      { id: 'teddy', name: 'Teddy hug', category: 'Cute', emoji: '🧸', particles: '♡ 💗 💕', motion: 'burst', heroMotion: 'bounce', bg1: '#fff2e6', bg2: '#fbe2eb' },
+      { id: 'gift', name: 'Gift surprise', category: 'Cute', emoji: '🎁', particles: '🎁 ✨ 💗', motion: 'burst', heroMotion: 'bounce', bg1: '#fff5ee', bg2: '#efddfa' },
+      { id: 'love-letter', name: 'Flying love notes', category: 'Cute', emoji: '💌', particles: '💌 ♥ ✉', motion: 'curtain', heroMotion: 'spin', bg1: '#fff4ef', bg2: '#f7e2f2' },
+      { id: 'diamonds', name: 'Diamond sparkle', category: 'Elegant', emoji: '💎', particles: '💎 ✦ 💠', motion: 'rain', heroMotion: 'glow', bg1: '#eaf8ff', bg2: '#d9e2ff' },
+      { id: 'pearls', name: 'Pearl shimmer', category: 'Elegant', emoji: '🤍', particles: '○ 🤍 ✧', motion: 'orbit', heroMotion: 'glow', bg1: '#fffafd', bg2: '#e8e5f0' },
+      { id: 'golden', name: 'Golden glow', category: 'Elegant', emoji: '✨', particles: '✨ 💛 ✦', motion: 'burst', heroMotion: 'glow', bg1: '#fff9de', bg2: '#ffe5b2' },
+      { id: 'confetti', name: 'Celebration confetti', category: 'Elegant', emoji: '🎊', particles: '🎉 🎊 ✨', motion: 'curtain', heroMotion: 'spin', bg1: '#f6edff', bg2: '#f6def1' },
+      { id: 'snow-kiss', name: 'Snowy love', category: 'Elegant', emoji: '❄️', particles: '❄️ 🤍 ✧', motion: 'rain', heroMotion: 'spin', bg1: '#f4fcff', bg2: '#dbeaff' },
+      { id: 'feather', name: 'Feather softness', category: 'Elegant', emoji: '🪶', particles: '🪶 🤍 ✨', motion: 'wave', heroMotion: 'bounce', bg1: '#fff8fa', bg2: '#e6e7f7' },
+    ]);
+    const safeIntroStyle = style => INTRO_PRESETS.some(v => v.id === style) ? style : 'bouquet';
+    const DEFAULT_PAPER_MAGIC = Object.freeze({ typewriter: true, pageTurn: true, bouquetIntro: true, introStyle: 'bouquet', typingSpeed: 'classic' });
+    function safePaperMagic(raw) {
+      const v = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+      return {
+        typewriter: v.typewriter === true,
+        pageTurn: v.pageTurn === true,
+        bouquetIntro: v.bouquetIntro === true,
+        introStyle: safeIntroStyle(v.introStyle),
+        typingSpeed: ['gentle', 'classic', 'quick'].includes(v.typingSpeed) ? v.typingSpeed : 'classic'
+      };
+    }
+
     const safeCoverText = value => typeof value === 'string' && value.trim()
       ? value.replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ').trim().slice(0, 64)
       : DEFAULT_COVER_TEXT;
@@ -49,6 +161,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
         title: String(d.title || 'A little surprise').slice(0, 80),
         from: String(d.from || '').slice(0, 40),
         coverText: safeCoverText(d.coverText),
+        paperMagic: safePaperMagic(d.paperMagic),
         envelopeColor: hexOk(d.envelopeColor) ? d.envelopeColor : ENV[0],
         createdAt: String(d.createdAt || new Date().toISOString()).slice(0, 40),
         shortCode: safeCode(d.shortCode), customCode: safeCode(d.customCode),
@@ -133,6 +246,25 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
           : 'Free plan uses the original greeting. Subscribe to Premium to customize it.';
       updPreview();
     }
+    function updatePaperMagicEditor() {
+      const unlocked = isPremium();
+      const source = editingId ? store.find(e => e.id === editingId)?.paperMagic : null;
+      const show = unlocked ? safePaperMagic(paperMagic) : safePaperMagic(source || { typewriter: false, pageTurn: false, bouquetIntro: false });
+      const type = $('#paperMagicTypewriter'), turn = $('#paperMagicTurn'), bouquet = $('#paperMagicBouquet');
+      if (!type || !turn || !bouquet) return;
+      type.checked = show.typewriter === true;
+      turn.checked = show.pageTurn === true;
+      bouquet.checked = show.bouquetIntro === true;
+      type.disabled = turn.disabled = bouquet.disabled = !unlocked;
+      $('#paperMagicSpeed').value = ['gentle', 'classic', 'quick'].includes(show.typingSpeed) ? show.typingSpeed : 'classic';
+      $('#paperMagicSpeed').disabled = !unlocked || !type.checked;
+      $('#paperMagicBadge').textContent = unlocked ? '✦ Premium unlocked' : '🔒 Premium';
+      $('#paperMagicHelp').textContent = unlocked
+        ? 'Saved with your envelope. Your recipient sees the typewriter, bouquet intro, and paper effects too, even without Premium.'
+        : 'Unlock Premium to create or edit animated letters. Existing Premium animations are kept when editing.';
+      $('#paperMagicUpgrade').hidden = unlocked;
+      renderIntroChoices();
+    }
     function updateSubscriptionUI() {
       $('#settingsPlanStatus').textContent = isPremium() ? 'Premium' : 'Free';
       $('#premiumPlanBtn').textContent = isPremium() ? '✓ Premium active' : '✦ Choose Maya or GoTyme';
@@ -145,7 +277,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $('#premiumAccountStatus').textContent = isPremium() ? '✓ Premium access verified by the owner.'
         : premiumPayments.some(v => v.status === 'pending') ? '⏳ Payment reference submitted; awaiting manual verification.'
         : 'Free plan. Select a payment method to request Premium.';
-      renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); updateCoverEditorLock();
+      renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor();
     }
     function watchPremium(uid) {
       stopSubscription();
@@ -279,11 +411,173 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       await window.WENV_DB.remove(currentUser.uid, id);
     }
     let signatureStyle = 0, signatureAlign = 'right', photoBusy = false;
+    let paperMagic = { ...DEFAULT_PAPER_MAGIC };
 
 
     let envColor = ENV[0], paper = PAPER[0], pages, recv = null, idx = 0, preview = false, created = null, tt;
     const blank = () => Array.from({ length: 10 }, () => ({ text: '', color: paper, photos: [], effect: 'none', photoStyle: 'classic', photoLayout: 'stack' })); pages = blank();
 
+    /* v9 mobile creator: persistent canvas + fixed bottom tool rail + collapsible controls.
+       All fields remain the SAME live DOM inputs; switching tools never loses an edit. */
+    const STUDIO_TOOLS = [
+      { id: 'title', name: 'Title', icon: '✎', heading: 'Envelope title', hint: 'Name the envelope they will open.' },
+      { id: 'from', name: 'From', icon: '♡', heading: 'From', hint: 'Let them know who sent this letter.' },
+      { id: 'pages', name: 'Pages', icon: '▣', heading: 'Number of pages', hint: 'Choose how many pages are in this envelope.' },
+      { id: 'envelope', name: 'Envelope', icon: '✉', heading: 'Envelope colors', hint: 'Pick the color of the envelope.' },
+      { id: 'paper', name: 'Paper', icon: '▤', heading: 'Paper colors', hint: 'Choose a paper shade for all pages or just this page.' },
+      { id: 'greeting', name: 'Greeting', icon: '❀', heading: 'Envelope greeting', hint: 'Customize the message shown on the sheets.' },
+      { id: 'write', name: 'Write', icon: '☷', heading: 'Write the letter', hint: 'Type a message on each page.' },
+      { id: 'photos', name: 'Photos', icon: '▧', heading: 'Add your pictures', hint: 'Add pictures and arrange them on your page.' },
+      { id: 'borders', name: 'Borders', icon: '▢', heading: 'Photo borders', hint: 'Choose a border style for the pictures.' },
+      { id: 'layouts', name: 'Layouts', icon: '◈', heading: 'Photo layouts', hint: 'Arrange your pictures into a sweet composition.' },
+      { id: 'effects', name: 'Effects', icon: '✦', heading: 'Page effects', hint: 'Choose the decorative animation for this paper.' },
+      { id: 'magic', name: 'Magic', icon: '💐', heading: 'Paper magic', hint: 'Typewriter, page flipping and bouquet intro.' },
+      { id: 'signature', name: 'Sign', icon: '❣', heading: 'Signature', hint: 'Add a lovely personal sign-off.' },
+      { id: 'seal', name: 'Seal', icon: '✓', heading: 'Seal and save', hint: 'Review your letter and save it to your account.' }
+    ];
+    let studioTool = 'title', studioCollapsed = false;
+    const studioEdited = new Set();
+    let introCategory = 'All';
+    const createWizardMobile = () => matchMedia('(max-width: 860px)').matches;
+    const studioPageTools = new Set(['paper', 'write', 'photos', 'borders', 'layouts', 'effects']);
+    function buildStudioRail() {
+      const rail = $('#studioToolRail');
+      if (rail.children.length) return;
+      rail.innerHTML = STUDIO_TOOLS.map(tool => `<button type="button" class="studio-tool" data-studio-switch="${tool.id}" aria-label="${tool.heading}" title="${tool.heading}"><span class="studio-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.name}</span></button>`).join('');
+      rail.querySelectorAll('[data-studio-switch]').forEach(btn => btn.addEventListener('click', () => selectStudioTool(btn.dataset.studioSwitch)));
+    }
+    function updateStudioCanvas() {
+      const canvas = $('#studioPaperCanvas');
+      if (!canvas) return;
+      const paperMode = studioPageTools.has(studioTool);
+      canvas.hidden = !paperMode || !createWizardMobile();
+      const pvScene = $('#create .pv > .scene');
+      if (pvScene) pvScene.hidden = paperMode && createWizardMobile();
+      const previewText = $('#studioPaperWriting');
+      const active = pages[activeLetterPage] || pages[0];
+      if (previewText) previewText.textContent = active?.text?.trim() || 'Your sweet message will appear here ♡';
+      const sheet = canvas.querySelector('.studio-paper-sheet');
+      if (sheet) sheet.style.background = active?.color || '#fffaf2';
+      $('#studioPaperBadge').textContent = `Page ${activeLetterPage + 1} of ${n()}`;
+      const photosEl = $('#studioPaperPictures');
+      if (photosEl) {
+        const sources = (active?.photos || []).filter(safeImage);
+        if (photosEl.children.length !== sources.length || sources.some((src,i) => photosEl.children[i]?.getAttribute('src') !== src)) {
+          photosEl.replaceChildren(...sources.map((src,i) => { const img = document.createElement('img'); img.src = src; img.alt = `Photo ${i+1}`; img.loading = 'lazy'; return img; }));
+        }
+      }
+      $('#studioPreviewCaption').textContent = paperMode ? 'Live paper preview · changes appear above ♡' : 'Live envelope preview ♡';
+      $('#studioSealDetails').textContent = `${$('#title').value.trim() || 'Untitled envelope'} · ${n()} page${n() === 1 ? '' : 's'} · From ${$('#from').value.trim() || 'Someone special'}`;
+    }
+    function updateStudioTool() {
+      const item = STUDIO_TOOLS.find(t => t.id === studioTool) || STUDIO_TOOLS[0];
+      document.body.dataset.studioTool = item.id;
+      const i = STUDIO_TOOLS.indexOf(item);
+      const mobile = createWizardMobile();
+      const sheet = $('#editorWorkbench');
+      const dock = $('#studioBottomDock');
+      $('#createWizard').hidden = true;
+      $('#createMobileNav').hidden = true;
+      $$('.editor-step-block').forEach(block => block.hidden = false);
+      dock.hidden = !mobile;
+      $('#studioPanelHead').hidden = !mobile;
+      $('#studioPanelFooter').hidden = !mobile;
+      $('#studioDraftProgress').hidden = !mobile;
+      sheet.classList.toggle('studio-is-collapsed', mobile && studioCollapsed);
+      $('#studioPanelCollapse').setAttribute('aria-expanded', String(!studioCollapsed));
+      $('#studioPanelCollapse').textContent = studioCollapsed ? '⌃' : '⌄';
+      $('#studioToolTitle').textContent = item.heading;
+      $('#studioToolDesc').textContent = item.hint;
+      $('#studioCounter').textContent = `${i + 1} / ${STUDIO_TOOLS.length}`;
+      $('#studioBack').disabled = i === 0;
+      $('#studioNext').textContent = i === STUDIO_TOOLS.length - 1 ? '💌 Seal now' : i === STUDIO_TOOLS.length - 2 ? 'Review ›' : 'Next ›';
+      if (mobile) $$('#studioToolRail .studio-tool').forEach(btn => {
+        const active = btn.dataset.studioSwitch === item.id;
+        btn.classList.toggle('active', active);
+        btn.setAttribute('aria-current', active ? 'step' : 'false');
+      });
+      updateStudioCanvas();
+      updateStudioProgress();
+    }
+    function selectStudioTool(id) {
+      if (!STUDIO_TOOLS.some(t => t.id === id)) return;
+      studioTool = id; studioCollapsed = false;
+      updateStudioTool();
+      const panel = $('#studioPanelScroll');
+      if (panel) panel.scrollTop = 0;
+      const chosen = $(`#studioToolRail [data-studio-switch="${id}"]`);
+      if (chosen) chosen.scrollIntoView({ block: 'nearest', inline: 'center', behavior: calm ? 'auto' : 'smooth' });
+    }
+    function studioMove(dir) {
+      const i = STUDIO_TOOLS.findIndex(t => t.id === studioTool);
+      if (dir > 0 && i === STUDIO_TOOLS.length - 1) {
+        $('#make').click();
+        return;
+      }
+      selectStudioTool(STUDIO_TOOLS[Math.max(0, Math.min(STUDIO_TOOLS.length - 1, i + dir))].id);
+    }
+    function applyCreateWizard() {
+      const mobile = createWizardMobile();
+      document.body.classList.toggle('create-mobile-mode', mobile);
+      buildStudioRail();
+      if (!mobile) studioCollapsed = false;
+      updateStudioTool();
+    }
+
+    function studioLiveSummary() {
+      const page = pages[activeLetterPage] || pages[0];
+      switch (studioTool) {
+        case 'title': return $('#title').value.trim() ? `Live title: ${$('#title').value.trim()}` : 'Type an envelope title here; it appears immediately in the preview.';
+        case 'from': return $('#from').value.trim() ? `From: ${$('#from').value.trim()}` : 'Add your name; sender name is optional.';
+        case 'pages': return `Your envelope currently has ${n()} page${n() === 1 ? '' : 's'}.`;
+        case 'envelope': return 'Envelope color updates immediately in the preview above.';
+        case 'paper': return `Paper color updated · Page ${activeLetterPage + 1}`;
+        case 'greeting': return $('#coverText').disabled ? 'Premium greeting is locked; the default greeting is preserved.' : 'Greeting changes appear on the envelope preview.';
+        case 'write': return `Page ${activeLetterPage + 1} · ${(page?.text || '').length}/600 characters`;
+        case 'photos': return `Page ${activeLetterPage + 1} · ${(page?.photos || []).length}/${photoLimit()} pictures`;
+        case 'borders': return `Border: ${PHOTO_STYLES.find(x => x.id === page?.photoStyle)?.name || 'Classic'}`;
+        case 'layouts': return `Layout: ${PHOTO_LAYOUTS.find(x => x.id === page?.photoLayout)?.name || 'Stack'}`;
+        case 'effects': return `Page effect: ${page?.effect || 'none'}`;
+        case 'magic': return `Intro: ${INTRO_PRESETS.find(x => x.id === safeIntroStyle(paperMagic.introStyle))?.name || 'Bouquet reveal'}`;
+        case 'signature': return `Signature: ${$('#signatureText').value.trim() || 'Optional'}`;
+        default: return `${n()} page${n() === 1 ? '' : 's'} · ${$('#title').value.trim() || 'Add an envelope title'} · Ready to seal`;
+      }
+    }
+    function updateStudioProgress() {
+      const i = Math.max(0, STUDIO_TOOLS.findIndex(tool => tool.id === studioTool));
+      const progress = $('#studioProgressTrack');
+      if (!progress) return;
+      progress.setAttribute('aria-valuenow', String(i + 1));
+      $('#studioProgressFill').style.width = `${((i + 1) / STUDIO_TOOLS.length) * 100}%`;
+      $('#studioProgressLabel').textContent = `Tool ${i + 1} of ${STUDIO_TOOLS.length} · ${STUDIO_TOOLS[i].name}`;
+      $('#studioLiveDetail').textContent = studioLiveSummary();
+      $('#studioDraftStatus').textContent = studioEdited.size ? `${studioEdited.size} edited · Not yet cloud-saved` : 'Draft only · Not yet saved';
+      $$('#studioToolRail .studio-tool').forEach(btn => btn.classList.toggle('edited', studioEdited.has(btn.dataset.studioSwitch)));
+    }
+    function markStudioEdited() {
+      if (!createWizardMobile()) return;
+      studioEdited.add(studioTool);
+      updateStudioProgress();
+    }
+    function renderIntroChoices() {
+      const categories = ['All','Flowers','Hearts','Magic','Cute','Elegant'];
+      const catRail = $('#introCategories'), grid = $('#introChoices');
+      if (!catRail || !grid) return;
+      catRail.innerHTML = categories.map(cat => `<button type="button" data-intro-filter="${cat}" class="${cat === introCategory ? 'active' : ''}" aria-pressed="${cat === introCategory}">${cat}</button>`).join('');
+      const setting = safePaperMagic(paperMagic);
+      const list = introCategory === 'All' ? INTRO_PRESETS : INTRO_PRESETS.filter(i => i.category === introCategory);
+      grid.innerHTML = list.map(item => `<button type="button" class="intro-card" data-intro-choice="${item.id}" aria-pressed="${item.id === setting.introStyle}" ${isPremium() ? '' : 'disabled'}><span class="intro-card-emoji">${item.emoji}</span><span class="intro-card-name">${item.name}</span><span class="intro-card-category">${item.category}</span></button>`).join('');
+      $('#introStudio').classList.toggle('intro-locked', !isPremium());
+      $('#introPreview').disabled = !isPremium() || !setting.bouquetIntro;
+      $('#introCurrent').textContent = `Selected: ${INTRO_PRESETS.find(p => p.id === setting.introStyle)?.name || 'Bouquet reveal'}${isPremium() ? '' : ' · Premium locked'}`;
+      catRail.querySelectorAll('[data-intro-filter]').forEach(button => button.onclick = () => { introCategory = button.dataset.introFilter; renderIntroChoices(); });
+      grid.querySelectorAll('[data-intro-choice]').forEach(button => button.onclick = () => {
+        if (!isPremium()) return;
+        paperMagic.introStyle = safeIntroStyle(button.dataset.introChoice);
+        renderIntroChoices();
+        markStudioEdited();
+      });
+    }
     /* envelope component */
     const sheets = (cols, coverText = DEFAULT_COVER_TEXT) => cols.slice(0, 5).map((p, i) => `<div class="sht" style="--p:${p};--i:${i};--r:${ROT[i]}deg"><b>${esc(safeCoverText(coverText))}</b></div>`).join('');
     const envHTML = (c, cols, o = {}) => `<div class="env${o.float ? " float" : ""}" ${o.id ? `id="${o.id}"` : ""} ${o.play ? "data-play" : ""} style="${vars(c)}"><div class="eb"></div><div class="sh">${sheets(cols, o.coverText)}</div><div class="fr"><i class="pb"></i><i class="pl"></i><i class="pr"></i></div><div class="fl"></div>${o.play ? '<button class="seal" aria-label="Open envelope">♡</button>' : '<span class="seal">♡</span>'}</div>`;
@@ -291,8 +585,9 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     /* nav */
     function go(n) {
       if (!currentUser) return;
+      if (n !== 'recv' && recv) clearPaperTurn();
       $$(".screen").forEach(s => s.classList.toggle("on", s.id === n)); $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.go === n));
-      document.body.classList.toggle("receiving", n === "recv"); scrollTo({ top: 0, behavior: calm || document.body.classList.contains("reduce-motion") ? "auto" : "smooth" }); if (n === "dash") renderDash()
+      document.body.classList.toggle("receiving", n === "recv"); scrollTo({ top: 0, behavior: calm || document.body.classList.contains("reduce-motion") ? "auto" : "smooth" }); if (n === "dash") renderDash(); if (n === "create") applyCreateWizard()
     }
     function toast(m) { const t = $("#toast"); t.textContent = m; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2800) }
     function modal(h) { $("#mc").innerHTML = h; $("#modal").classList.add("show"); setTimeout(() => { const f = $("#mc .btn,#mc input"); f && f.focus() }, 60) }
@@ -375,7 +670,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       activeLetterPage = pageIndex;
       renderPages();
     }
-    function updPreview() { const e = $("#pvEnv .env"); e.style.cssText = vars(envColor); e.querySelector(".sh").innerHTML = sheets(pages.slice(0, n()).map(p => p.color), editorCoverText()); $("#pvTitle").textContent = $("#title").value.trim() || "Your envelope" }
+    function updPreview() { const e = $("#pvEnv .env"); if (e) { e.style.cssText = vars(envColor); e.querySelector(".sh").innerHTML = sheets(pages.slice(0, n()).map(p => p.color), editorCoverText()); } $("#pvTitle").textContent = $("#title").value.trim() || "Your envelope"; updateStudioCanvas(); }
     function renderSignatureStyles() {
       const text = $('#signatureText').value.trim() || 'With love ♡';
       const rail = $('#signatureStyles'), previousScroll = rail.scrollLeft;
@@ -426,8 +721,41 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       e.preventDefault(); signatureStyle = (signatureStyle + (e.key === 'ArrowRight' ? 1 : 9)) % 10;
       renderSignatureStyles(); const b = $(`#signatureStyles [data-signature="${signatureStyle}"]`); b?.focus({ preventScroll: true }); b?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     });
+    // After editor re-render, keep the selected style in view instead of resetting to the first item.
+    function preserveDesignScroll(pageIndex, attribute, value) {
+      const node = $(`#pages [data-${attribute}="${value}"][data-page="${pageIndex}"]`);
+      const rail = node?.closest('.polaroid-options');
+      if (node && rail) rail.scrollLeft += node.getBoundingClientRect().left - rail.getBoundingClientRect().left - rail.clientWidth / 2 + node.clientWidth / 2;
+    }
     function lockedDesignNotice() {
-      modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all five borders and all five layer formats with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
+      modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all 24 photo borders and 24 photo layouts with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
+    }
+    function photoCoordinates(layout, index, count) {
+      const middle = (count - 1) / 2;
+      if (layout === 'fan') return [(index-middle)*46,13+Math.abs(index-middle)*11,(index-middle)*13];
+      if (layout === 'stair') return [(index-middle)*40,10+index*16,(index-middle)*-3];
+      if (layout === 'ribbon') return [(index-middle)*39,8+(index%2?0:22),index%2?8:-9];
+      if (layout === 'petal') {
+        const xs = count===1?[0]:count===2?[-39,39]:count===3?[-47,0,47]:[-46,43,-33,33];
+        const ys = count===1?[15]:count===2?[10,10]:count===3?[8,37,8]:[6,6,35,35];
+        const rs = count===1?[0]:count===2?[-12,12]:count===3?[-14,0,14]:[-16,16,-9,9];
+        return [xs[index],ys[index],rs[index]];
+      }
+      if (layout === 'stack') return [(index-middle)*11,index*6,(index-middle)*-7];
+      const coords = EXTRA_PHOTO_LAYOUT_POSITIONS[layout];
+      if (!coords || count===1) return [0,12,0];
+      // Select symmetric positions for 2/3 photos so previews never run outside the paper.
+      const visible = count===2 ? [coords[0],coords[1]] : count===3 ? [coords[0],coords[1],coords[3]] : coords;
+      const bounds = visible.reduce((a,p)=>[Math.min(a[0],p[0]),Math.max(a[1],p[0])],[Infinity,-Infinity]);
+      const center = (bounds[0]+bounds[1])/2;
+      const pos = visible[index];
+      return [pos[0]-center,pos[1],pos[2]];
+    }
+    function layoutMiniMarkup(id) {
+      return `<span class="layer-mini" aria-hidden="true">${[0,1,2,3].map(k => {
+        const [x,y,r] = photoCoordinates(id,k,4);
+        return `<i style="left:50%;top:2px;transform:translateX(calc(-50% + ${Math.round(x*.32)}px)) translateY(${Math.round(y*.28)}px) rotate(${r}deg);z-index:${k+1}"></i>`;
+      }).join('')}</span>`;
     }
     /* v4.1: reusable layered photo stack in the creator AND the paper reader. */
     function photoStackMarkup(srcs, context, pageIndex, selectedStyle = 'classic', selectedLayout = 'stack') {
@@ -436,19 +764,8 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       if (!list.length) return '';
       const count = list.length;
       const cards = list.map((src, k) => {
-        // Keep each photo slightly visible behind the one on top; fanning is responsive via CSS custom properties.
-        const middle = (count - 1) / 2;
-        // Five distinct compositions, each keeps cards inside the photo area on phones.
-        let baseX = 0, baseY = 0, baseR = 0;
-        if (photoLayout === 'fan') { baseX = (k - middle) * 46; baseY = 13 + Math.abs(k - middle) * 11; baseR = (k - middle) * 13; }
-        else if (photoLayout === 'stair') { baseX = (k - middle) * 40; baseY = 10 + k * 16; baseR = (k - middle) * -3; }
-        else if (photoLayout === 'ribbon') { baseX = (k - middle) * 39; baseY = (k % 2 ? 0 : 22) + 8; baseR = k % 2 ? 8 : -9; }
-        else if (photoLayout === 'petal') {
-          const xs = count === 1 ? [0] : count === 2 ? [-39, 39] : count === 3 ? [-47, 0, 47] : [-46, 43, -33, 33];
-          const ys = count === 1 ? [15] : count === 2 ? [10, 10] : count === 3 ? [8, 37, 8] : [6, 6, 35, 35];
-          const rs = count === 1 ? [0] : count === 2 ? [-12, 12] : count === 3 ? [-14, 0, 14] : [-16, 16, -9, 9];
-          baseX = xs[k]; baseY = ys[k]; baseR = rs[k];
-        } else { baseX = (k - middle) * 11; baseY = k * 6; baseR = (k - middle) * -7; }
+        const [baseX,baseY,baseR] = photoCoordinates(photoLayout,k,count);
+        const middle = (count-1)/2;
         const fanX = (k - middle) * 94, fanR = (k - middle) * -8, fanY = Math.abs(k - middle) * 9 + 6;
         return `<button type="button" class="polaroid-card" data-photo-open="${context}:${pageIndex}:${k}" aria-label="Open photo ${k + 1} of ${count}" style="--stack-x:${baseX}px;--stack-y:${baseY}px;--stack-r:${baseR}deg;--fan-x:calc(${fanX}px * var(--fan-scale,1));--fan-r:${fanR}deg;--fan-y:${fanY}px;--order:${k + 1}"><span class="polaroid-image"><img src="${src}" alt="Photo ${k + 1} of ${count}" loading="lazy"></span><span class="polaroid-caption">♡ little memory <b>${String(k + 1).padStart(2, '0')}</b></span></button>`;
       }).join('');
@@ -514,12 +831,12 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
             </div>
             <div class="photo-design-duo" aria-label="Photo styling choices">
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid border style for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Border</b><small>${isPremium() ? 'Choose frame' : 'Classic free · others Premium ✦'}</small></div>
-                <div class="polaroid-options">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Border <em class="photo-design-count">24 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Classic free · 23 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 24 border styles">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid layering format for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Layout</b><small>${isPremium() ? 'Choose Layout' : 'Stack free · others Premium ✦'}</small></div>
-                <div class="polaroid-options">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="layer-mini layer-mini--${v.id}" aria-hidden="true"><i></i><i></i><i></i></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Layout <em class="photo-design-count">24 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Stack free · 23 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 24 photo layouts">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}">${layoutMiniMarkup(v.id)}<span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
             </div>
             <div class="photo-previews">${photoStackMarkup(p.photos, 'editor', i, p.photoStyle, p.photoLayout)}${!p.photos.length ? '' : ''}${p.photos.length ? `<div class="photo-remove-list">${p.photos.map((_, k) => `<button type="button" data-remove-photo="${i}:${k}" aria-label="Remove photo ${k + 1}">✕ Photo ${k + 1}</button>`).join('')}</div>` : ''}</div>
@@ -534,16 +851,16 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $$('#pages [data-photo-style]').forEach(b => b.onclick = () => {
         const id = safePhotoStyle(b.dataset.photoStyle), i = Number(b.dataset.page);
         if (!isPremium() && id !== 'classic') return lockedDesignNotice();
-        pages[i].photoStyle = id; renderPages(); toast('Border style updated ♡');
+        pages[i].photoStyle = id; renderPages(); preserveDesignScroll(i, 'photo-style', id); toast('Border style updated ♡');
       });
       $$('#pages [data-photo-layout]').forEach(b => b.onclick = () => {
         const id = safePhotoLayout(b.dataset.photoLayout), i = Number(b.dataset.page);
         if (!isPremium() && id !== 'stack') return lockedDesignNotice();
-        pages[i].photoLayout = id; renderPages(); toast('Photo layout updated ♡');
+        pages[i].photoLayout = id; renderPages(); preserveDesignScroll(i, 'photo-layout', id); toast('Photo layout updated ♡');
       });
       $$('#pages [data-effect]').forEach(select => select.onchange = () => { pages[+select.dataset.effect].effect = select.value; refreshPageTabMarkers() });
       $$('#pages .sw').forEach(el => { const i = +el.dataset.i; swatches(el, PAPER, pages[i].color, c => { pages[i].color = c; updPreview() }) });
-      $$('#pages textarea').forEach(t => t.oninput = () => { const i = +t.dataset.i; pages[i].text = t.value; $('#cc' + i).textContent = t.value.length + '/600'; refreshPageTabMarkers() });
+      $$('#pages textarea').forEach(t => t.oninput = () => { const i = +t.dataset.i; pages[i].text = t.value; $('#cc' + i).textContent = t.value.length + '/600'; refreshPageTabMarkers(); updateStudioCanvas(); });
       $$('#pages [data-photo]').forEach(input => input.onchange = async e => {
         if (photoBusy) { toast('Please finish uploading the current pictures first'); return }
         const i = +input.dataset.photo; const files = [...e.target.files]; input.value = '';
@@ -558,6 +875,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
         pages[i].photos.splice(k, 1); renderPages();
       });
       updPreview();
+      updateStudioCanvas();
     }
     async function compressPhoto(file) {
       if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw Error('Choose JPG, PNG or WebP only');
@@ -576,19 +894,19 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       } finally { URL.revokeObjectURL(src) }
     }
     function resetLetterEditor() {
-      editingId = null; envColor = ENV[0]; paper = PAPER[0]; pages = blank(); activeLetterPage = 0;
+      editingId = null; envColor = ENV[0]; paper = PAPER[0]; pages = blank(); activeLetterPage = 0; studioTool = 'title'; studioCollapsed = false; studioEdited.clear(); paperMagic = { ...DEFAULT_PAPER_MAGIC };
       $('#title').value = $('#from').value = $('#signatureText').value = ''; $('#coverText').value = DEFAULT_COVER_TEXT; signatureStyle = 0; signatureAlign = 'right';
       $('#editorTitle').textContent = 'Design your envelope';
       $('#editorSubtitle').textContent = 'Pick the colors, then write each page.';
       $('#editBanner').hidden = true; $('#make').textContent = '💌 Seal my envelope';
-      updatePageOptions(); $('#count').value = '1'; renderPages(); renderSignatureStyles(); updateCoverEditorLock();
+      updatePageOptions(); $('#count').value = '1'; renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); applyCreateWizard();
     }
     function editEnv(id) {
       if (!currentUser) return toast('Please sign in before editing.');
       const e = store.find(v => v.id === id);
       if (!e) return toast('Envelope not found. Please refresh My Envelopes.');
       try {
-      closeModal(); editingId = e.id; envColor = e.envelopeColor;
+      closeModal(); editingId = e.id; envColor = e.envelopeColor; paperMagic = { ...safePaperMagic(e.paperMagic || DEFAULT_PAPER_MAGIC) };
       pages = blank(); e.pages.forEach((p, i) => { pages[i] = { text: p.text, color: p.color, photos: [...(p.photos || [])], effect: p.effect || 'none', photoStyle: safePhotoStyle(p.photoStyle), photoLayout: safePhotoLayout(p.photoLayout) } });
       $('#title').value = e.title; $('#from').value = e.from || ''; $('#coverText').value = safeCoverText(e.coverText);
       signatureStyle = e.signature?.style || 0; signatureAlign = e.signature?.align || 'right'; $('#signatureText').value = e.signature?.text || '';
@@ -596,10 +914,10 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $('#editorTitle').textContent = 'Edit existing envelope ✏️';
       $('#editorSubtitle').textContent = 'Make changes without creating a new envelope. Existing short links will be refreshed.';
       $('#editBanner').hidden = false; $('#make').textContent = '☁️ Save changes';
-      updatePageOptions(); $('#count').value = String(e.pages.length);
+      updatePageOptions(); $('#count').value = String(e.pages.length); studioTool = 'title'; studioCollapsed = false; studioEdited.clear();
       swatches($('#envSw'), ENV, envColor, c => { envColor = c; updPreview() });
       swatches($('#paperSw'), PAPER, pages[0].color, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
-      renderPages(); renderSignatureStyles(); updateCoverEditorLock(); go('create');
+      renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); go('create');
       // A visible and accessible edit state confirms the correct record was loaded.
       $('#editBanner').scrollIntoView({ block: 'nearest', behavior: 'auto' });
       } catch (error) {
@@ -623,12 +941,13 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       if (photoBusy || creating) return toast('Finish uploading your pictures first');
       if (n() > pageLimit() && !editingId) return toast('Subscribe to Premium for 9–10 pages');
       const t = $('#title').value.trim();
-      if (!t) { const input = $('#title'); input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake'); input.focus(); return toast('Give your envelope a title first 💌') }
+      if (!t) { if (createWizardMobile()) selectStudioTool('title'); const input = $('#title'); input.classList.remove('shake'); void input.offsetWidth; input.classList.add('shake'); input.focus(); return toast('Give your envelope a title first 💌') }
       const original = editingId ? store.find(v => v.id === editingId) : null;
       if (editingId && !original) return toast('Original envelope not found. Refresh and try again.');
       const e = clean({
         id: original?.id || uid(), title: t, from: $('#from').value.trim(), envelopeColor: envColor,
         coverText: editorCoverText(),
+        paperMagic: isPremium() ? safePaperMagic(paperMagic) : safePaperMagic(original?.paperMagic || { typewriter: false, pageTurn: false, bouquetIntro: false, typingSpeed: 'classic' }),
         createdAt: original?.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString(),
         shortCode: original?.shortCode, customCode: original?.customCode, linkCodes: original?.linkCodes,
         signature: { text: $('#signatureText').value.trim(), style: signatureStyle, align: isPremium() ? signatureAlign : (original?.signature?.align || 'right') },
@@ -779,32 +1098,247 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
 
 
     /* receiver */
+    let typingFrame = 0, typingToken = 0, typingFullText = '', paperTurnInProgress = false;
+    let paperTurnTimer = 0, paperTurnLayer = [], readerSequence = 0;
+    const reducedPaperMotion = () => calm || appearance.reduceMotion;
+    function cancelTyping() {
+      ++typingToken;
+      cancelAnimationFrame(typingFrame);
+      typingFrame = 0;
+      $('#pgTxt').classList.remove('is-typing');
+      $('#skipTyping').hidden = true;
+    }
+    function finishTyping() {
+      if (!$('#pgTxt').classList.contains('is-typing')) return;
+      const full = typingFullText;
+      cancelTyping();
+      $('#pgTxt').textContent = full;
+    }
+    function clearPaperTurn() {
+      ++readerSequence;
+      clearTimeout(paperTurnTimer);
+      for (const layer of paperTurnLayer) layer.remove();
+      paperTurnLayer = [];
+      paperTurnInProgress = false;
+      const stage = $('#paperStage');
+      stage.style.minHeight = '';
+      stage.removeAttribute('aria-busy');
+      $('#prev').disabled = false;
+      $('#next').disabled = false;
+      cancelTyping();
+    }
+    function startTypewriter(page) {
+      cancelTyping();
+      const txt = $('#pgTxt');
+      const content = String(page?.text || '');
+      typingFullText = content;
+      txt.setAttribute('aria-label', content);
+      const setting = safePaperMagic(recv?.paperMagic);
+      if (!setting.typewriter || reducedPaperMotion() || !content) {
+        txt.textContent = content;
+        return;
+      }
+      // Unicode grapheme clusters avoid splitting emoji/combining characters mid-letter.
+      const chars = typeof Intl !== 'undefined' && Intl.Segmenter
+        ? [...new Intl.Segmenter(undefined, { granularity: 'grapheme' }).segment(content)].map(v => v.segment)
+        : Array.from(content);
+      const delay = { gentle: 58, classic: 32, quick: 13 }[setting.typingSpeed];
+      const token = typingToken;
+      let revealed = 0, started = 0;
+      txt.textContent = '';
+      txt.classList.add('is-typing');
+      $('#skipTyping').hidden = false;
+      const tick = timestamp => {
+        if (token !== typingToken) return;
+        if (!started) started = timestamp;
+        const wanted = Math.min(chars.length, Math.max(1, Math.floor((timestamp - started) / delay) + 1));
+        if (wanted > revealed) {
+          txt.textContent += chars.slice(revealed, wanted).join('');
+          revealed = wanted;
+        }
+        if (revealed >= chars.length) { cancelTyping(); return; }
+        typingFrame = requestAnimationFrame(tick);
+      };
+      typingFrame = requestAnimationFrame(tick);
+    }
+
+    function bouquetIntroMarkup() {
+      return `<div class="bouquet-intro bouquet-intro--left"><div class="bouquet-bow"></div><div class="bouquet-wrap"></div>${Array.from({ length: 8 }, (_, i) => `<span class="bouquet-flower bouquet-flower--${i + 1}"></span>`).join('')}</div><div class="bouquet-intro bouquet-intro--right"><div class="bouquet-bow"></div><div class="bouquet-wrap"></div>${Array.from({ length: 8 }, (_, i) => `<span class="bouquet-flower bouquet-flower--${i + 1}"></span>`).join('')}</div><div class="bouquet-sparkle bouquet-sparkle--1">✦</div><div class="bouquet-sparkle bouquet-sparkle--2">♡</div><div class="bouquet-sparkle bouquet-sparkle--3">✿</div><div class="bouquet-sparkle bouquet-sparkle--4">♥</div><div class="bouquet-intro-copy"><b>A flower surprise for you</b><small>the letter is blooming open...</small></div>`;
+    }
+    function hideBouquetIntro(immediate = false) {
+      const overlay = $('#bouquetScreen');
+      if (!overlay) return;
+      clearTimeout(hideBouquetIntro.timer);
+      if (immediate) {
+        overlay.hidden = true;
+        overlay.classList.remove('show', 'leaving');
+        overlay.innerHTML = '';
+        return;
+      }
+      overlay.classList.add('leaving');
+      hideBouquetIntro.timer = setTimeout(() => {
+        overlay.hidden = true;
+        overlay.classList.remove('show', 'leaving');
+        overlay.innerHTML = '';
+      }, 720);
+    }
+    hideBouquetIntro.timer = 0;
+    function introVariantMarkup(style) {
+      const preset = INTRO_PRESETS.find(v => v.id === safeIntroStyle(style)) || INTRO_PRESETS[0];
+      if (preset.id === 'bouquet') return bouquetIntroMarkup();
+      const particles = preset.particles.split(' ');
+      const giant = preset.id === 'giant-heart';
+      const parts = Array.from({length: 34}, (_, i) => {
+        const angle = i * 2.399963229728653;
+        const dist = 17 + Math.sqrt(i / 34) * 34;
+        const x = Math.round(50 + Math.cos(angle) * dist);
+        const y = Math.round(50 + Math.sin(angle) * dist);
+        const dx = Math.round(Math.cos(angle) * (70 + (i%5)*17));
+        const dy = Math.round(Math.sin(angle) * (65 + (i%4)*15));
+        const size = 15 + (i%4)*8;
+        return `<span class="intro-v10-particle" style="--intro-x:${Math.min(96,Math.max(4,x))}%;--intro-y:${Math.min(91,Math.max(9,y))}%;--intro-dx:${dx}px;--intro-dy:${dy}px;--intro-size:${size}px;--intro-delay:-${(i%12)*.16}s">${particles[i%particles.length]}</span>`;
+      }).join('');
+      return `${parts}<div class="intro-v10-center">${giant ? '<span class="intro-giant-heart" aria-hidden="true"></span>' : `<span class="intro-v10-hero" aria-hidden="true">${preset.emoji}</span>`}<span class="intro-v10-caption">${preset.name} ♡</span></div>`;
+    }
+    function playBouquetIntro(setting, previewMode = false) {
+      const overlay = $('#bouquetScreen');
+      if (!overlay) return;
+      if (reducedPaperMotion() || !setting?.bouquetIntro) {
+        hideBouquetIntro(true);
+        if (!previewMode) { $('#recvScene').classList.remove('scene-envelope-hidden'); $('#hint').style.display = ''; }
+        return;
+      }
+      clearTimeout(hideBouquetIntro.timer);
+      const preset = INTRO_PRESETS.find(v => v.id === safeIntroStyle(setting.introStyle)) || INTRO_PRESETS[0];
+      overlay.className = preset.id === 'bouquet' ? 'bouquet-screen' : 'bouquet-screen intro-v10';
+      overlay.removeAttribute('data-motion'); overlay.removeAttribute('data-hero-motion');
+      overlay.style.removeProperty('--intro-bg1'); overlay.style.removeProperty('--intro-bg2');
+      if (preset.id !== 'bouquet') {
+        overlay.dataset.motion = preset.motion;
+        overlay.dataset.heroMotion = preset.heroMotion;
+        overlay.style.setProperty('--intro-bg1',preset.bg1);
+        overlay.style.setProperty('--intro-bg2',preset.bg2);
+      }
+      // Keep this full-screen layer outside hidden route sections (Create preview and public reader).
+      if (overlay.parentElement !== document.body) document.body.append(overlay);
+      overlay.innerHTML = introVariantMarkup(preset.id) + '<button class="intro-skip" type="button" aria-label="Skip intro animation">Skip intro ›</button>';
+      overlay.querySelector('.intro-skip').onclick = () => {
+        ++readerSequence; hideBouquetIntro(true);
+        if (!previewMode) { $('#recvScene').classList.remove('scene-envelope-hidden'); $('#hint').style.display = ''; }
+      };
+      overlay.hidden = false;
+      overlay.classList.add('show');
+      if (!previewMode) { $('#recvScene').classList.add('scene-envelope-hidden'); $('#hint').style.display = 'none'; }
+      const seq = ++readerSequence;
+      hideBouquetIntro.timer = setTimeout(() => {
+        if (seq !== readerSequence) return;
+        overlay.classList.add('leaving');
+        if (!previewMode) $('#recvScene').classList.remove('scene-envelope-hidden');
+        hideBouquetIntro.timer = setTimeout(() => {
+          if (seq !== readerSequence) return;
+          hideBouquetIntro(true);
+          if (!previewMode) $('#hint').style.display = '';
+        }, 650);
+      }, 2250);
+    }
     function setup(e, prev) {
-      recv = e; idx = 0; preview = prev; $("#recvTitle").textContent = e.title;
-      $("#recvSub").textContent = e.from ? `From ${e.from}` : "Someone prepared a little surprise for you.";
-      const s = $("#recvScene"); s.className = "scene"; s.innerHTML = `<div class="tilt">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { float: 1, play: 1, id: "recvEnv", coverText: e.coverText })}</div>`;
-      $("#hint").style.display = ""; $("#reader").hidden = true; $("#back").hidden = !prev; go("recv")
+      clearPaperTurn();
+      recv = e; idx = 0; preview = prev; $('#recvTitle').textContent = e.title;
+      $('#recvSub').textContent = e.from ? `From ${e.from}` : 'Someone prepared a little surprise for you.';
+      const s = $('#recvScene'); s.className = 'scene'; s.innerHTML = `<div class="tilt">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { float: 1, play: 1, id: 'recvEnv', coverText: e.coverText })}</div>`;
+      $('#reader').hidden = true; $('#back').hidden = !prev; go('recv');
+      playBouquetIntro(safePaperMagic(e.paperMagic));
     }
-    function previewEnv(id) { if (!currentUser) return; const e = store.find(x => x.id === id); if (e) { closeModal(); setup(e, true) } }
+    function previewEnv(id) { if (!currentUser) return; const e = store.find(x => x.id === id); if (e) { closeModal(); setup(e, true); } }
     function openRecv() {
-      const env = $("#recvEnv"); if (!env || env.classList.contains("open")) return; env.classList.remove("float"); env.classList.add("open"); $("#hint").style.display = "none"; burst(env, 18);
-      setTimeout(() => $("#recvScene").classList.add("done"), 1900);
-      setTimeout(() => { $("#recvScene").classList.add("gone"); $("#reader").hidden = false; show(0, 1) }, 2550)
+      const env = $('#recvEnv'); if (!env || env.classList.contains('open')) return;
+      env.classList.remove('float'); env.classList.add('open'); $('#hint').style.display = 'none'; burst(env, 18);
+      const seq = ++readerSequence;
+      setTimeout(() => { if (seq === readerSequence) $('#recvScene').classList.add('done'); }, 1900);
+      setTimeout(() => {
+        if (seq !== readerSequence) return;
+        $('#recvScene').classList.add('gone'); $('#reader').hidden = false; show(0, 0);
+      }, 2550);
     }
-    function show(i, dir) {
-      idx = i; const p = recv.pages[i], el = $("#page"), last = i === recv.pages.length - 1;
-      el.style.setProperty("--paper", p.color); el.className = "page"; void el.offsetWidth; el.className = "page " + (dir > 0 ? "fn" : "fp");
-      $('#pgTxt').textContent = p.text; $('#pgNo').textContent = `Page ${i + 1} of ${recv.pages.length}`;
+    function paintPage(i, animateOldStyle = 0) {
+      idx = i;
+      const p = recv.pages[i], el = $('#page'), last = i === recv.pages.length - 1;
+      cancelTyping();
+      el.style.setProperty('--paper', p.color);
+      el.className = 'page' + (animateOldStyle > 0 ? ' fn' : animateOldStyle < 0 ? ' fp' : '');
+      $('#pgTxt').textContent = '';
+      $('#pgTxt').setAttribute('aria-label', String(p.text || ''));
+      $('#pgNo').textContent = `Page ${i + 1} of ${recv.pages.length}`;
       const photos = $('#pgPhotos'); photos.innerHTML = photoStackMarkup(p.photos, 'reader', i, p.photoStyle, p.photoLayout);
       photos.hidden = !(p.photos || []).length;
-      $("#dots").innerHTML = recv.pages.map((_, k) => `<i class="${k === i ? "on" : ""}"></i>`).join("");
-      $("#prev").style.visibility = i ? "visible" : "hidden"; $("#next").textContent = last ? "Finish ♡" : "Next ›";
+      $('#dots').innerHTML = recv.pages.map((_, k) => `<i class="${k === i ? 'on' : ''}"></i>`).join('');
+      $('#prev').style.visibility = i ? 'visible' : 'hidden'; $('#next').textContent = last ? 'Finish ♡' : 'Next ›';
       const sig = recv.signature || {};
       $('#sign').textContent = last ? (sig.text ? '— ' + sig.text : recv.from ? '— ' + recv.from : '') : '';
       $('#sign').style.fontFamily = SIGNATURE_STYLES[Number(sig.style) || 0]?.font || SIGNATURE_STYLES[0].font;
       $('#sign').style.fontStyle = (Number(sig.style) || 0) === 9 ? 'italic' : 'normal';
       $('#sign').style.textAlign = ['left','center','right'].includes(sig.align) ? sig.align : 'right';
       renderPaperEffect(p.effect || 'none');
+    }
+    function clonePaper(el, cls) {
+      const copy = el.cloneNode(true);
+      copy.removeAttribute('id');
+      copy.querySelectorAll('[id]').forEach(x => x.removeAttribute('id'));
+      copy.querySelectorAll('[tabindex]').forEach(x => x.setAttribute('tabindex', '-1'));
+      copy.removeAttribute('aria-busy');
+      copy.setAttribute('aria-hidden', 'true');
+      copy.className = 'page paper-turn-sheet ' + cls;
+      copy.style.setProperty('--paper', el.style.getPropertyValue('--paper'));
+      copy.inert = true;
+      return copy;
+    }
+    function show(i, dir) {
+      if (!recv || i < 0 || i >= recv.pages.length || paperTurnInProgress) return;
+      const current = idx;
+      const turn = i !== current && !!safePaperMagic(recv.paperMagic).pageTurn && !reducedPaperMotion() && !$('#reader').hidden;
+      const stage = $('#paperStage'), el = $('#page');
+      if (!turn) {
+        paintPage(i, i === current || reducedPaperMotion() ? 0 : dir);
+        startTypewriter(recv.pages[i]);
+        return;
+      }
+      finishTyping();
+      const oldHeight = el.getBoundingClientRect().height;
+      const previous = clonePaper(el, 'paper-underlay');
+      paintPage(i);
+      const newHeight = el.getBoundingClientRect().height;
+      stage.style.minHeight = Math.ceil(Math.max(oldHeight, newHeight)) + 'px';
+      paperTurnInProgress = true;
+      stage.setAttribute('aria-busy', 'true');
+      $('#prev').disabled = $('#next').disabled = true;
+      let moving;
+      if (dir > 0) {
+        // Turn the sheet just read. The following sheet is visible underneath.
+        moving = previous;
+        moving.classList.remove('paper-underlay');
+        moving.classList.add('paper-turn-forward');
+        stage.append(moving);
+        paperTurnLayer = [moving];
+      } else {
+        // The sheet being returned to unfolds above the previous one.
+        moving = clonePaper(el, 'paper-turn-back');
+        stage.append(previous, moving);
+        paperTurnLayer = [previous, moving];
+      }
+      const seq = ++readerSequence;
+      let finished = false;
+      const finalize = () => {
+        if (finished || seq !== readerSequence) return;
+        finished = true;
+        clearTimeout(paperTurnTimer);
+        paperTurnLayer.forEach(x => x.remove()); paperTurnLayer = [];
+        stage.style.minHeight = ''; stage.removeAttribute('aria-busy');
+        paperTurnInProgress = false;
+        $('#prev').disabled = $('#next').disabled = false;
+        startTypewriter(recv.pages[i]);
+      };
+      moving.addEventListener('animationend', e => { if (e.target === moving) finalize(); }, { once: true });
+      paperTurnTimer = setTimeout(finalize, 1120);
     }
     function renderPaperEffect(effect) {
       const layer = $('#paperEmoji');
@@ -819,12 +1353,14 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
         layer.append(el);
       }
     }
-    const prev = () => idx > 0 && show(idx - 1, -1);
+    const prev = () => { if (!paperTurnInProgress && idx > 0) show(idx - 1, -1); };
     function next() {
-      if (idx < recv.pages.length - 1) return show(idx + 1, 1); burst(null, 26);
+      if (!recv || paperTurnInProgress) return;
+      if (idx < recv.pages.length - 1) return show(idx + 1, 1);
+      finishTyping(); burst(null, 26);
       modal(`<div class="big brand-big"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>That was the last page</h2><p>${recv.from ? "With love, " + esc(recv.from) : "Thanks for reading."}</p><div class="row"><button class="btn sec" onclick="closeModal();show(0,-1)">Read again</button>${preview ? '<button class="btn pri" onclick="leave()">Back to my envelopes</button>' : '<button class="btn pri" onclick="leave(1)">Make my own</button>'}</div>`)
     }
-    function leave(c) { closeModal(); history.replaceState(null, '', location.pathname + location.search); recv = null; go(c ? 'create' : 'dash') }
+    function leave(c) { clearPaperTurn(); hideBouquetIntro(true); closeModal(); history.replaceState(null, '', location.pathname + location.search); recv = null; go(c ? 'create' : 'dash') }
     let hashRequest = 0;
     function checkHash() {
       if (!currentUser) return false;
@@ -833,8 +1369,8 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
         const code = decodeURIComponent(h.slice(3));
         const request = ++hashRequest;
         if (!safeCode(code)) { toast('Invalid short link'); go('home'); return true }
-        go('recv'); $('#recvHead').hidden = false; $('#recvTitle').textContent = 'Opening your letter...'; $('#recvSub').textContent = 'Finding your envelope in Firebase 💌';
-        $('#recvScene').innerHTML = ''; $('#hint').style.display = 'none'; $('#reader').hidden = true; $('#back').hidden = true;
+        clearPaperTurn(); recv = null; go('recv'); $('#recvHead').hidden = false; $('#recvTitle').textContent = 'Opening your letter...'; $('#recvSub').textContent = 'Finding your envelope in Firebase 💌';
+        $('#recvScene').innerHTML = ''; hideBouquetIntro(true); $('#hint').style.display = 'none'; $('#reader').hidden = true; $('#back').hidden = true;
         window.WENV_DB.getPublic(code).then(raw => {
           if (request !== hashRequest || currentUser === null || location.hash !== h) return;
           const obj = clean(raw && raw.envelope);
@@ -970,7 +1506,7 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
       $('#authGate').hidden = !!user;
       if (!user) {
         stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopSupport(); stopFeedback(); stopCloud = stopReceived = stopSubscription = stopPayments = stopSupport = stopFeedback = () => { }; supportInbox = {}; feedbackInbox = {}; cloudReady = false; cloudConnected = false; receivedStore = []; premiumApproved = false; premiumPayments = []; editingId = null;
-        accountKey = null; appearanceKey = null; store = []; recv = null; connectionUid = null;
+        clearPaperTurn(); accountKey = null; appearanceKey = null; store = []; recv = null; connectionUid = null;
         $('#googleRedirect').hidden = true;
         updateSubscriptionUI(); showAuthControls(); return;
       }
@@ -1101,9 +1637,24 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     $("#modal").onclick = e => { if (e.target.id === "modal") closeModal() };
     $("#prev").onclick = prev; $("#next").onclick = next; $("#make").onclick = create;
     $('#title').oninput = updPreview;
+    $('#from').oninput = updateStudioCanvas;
     $('#coverText').oninput = updPreview;
     $('#coverUpgrade').onclick = () => { go('settings'); setSettingsPage('subscription'); };
-    $('#count').onchange = () => { activeLetterPage = 0; renderPages() };
+    $('#paperMagicUpgrade').onclick = () => { go('settings'); setSettingsPage('subscription'); };
+    $('#paperMagicTypewriter').onchange = e => { if (!isPremium()) return updatePaperMagicEditor(); paperMagic.typewriter = e.target.checked; updatePaperMagicEditor(); };
+    $('#paperMagicTurn').onchange = e => { if (!isPremium()) return updatePaperMagicEditor(); paperMagic.pageTurn = e.target.checked; updatePaperMagicEditor(); };
+    $('#paperMagicBouquet').onchange = e => { if (!isPremium()) return updatePaperMagicEditor(); paperMagic.bouquetIntro = e.target.checked; updatePaperMagicEditor(); markStudioEdited(); };
+    $('#paperMagicSpeed').onchange = e => { if (!isPremium()) return updatePaperMagicEditor(); paperMagic.typingSpeed = ['gentle','classic','quick'].includes(e.target.value) ? e.target.value : 'classic'; updatePaperMagicEditor(); markStudioEdited(); };
+    $('#introPreview').onclick = () => { if (isPremium()) playBouquetIntro({ ...safePaperMagic(paperMagic), bouquetIntro:true }, true); };
+    $('#skipTyping').onclick = finishTyping;
+    $('#studioBack').onclick = () => studioMove(-1);
+    $('#studioNext').onclick = () => studioMove(1);
+    $('#studioPanelCollapse').onclick = () => { studioCollapsed = !studioCollapsed; updateStudioTool(); };
+    $('#studioPanelScroll').addEventListener('input', () => { markStudioEdited(); requestAnimationFrame(updateStudioProgress); });
+    $('#studioPanelScroll').addEventListener('change', () => { markStudioEdited(); requestAnimationFrame(updateStudioProgress); });
+    $('#studioPanelScroll').addEventListener('click', e => { if (e.target.closest('.sw button, [data-photo-style], [data-photo-layout], [data-remove-photo], [data-intro-choice], [data-align], [data-effect]')) requestAnimationFrame(() => { markStudioEdited(); updateStudioCanvas(); }); });
+    addEventListener('resize', () => applyCreateWizard());
+    $('#count').onchange = () => { activeLetterPage = 0; renderPages(); updPreview(); };
     $('#letterPageTabs').addEventListener('scroll', updatePageTabArrows, { passive: true });
     $('#letterPageLeft').onclick = () => $('#letterPageTabs').scrollBy({ left: -$('#letterPageTabs').clientWidth * .75, behavior: 'smooth' });
     $('#letterPageRight').onclick = () => $('#letterPageTabs').scrollBy({ left: $('#letterPageTabs').clientWidth * .75, behavior: 'smooth' });
@@ -1118,7 +1669,8 @@ const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s =
     updatePageOptions(); $('#count').value = '1';
     swatches($("#envSw"), ENV, envColor, c => { envColor = c; updPreview() });
     swatches($("#paperSw"), PAPER, paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
+    applyCreateWizard();
     $("#demo").innerHTML = envHTML(ENV[0], PAPER.slice(0, 3), { float: 1, play: 1 });
     $("#pvEnv").innerHTML = envHTML(envColor, [paper], { play: 1 });
-    renderPages(); renderSignatureStyles(); renderDash();
+    renderPages(); renderSignatureStyles(); updatePaperMagicEditor(); renderDash();
     // Firebase observer decides when the app becomes visible and which account owns local data.
