@@ -1,6 +1,25 @@
 const KEY = "whisper_envelopes_v1", $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const ENV = ["#e994b7", "#f3a6a6", "#f2c879", "#a995d9", "#8db7d9", "#8dc7b0", "#d5aa76", "#d88383"];
 const PAPER = ["#fffaf2", "#fff1f6", "#f5efff", "#edf8ff", "#effbf3", "#fff7df"];
+// 144 additional premium tones for each palette; generated locally (no extra API or assets).
+// Keep original Free colors at the start so existing envelopes render exactly as before.
+function paletteHex(hue, saturation, lightness) {
+  const s = saturation / 100, l = lightness / 100;
+  const a = s * Math.min(l, 1 - l);
+  const channel = n => {
+    const k = (n + hue / 30) % 12;
+    return Math.round(255 * (l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)))).toString(16).padStart(2, '0');
+  };
+  return `#${channel(0)}${channel(8)}${channel(4)}`;
+}
+const PREMIUM_ENV_TONES = Object.freeze(Array.from({ length: 24 }, (_, h) => [
+  [38, 70], [64, 62], [75, 53], [68, 43], [58, 35], [52, 79]
+].map(([s, l]) => paletteHex(h * 15, s, l))).flat());
+const PREMIUM_PAPER_TONES = Object.freeze(Array.from({ length: 24 }, (_, h) => [
+  [33, 97], [46, 95], [57, 93], [69, 91], [74, 89], [49, 87]
+].map(([s, l]) => paletteHex(h * 15, s, l))).flat());
+const fullColors = kind => [...new Set([...(kind === 'envelope' ? ENV : PAPER), ...(kind === 'envelope' ? PREMIUM_ENV_TONES : PREMIUM_PAPER_TONES)])];
+
 const ROT = [-2, 2, -4, 3, -1], calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const hexOk = c => /^#[0-9a-f]{6}$/i.test(c), uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
@@ -277,7 +296,7 @@ function updateSubscriptionUI() {
   $('#premiumAccountStatus').textContent = isPremium() ? '✓ Premium access verified by the owner.'
     : premiumPayments.some(v => v.status === 'pending') ? '⏳ Payment reference submitted; awaiting manual verification.'
       : 'Free plan. Select a payment method to request Premium.';
-  renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor();
+  renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); renderColorPalettes(); updateCoverEditorLock(); updatePaperMagicEditor(); renderAccountDashboard();
 }
 function watchPremium(uid) {
   stopSubscription();
@@ -607,8 +626,28 @@ function burst(el, n = 14) {
 
 /* create */
 function swatches(el, list, cur, fn) {
-  el.innerHTML = list.map(c => `<button type="button" class="dot${c === cur ? " on" : ""}" style="background:${c}" aria-label="Color ${c}" aria-pressed="${c === cur}"></button>`).join("");
-  [...el.children].forEach((b, i) => b.onclick = () => { [...el.children].forEach(x => { x.classList.remove("on"); x.setAttribute("aria-pressed", "false") }); b.classList.add("on"); b.setAttribute("aria-pressed", "true"); fn(list[i]) })
+  if (!el) return;
+  const unique = [...new Set(list)];
+  el.innerHTML = unique.map((c, i) => `<button type="button" class="dot${c === cur ? " on" : ""}" style="background:${c}" aria-label="Color ${i + 1}: ${c}" title="${c.toUpperCase()}" aria-pressed="${c === cur}" data-color="${c}"></button>`).join("");
+  [...el.children].forEach((b, i) => b.onclick = () => {
+    [...el.children].forEach(x => { x.classList.remove('on'); x.setAttribute('aria-pressed', 'false') });
+    b.classList.add('on'); b.setAttribute('aria-pressed', 'true'); fn(unique[i]);
+  });
+}
+function availableColors(kind, current) {
+  const list = isPremium() ? fullColors(kind) : [...(kind === 'envelope' ? ENV : PAPER)];
+  // Editing a formerly Premium envelope on Free must not silently discard its saved color.
+  if (hexOk(current) && !list.includes(current)) list.push(current);
+  return list;
+}
+function renderColorPalettes() {
+  const envelopeList = availableColors('envelope', envColor), paperList = availableColors('paper', pages[0]?.color || paper);
+  swatches($('#envSw'), envelopeList, envColor, c => { envColor = c; updPreview(); });
+  swatches($('#paperSw'), paperList, pages[0]?.color || paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages(); updPreview(); });
+  $('#envColorCount').textContent = isPremium() ? `${envelopeList.length} Premium colors · scroll ↓` : `${ENV.length} free colors · ✦ Premium unlocks ${fullColors('envelope').length}`;
+  $('#paperColorCount').textContent = isPremium() ? `${paperList.length} Premium colors · scroll ↓` : `${PAPER.length} free colors · ✦ Premium unlocks ${fullColors('paper').length}`;
+  $('#envSw').classList.toggle('palette-premium', isPremium());
+  $('#paperSw').classList.toggle('palette-premium', isPremium());
 }
 const n = () => +$("#count").value;
 // These tabs switch the *editor*, never the stored page data. All page drafts
@@ -676,9 +715,9 @@ function selectLetterPage(pageIndex) {
 function updPreview() { const e = $("#pvEnv .env"); if (e) { e.style.cssText = vars(envColor); e.querySelector(".sh").innerHTML = sheets(pages.slice(0, n()).map(p => p.color), editorCoverText()); } $("#pvTitle").textContent = $("#title").value.trim() || "Your envelope"; updateStudioCanvas(); }
 function renderSignatureStyles() {
   const text = $('#signatureText').value.trim() || 'With love ♡';
-  const rail = $('#signatureStyles'), previousScroll = rail.scrollLeft;
+  const rail = $('#signatureStyles'), previousScroll = rail.scrollLeft, previousTop = rail.scrollTop;
   rail.innerHTML = SIGNATURE_STYLES.map((style, i) => `<button type="button" role="tab" class="sig-style${i === signatureStyle ? ' on' : ''}" data-signature="${i}" aria-selected="${i === signatureStyle}" aria-label="${style.name} signature" tabindex="${i === signatureStyle ? '0' : '-1'}"><b style="font-family:${style.font}">Aa</b><small>${style.name}</small></button>`).join('');
-  rail.scrollLeft = previousScroll;
+  rail.scrollLeft = previousScroll; rail.scrollTop = previousTop;
   const preview = $('#signaturePreview'); preview.textContent = text;
   preview.style.fontFamily = SIGNATURE_STYLES[signatureStyle].font;
   preview.style.fontStyle = signatureStyle === 9 ? 'italic' : 'normal';
@@ -720,15 +759,21 @@ $('#signatureStyles').addEventListener('scroll', updateSignatureArrows, { passiv
 $('#signaturePrev').onclick = () => $('#signatureStyles').scrollBy({ left: -220, behavior: 'smooth' });
 $('#signatureNext').onclick = () => $('#signatureStyles').scrollBy({ left: 220, behavior: 'smooth' });
 $('#signatureStyles').addEventListener('keydown', e => {
-  if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
-  e.preventDefault(); signatureStyle = (signatureStyle + (e.key === 'ArrowRight' ? 1 : 9)) % 10;
+  if (!['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
+  e.preventDefault();
+  const desktop = matchMedia('(min-width:861px)').matches;
+  const delta = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowDown' ? (desktop ? 2 : 1) : (desktop ? -2 : -1);
+  signatureStyle = (signatureStyle + delta + SIGNATURE_STYLES.length) % SIGNATURE_STYLES.length;
   renderSignatureStyles(); const b = $(`#signatureStyles [data-signature="${signatureStyle}"]`); b?.focus({ preventScroll: true }); b?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
 });
 // After editor re-render, keep the selected style in view instead of resetting to the first item.
 function preserveDesignScroll(pageIndex, attribute, value) {
   const node = $(`#pages [data-${attribute}="${value}"][data-page="${pageIndex}"]`);
   const rail = node?.closest('.polaroid-options');
-  if (node && rail) rail.scrollLeft += node.getBoundingClientRect().left - rail.getBoundingClientRect().left - rail.clientWidth / 2 + node.clientWidth / 2;
+  if (node && rail) {
+    if (matchMedia('(min-width:861px)').matches) rail.scrollTop += node.getBoundingClientRect().top - rail.getBoundingClientRect().top - rail.clientHeight / 2 + node.clientHeight / 2;
+    else rail.scrollLeft += node.getBoundingClientRect().left - rail.getBoundingClientRect().left - rail.clientWidth / 2 + node.clientWidth / 2;
+  }
 }
 function lockedDesignNotice() {
   modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all 24 photo borders and 24 photo layouts with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
@@ -862,7 +907,7 @@ function renderPages() {
     pages[i].photoLayout = id; renderPages(); preserveDesignScroll(i, 'photo-layout', id); toast('Photo layout updated ♡');
   });
   $$('#pages [data-effect]').forEach(select => select.onchange = () => { pages[+select.dataset.effect].effect = select.value; refreshPageTabMarkers() });
-  $$('#pages .sw').forEach(el => { const i = +el.dataset.i; swatches(el, PAPER, pages[i].color, c => { pages[i].color = c; updPreview() }) });
+  $$('#pages .sw').forEach(el => { const i = +el.dataset.i; swatches(el, availableColors('paper', pages[i].color), pages[i].color, c => { pages[i].color = c; if (i === 0) { paper = c; renderColorPalettes(); } updPreview() }) });
   $$('#pages textarea').forEach(t => t.oninput = () => { const i = +t.dataset.i; pages[i].text = t.value; $('#cc' + i).textContent = t.value.length + '/600'; refreshPageTabMarkers(); updateStudioCanvas(); });
   $$('#pages [data-photo]').forEach(input => input.onchange = async e => {
     if (photoBusy) { toast('Please finish uploading the current pictures first'); return }
@@ -902,7 +947,7 @@ function resetLetterEditor() {
   $('#editorTitle').textContent = 'Design your envelope';
   $('#editorSubtitle').textContent = 'Pick the colors, then write each page.';
   $('#editBanner').hidden = true; $('#make').textContent = '💌 Seal my envelope';
-  updatePageOptions(); $('#count').value = '1'; renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); applyCreateWizard();
+  updatePageOptions(); $('#count').value = '1'; renderColorPalettes(); renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); applyCreateWizard();
 }
 function editEnv(id) {
   if (!currentUser) return toast('Please sign in before editing.');
@@ -918,8 +963,7 @@ function editEnv(id) {
     $('#editorSubtitle').textContent = 'Make changes without creating a new envelope. Existing short links will be refreshed.';
     $('#editBanner').hidden = false; $('#make').textContent = '☁️ Save changes';
     updatePageOptions(); $('#count').value = String(e.pages.length); studioTool = 'title'; studioCollapsed = false;
-    swatches($('#envSw'), ENV, envColor, c => { envColor = c; updPreview() });
-    swatches($('#paperSw'), PAPER, pages[0].color, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
+    renderColorPalettes();
     renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); go('create');
     // A visible and accessible edit state confirms the correct record was loaded.
     $('#editBanner').scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -980,6 +1024,7 @@ function renderDash() {
   const L = $('#list');
   $('#recentCount').textContent = store.length; $('#receivedCount').textContent = receivedStore.length;
   $('#total').textContent = `${store.length} created · ${receivedStore.length} received`;
+  renderAccountDashboard();
   $('#recentTab').classList.toggle('on', mailboxView === 'recent'); $('#receivedTab').classList.toggle('on', mailboxView === 'received');
   $('#recentTab').setAttribute('aria-selected', String(mailboxView === 'recent')); $('#receivedTab').setAttribute('aria-selected', String(mailboxView === 'received'));
   $('#mailboxNote').textContent = mailboxView === 'recent' ? 'Letters you created. Edit them anytime, then share the same short link.' : 'Letters people sent you through shared links. Open them here without searching old chats.';
@@ -990,6 +1035,39 @@ function renderDash() {
     if (!receivedStore.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big">📭</div><h3>No received envelopes yet</h3><p class="soft">Open a shared envelope link and it will be saved to this collection.</p></div>'; return }
     L.innerHTML = receivedStore.map(e => `<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><img class="received-brand-logo" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"></div><div class="info"><h3>${esc(e.title || 'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from || 'Someone')}</span><small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
   }
+}
+function renderAccountDashboard() {
+  const node = $('#accCreated');
+  if (!node) return;
+  const count = store.length, received = receivedStore.length;
+  const pagesSaved = store.reduce((sum, e) => sum + (e.pages?.length || 0), 0);
+  const photosSaved = store.reduce((sum, e) => sum + (e.pages || []).reduce((subtotal, pg) => subtotal + (pg.photos?.length || 0), 0), 0);
+  const linksSaved = new Set(store.flatMap(e => [...(e.linkCodes || []), e.shortCode, e.customCode].filter(Boolean))).size;
+  const pending = premiumPayments.filter(p => p.status === 'pending').length;
+  const approved = premiumPayments.filter(p => p.status === 'approved').length;
+  $('#accCreated').textContent = count.toLocaleString();
+  $('#accReceived').textContent = received.toLocaleString();
+  $('#accPages').textContent = pagesSaved.toLocaleString();
+  $('#accPhotos').textContent = photosSaved.toLocaleString();
+  $('#accLinks').textContent = linksSaved.toLocaleString();
+  $('#accRequests').textContent = premiumPayments.length.toLocaleString();
+  $('#accRequestStatus').textContent = `${pending} pending · ${approved} approved`;
+  const total = count + received;
+  $('#accCreatedBar').style.width = `${total ? count / total * 100 : 0}%`;
+  $('#accReceivedBar').style.width = `${total ? received / total * 100 : 0}%`;
+  $('#accActivityTotal').textContent = total ? `${total} total envelopes` : 'No saved activity yet';
+  const latest = store.map(e => e.updatedAt || e.createdAt).filter(Boolean).sort().at(-1);
+  $('#accLatestUpdate').textContent = latest && !isNaN(Date.parse(latest)) ? fmt(latest) : 'No envelopes yet';
+  $('#accountPlanBadge').textContent = isPremium() ? '✦ Premium active' : 'Free plan';
+  $('#accountPlanBadge').classList.toggle('is-premium', isPremium());
+  $('#accPremiumDetail').textContent = isPremium() ? 'Active · owner-approved' : pending ? 'Free · payment under review' : 'Free · upgrade available';
+  const uid = currentUser?.uid || '';
+  $('#accUidMasked').textContent = uid ? uid.slice(0, 6) + '…' + uid.slice(-4) : '—';
+  const signed = currentUser?.metadata?.lastSignInTime;
+  $('#accountLastLogin').textContent = signed && !isNaN(Date.parse(signed)) ? fmt(signed) : 'Not provided';
+  $('#accountAuthState').textContent = currentUser ? 'Google connected' : 'Not signed in';
+  $('#accountCloudState').textContent = !currentUser ? 'Signed out' : cloudReady ? '☁ Cloud synced' : 'Sync pending';
+  $('#accountCloudState').classList.toggle('online', !!(currentUser && cloudReady));
 }
 function setMailbox(view) { mailboxView = view; renderDash(); }
 $('#recentTab').onclick = () => setMailbox('recent');
@@ -1451,6 +1529,7 @@ function renderThemePresets() {
   }).join("");
 }
 function setSettingsPage(id) {
+  if (id === 'account') renderAccountDashboard();
   $$(".settings-nav").forEach(b => { const on = b.dataset.settings === id; b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)) });
   $$(".settings-panel").forEach(p => p.classList.toggle("on", p.id === "settings-" + id));
   // Swipeable categories remain discoverable when navigating to a panel programmatically.
@@ -1476,6 +1555,17 @@ function renderUser(user) {
   $("#accountEmail").textContent = user.email || "Signed in with Google";
   $("#navAvatar").src = $("#accountAvatar").src = safePhoto(user.photoURL);
 }
+function openAccountData() { if (!currentUser) return; go('settings'); setSettingsPage('account'); }
+$('#accountNavTrigger').onclick = openAccountData;
+$('#accountManagePremium').onclick = () => { go('settings'); setSettingsPage('subscription'); };
+$('#accountOpenMail').onclick = () => go('dash');
+$('#accountCreateNew').onclick = () => go('create');
+$('#accCopyUid').onclick = async () => {
+  const id = currentUser?.uid;
+  if (!id) return;
+  try { await navigator.clipboard.writeText(id); toast('Account ID copied securely'); }
+  catch (error) { console.warn('Clipboard unavailable:', error); toast('Clipboard not available in this browser'); }
+};
 function authStatus(message, error = false) {
   $("#authStatus").textContent = message;
   $("#authStatus").classList.toggle("error", error);
@@ -1710,8 +1800,7 @@ const bg = $("#bg"); for (let i = 0; i < 9; i++) {
   s.style.cssText = `left:${(i * 37 + 8) % 96}%;top:${(i * 53 + 10) % 88}%;font-size:${14 + i % 4 * 8}px;animation-delay:${-i * 1.3}s;animation-duration:${9 + i % 4 * 3}s`; bg.append(s)
 }
 updatePageOptions(); $('#count').value = '1';
-swatches($("#envSw"), ENV, envColor, c => { envColor = c; updPreview() });
-swatches($("#paperSw"), PAPER, paper, c => { paper = c; pages.forEach(p => p.color = c); renderPages() });
+renderColorPalettes();
 applyCreateWizard();
 $("#demo").innerHTML = envHTML(ENV[0], PAPER.slice(0, 3), { float: 1, play: 1 });
 $("#pvEnv").innerHTML = envHTML(envColor, [paper], { play: 1 });

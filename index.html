@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/mobile-studio.css">
   <link rel="stylesheet" href="css/v10-editor-intros.css">
   <link rel="stylesheet" href="css/v11-workspace.css">
+  <link rel="stylesheet" href="css/v12-desktop-palettes-account.css">
 </head>
 
 <body>
@@ -30,12 +31,12 @@
       <button class="tab" data-go="dash">My envelopes</button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
     </nav>
-    <div class="nav-user" title="Signed-in Google account">
+    <div class="nav-user" title="Account and profile">
       <a class="admin-quick-link" id="adminQuickLink" href="admin.html" hidden aria-label="Open Admin Dashboard" title="Open Admin Dashboard">
         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
         <span>Admin</span>
       </a>
-      <img class="nav-avatar" id="navAvatar" alt="Account photo" referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span>
+      <button type="button" class="account-nav-trigger" id="accountNavTrigger" aria-label="Open Account and Data" title="Open Account & Data"><img class="nav-avatar" id="navAvatar" alt="Account photo" referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span><span class="account-nav-chevron" aria-hidden="true">⌄</span></button>
     </div>
   </header>
   <main>
@@ -87,11 +88,11 @@
                 autocomplete="off"></label>
             <label data-mobile-field="from">From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
             <label data-mobile-field="pages">Pages<select id="count"></select></label>
-            <div class="full" data-mobile-field="envelope"> <span class="lb">Envelope color</span>
-              <div class="sw" id="envSw"></div>
+            <div class="full" data-mobile-field="envelope"> <span class="lb color-palette-heading">Envelope color <small id="envColorCount" class="palette-count">8 colors</small></span>
+              <div class="sw palette-swatches" id="envSw" role="group" aria-label="Envelope colors"></div>
             </div>
-            <div class="full" data-mobile-field="paper"> <span class="lb">Paper color</span>
-              <div class="sw" id="paperSw"></div>
+            <div class="full" data-mobile-field="paper"> <span class="lb color-palette-heading">Paper color <small id="paperColorCount" class="palette-count">6 colors</small></span>
+              <div class="sw palette-swatches" id="paperSw" role="group" aria-label="Paper colors"></div>
             </div>
           </div>
           <section class="cover-customizer editor-step-block" data-editor-step="0" aria-labelledby="coverTextTitle">
@@ -276,7 +277,30 @@
                   referrerpolicy="no-referrer">
                 <div><strong id="accountName">Google account</strong><small id="accountEmail"></small></div>
               </div>
+              <div class="account-profile-details">
+                <div><span>Subscription</span><strong id="accountPlanBadge" class="account-plan-badge">Free plan</strong></div>
+                <div><span>Google sign-in</span><strong id="accountAuthState">Signed in</strong></div>
+                <div><span>Last sign-in</span><strong id="accountLastLogin">—</strong></div>
+              </div>
+              <div class="account-quick-actions">
+                <button type="button" class="btn pri" id="accountManagePremium">✦ Manage Premium</button>
+                <button type="button" class="btn sec" id="accountOpenMail">♡ My envelopes</button>
+                <button type="button" class="btn sec" id="accountCreateNew">＋ Create letter</button>
+              </div>
               <div class="settings-actions"><button class="btn dng" id="signOutBtn">↪ Sign out of Google</button></div>
+            </div>
+            <div class="glass settings-section account-insights" aria-labelledby="accountInsightsTitle">
+              <div class="account-insights-head"><div><span class="account-eyebrow">YOUR ACTIVITY</span><h2 id="accountInsightsTitle">Account statistics</h2><p>Based on your own synced envelopes and payment records.</p></div><span class="account-sync-status" id="accountCloudState">Checking sync…</span></div>
+              <div class="account-stats-grid">
+                <div class="account-stat"><span>Created envelopes</span><strong id="accCreated">0</strong><small>Letters you've made</small></div>
+                <div class="account-stat"><span>Received envelopes</span><strong id="accReceived">0</strong><small>Saved to your inbox</small></div>
+                <div class="account-stat"><span>Paper pages</span><strong id="accPages">0</strong><small>Across created letters</small></div>
+                <div class="account-stat"><span>Uploaded photos</span><strong id="accPhotos">0</strong><small>Across created letters</small></div>
+                <div class="account-stat"><span>Shared links</span><strong id="accLinks">0</strong><small>Published link aliases</small></div>
+                <div class="account-stat"><span>Premium requests</span><strong id="accRequests">0</strong><small id="accRequestStatus">No payment requests</small></div>
+              </div>
+              <div class="account-activity-visual"><div class="account-activity-head"><strong>Envelope activity</strong><small id="accActivityTotal">No saved activity yet</small></div><div class="account-activity-track" aria-label="Created versus received envelope distribution"><div id="accCreatedBar" class="account-activity-created" style="width:0%"></div><div id="accReceivedBar" class="account-activity-received" style="width:0%"></div></div><div class="account-activity-legend"><span><i class="acc-legend-created"></i>Created</span><span><i class="acc-legend-received"></i>Received</span></div></div>
+              <div class="account-account-info"><div><span>Account ID</span><code id="accUidMasked">—</code><button type="button" class="account-copy-btn" id="accCopyUid">Copy ID</button></div><div><span>Latest envelope update</span><strong id="accLatestUpdate">—</strong></div><div><span>Storage</span><strong>Cloudflare Realtime Database</strong></div><div><span>Premium access</span><strong id="accPremiumDetail">Free plan</strong></div></div>
             </div>
             <div class="glass settings-section">
               <h2>My envelope data</h2>
@@ -454,7 +478,7 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=11.0-workspace-intro-studio" defer></script>
+  <script src="js/app.js?v=12.0-palettes-account" defer></script>
 
   <script type="module" src="js/firebase.js"></script>
 </body>
