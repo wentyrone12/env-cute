@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/admin-analytics.css">
+  <link rel="stylesheet" href="css/v11-admin-gate.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
 </head>
 <body class="authenticated admin-page">
@@ -47,6 +48,16 @@
           <h2 id="loginHeadline">Administrator sign in</h2>
           <p>Sign in with the authorized Google account to review Maya and GoTyme premium payments.</p>
           <button id="adminLogin" type="button" class="admin-primary-button" disabled>Continue with Google</button>
+        </section>
+
+        <section id="adminDeniedPanel" class="admin-denied-panel" hidden aria-labelledby="adminDeniedTitle" role="alert">
+          <div class="admin-denied-emblem" aria-hidden="true"><span>✦</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="12" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 15v2"/></svg></div>
+          <div class="admin-denied-eyebrow">PRIVATE WORKSPACE</div>
+          <h2 id="adminDeniedTitle">Access restricted</h2>
+          <p id="adminDeniedMessage">You are not authorized to access this admin dashboard with the current account.</p>
+          <div class="admin-denied-rule"><span>SECURITY CHECK</span><strong>Administrator permission required</strong></div>
+          <div class="admin-denied-actions"><button type="button" id="adminDeniedSwitch" class="admin-denied-primary">Switch Google account</button><a href="index.html" class="admin-denied-secondary">Back to W-Envelope Cute</a></div>
+          <small>Signed in by mistake? Return to the website or use an approved administrator account.</small>
         </section>
 
         <section id="adminDashboard" hidden aria-label="Administrator workspace">
@@ -147,6 +158,6 @@
 
   <script src="js/firebase-config.js"></script>
   <script src="js/payment-config.js"></script>
-  <script type="module" src="js/admin.js?v=5.0-statistics"></script>
+  <script type="module" src="js/admin.js?v=11.0-authorized-gate"></script>
 </body>
 </html>

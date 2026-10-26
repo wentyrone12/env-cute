@@ -72,6 +72,13 @@ $('#adminLogin').onclick = async () => {
     else setStatus('Google sign-in failed (' + (error?.code || 'unknown') + '): ' + (error?.message || 'Check browser or internet connection.'),'error');
   } finally {$('#adminLogin').disabled = false;}
 };
+$('#adminDeniedSwitch').onclick = async () => {
+  if (!signOut) return setStatus('Authentication is not ready. Try refreshing this page.', 'error');
+  $('#adminDeniedSwitch').disabled = true;
+  try { await signOut(); }
+  catch (error) { setStatus('Could not switch account: ' + (error?.message || 'Please try again.'), 'error'); }
+  finally { $('#adminDeniedSwitch').disabled = false; }
+};
 $('#adminSignOut').onclick = async () => {
   try {if(signOut) await signOut();}
   catch(error) {setStatus('Sign-out failed: ' + error.message, 'error');}
@@ -85,10 +92,18 @@ function onSession(user, { ref, onValue }) {
   $('#adminSignOut').hidden = !user;
   $('#adminLoginPanel').hidden = Boolean(user);
   $('#adminDashboard').hidden = true;
+  $('#adminDeniedPanel').hidden = true;
+  document.body.classList.remove('admin-access-denied');
   render();
   if(!user) {setStatus('Sign in with the authorized Google account to open the payments dashboard.'); return;}
   if(!cfg.adminUid) {setStatus('Missing admin UID in js/payment-config.js. Find your UID under Admin access & setup help.','error','Admin configuration required'); return;}
-  if(!isAdmin(user)) {setStatus('The signed-in account UID differs from the configured admin UID. Sign out and choose the authorized account.','error','UID mismatch'); $('#adminHelp').open = true; return;}
+  if(!isAdmin(user)) {
+    $('#adminDeniedPanel').hidden = false;
+    $('#adminDeniedMessage').textContent = 'This Google account is signed in, but it is not authorized to view the administrator workspace.';
+    document.body.classList.add('admin-access-denied');
+    setStatus('This account is not authorized for administrator access.', 'error', 'Access restricted');
+    return;
+  }
   current = user;
   watchAdminInboxes({ref,onValue});
   setStatus('Your UID matches. Checking Realtime Database read permissions…');
@@ -114,7 +129,11 @@ function onSession(user, { ref, onValue }) {
     setStatus(denied
       ? 'Permission denied by Firebase. Publish your updated database.rules.json in Realtime Database → Rules and verify the admin UID.'
       : 'Cannot load payment requests: ' + (error?.message || 'Check internet and Firebase configuration.'), 'error', 'Database access failed');
-    if(denied) $('#adminHelp').open = true;
+    if(denied) {
+      $('#adminDeniedPanel').hidden = false;
+      $('#adminDeniedMessage').textContent = 'Your account matched the configured administrator, but Firebase has not granted the database permissions required to open this workspace.';
+      document.body.classList.add('admin-access-denied');
+    }
   });
 }
 

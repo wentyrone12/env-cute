@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/paper-magic.css">
   <link rel="stylesheet" href="css/mobile-studio.css">
   <link rel="stylesheet" href="css/v10-editor-intros.css">
+  <link rel="stylesheet" href="css/v11-workspace.css">
 </head>
 
 <body>
@@ -41,8 +42,7 @@
     <section class="screen" id="home">
       <div class="hero">
         <div>
-          <h1>Send a secret<br>worth opening.</h1>
-          <p>Write a few pages, pick an envelope, and share a link. They get to break the seal themselves.</p>
+          <h1>Send a secret<br> cute message</h1>
           <div class="row"><button class="btn pri" data-go="create">Create envelope</button><button class="btn sec"
               data-go="dash">My envelopes</button></div>
         </div>
@@ -77,8 +77,9 @@
             </div>
           </section>
           <div class="studio-panel-head" id="studioPanelHead" hidden>
+            <span class="studio-swipe-grip" aria-hidden="true"></span>
             <div><span class="studio-panel-eyebrow">✦ ENVELOPE DESIGN STUDIO</span><h3 id="studioToolTitle">Envelope title</h3><p id="studioToolDesc">Give your letter a lovely name.</p></div>
-            <button type="button" id="studioPanelCollapse" aria-label="Collapse editor" aria-expanded="true">⌄</button>
+            <button type="button" id="studioPanelCollapse" aria-label="Collapse Studio Panel" aria-expanded="true">⌄</button>
           </div>
           <div class="studio-panel-scroll" id="studioPanelScroll">
           <div class="grid editor-step-block" data-editor-step="0">
@@ -118,7 +119,8 @@
               <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">💐</span><span class="paper-magic-option-copy"><strong>Animated intro</strong><small>Choose from 36 different full-screen reveals before the envelope appears.</small></span><input id="paperMagicBouquet" type="checkbox" disabled></label>
             </div>
             <div class="intro-studio" id="introStudio" aria-labelledby="introStudioTitle">
-              <div class="intro-studio-head"><div><h4 id="introStudioTitle">Choose your intro <span class="intro-total">36 animations</span></h4><p>Tap a design to choose it, then Preview to watch it.</p></div><button type="button" class="btn sec intro-preview-btn" id="introPreview">▶ Preview</button></div>
+              <div class="intro-studio-head"><div><h4 id="introStudioTitle">Choose your intro <span class="intro-total">36 animations</span></h4><p>Choose any design to see it animate instantly on the canvas.</p></div><button type="button" class="btn sec intro-preview-btn" id="introPreview">▶ Preview</button></div>
+              <div class="intro-inline-demo" id="introInlineDemo" aria-label="Instant animation preview"></div>
               <div class="intro-category-rail" id="introCategories" role="group" aria-label="Filter intro animations"></div>
               <div class="intro-choice-grid" id="introChoices" role="group" aria-label="Premium intro animation choices"></div>
               <p class="intro-current" id="introCurrent" aria-live="polite">Selected: Bouquet reveal</p>
@@ -163,14 +165,9 @@
           </section>
           <button class="btn pri wide editor-step-block" data-editor-step="2" id="make">💌 Seal my envelope</button>
           </div>
-          <div class="studio-draft-progress" id="studioDraftProgress" hidden>
-            <div class="studio-progress-meta"><b id="studioProgressLabel">Step 1 of 14</b><span id="studioDraftStatus" aria-live="polite">Draft only · Not saved yet</span></div>
-            <div class="studio-progress-track" role="progressbar" aria-label="Creator step progress" aria-valuemin="0" aria-valuemax="14" aria-valuenow="1" id="studioProgressTrack"><span id="studioProgressFill"></span></div>
-            <p id="studioLiveDetail">Name your envelope to begin.</p>
-          </div>
           <div class="studio-panel-footer" id="studioPanelFooter" hidden>
             <button class="studio-flow-btn studio-flow-back" type="button" id="studioBack">‹ Back</button>
-            <span id="studioCounter" aria-live="polite">1 / 14</span>
+            <span class="studio-nav-label" aria-hidden="true">STUDIO</span>
             <button class="studio-flow-btn studio-flow-next" type="button" id="studioNext">Next ›</button>
           </div>
           <div class="create-mobile-nav" id="createMobileNav" hidden>
@@ -186,6 +183,11 @@
             <div class="studio-paper-sheet"><div class="studio-paper-badge" id="studioPaperBadge">Page 1</div>
               <div class="studio-paper-writing" id="studioPaperWriting">Your sweet message will appear here ♡</div>
               <div class="studio-paper-pictures" id="studioPaperPictures"></div></div>
+          </div>
+          <div class="studio-intro-canvas" id="studioIntroCanvas" hidden aria-label="Live intro animation preview">
+            <div class="studio-intro-scene" id="studioIntroScene"></div>
+            <div class="studio-intro-canvas-foot"><span id="studioIntroLabel">Live animation preview</span><button type="button" id="studioReplayIntro" aria-label="Replay intro animation">↻ Replay</button></div>
+            <div class="studio-motion-samples" id="studioMotionSamples"><div class="studio-mini-typewriter" id="studioMiniTypewriter">Love, one letter at a time ♡</div><span class="studio-mini-page" id="studioMiniPage" aria-hidden="true">▱</span></div>
           </div>
           <h3 id="pvTitle">Your envelope</h3>
           <p class="soft" id="studioPreviewCaption">Live preview. Tap it to peek.</p>
@@ -452,7 +454,7 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=10.0-intro-studio" defer></script>
+  <script src="js/app.js?v=11.0-workspace-intro-studio" defer></script>
 
   <script type="module" src="js/firebase.js"></script>
 </body>
