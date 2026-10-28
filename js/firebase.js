@@ -22,6 +22,7 @@
             return result.committed;
           },
           saveAnonymousPointer(ownerUid,code) { return dbModule.set(dbModule.ref(db,'users/'+ownerUid+'/anonymousPages/'+code),Date.now()) },
+          getAnonymousPointers(uid) { return dbModule.get(dbModule.ref(db,'users/'+uid+'/anonymousPages')).then(s=>s.val()||{}) },
           subscribeAnonymousPointers(uid,next,fail) { return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousPages'),s=>next(s.val()||{}),fail) },
           // The anonymous inbox write is directly authorized by page ownership rules.
           sendAnonymousEnvelope(recipientUid, payload) { return dbModule.set(dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/received')), payload) },

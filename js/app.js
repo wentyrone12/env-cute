@@ -1270,10 +1270,50 @@ async function create() {
 
 
 /* v14 Username directory & direct mail (Firebase RTDB; no hardcoded demo users). */
-const validUsername = value => /^[a-z0-9_]{3,20}$/.test(value);
+const validUsername = value => typeof value === 'string' && /^[a-z0-9_]{3,20}$/.test(value);
 const normalizeUsername = value => String(value || '').toLowerCase().replace(/^@/, '').trim();
 const USERNAME_CHANGE_INTERVAL = 7 * 24 * 60 * 60 * 1000;
 let myUsername = '', usernameChangedAt = 0, usernameEditing = false, usernameBusy = false;
+let usernameLoadPromise=Promise.resolve(), usernameSetupPromise=null, usernameSetupDone=null, usernameOnboardingActive=false;
+function completeUsernameOnboarding(){
+  if(!usernameOnboardingActive)return;
+  usernameOnboardingActive=false;
+  $('#usernameModalTitle').textContent='Edit envelope username';
+  $('#usernameModalDescription').textContent='A unique username helps friends send envelopes directly to you. You can change it again after 7 days.';
+  $('#usernameModalClose').setAttribute('aria-label','Close username editor');
+  const done=usernameSetupDone;usernameSetupDone=null;usernameSetupPromise=null;
+  if(done)done();
+}
+function offerUsernameOnboarding(uid){
+  if(!currentUser || currentUser.uid!==uid || myUsername || usernameOnboardingActive)return;
+  usernameOnboardingActive=true;
+  usernameSetupPromise=new Promise(resolve=>{usernameSetupDone=resolve;});
+  usernameEditing=true;
+  $('#usernameModalTitle').textContent='Choose your envelope username 💌';
+  $('#usernameModalDescription').textContent='Pick a unique searchable @username so friends can find you and send envelopes. You can edit it again after 7 days.';
+  $('#usernameModalClose').setAttribute('aria-label','Choose username later');
+  setUsernameLabel();
+  const suggested=normalizeUsername(String(currentUser.displayName || currentUser.email?.split('@')[0] || '').replace(/[^a-z0-9_]+/gi,'_')).slice(0,20).replace(/^_+|_+$/g,'');
+  $('#myUsernameInput').value=validUsername(suggested)?suggested:'';
+  usernameStatus('Your username is public, but your Google email stays private.');
+  requestAnimationFrame(()=>$('#myUsernameInput').focus({preventScroll:true}));
+}
+window.WENV_PROFILE={
+  async waitForUsernameSetup(uid){
+    if(!uid)return;
+    // The Auth observer sometimes fires just after signInWithPopup resolves.
+    if(currentUser?.uid!==uid){
+      await new Promise(resolve=>{
+        const next=e=>{if(e.detail?.uid===uid){clearTimeout(timeout);document.removeEventListener('wenv-user-ready',next);resolve();}};
+        document.addEventListener('wenv-user-ready',next);
+        const timeout=setTimeout(()=>{document.removeEventListener('wenv-user-ready',next);resolve();},8000);
+      });
+    }
+    if(currentUser?.uid!==uid)return;
+    await usernameLoadPromise;
+    if(usernameOnboardingActive && usernameSetupPromise)await usernameSetupPromise;
+  }
+};
 let pickedRecipient = null, searchToken = 0, selectedMailId = null;
 function usernameAvailableAt() { return myUsername ? usernameChangedAt + USERNAME_CHANGE_INTERVAL : 0; }
 function usernameRemainingMs() { return Math.max(0, usernameAvailableAt() - Date.now()); }
@@ -1327,6 +1367,7 @@ async function loadMyUsername(uid) {
       if (directory?.uid === uid) usernameChangedAt = Number(directory.createdAt) || Date.now();
     }
     setUsernameLabel();
+    if(!myUsername)offerUsernameOnboarding(uid);
     // An interrupted rename cannot strand an old searchable username indefinitely.
     if (validUsername(profile?.previousUsername) && profile.previousUsername !== myUsername) {
       try {
@@ -1349,11 +1390,11 @@ $('#editMyUsername').addEventListener('click',()=>{
   if (usernameEditing) { $('#myUsernameInput').value = myUsername; $('#myUsernameInput').focus(); }
 });
 $('#cancelUsernameEdit').addEventListener('click',()=>{
-  usernameEditing=false;usernameStatus('');setUsernameLabel();
+  usernameEditing=false;completeUsernameOnboarding();usernameStatus('');setUsernameLabel();
 });
 function cancelUsernameDialog(){
   if(usernameBusy)return;
-  usernameEditing=false;usernameStatus('');setUsernameLabel();
+  usernameEditing=false;completeUsernameOnboarding();usernameStatus('');setUsernameLabel();
   $('#editMyUsername').focus({preventScroll:true});
 }
 $('#usernameModalClose').addEventListener('click',cancelUsernameDialog);
@@ -1375,7 +1416,7 @@ $('#saveMyUsername').addEventListener('click',async()=>{
   if (usernameRemainingMs()) return usernameStatus('Your 7-day username cooldown is still active.',true);
   const name = normalizeUsername($('#myUsernameInput').value);
   if (!validUsername(name)) return usernameStatus('Use 3–20 lowercase letters, numbers, or underscores.',true);
-  if (name===myUsername) { usernameEditing=false;setUsernameLabel();return usernameStatus('No changes to save.'); }
+  if (name===myUsername) { usernameEditing=false;completeUsernameOnboarding();setUsernameLabel();return usernameStatus('No changes to save.'); }
   usernameBusy=true; setUsernameLabel();
   const button=$('#saveMyUsername');button.textContent='Saving…';
   const oldName=myUsername, currentUid=currentUser.uid;
@@ -1388,7 +1429,7 @@ $('#saveMyUsername').addEventListener('click',async()=>{
     await window.WENV_DB.setMyProfile(currentUid,{username:name,usernameChangedAt:window.WENV_DB.serverTimestamp(),...(oldName?{previousUsername:oldName}:{})});
     profileSaved=true;
     if (currentUser?.uid!==currentUid) return;
-    myUsername=name;usernameChangedAt=Date.now();usernameEditing=false;
+    myUsername=name;usernameChangedAt=Date.now();usernameEditing=false;completeUsernameOnboarding();
     let retired = true;
     if (oldName && oldName!==name) {
       try {
@@ -2093,6 +2134,7 @@ function setSignedInUser(user) {
   document.body.classList.toggle('guest-receiving', guestLink);
   $('#authGate').hidden = !!user || guestLink;
   if (!user) {
+    completeUsernameOnboarding();
     stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopSupport(); stopFeedback(); stopCloud = stopReceived = stopSubscription = stopPayments = stopSupport = stopFeedback = () => { }; supportInbox = {}; feedbackInbox = {}; cloudReady = false; cloudConnected = false; receivedStore = []; myUsername = ''; usernameChangedAt = 0; usernameEditing = false; setUsernameLabel(); premiumApproved = false; premiumState = null; premiumPayments = []; editingId = null;
     clearPaperTurn(); accountKey = null; appearanceKey = null; store = []; recv = null; connectionUid = null;
     if (guestLink) checkHash();
@@ -2100,9 +2142,10 @@ function setSignedInUser(user) {
     updateSubscriptionUI(); showAuthControls(); return;
   }
   if (oldUid !== user.uid) {
+    if(oldUid)completeUsernameOnboarding();
     premiumApproved = false; premiumState = null; premiumPayments = [];
     loadAccount(user.uid); loadAppearance(user.uid); renderUser(user); renderDash();
-    loadMyUsername(user.uid); watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid); watchInquiries(user.uid);
+    usernameLoadPromise=loadMyUsername(user.uid);document.dispatchEvent(new CustomEvent('wenv-user-ready',{detail:{uid:user.uid}})); watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid); watchInquiries(user.uid);
     if (window.WENV_ANON?.composing) { $('#authGate').hidden = true; }
     else if (!checkHash()) go('home');
     watchCloud(user.uid);

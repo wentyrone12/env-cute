@@ -23,7 +23,8 @@
   <link rel="stylesheet" href="css/v14-envelopes.css">
   <link rel="stylesheet" href="css/v15-account-photo-mobile.css">
   <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0">
-  <link rel="stylesheet" href="css/v17-anonymous.css?v=17.2">
+  <link rel="stylesheet" href="css/v17-anonymous.css?v=18-mobile-sheet">
+  <link rel="stylesheet" href="css/v18-ask-mobile.css?v=18.0">
 </head>
 
 <body>
@@ -254,17 +255,17 @@
             <img id="askPaperImage" alt="Your page photo" hidden>
             <div class="ask-signature" id="askPaperSignature">with love ♡</div>
           </div></div>
-          <div class="ask-tool-card" id="askToolCard"><div class="ask-tool-header"><strong id="askToolHeading">Edit your message</strong><small>Changes appear instantly on the paper</small></div>
+          <div class="ask-tool-card" id="askToolCard" aria-label="Paper editing controls"><div class="ask-tool-header" id="askSheetHandle"><div class="ask-sheet-grip" aria-hidden="true"></div><div class="ask-tool-heading-copy"><strong id="askToolHeading">Edit your message</strong><small>Changes appear instantly on the paper</small></div><button type="button" class="ask-sheet-close" id="askSheetClose" aria-label="Hide editor panel">⌄</button></div>
             <div class="ask-tool-section" data-ask-panel="text"><label>Big text on paper<input id="askHeading" maxlength="75" placeholder="Send me an anonymous message"></label><label>Little note<textarea id="askSubtitle" rows="3" maxlength="220" placeholder="Write a welcoming message…"></textarea></label><label>Paper sticker<select id="askStickerInput"><option value="💌">💌 Love letter</option><option value="🎀">🎀 Ribbon</option><option value="🌸">🌸 Sakura</option><option value="🧸">🧸 Teddy</option><option value="🦋">🦋 Butterfly</option><option value="✨">✨ Sparkles</option></select></label></div>
             <div class="ask-tool-section" data-ask-panel="theme" hidden><span class="ask-input-label">Background style</span><div class="ask-theme-grid" id="askThemeGrid"></div><label>Paper tint<input id="askPaperColor" type="color" value="#fffaf7"></label><label>Accent color<input id="askAccentColor" type="color" value="#bd6995"></label></div>
             <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">📷 Add a picture below the message <input id="askPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></label><small>Automatically resized to save cloud space.</small><button class="btn sec" id="askRemovePhoto" type="button">Remove picture</button></div>
             <div class="ask-tool-section" data-ask-panel="signature" hidden><label>Your signature<input id="askSignature" maxlength="55" placeholder="with love ♡"></label><label>Handwriting style<select id="askSignatureFont"><option value="dancing">Dancing Script</option><option value="caveat">Caveat</option><option value="pacifico">Pacifico</option><option value="classic">Classic</option></select></label></div>
           </div>
         </div>
-        <div class="ask-saved-list glass" id="askSavedList"><div class="ask-saved-head"><strong>My published pages</strong><small>Tap a page to edit or copy its link</small></div><div id="askSavedCards" class="ask-saved-cards"><p>Loading your saved pages…</p></div></div>
+
       </div>
       <div class="ask-public-wrap" id="askGuest" hidden><div class="ask-public-intro"><span class="ask-kicker">♡ SOMEONE LEFT A NOTE FOR YOU</span><h2>It's your turn to send a secret</h2><p>Make their day with a little mystery message.</p></div><div class="ask-stage ask-public-stage" id="askPublicStage"><div class="ask-paper" id="askPublicPaper"><span class="ask-paper-sticker" id="askPublicSticker">💌</span><span class="ask-paper-kicker">an anonymous little note ♡</span><h3 id="askPublicHeading">Send me an anonymous message</h3><p id="askPublicSubtitle"></p><img id="askPublicImage" hidden alt="Personalized page photo"><div class="ask-signature" id="askPublicSignature"></div></div></div><button class="btn pri ask-public-send" type="button" id="askStartEnvelope">💌 Send envelope message</button><p class="ask-privacy">Your name appears only as the anonymous nickname you choose. Google sign-in is required to send and help prevent abuse.</p></div>
-      <div class="ask-toolbar" id="askToolbar" hidden><button type="button" data-ask-tool="text" class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span> Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save" type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div>
+      <button type="button" id="askSheetReopen" class="ask-sheet-reopen" hidden>↑ Open editor</button><nav class="ask-toolbar" id="askToolbar" aria-label="Anonymous page editing toolbar" hidden><div class="ask-toolbar-scroll" id="askToolbarScroll"><button type="button" data-ask-tool="text" class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span> Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save" type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div></nav>
     </section>
 
     <section class="screen" id="settings">
@@ -544,8 +545,8 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=17.2-anonymous-page" defer></script>
-  <script src="js/anonymous.js?v=17.2" defer></script>
+  <script src="js/app.js?v=18-mobile-ask-username" defer></script>
+  <script src="js/anonymous.js?v=18-mobile-ask-username" defer></script>
 
   <script type="module" src="js/firebase.js"></script>
 </body>

@@ -18,13 +18,70 @@
   const genCode=()=> { const chars='abcdefghjkmnpqrstuvwxyz23456789', arr=crypto.getRandomValues(new Uint8Array(12)); return Array.from(arr,x=>chars[x%chars.length]).join(''); };
   let draft=defaults(), code='', activePublic=null, composing=false, draftEnvelope=null, saving=false, loading=0;
   let pointers={}, unsubscribe=()=>{}, subscribedUid='';
+  let studioUid='', dirty=false, restoreRequest=0, sheetOpen=false, sheetDismissed=false;
+  const smallScreen=()=>window.matchMedia('(max-width:820px)').matches;
+  const cacheKey=uid=>'wenv:ask-draft:v18:'+uid;
+  function storeDraft(){
+    if(!currentUser || !$a('askOwner') || $a('askOwner').hidden)return;
+    try{localStorage.setItem(cacheKey(currentUser.uid),JSON.stringify({code,design:draft,dirty,at:Date.now()}));}
+    catch(err){console.warn('Local draft backup unavailable',err);}
+  }
+  function restoreDraft(uid){
+    try{
+      const raw=JSON.parse(localStorage.getItem(cacheKey(uid))||'null');
+      if(raw?.design && typeof raw.design==='object'){
+        code=validCode(raw.code)?raw.code:'';draft=safeStyle(raw.design);dirty=raw.dirty===true;
+        return true;
+      }
+    }catch(err){console.warn('Could not read saved editor draft',err);}
+    return false;
+  }
+  function setSheet(open, dismissed=false){
+    sheetOpen=!!open;sheetDismissed=!!dismissed;
+    const card=$a('askToolCard'),reopen=$a('askSheetReopen');
+    card.classList.toggle('is-collapsed',!sheetOpen);
+    card.setAttribute('aria-hidden',String(!sheetOpen && smallScreen()));
+    reopen.hidden=sheetOpen || !smallScreen();
+    if(!smallScreen()){reopen.hidden=true;card.classList.remove('is-collapsed');card.setAttribute('aria-hidden','false');}
+    if(sheetOpen)card.scrollTop=0;
+  }
+  function stageTool(name){
+    const same=document.querySelector('[data-ask-tool="'+name+'"]')?.classList.contains('on');
+    tool(name);
+    if(!smallScreen())return;
+    if(sheetOpen){$a('askToolCard').scrollTop=0;return;}
+    // Swiping/closing keeps the panel down while selecting other tools.
+    // The Open editor pill (or tapping the currently selected tab) reopens it.
+    if(!sheetDismissed || same)setSheet(true,false);
+  }
+  async function refreshStudioFromCloud(uid){
+    const seq=++restoreRequest;
+    if(!uid || !window.WENV_DB?.getAnonymousPage || dirty)return;
+    try{
+      let target=code;
+      if(!target){
+        const refs=Object.keys(pointers).filter(validCode);
+        if(!refs.length && window.WENV_DB?.getAnonymousPointers){
+          const cloud=await window.WENV_DB.getAnonymousPointers(uid);
+          if(currentUser?.uid!==uid || seq!==restoreRequest || dirty)return;
+          pointers={...cloud,...pointers};
+        }
+        target=Object.keys(pointers).filter(validCode).sort((a,b)=>(pointers[b]||0)-(pointers[a]||0))[0]||'';
+      }
+      if(!target)return;
+      const page=await window.WENV_DB.getAnonymousPage(target);
+      if(currentUser?.uid!==uid || seq!==restoreRequest || dirty || !page || page.ownerUid!==uid)return;
+      code=target;draft=safeStyle(page.design);dirty=false;storeDraft();
+      if(!$a('askOwner').hidden)fillForm();
+    }catch(err){console.warn('Unable to restore published anonymous page',err);}
+  }
   const getLink = c => location.origin + location.pathname + '#ask=' + encodeURIComponent(c);
   const cleanText=(value,max)=>String(value||'').trim().slice(0,max);
   const safeStyle=(item={})=>{
     const x={...defaults(), ...item};
     return {heading:cleanText(x.heading,75)||defaults().heading,subtitle:cleanText(x.subtitle,220),signature:cleanText(x.signature,55),theme:themes.some(t=>t.id===x.theme)?x.theme:'blush',paper:hexOk(x.paper)?x.paper:'#fffaf7',accent:hexOk(x.accent)?x.accent:'#bd6995',sticker:['💌','🎀','🌸','🧸','🦋','✨'].includes(x.sticker)?x.sticker:'💌',font:['dancing','caveat','pacifico','classic'].includes(x.font)?x.font:'dancing',photo:typeof x.photo==='string' && /^data:image\/jpeg;base64,[A-Za-z0-9+/=]+$/.test(x.photo) && x.photo.length<=170000 ?x.photo:''};
   };
-  function show(which){ $a('askOwner').hidden=which!=='owner'; $a('askGuest').hidden=which!=='guest'; $a('askToolbar').hidden=which!=='owner'; }
+  function show(which){ $a('askOwner').hidden=which!=='owner'; $a('askGuest').hidden=which!=='guest'; $a('askToolbar').hidden=which!=='owner'; $a('askSheetReopen').hidden=which!=='owner' || sheetOpen || !smallScreen(); }
   function paint(stage,parts,design){
     const s=safeStyle(design), th=themes.find(t=>t.id===s.theme)||themes[0];
     stage.style.setProperty('--ask-a',th.a); stage.style.setProperty('--ask-b',th.b);
@@ -33,7 +90,7 @@
     $a(parts.sticker).textContent=s.sticker;
     const img=$a(parts.image); img.hidden=!s.photo; if(s.photo) img.src=s.photo; else img.removeAttribute('src');
   }
-  function draw(){draft=safeStyle(draft);paint($a('askStage'),{paper:'askPaper',heading:'askPaperHeading',subtitle:'askPaperSubtitle',signature:'askPaperSignature',sticker:'askSticker',image:'askPaperImage'},draft);updateThemeChecks();}
+  function draw(changed=false){draft=safeStyle(draft);paint($a('askStage'),{paper:'askPaper',heading:'askPaperHeading',subtitle:'askPaperSubtitle',signature:'askPaperSignature',sticker:'askSticker',image:'askPaperImage'},draft);updateThemeChecks();if(changed){dirty=true;storeDraft();}}
   function fillForm(){ $a('askHeading').value=draft.heading; $a('askSubtitle').value=draft.subtitle; $a('askSignature').value=draft.signature; $a('askPaperColor').value=draft.paper; $a('askAccentColor').value=draft.accent; $a('askStickerInput').value=draft.sticker; $a('askSignatureFont').value=draft.font; draw(); }
   function tool(name){
     document.querySelectorAll('[data-ask-panel]').forEach(x=>x.hidden=x.dataset.askPanel!==name);
@@ -41,38 +98,48 @@
     $a('askToolHeading').textContent=({text:'Customize your words',theme:'Pick a dreamy background',photo:'Your favorite picture',signature:'Sign your little note'})[name]||'Edit your paper';
   }
   const setHashClean=()=>{if(location.hash.startsWith('#ask='))history.replaceState(null,'',location.pathname+location.search);};
-  function openStudio(newPage=true){
+  function openStudio(){
     if(!currentUser){go('home');return;}
-    if(newPage){ code=''; draft=defaults(); }
-    setHashClean();show('owner');fillForm();tool('text');go('ask');renderSaved();
-    if(subscribedUid!==currentUser.uid) userChanged(currentUser);
+    if(studioUid!==currentUser.uid){
+      studioUid=currentUser.uid;code='';draft=defaults();dirty=false;
+      restoreDraft(studioUid);
+    }
+    setHashClean();show('owner');fillForm();tool('text');
+    setSheet(false,false);go('ask');
+    if(subscribedUid!==currentUser.uid)userChanged(currentUser);
+    refreshStudioFromCloud(currentUser.uid);
   }
-  function renderSaved(){
-    const node=$a('askSavedCards'); if(!node)return;
+  function savedPagesHTML(){
     const ids=Object.keys(pointers).filter(validCode).sort((a,b)=>(pointers[b]||0)-(pointers[a]||0));
-    node.innerHTML=ids.length ? ids.map(id=>`<div class="ask-saved-item"><span>💌 <strong>${id===code?'Current page':'Anonymous page'}</strong><small>${esc(id)}</small></span><div><button type="button" data-ask-edit="${esc(id)}" class="btn sec">Edit</button><button type="button" data-ask-share="${esc(id)}" class="btn pri">Share</button></div></div>`).join(''):'<p class="ask-no-saved">Your published pages will show here after saving. ♡</p>';
+    if(code && !ids.includes(code))ids.unshift(code);
+    return `<div class="ask-saved-head"><strong>My published pages</strong><small>Choose a page to edit or share</small></div><div class="ask-saved-cards">${ids.length?ids.map(id=>`<div class="ask-saved-item"><span>💌 <strong>${id===code?'Current page':'Anonymous page'}</strong><small>${esc(id)}</small></span><div><button type="button" data-ask-edit="${esc(id)}" class="btn sec">Edit</button><button type="button" data-ask-share="${esc(id)}" class="btn pri">Share</button></div></div>`).join(''):'<p class="ask-no-saved">Save your first page to get a shareable link ♡</p>'}</div>`;
   }
+  function renderSaved(){const node=$a('askModalSaved');if(node)node.innerHTML=savedPagesHTML();}
   function userChanged(user){
-    if(!user){unsubscribe();unsubscribe=()=>{};subscribedUid='';pointers={};renderSaved();return;}
+    if(!user){unsubscribe();unsubscribe=()=>{};subscribedUid='';studioUid='';code='';draft=defaults();dirty=false;restoreRequest++;pointers={};renderSaved();return;}
     if(subscribedUid===user.uid)return;
     unsubscribe();subscribedUid=user.uid;pointers={};renderSaved();
     if(!window.WENV_DB?.subscribeAnonymousPointers)return;
-    unsubscribe=window.WENV_DB.subscribeAnonymousPointers(user.uid,data=>{if(currentUser?.uid!==user.uid)return;pointers=data||{};renderSaved();},err=>console.warn('Anonymous page list:',err));
+    unsubscribe=window.WENV_DB.subscribeAnonymousPointers(user.uid,data=>{if(currentUser?.uid!==user.uid)return;pointers=data||{};renderSaved();if(!$a('askOwner').hidden && !dirty && !code)refreshStudioFromCloud(user.uid);},err=>console.warn('Anonymous page list:',err));
   }
   async function editPage(c){
     if(!currentUser || !validCode(c))return;
     try{
       const page=await window.WENV_DB.getAnonymousPage(c);
       if(!page || page.ownerUid!==currentUser.uid)throw new Error('This page does not belong to your account.');
-      code=c;draft=safeStyle(page.design);openStudio(false);toast('Editing your published page ♡');
+      code=c;draft=safeStyle(page.design);dirty=false;studioUid=currentUser.uid;openStudio();storeDraft();closeModal();toast('Editing your published page ♡');
     }catch(err){console.error(err);toast('Unable to open that page. Check your cloud connection.');}
   }
   function popupShare(c){
     const link=getLink(c);
-    modal(`<div class="ask-share-modal"><div class="big">💌</div><h2>Your anonymous link is ready!</h2><p>Post on Instagram stories, Facebook, Messenger, or anywhere you like. Friends can open your personal paper design.</p><div class="ask-link-row"><input id="askShareLink" readonly aria-label="Public anonymous link" value="${esc(link)}"><button class="btn pri" id="askCopyLink" type="button">Copy</button></div><div class="ask-modal-actions"><button type="button" class="btn sec" id="askNativeShare">↗ Share link</button><button type="button" class="btn sec" id="askPreviewLink">Preview</button></div><p class="ask-share-warning">Anyone with this link can see your page and send you a letter after Google sign-in.</p></div>`);
+    modal(`<div class="ask-share-modal"><div class="big">💌</div><h2>${dirty?'Share your anonymous page':'Your anonymous link is ready!'}</h2><p>Your page is cloud-saved. Edit it anytime, then press Save & Share again to update this same link.</p><div class="ask-link-row"><input id="askShareLink" readonly aria-label="Public anonymous link" value="${esc(link)}"><button class="btn pri" id="askCopyLink" type="button">Copy</button></div><div class="ask-modal-actions"><button type="button" class="btn sec" id="askNativeShare">↗ Share link</button><button type="button" class="btn sec" id="askPreviewLink">Preview</button></div><p class="ask-share-warning">Anyone with this link can see your page and send an envelope after Google sign-in.</p><div class="ask-modal-saved" id="askModalSaved">${savedPagesHTML()}</div></div>`);
     $a('askCopyLink').onclick=()=>copyLink(link);
     $a('askNativeShare').onclick=async()=>{if(navigator.share){try{await navigator.share({title:'Send me an anonymous envelope 💌',url:link});}catch(err){if(err?.name!=='AbortError')copyLink(link);}}else copyLink(link);};
     $a('askPreviewLink').onclick=()=>window.open(link,'_blank','noopener,noreferrer');
+    $a('askModalSaved').addEventListener('click',e=>{
+      const edit=e.target.closest('[data-ask-edit]');if(edit){if(dirty){toast('Save your changes before switching pages ♡');return;}editPage(edit.dataset.askEdit);return;}
+      const share=e.target.closest('[data-ask-share]');if(share)popupShare(share.dataset.askShare);
+    });
   }
   async function copyLink(link){try{await navigator.clipboard.writeText(link);toast('Link copied! ♡');}catch{const input=$a('askShareLink');input.focus();input.select();toast('Select and copy the link above ♡');}}
   async function saveShare(){
@@ -90,7 +157,7 @@
       }
       if(!saved)throw new Error('Could not generate a unique page link.');
       code=chosen;await window.WENV_DB.saveAnonymousPointer(currentUser.uid,code);
-      renderSaved();popupShare(code);burst($a('askPaper'),14);
+      dirty=false;storeDraft();pointers[code]=Date.now();renderSaved();popupShare(code);burst($a('askPaper'),14);
     }catch(err){console.error('Save public page failed:',err);modal(`<div class="big">🥺</div><h2>Could not save your page</h2><p>${esc(err?.message||'Check Firebase connection and rules.')}</p><p>Deploy the included database.rules.json rules in Firebase first. Your design is still on this page.</p><button class="btn pri wide" onclick="closeModal()">Back to design</button>`);}
     finally{saving=false;b.disabled=false;b.innerHTML='<span>↗</span> Save & Share';}
   }
@@ -156,7 +223,7 @@
     $a('askGoogleLogin').onclick=async()=>{
       const btn=$a('askGoogleLogin');if(!window.WENV_AUTH?.signIn){$a('askLoginStatus').textContent='Google sign-in is not ready yet.';return;}
       btn.disabled=true;$a('askLoginStatus').textContent='Opening Google sign-in…';
-      try{await window.WENV_AUTH.signIn();nicknameModal();}
+      try{const result=await window.WENV_AUTH.signIn();await window.WENV_PROFILE?.waitForUsernameSetup?.(result?.user?.uid);nicknameModal();}
       catch(err){console.error(err);if($a('askLoginStatus'))$a('askLoginStatus').textContent=err?.code==='auth/popup-closed-by-user'?'Sign-in was cancelled.':(err?.code==='auth/unauthorized-domain'?'Add this hosting domain to Firebase Auth authorized domains.':'Google sign-in failed. Check popups and try again.');}
       finally{if(btn.isConnected)btn.disabled=false;}
     };
@@ -180,34 +247,46 @@
     }catch(err){console.error('Anonymous delivery failed:',err);modal(`<div class="ask-send-modal"><div class="big">🥺</div><h2>Could not send</h2><p>${esc(err?.message||'Please try again.')}</p><p>Make sure Firebase Realtime Database rules are updated.</p><button type="button" class="btn pri wide" id="askRetry">Try again</button><button type="button" class="btn sec wide" onclick="closeModal()">Back to editor</button></div>`);$a('askRetry').onclick=nicknameModal;}
   }
   function init(){
-    $a('openAnonymousStudio').onclick=()=>openStudio(true);
+    $a('openAnonymousStudio').onclick=()=>openStudio();
     $a('askBackToMailbox').onclick=()=>{go('dash');};
     const themesNode=$a('askThemeGrid');themesNode.innerHTML=themes.map(t=>`<button type="button" data-ask-theme="${t.id}" style="--as-a:${t.a};--as-b:${t.b}" aria-label="${esc(t.label)}"><span>${t.mark}</span><small>${t.label}</small></button>`).join('');
-    themesNode.onclick=e=>{const btn=e.target.closest('[data-ask-theme]');if(!btn)return;draft.theme=btn.dataset.askTheme;draw();updateThemeChecks();};
-    $a('askHeading').addEventListener('input',e=>{draft.heading=e.target.value;draw();});
-    $a('askSubtitle').addEventListener('input',e=>{draft.subtitle=e.target.value;draw();});
-    $a('askSignature').addEventListener('input',e=>{draft.signature=e.target.value;draw();});
-    $a('askPaperColor').addEventListener('input',e=>{draft.paper=e.target.value;draw();});
-    $a('askAccentColor').addEventListener('input',e=>{draft.accent=e.target.value;draw();});
-    $a('askStickerInput').addEventListener('change',e=>{draft.sticker=e.target.value;draw();});
-    $a('askSignatureFont').addEventListener('change',e=>{draft.font=e.target.value;draw();});
+    themesNode.onclick=e=>{const btn=e.target.closest('[data-ask-theme]');if(!btn)return;draft.theme=btn.dataset.askTheme;draw(true);updateThemeChecks();};
+    $a('askHeading').addEventListener('input',e=>{draft.heading=e.target.value;draw(true);});
+    $a('askSubtitle').addEventListener('input',e=>{draft.subtitle=e.target.value;draw(true);});
+    $a('askSignature').addEventListener('input',e=>{draft.signature=e.target.value;draw(true);});
+    $a('askPaperColor').addEventListener('input',e=>{draft.paper=e.target.value;draw(true);});
+    $a('askAccentColor').addEventListener('input',e=>{draft.accent=e.target.value;draw(true);});
+    $a('askStickerInput').addEventListener('change',e=>{draft.sticker=e.target.value;draw(true);});
+    $a('askSignatureFont').addEventListener('change',e=>{draft.font=e.target.value;draw(true);});
     $a('askPhotoInput').addEventListener('change',async e=>{
       const file=e.target.files?.[0];e.target.value='';if(!file)return;
       if(!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size>7*1024*1024)return toast('Choose a JPG, PNG, or WebP image under 7 MB.');
-      try{draft.photo=await compressPhoto(file);draw();toast('Picture added to your page ♡');}
+      try{draft.photo=await compressPhoto(file);draw(true);toast('Picture added to your page ♡');}
       catch(err){console.warn(err);toast('Could not resize that picture. Try a smaller one.');}
     });
-    $a('askRemovePhoto').onclick=()=>{draft.photo='';draw();toast('Photo removed');};
-    document.querySelectorAll('[data-ask-tool]').forEach(b=>b.onclick=()=>tool(b.dataset.askTool));
+    $a('askRemovePhoto').onclick=()=>{draft.photo='';draw(true);toast('Photo removed');};
+    document.querySelectorAll('[data-ask-tool]').forEach(b=>b.onclick=()=>stageTool(b.dataset.askTool));
+    $a('askSheetClose').onclick=()=>setSheet(false,true);
+    $a('askSheetReopen').onclick=()=>setSheet(true,false);
+    // A downward gesture on the sheet dismisses it. Switching toolbar tabs
+    // does not reopen it until the user asks to expand it again.
+    let touchStart=null;
+    $a('askToolCard').addEventListener('touchstart',e=>{
+      if(!smallScreen() || !sheetOpen || !e.touches.length)return;
+      touchStart={x:e.touches[0].clientX,y:e.touches[0].clientY,top:$a('askToolCard').scrollTop};
+    },{passive:true});
+    $a('askToolCard').addEventListener('touchend',e=>{
+      if(!touchStart || !e.changedTouches.length)return;
+      const dy=e.changedTouches[0].clientY-touchStart.y,dx=e.changedTouches[0].clientX-touchStart.x;
+      if(dy>78 && Math.abs(dy)>Math.abs(dx)*1.3 && touchStart.top<=2)setSheet(false,true);
+      touchStart=null;
+    },{passive:true});
+    window.matchMedia('(max-width:820px)').addEventListener('change',()=>setSheet(sheetOpen,sheetDismissed));
     $a('askSaveShare').onclick=saveShare;
     $a('askStartEnvelope').onclick=startCompose;
     $a('anonComposeBack').onclick=()=>{cancelCompose();closeModal();go('ask');};
     $a('anonSendDockButton').onclick=beginSend;
-    $a('askSavedCards').addEventListener('click',e=>{
-      const edit=e.target.closest('[data-ask-edit]');if(edit)return editPage(edit.dataset.askEdit);
-      const share=e.target.closest('[data-ask-share]');if(share)return popupShare(share.dataset.askShare);
-    });
-    fillForm();tool('text');updateThemeChecks();
+    fillForm();tool('text');setSheet(false,false);updateThemeChecks();
     addEventListener('hashchange',()=>{if(location.hash.startsWith('#ask=')){cancelCompose();checkHash();} });
   }
   function updateThemeChecks(){document.querySelectorAll('[data-ask-theme]').forEach(b=>b.classList.toggle('on',b.dataset.askTheme===draft.theme));}
