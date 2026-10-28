@@ -10,6 +10,47 @@
         const auth = authModule.getAuth(app);
         const db = dbModule.getDatabase(app);
         window.WENV_DB = {
+          // Public NGL-style pages. Ownership is enforced by Realtime Database rules.
+          getAnonymousPage(code) { return dbModule.get(dbModule.ref(db,'anonymousPages/'+code)).then(s=>s.val()||null) },
+          async claimAnonymousPage(code, page, ownerUid) {
+            const target=dbModule.ref(db,'anonymousPages/'+code);
+            const result=await dbModule.runTransaction(target,old=>{
+              if (!old) return {ownerUid,design:page,createdAt:Date.now()};
+              if (old.ownerUid === ownerUid) return { ...old, design:page, updatedAt:Date.now() };
+              return;
+            },{applyLocally:false});
+            return result.committed;
+          },
+          saveAnonymousPointer(ownerUid,code) { return dbModule.set(dbModule.ref(db,'users/'+ownerUid+'/anonymousPages/'+code),Date.now()) },
+          subscribeAnonymousPointers(uid,next,fail) { return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousPages'),s=>next(s.val()||{}),fail) },
+          // The anonymous inbox write is directly authorized by page ownership rules.
+          sendAnonymousEnvelope(recipientUid, payload) { return dbModule.set(dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/received')), payload) },
+          getMyProfile(uid) { return dbModule.get(dbModule.ref(db,'users/'+uid+'/profile')).then(s=>s.val()||null) },
+          setMyProfile(uid, profile) { return dbModule.update(dbModule.ref(db,'users/'+uid+'/profile'),profile) },
+          async reserveUsername(username, uid, displayName) {
+            const target = dbModule.ref(db,'usernames/'+username);
+            const result = await dbModule.runTransaction(target,previous=>{
+              if (!previous) return {uid,username,displayName,createdAt:Date.now()};
+              if (previous.uid === uid) return previous;
+              return;
+            },{applyLocally:false});
+            return result.committed || result.snapshot.val()?.uid === uid;
+          },
+          searchUsernames(prefix) {
+            const q=dbModule.query(dbModule.ref(db,'usernames'),dbModule.orderByKey(),dbModule.startAt(prefix),dbModule.endAt(prefix+'\uf8ff'),dbModule.limitToFirst(12));
+            return dbModule.get(q).then(s=>Object.entries(s.val()||{}).map(([username,v])=>({...v,username})).filter(v=>v.uid));
+          },
+          getUsername(username) { return dbModule.get(dbModule.ref(db,'usernames/'+username)).then(s=>s.val()) },
+          releaseOldUsername(username,uid) {
+            return dbModule.runTransaction(dbModule.ref(db,'usernames/'+username), old => {
+              if (!old || old.uid !== uid) return;
+              return null;
+            },{applyLocally:false}).then(result => result.committed || !result.snapshot.exists());
+          },
+          serverTimestamp() { return dbModule.serverTimestamp() },
+          clearPreviousUsername(uid) { return dbModule.remove(dbModule.ref(db,'users/'+uid+'/profile/previousUsername')) },
+          sendDirectEnvelope(uid, item) { return dbModule.set(dbModule.push(dbModule.ref(db,'users/'+uid+'/received')),item) },
+          markReceivedRead(uid,key) { return dbModule.update(dbModule.ref(db,'users/'+uid+'/received/'+key),{readAt:Date.now()}) },
           subscribeReceived(uid, next, fail) { return dbModule.onValue(dbModule.ref(db, 'users/' + uid + '/received'), snap => next(snap.val() || {}), fail) },
           saveReceived(uid, key, item) { return dbModule.set(dbModule.ref(db, 'users/' + uid + '/received/' + key), item) },
           removeReceived(uid, key) { return dbModule.remove(dbModule.ref(db, 'users/' + uid + '/received/' + key)) },

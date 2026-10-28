@@ -1,0 +1,81 @@
+/* v13 - Mobile bottom-sheet, guest receiver & content-sized paper */
+@media(max-width:860px) {
+  body.create-mobile-mode #create .editor-workbench {
+    height:min(61dvh,570px);
+    max-height:min(61dvh,570px);
+    transform:translate3d(0,var(--studio-drag-y,0px),0);
+    opacity:1;
+    visibility:visible;
+    transition:transform .38s cubic-bezier(.22,1,.36,1),opacity .28s ease,visibility 0s;
+    will-change:transform;
+    touch-action:pan-y;
+  }
+  body.create-mobile-mode #create .editor-workbench.studio-is-collapsed {
+    height:min(61dvh,570px);
+    max-height:min(61dvh,570px);
+    transform:translate3d(0,calc(100% + 125px),0);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform .4s cubic-bezier(.32,.72,.22,1),opacity .28s ease,visibility 0s linear .4s;
+  }
+  body.create-mobile-mode #create .editor-workbench.studio-is-collapsed #studioPanelScroll {
+    display:block!important;
+  }
+  body.create-mobile-mode #create .editor-workbench.studio-is-collapsed #studioPanelFooter {
+    display:flex!important;
+  }
+  body.create-mobile-mode #create .editor-workbench.studio-is-dragging {
+    transition:none!important;
+    visibility:visible!important;
+  }
+  body.create-mobile-mode #create .studio-panel-head {
+    touch-action:none;
+    cursor:grab;
+    -webkit-user-select:none;user-select:none;
+  }
+  body.create-mobile-mode #create .studio-panel-head:active {cursor:grabbing}
+  body.create-mobile-mode #create #studioPanelScroll {overscroll-behavior-y:contain}
+  body.create-mobile-mode #create #studioDrawerReopen {
+    display:flex;align-items:center;justify-content:center;gap:9px;
+    position:fixed;z-index:78;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));
+    min-height:42px;max-width:calc(100% - 25px);padding:8px 23px;
+    border:1px solid #f0d4e5;border-radius:99px;
+    background:rgba(255,250,254,.97);color:#a15282;font-weight:900;
+    box-shadow:0 8px 28px #9452743c;backdrop-filter:blur(14px);
+    transform:translate(-50%,95px);opacity:0;pointer-events:none;
+    transition:transform .38s cubic-bezier(.22,1,.36,1),opacity .25s ease;
+    touch-action:none;
+  }
+  body.create-mobile-mode.studio-drawer-closed #create.on #studioDrawerReopen {
+    transform:translate(-50%,0);opacity:1;pointer-events:auto;
+  }
+}
+#studioDrawerReopen {display:none}
+/* A received public link is intentionally readable without an account; only creation needs Google. */
+body.guest-receiving>main,body.guest-receiving>.bg {visibility:visible!important}
+body.guest-receiving>.nav,body.guest-receiving>.credit {visibility:hidden!important}
+/* Paper should fit its content, instead of reserving a nearly full-screen A4 height. */
+#recv .reader .page {
+  min-height:0!important;height:auto!important;
+  grid-template-rows:auto auto auto auto!important;
+  align-content:start;gap:clamp(8px,2vw,15px);
+  padding:clamp(20px,4.5vw,38px) clamp(17px,4.5vw,45px) clamp(18px,3.8vw,32px);
+}
+#recv .reader .page .txt {
+  white-space:pre-wrap!important;overflow-wrap:anywhere;word-break:normal;
+  overflow:visible!important;min-height:1.5em;max-height:none;
+  align-self:start;line-height:1.48;
+}
+#recv .reader .page .paper-photos {margin-top:0}
+#recv .reader .page .sign {margin-top:0;min-height:0}
+#recv .reader .paper-stage {min-height:0}
+@media(max-width:560px) {
+  #recv .reader .page {padding:24px 20px 22px;gap:9px}
+  #recv .reader .page .txt {line-height:1.43}
+}
+@media(prefers-reduced-motion:reduce) {
+  body.create-mobile-mode #create .editor-workbench,
+  body.create-mobile-mode #create .editor-workbench.studio-is-collapsed,
+  body.create-mobile-mode #create #studioDrawerReopen {transition:none!important}
+}

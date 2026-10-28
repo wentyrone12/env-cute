@@ -13,7 +13,7 @@
 .admin-brand strong,.admin-brand small{display:block;line-height:1.3}
 .admin-brand strong{font-size:15px;white-space:nowrap}
 .admin-brand small{font-size:11px;color:var(--ad-muted);margin-top:3px}
-.admin-sidebar-heading,.admin-kicker,.admin-welcome-eyebrow{font-size:10px;font-weight:900;letter-spacing:1.6px;color:#b6a0b1}
+.admin-sidebar-heading,.admin-kicker,.admin-welcome-eyebrow{font-size:10px;font-weight:900;color:#b6a0b1}
 .admin-sidebar-heading{margin:0 12px 13px!important}
 .admin-navigation{display:grid;gap:7px}
 .admin-nav{display:flex;align-items:center;gap:12px;width:100%;border:1px solid transparent;text-align:left;padding:13px 13px;border-radius:14px;color:#87768d;font-weight:900;font-size:14px;transition:background .2s, color .2s,transform .2s}

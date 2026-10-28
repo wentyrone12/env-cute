@@ -19,6 +19,11 @@
   <link rel="stylesheet" href="css/v10-editor-intros.css">
   <link rel="stylesheet" href="css/v11-workspace.css">
   <link rel="stylesheet" href="css/v12-desktop-palettes-account.css">
+  <link rel="stylesheet" href="css/v13-mobile-receiver.css">
+  <link rel="stylesheet" href="css/v14-envelopes.css">
+  <link rel="stylesheet" href="css/v15-account-photo-mobile.css">
+  <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0">
+  <link rel="stylesheet" href="css/v17-anonymous.css?v=17.2">
 </head>
 
 <body>
@@ -28,7 +33,7 @@
     <nav class="tabs" aria-label="Main">
       <button class="tab" data-go="home">Home</button>
       <button class="tab tab-create" data-go="create" aria-label="Create an envelope"><span class="tab-create-text">Created</span></button>
-      <button class="tab" data-go="dash">My envelopes</button>
+      <button class="tab" data-go="dash">My envelopes <span class="nav-mail-badge" id="mailboxNavBadge" hidden>0</span></button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
     </nav>
     <div class="nav-user" title="Account and profile">
@@ -57,6 +62,8 @@
     </section>
 
     <section class="screen" id="create">
+      <button id="anonComposeBack" type="button" class="btn sec anon-compose-back" hidden>‹ Back to anonymous page</button>
+      <div class="anon-send-dock" id="anonSendDock" hidden><span>♡ Your secret envelope</span><button type="button" class="btn pri" id="anonSendDockButton">💌 Send envelope</button></div>
       <div class="make">
         <div class="glass editor-workbench" id="editorWorkbench">
           <h2 id="editorTitle">Design your envelope</h2>
@@ -194,6 +201,14 @@
           <p class="soft" id="studioPreviewCaption">Live preview. Tap it to peek.</p>
         </aside>
       </div>
+      <section class="mobile-photo-picker" id="mobilePhotoPicker" aria-label="Swipeable photo border and layout previews" hidden>
+        <div class="mobile-photo-picker-head" id="mobilePhotoPickerDrag" aria-label="Swipe down to hide photo styles"><div><span class="mobile-photo-picker-kicker">✦ LIVE PHOTO STYLES</span><h3 id="mobilePhotoPickerTitle">Photo borders</h3><small id="mobilePhotoPickerHint">Swipe styles sideways · swipe down to hide</small></div><div class="mobile-photo-picker-actions"><span class="photo-picker-count" id="mobilePhotoPickerCount">60 styles</span><button type="button" class="mobile-picker-hide" id="mobilePhotoPickerHide" aria-label="Hide photo styles" title="Hide photo styles">⌄</button></div></div>
+        <div class="mobile-photo-page-nav" id="mobilePhotoPageNav" aria-label="Switch envelope paper pages" hidden><button type="button" id="mobilePhotoPagePrevious" aria-label="Previous paper page">‹ Previous</button><strong id="mobilePhotoPageLabel" aria-live="polite">Page 1 of 1</strong><button type="button" id="mobilePhotoPageNext" aria-label="Next paper page">Next ›</button></div>
+        <div class="mobile-photo-picker-rail" id="mobilePhotoPickerRail" role="group" aria-label="Swipe through photo styles"></div>
+        <span class="mobile-picker-pull-guide" aria-hidden="true"></span>
+      </section>
+      <button class="mobile-photo-picker-show" type="button" id="mobilePhotoPickerShow" hidden aria-controls="mobilePhotoPicker" aria-expanded="false">⌃ &nbsp; Show photo styles</button>
+      <button type="button" id="studioDrawerReopen" aria-label="Open envelope design studio" aria-controls="editorWorkbench" aria-expanded="false">⌃ &nbsp; Open Design Studio</button>
       <nav class="studio-bottom-dock" id="studioBottomDock" aria-label="Envelope creation tools" hidden>
         <div class="studio-tool-rail" id="studioToolRail"></div>
       </nav>
@@ -205,18 +220,52 @@
           <h2>My envelopes</h2>
           <p class="soft" id="total"></p>
           <p class="sync-line" id="cloudStatus" data-state="loading">Connecting to cloud...</p>
-        </div><button class="btn pri" data-go="create">+ New</button>
+        </div><button class="btn pri" type="button" id="openAnonymousStudio">💌 Create anonymous page</button>
       </div>
       <div class="mailbox-tabs" role="tablist" aria-label="Envelope collections">
         <button class="mailbox-tab on" type="button" id="recentTab" role="tab" aria-selected="true">Recent Envelopes
           <span id="recentCount">0</span></button>
         <button class="mailbox-tab" type="button" id="receivedTab" role="tab" aria-selected="false">Received
-          Envelopes <span id="receivedCount">0</span></button>
+          Envelopes <span id="receivedCount">0</span> <span class="unread-counter" id="receivedUnread" hidden>0</span></button>
+        <button class="mailbox-tab" type="button" id="sendTab" role="tab" aria-selected="false">✉ Send Envelope</button>
       </div>
+      <section class="mailbox-send glass" id="mailboxSend" aria-labelledby="mailboxSendTitle" hidden>
+        <div class="mailbox-send-head"><span class="mailbox-send-icon">💌</span><div><h3 id="mailboxSendTitle">Send an envelope to a username</h3><p>Find a friend and choose one of your recent envelopes.</p></div></div>
+        <label class="mail-search-label" for="recipientSearchInput">Recipient username</label>
+        <div class="mail-search-wrap"><span>@</span><input id="recipientSearchInput" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search username…" /></div>
+        <div id="usernameSearchResults" class="mail-search-results" aria-live="polite"><p class="mail-empty">Type at least 2 characters to find a username.</p></div>
+        <div id="sendEnvelopeStep" hidden><h4 id="selectedRecipient">Select a recipient</h4><p class="mail-step-help">Choose a letter from your Recent Envelopes:</p><div id="recipientEnvelopeChoices" class="mail-envelope-choices"></div><button type="button" class="btn pri wide" id="prepareEnvelopeSend" disabled>Continue to send ›</button></div>
+      </section>
       <p class="mailbox-note" id="mailboxNote">Letters you created. Open, edit, share or remove them.</p>
       <div class="cards" id="list" role="tabpanel"></div>
     </section>
 
+
+    <!-- NGL-inspired shareable anonymous question page: owner studio and public view. -->
+    <section class="screen" id="ask" aria-label="Anonymous envelope page">
+      <div class="ask-layout" id="askOwner" hidden>
+        <div class="ask-editor-head"><div><span class="ask-kicker">♡ YOUR ANONYMOUS SPACE</span><h2>Make your anonymous page</h2><p>Design a little paper that friends can open from your link.</p></div><button class="btn sec" id="askBackToMailbox" type="button">‹ My envelopes</button></div>
+        <div class="ask-studio-grid">
+          <div class="ask-stage" id="askStage"><div class="ask-decor ask-decor-a">✿</div><div class="ask-decor ask-decor-b">✦</div><div class="ask-paper" id="askPaper">
+            <span class="ask-paper-sticker" id="askSticker">💌</span>
+            <span class="ask-paper-kicker">a little note for you ♡</span>
+            <h3 id="askPaperHeading">Send me an anonymous message</h3>
+            <p id="askPaperSubtitle">Tell me something sweet, funny, or a secret you never got to say…</p>
+            <img id="askPaperImage" alt="Your page photo" hidden>
+            <div class="ask-signature" id="askPaperSignature">with love ♡</div>
+          </div></div>
+          <div class="ask-tool-card" id="askToolCard"><div class="ask-tool-header"><strong id="askToolHeading">Edit your message</strong><small>Changes appear instantly on the paper</small></div>
+            <div class="ask-tool-section" data-ask-panel="text"><label>Big text on paper<input id="askHeading" maxlength="75" placeholder="Send me an anonymous message"></label><label>Little note<textarea id="askSubtitle" rows="3" maxlength="220" placeholder="Write a welcoming message…"></textarea></label><label>Paper sticker<select id="askStickerInput"><option value="💌">💌 Love letter</option><option value="🎀">🎀 Ribbon</option><option value="🌸">🌸 Sakura</option><option value="🧸">🧸 Teddy</option><option value="🦋">🦋 Butterfly</option><option value="✨">✨ Sparkles</option></select></label></div>
+            <div class="ask-tool-section" data-ask-panel="theme" hidden><span class="ask-input-label">Background style</span><div class="ask-theme-grid" id="askThemeGrid"></div><label>Paper tint<input id="askPaperColor" type="color" value="#fffaf7"></label><label>Accent color<input id="askAccentColor" type="color" value="#bd6995"></label></div>
+            <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">📷 Add a picture below the message <input id="askPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></label><small>Automatically resized to save cloud space.</small><button class="btn sec" id="askRemovePhoto" type="button">Remove picture</button></div>
+            <div class="ask-tool-section" data-ask-panel="signature" hidden><label>Your signature<input id="askSignature" maxlength="55" placeholder="with love ♡"></label><label>Handwriting style<select id="askSignatureFont"><option value="dancing">Dancing Script</option><option value="caveat">Caveat</option><option value="pacifico">Pacifico</option><option value="classic">Classic</option></select></label></div>
+          </div>
+        </div>
+        <div class="ask-saved-list glass" id="askSavedList"><div class="ask-saved-head"><strong>My published pages</strong><small>Tap a page to edit or copy its link</small></div><div id="askSavedCards" class="ask-saved-cards"><p>Loading your saved pages…</p></div></div>
+      </div>
+      <div class="ask-public-wrap" id="askGuest" hidden><div class="ask-public-intro"><span class="ask-kicker">♡ SOMEONE LEFT A NOTE FOR YOU</span><h2>It's your turn to send a secret</h2><p>Make their day with a little mystery message.</p></div><div class="ask-stage ask-public-stage" id="askPublicStage"><div class="ask-paper" id="askPublicPaper"><span class="ask-paper-sticker" id="askPublicSticker">💌</span><span class="ask-paper-kicker">an anonymous little note ♡</span><h3 id="askPublicHeading">Send me an anonymous message</h3><p id="askPublicSubtitle"></p><img id="askPublicImage" hidden alt="Personalized page photo"><div class="ask-signature" id="askPublicSignature"></div></div></div><button class="btn pri ask-public-send" type="button" id="askStartEnvelope">💌 Send envelope message</button><p class="ask-privacy">Your name appears only as the anonymous nickname you choose. Google sign-in is required to send and help prevent abuse.</p></div>
+      <div class="ask-toolbar" id="askToolbar" hidden><button type="button" data-ask-tool="text" class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span> Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save" type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div>
+    </section>
 
     <section class="screen" id="settings">
       <div class="settings-top">
@@ -282,11 +331,13 @@
                 <div><span>Google sign-in</span><strong id="accountAuthState">Signed in</strong></div>
                 <div><span>Last sign-in</span><strong id="accountLastLogin">—</strong></div>
               </div>
-              <div class="account-quick-actions">
-                <button type="button" class="btn pri" id="accountManagePremium">✦ Manage Premium</button>
-                <button type="button" class="btn sec" id="accountOpenMail">♡ My envelopes</button>
-                <button type="button" class="btn sec" id="accountCreateNew">＋ Create letter</button>
+              <div class="account-identity-heading"><h3>Username & Gmail</h3><p>Friends find you by your envelope username. Your Google email stays private.</p></div>
+              <div class="account-identity-list">
+                <div class="account-identity-row"><div class="identity-logo">@</div><div class="identity-text"><small>Envelope username · searchable by friends</small><strong id="myUsernameLabel">Not set yet</strong></div><button type="button" class="identity-edit" id="editMyUsername" aria-label="Edit envelope username" title="Edit username"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></button></div>
+                <div class="account-identity-row"><div class="identity-logo identity-google">G</div><div class="identity-text"><small>Google email · linked account</small><strong id="accountEmailValue">Sign in with Google</strong></div><span class="identity-readonly" title="Managed by Google" aria-label="Google email is read only">🔒</span></div>
               </div>
+              <p id="usernameCooldown" class="username-cooldown" aria-live="polite">Claim your username so friends can send envelopes to you.</p>
+              <p id="usernameStatus" role="status" aria-live="polite"></p>
               <div class="settings-actions"><button class="btn dng" id="signOutBtn">↪ Sign out of Google</button></div>
             </div>
             <div class="glass settings-section account-insights" aria-labelledby="accountInsightsTitle">
@@ -337,7 +388,7 @@
                   <li>Up to 10 pages per envelope</li>
                   <li>Up to 4 pictures on every page</li>
                   <li>Animated emoji / sparkle effects on any page</li>
-                  <li>24 photo border styles + 24 creative photo layouts</li>
+                  <li>60 photo border styles + 60 creative photo layouts</li>
                   <li>Letter-by-letter typewriter effect and adjustable typing speed</li>
                   <li>Realistic 3D paper-turn transition between pages</li>
                   <li>Position signatures Left, Center or Right</li>
@@ -438,6 +489,21 @@
       </div>
     </section>
   </main>
+  <div class="username-modal-backdrop" id="usernameModalBackdrop" hidden>
+    <section class="username-modal-card" role="dialog" aria-modal="true" aria-labelledby="usernameModalTitle" aria-describedby="usernameModalDescription" tabindex="-1">
+      <button type="button" class="username-modal-close" id="usernameModalClose" aria-label="Close username editor">×</button>
+      <div class="username-modal-icon" aria-hidden="true">@</div>
+      <h2 id="usernameModalTitle">Edit envelope username</h2>
+      <p id="usernameModalDescription">A unique username helps friends send envelopes directly to you. You can change it again after 7 days.</p>
+              <div class="username-edit-panel" id="usernameEditPanel" hidden>
+                <label for="myUsernameInput">New username</label>
+                <div class="username-input-row"><input type="text" id="myUsernameInput" minlength="3" maxlength="20" placeholder="e.g. sweet_wen" autocapitalize="off" autocomplete="off" spellcheck="false" /><button type="button" class="btn pri" id="saveMyUsername">Save username</button><button type="button" class="btn sec" id="cancelUsernameEdit">Cancel</button></div>
+                <small>3–20 lowercase letters, numbers, or underscores. Usernames are unique.</small>
+              </div>
+
+      <p class="username-modal-status" id="usernameModalStatus" role="status" aria-live="polite"></p>
+    </section>
+  </div>
   <div class="modal" id="modal" role="dialog" aria-modal="true">
     <div class="mcard" id="mc"></div>
   </div>
@@ -478,7 +544,8 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=12.0-palettes-account" defer></script>
+  <script src="js/app.js?v=17.2-anonymous-page" defer></script>
+  <script src="js/anonymous.js?v=17.2" defer></script>
 
   <script type="module" src="js/firebase.js"></script>
 </body>

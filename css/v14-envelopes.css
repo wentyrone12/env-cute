@@ -1,0 +1,326 @@
+/* W-Envelope Cute v14 — polished mail, persistent drawer, 60 premium designs */
+[hidden] {display:none!important}
+.mailbox-tabs{flex-wrap:wrap;gap:6px}
+.mailbox-tab{flex:1 1 27%;padding:10px 6px!important;font-size:clamp(10px,2.2vw,13px)!important;position:relative}
+.mailbox-tab .unread-counter,.nav-mail-badge{display:inline-flex;min-width:18px;min-height:18px;align-items:center;justify-content:center;border-radius:99px;padding:2px 5px;background:#e46e99;color:#fff;font-size:10px;font-weight:900;vertical-align:middle;box-shadow:0 2px 7px #cf4a7c44}
+.mailbox-tab .unread-counter{background:#d93075;animation:mailPop .32s ease both}
+@keyframes mailPop{from{transform:scale(.65);opacity:.3}to{transform:scale(1);opacity:1}}
+.unread-chip{color:#ac3774;background:#fff1fa;border-radius:99px;padding:3px 8px;font-size:11px;font-weight:900}
+.mailbox-send{padding:clamp(16px,3vw,25px);margin:14px 0 24px;border:1px solid #f5dce9;border-radius:22px;background:linear-gradient(150deg,#fffdfef2,#fff1f7ee)}
+.mailbox-send-head,.username-settings-title{display:flex;align-items:center;gap:13px;margin-bottom:14px}
+.mailbox-send-head h3,.username-settings-title h2{margin:0;font-size:clamp(17px,3vw,22px)}
+.mailbox-send-head p,.username-settings-title p{margin:4px 0 0;color:var(--soft);font-size:12px}
+.mailbox-send-icon{display:grid;place-items:center;flex-shrink:0;width:46px;height:46px;border-radius:15px;background:#ffdeee;color:#a14f81;font-weight:900;font-size:22px}
+.mail-search-label{display:block;margin-bottom:7px;font-size:12px;font-weight:900;color:#8d5d7e}
+.mail-search-wrap{display:flex;align-items:center;gap:7px;padding:4px 13px;border-radius:14px;border:1.5px solid #eac7db;background:#fff;box-shadow:0 2px 9px #a4668221}
+.mail-search-wrap span{font-size:18px;color:#a56184;font-weight:900}
+.mail-search-wrap input{width:100%;min-height:41px;background:transparent;border:0!important;outline:0;box-shadow:none!important;color:var(--ink);font-size:15px}
+.mail-search-results{display:grid;gap:8px;margin:13px 0;max-height:230px;overflow-y:auto;overscroll-behavior:contain}
+.mail-empty{padding:12px 13px;margin:0!important;color:#957e90;background:#fff9fd;border:1px dashed #e9d2e0;border-radius:13px;font-size:12px;text-align:left}
+.mail-user-result,.mail-envelope-choice{display:flex;align-items:center;gap:12px;text-align:left;border:1.5px solid #eddce8;background:rgba(255,255,255,.95);padding:11px 12px;border-radius:16px;width:100%;color:var(--ink);transition:transform .16s ease,border .16s ease,background .16s}
+.mail-user-result:hover,.mail-envelope-choice:hover,.mail-envelope-choice.selected{transform:translateY(-2px);border-color:#dd8ab5;background:#fff5fc}
+.mail-user-result>span:nth-child(2),.mail-envelope-choice>span:nth-child(2){display:grid;gap:2px;min-width:0;flex:1}
+.mail-user-result strong,.mail-envelope-choice strong{font-size:14px;overflow-wrap:anywhere}
+.mail-user-result small,.mail-envelope-choice small{font-size:11px;color:var(--soft)}
+.mail-user-result>span:last-child,.mail-check{font-weight:900;color:#b17b99;font-size:12px}
+.mail-user-avatar,.mail-letter-icon{width:39px;height:39px;display:grid;place-items:center;background:#fce4f0;border-radius:13px;font-weight:900;font-size:19px;color:#bb6a96}
+#sendEnvelopeStep{border-top:1px solid #f4ddeb;margin-top:15px;padding-top:12px;animation:mailEnter .27s ease both}
+#selectedRecipient{margin:0 0 5px;color:#9c4c81;font-size:17px}
+.mail-step-help{font-size:12px;color:var(--soft);margin:6px 0 10px!important}
+.mail-envelope-choices{display:grid;gap:8px;max-height:285px;overflow:auto;margin:12px 0 14px;overscroll-behavior:contain}
+.mail-envelope-choice.selected .mail-check{color:#159c7f;font-size:18px}
+@keyframes mailEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.username-settings{padding:clamp(16px,3vw,22px)}
+.username-current{color:#8c6384;font-size:13px;margin:0 0 12px}.username-current strong{color:#aa4a82;font-size:15px}
+.username-input-row{display:flex;gap:8px}.username-input-row input{flex:1;min-width:0;min-height:45px;padding:10px 12px;border:1.5px solid #edc9e0;border-radius:13px;background:#fff;color:var(--ink)}
+.username-input-row button{white-space:nowrap}
+#usernameStatus{font-size:12px;color:#21896e;margin:7px 0 0;min-height:12px}#usernameStatus.is-error{color:#c24a72}
+.mail-send-modal{text-align:left}.mail-send-modal>.big,.mail-send-modal>h2,.mail-send-modal>p{text-align:center}.mail-send-modal>p{font-size:13px;color:#826e81}
+.sender-options{display:grid;gap:8px;margin:15px 0 10px}.sender-option{display:flex;gap:10px;align-items:center;padding:12px;border:1.5px solid #efdae8;border-radius:15px;background:#fff9fc;cursor:pointer}
+.sender-option:has(input:checked){border-color:#d781b0;background:#fdf0f8;box-shadow:0 3px 13px #c983ad22}
+.sender-option input{accent-color:#d96b9e;width:17px;height:17px;flex-shrink:0}.sender-option span{display:grid;text-align:left;gap:3px}.sender-option b{font-size:13px}.sender-option small{font-size:11px;color:#9a7990}
+.sender-option-locked{opacity:.65;cursor:not-allowed}.mail-custom-field{display:grid;text-align:left;gap:6px;color:#98657d;font-size:12px;font-weight:900;margin:12px 0}.mail-custom-field input{width:100%;min-height:44px;padding:10px 12px;border:1px solid #ebcddd;border-radius:12px;background:white;color:var(--ink)}
+.mail-error{color:#ba426d!important;text-align:center;min-height:1em;font-size:12px!important}
+.mail-progress{text-align:center;padding:20px 10px}.mail-progress p{color:var(--soft);font-size:13px}.mail-spinner{width:70px;height:70px;margin:0 auto 17px;border:5px solid #fde6f3;border-top-color:#c2679d;border-radius:50%;animation:mailSpin .75s linear infinite}
+@keyframes mailSpin{to{transform:rotate(360deg)}}
+@media(max-width:460px){.mailbox-send-head,.username-settings-title{align-items:flex-start}.username-input-row{flex-direction:column}.mailbox-tabs{gap:4px;padding:4px}.mailbox-tab{font-size:10px!important;letter-spacing:-.15px}.mailbox-tab span{padding:1px 4px}.mailbox-send{padding:14px}.mail-user-result{gap:8px}}
+@media(prefers-reduced-motion:reduce){.mail-spinner{animation:none;border-color:#d384b0}.mailbox-send *, .username-settings *{transition:none!important;animation:none!important}}
+/* When the user closes the Studio, nothing in the rail can reopen it by accident. */
+@media(max-width:860px){body.create-mobile-mode.studio-drawer-closed #create .editor-workbench.studio-is-collapsed{pointer-events:none!important}body.create-mobile-mode.studio-drawer-closed #create .studio-bottom-dock{pointer-events:auto}body.create-mobile-mode #create .studio-panel-head{touch-action:none}}
+
+/* Torn Rose — Hand-ripped blush paper */
+.photo-variant--torn-rose .polaroid-card,.photo-variant--torn-rose .polaroid-mini-frame{background:#fff0f4;border:3px solid #dd7a9e;border-radius:5px;box-shadow:0 8px 21px #dd7a9e46;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 95.3%,93.75% 97.3%,87.5% 94.3%,81.25% 96.3%,75.0% 93.3%,68.75% 95.3%,62.5% 97.3%,56.25% 94.3%,50.0% 96.3%,43.75% 93.3%,37.5% 95.3%,31.25% 97.3%,25.0% 94.3%,18.75% 96.3%,12.5% 93.3%,6.25% 95.3%,0.0% 97.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-rose .polaroid-caption{color:#dd7a9e}
+.photo-lightbox[data-photo-style="torn-rose"] .photo-lightbox-frame{background:#fff0f4;border:6px solid #dd7a9e;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 95.3%,93.75% 97.3%,87.5% 94.3%,81.25% 96.3%,75.0% 93.3%,68.75% 95.3%,62.5% 97.3%,56.25% 94.3%,50.0% 96.3%,43.75% 93.3%,37.5% 95.3%,31.25% 97.3%,25.0% 94.3%,18.75% 96.3%,12.5% 93.3%,6.25% 95.3%,0.0% 97.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-rose .polaroid-card{background:repeating-linear-gradient(104deg,transparent 0 13px,#dd7a9e15 14px 15px,transparent 16px 35px),#fff0f4;}
+.photo-variant--torn-rose .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#dd7a9e19 6px,transparent 7px 17px),#fff0f4}
+
+/* Torn Kraft — Recycled deckled paper */
+.photo-variant--torn-kraft .polaroid-card,.photo-variant--torn-kraft .polaroid-mini-frame{background:#e6ceab;border:3px solid #947653;border-radius:11px;box-shadow:0 8px 21px #94765346;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 97.3%,93.75% 94.3%,87.5% 96.3%,81.25% 93.3%,75.0% 95.3%,68.75% 97.3%,62.5% 94.3%,56.25% 96.3%,50.0% 93.3%,43.75% 95.3%,37.5% 97.3%,31.25% 94.3%,25.0% 96.3%,18.75% 93.3%,12.5% 95.3%,6.25% 97.3%,0.0% 94.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-kraft .polaroid-caption{color:#947653}
+.photo-lightbox[data-photo-style="torn-kraft"] .photo-lightbox-frame{background:#e6ceab;border:6px solid #947653;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 97.3%,93.75% 94.3%,87.5% 96.3%,81.25% 93.3%,75.0% 95.3%,68.75% 97.3%,62.5% 94.3%,56.25% 96.3%,50.0% 93.3%,43.75% 95.3%,37.5% 97.3%,31.25% 94.3%,25.0% 96.3%,18.75% 93.3%,12.5% 95.3%,6.25% 97.3%,0.0% 94.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-kraft .polaroid-card{background:repeating-linear-gradient(114deg,transparent 0 13px,#94765315 14px 15px,transparent 16px 35px),#e6ceab;}
+.photo-variant--torn-kraft .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#94765319 6px,transparent 7px 17px),#e6ceab}
+
+/* Cloud Torn — Soft fluffy paper edges */
+.photo-variant--torn-cloud .polaroid-card,.photo-variant--torn-cloud .polaroid-mini-frame{background:#f8f9fc;border:3px solid #aeb6cf;border-radius:8px;box-shadow:0 8px 21px #aeb6cf46;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 94.3%,93.75% 96.3%,87.5% 93.3%,81.25% 95.3%,75.0% 97.3%,68.75% 94.3%,62.5% 96.3%,56.25% 93.3%,50.0% 95.3%,43.75% 97.3%,37.5% 94.3%,31.25% 96.3%,25.0% 93.3%,18.75% 95.3%,12.5% 97.3%,6.25% 94.3%,0.0% 96.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-cloud .polaroid-caption{color:#aeb6cf}
+.photo-lightbox[data-photo-style="torn-cloud"] .photo-lightbox-frame{background:#f8f9fc;border:6px solid #aeb6cf;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 94.3%,93.75% 96.3%,87.5% 93.3%,81.25% 95.3%,75.0% 97.3%,68.75% 94.3%,62.5% 96.3%,56.25% 93.3%,50.0% 95.3%,43.75% 97.3%,37.5% 94.3%,31.25% 96.3%,25.0% 93.3%,18.75% 95.3%,12.5% 97.3%,6.25% 94.3%,0.0% 96.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-cloud .polaroid-card{background:repeating-linear-gradient(124deg,transparent 0 13px,#aeb6cf15 14px 15px,transparent 16px 35px),#f8f9fc;}
+.photo-variant--torn-cloud .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#aeb6cf19 6px,transparent 7px 17px),#f8f9fc}
+
+/* Lavender Tear — Hand-cut lavender cardstock */
+.photo-variant--torn-lilac .polaroid-card,.photo-variant--torn-lilac .polaroid-mini-frame{background:#ede1ff;border:3px solid #9579ce;border-radius:3px;box-shadow:0 8px 21px #9579ce46;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 96.3%,93.75% 93.3%,87.5% 95.3%,81.25% 97.3%,75.0% 94.3%,68.75% 96.3%,62.5% 93.3%,56.25% 95.3%,50.0% 97.3%,43.75% 94.3%,37.5% 96.3%,31.25% 93.3%,25.0% 95.3%,18.75% 97.3%,12.5% 94.3%,6.25% 96.3%,0.0% 93.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-lilac .polaroid-caption{color:#9579ce}
+.photo-lightbox[data-photo-style="torn-lilac"] .photo-lightbox-frame{background:#ede1ff;border:6px solid #9579ce;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 96.3%,93.75% 93.3%,87.5% 95.3%,81.25% 97.3%,75.0% 94.3%,68.75% 96.3%,62.5% 93.3%,56.25% 95.3%,50.0% 97.3%,43.75% 94.3%,37.5% 96.3%,31.25% 93.3%,25.0% 95.3%,18.75% 97.3%,12.5% 94.3%,6.25% 96.3%,0.0% 93.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-lilac .polaroid-card{background:repeating-linear-gradient(134deg,transparent 0 13px,#9579ce15 14px 15px,transparent 16px 35px),#ede1ff;}
+.photo-variant--torn-lilac .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#9579ce19 6px,transparent 7px 17px),#ede1ff}
+
+/* Old Letter — Aged uneven parchment */
+.photo-variant--torn-parchment .polaroid-card,.photo-variant--torn-parchment .polaroid-mini-frame{background:#f0e0c4;border:3px solid #aa8265;border-radius:6px;box-shadow:0 8px 21px #aa826546;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 93.3%,93.75% 95.3%,87.5% 97.3%,81.25% 94.3%,75.0% 96.3%,68.75% 93.3%,62.5% 95.3%,56.25% 97.3%,50.0% 94.3%,43.75% 96.3%,37.5% 93.3%,31.25% 95.3%,25.0% 97.3%,18.75% 94.3%,12.5% 96.3%,6.25% 93.3%,0.0% 95.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-parchment .polaroid-caption{color:#aa8265}
+.photo-lightbox[data-photo-style="torn-parchment"] .photo-lightbox-frame{background:#f0e0c4;border:6px solid #aa8265;clip-path:polygon(0.0% 2.8%,6.25% 7.8%,12.5% 6.8%,18.75% 5.8%,25.0% 4.8%,31.25% 3.8%,37.5% 2.8%,43.75% 7.8%,50.0% 6.8%,56.25% 5.8%,62.5% 4.8%,68.75% 3.8%,75.0% 2.8%,81.25% 7.8%,87.5% 6.8%,93.75% 5.8%,100.0% 4.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 93.3%,93.75% 95.3%,87.5% 97.3%,81.25% 94.3%,75.0% 96.3%,68.75% 93.3%,62.5% 95.3%,56.25% 97.3%,50.0% 94.3%,43.75% 96.3%,37.5% 93.3%,31.25% 95.3%,25.0% 97.3%,18.75% 94.3%,12.5% 96.3%,6.25% 93.3%,0.0% 95.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-parchment .polaroid-card{background:repeating-linear-gradient(144deg,transparent 0 13px,#aa826515 14px 15px,transparent 16px 35px),#f0e0c4;}
+.photo-variant--torn-parchment .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#aa826519 6px,transparent 7px 17px),#f0e0c4}
+
+/* Mint Tear — Fresh pastel ripped edge */
+.photo-variant--torn-mint .polaroid-card,.photo-variant--torn-mint .polaroid-mini-frame{background:#dff5e9;border:3px solid #83b8a0;border-radius:9px;box-shadow:0 8px 21px #83b8a046;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 95.3%,93.75% 97.3%,87.5% 94.3%,81.25% 96.3%,75.0% 93.3%,68.75% 95.3%,62.5% 97.3%,56.25% 94.3%,50.0% 96.3%,43.75% 93.3%,37.5% 95.3%,31.25% 97.3%,25.0% 94.3%,18.75% 96.3%,12.5% 93.3%,6.25% 95.3%,0.0% 97.3%,2% 90%,0% 65%,2% 37%,0% 13%);}
+.photo-variant--torn-mint .polaroid-caption{color:#83b8a0}
+.photo-lightbox[data-photo-style="torn-mint"] .photo-lightbox-frame{background:#dff5e9;border:6px solid #83b8a0;clip-path:polygon(0.0% 5.8%,6.25% 4.8%,12.5% 3.8%,18.75% 2.8%,25.0% 7.8%,31.25% 6.8%,37.5% 5.8%,43.75% 4.8%,50.0% 3.8%,56.25% 2.8%,62.5% 7.8%,68.75% 6.8%,75.0% 5.8%,81.25% 4.8%,87.5% 3.8%,93.75% 2.8%,100.0% 7.8%,99% 14%,97% 40%,99% 68%,97% 90%,100.0% 95.3%,93.75% 97.3%,87.5% 94.3%,81.25% 96.3%,75.0% 93.3%,68.75% 95.3%,62.5% 97.3%,56.25% 94.3%,50.0% 96.3%,43.75% 93.3%,37.5% 95.3%,31.25% 97.3%,25.0% 94.3%,18.75% 96.3%,12.5% 93.3%,6.25% 95.3%,0.0% 97.3%,2% 90%,0% 65%,2% 37%,0% 13%)}
+
+.photo-variant--torn-mint .polaroid-card{background:repeating-linear-gradient(154deg,transparent 0 13px,#83b8a015 14px 15px,transparent 16px 35px),#dff5e9;}
+.photo-variant--torn-mint .polaroid-mini-frame{background:repeating-linear-gradient(132deg,transparent 0 5px,#83b8a019 6px,transparent 7px 17px),#dff5e9}
+
+/* Pink Ticket — Perforated ticket border */
+.photo-variant--ticket-pink .polaroid-card,.photo-variant--ticket-pink .polaroid-mini-frame{background:#fff1f5;border:3px dashed #cf75a7;border-radius:5px;box-shadow:0 8px 21px #cf75a746;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-pink .polaroid-caption{color:#cf75a7}
+.photo-lightbox[data-photo-style="ticket-pink"] .photo-lightbox-frame{background:#fff1f5;border:6px dashed #cf75a7;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-pink .polaroid-card,.photo-variant--ticket-pink .polaroid-mini-frame{outline:2px dotted #cf75a770;outline-offset:-9px}
+/* Golden Ticket — Warm concert-ticket edge */
+.photo-variant--ticket-gold .polaroid-card,.photo-variant--ticket-gold .polaroid-mini-frame{background:#fff3cf;border:3px dashed #c99c38;border-radius:11px;box-shadow:0 8px 21px #c99c3846;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-gold .polaroid-caption{color:#c99c38}
+.photo-lightbox[data-photo-style="ticket-gold"] .photo-lightbox-frame{background:#fff3cf;border:6px dashed #c99c38;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-gold .polaroid-card,.photo-variant--ticket-gold .polaroid-mini-frame{outline:2px dotted #c99c3870;outline-offset:-9px}
+/* Blue Ticket — Perforated keepsake */
+.photo-variant--ticket-blue .polaroid-card,.photo-variant--ticket-blue .polaroid-mini-frame{background:#e3f4ff;border:3px dashed #75a9d5;border-radius:8px;box-shadow:0 8px 21px #75a9d546;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-blue .polaroid-caption{color:#75a9d5}
+.photo-lightbox[data-photo-style="ticket-blue"] .photo-lightbox-frame{background:#e3f4ff;border:6px dashed #75a9d5;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-blue .polaroid-card,.photo-variant--ticket-blue .polaroid-mini-frame{outline:2px dotted #75a9d570;outline-offset:-9px}
+/* Ivory Ticket — Vintage ticket stub */
+.photo-variant--ticket-ivory .polaroid-card,.photo-variant--ticket-ivory .polaroid-mini-frame{background:#f8f0e1;border:3px dashed #ac9074;border-radius:3px;box-shadow:0 8px 21px #ac907446;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-ivory .polaroid-caption{color:#ac9074}
+.photo-lightbox[data-photo-style="ticket-ivory"] .photo-lightbox-frame{background:#f8f0e1;border:6px dashed #ac9074;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-ivory .polaroid-card,.photo-variant--ticket-ivory .polaroid-mini-frame{outline:2px dotted #ac907470;outline-offset:-9px}
+/* Violet Ticket — Playful ticket border */
+.photo-variant--ticket-lilac .polaroid-card,.photo-variant--ticket-lilac .polaroid-mini-frame{background:#f1e8ff;border:3px dashed #aa89cd;border-radius:6px;box-shadow:0 8px 21px #aa89cd46;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-lilac .polaroid-caption{color:#aa89cd}
+.photo-lightbox[data-photo-style="ticket-lilac"] .photo-lightbox-frame{background:#f1e8ff;border:6px dashed #aa89cd;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-lilac .polaroid-card,.photo-variant--ticket-lilac .polaroid-mini-frame{outline:2px dotted #aa89cd70;outline-offset:-9px}
+/* Coral Ticket — Event-style torn receipt */
+.photo-variant--ticket-coral .polaroid-card,.photo-variant--ticket-coral .polaroid-mini-frame{background:#fff0df;border:3px dashed #e88c6f;border-radius:9px;box-shadow:0 8px 21px #e88c6f46;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%);}
+.photo-variant--ticket-coral .polaroid-caption{color:#e88c6f}
+.photo-lightbox[data-photo-style="ticket-coral"] .photo-lightbox-frame{background:#fff0df;border:6px dashed #e88c6f;clip-path:polygon(0% 0%,100% 0%,100% 19%,92% 22%,100% 25%,100% 49%,92% 52%,100% 55%,100% 80%,92% 83%,100% 86%,100% 100%,0% 100%,0% 86%,8% 83%,0% 80%,0% 55%,8% 52%,0% 49%,0% 25%,8% 22%,0% 19%)}
+
+.photo-variant--ticket-coral .polaroid-card,.photo-variant--ticket-coral .polaroid-mini-frame{outline:2px dotted #e88c6f70;outline-offset:-9px}
+/* Rose Sticker — Sticker-cut pink outline */
+.photo-variant--sticker-rose .polaroid-card,.photo-variant--sticker-rose .polaroid-mini-frame{background:#ffe8f0;border:3px solid #e781b1;border-radius:5px;box-shadow:0 8px 21px #e781b146;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-rose .polaroid-caption{color:#e781b1}
+.photo-lightbox[data-photo-style="sticker-rose"] .photo-lightbox-frame{background:#ffe8f0;border:6px solid #e781b1;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-rose .polaroid-card,.photo-variant--sticker-rose .polaroid-mini-frame{outline:3px solid #e781b1;outline-offset:-6px;border-width:5px;border-color:white}
+/* Sky Sticker — Blue die-cut frame */
+.photo-variant--sticker-sky .polaroid-card,.photo-variant--sticker-sky .polaroid-mini-frame{background:#e5f4ff;border:3px solid #6aa5d8;border-radius:11px;box-shadow:0 8px 21px #6aa5d846;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-sky .polaroid-caption{color:#6aa5d8}
+.photo-lightbox[data-photo-style="sticker-sky"] .photo-lightbox-frame{background:#e5f4ff;border:6px solid #6aa5d8;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-sky .polaroid-card,.photo-variant--sticker-sky .polaroid-mini-frame{outline:3px solid #6aa5d8;outline-offset:-6px;border-width:5px;border-color:white}
+/* Honey Sticker — Golden label outline */
+.photo-variant--sticker-honey .polaroid-card,.photo-variant--sticker-honey .polaroid-mini-frame{background:#fff3d0;border:3px solid #deaf51;border-radius:8px;box-shadow:0 8px 21px #deaf5146;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-honey .polaroid-caption{color:#deaf51}
+.photo-lightbox[data-photo-style="sticker-honey"] .photo-lightbox-frame{background:#fff3d0;border:6px solid #deaf51;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-honey .polaroid-card,.photo-variant--sticker-honey .polaroid-mini-frame{outline:3px solid #deaf51;outline-offset:-6px;border-width:5px;border-color:white}
+/* Mint Sticker — Leafy sticker edge */
+.photo-variant--sticker-mint .polaroid-card,.photo-variant--sticker-mint .polaroid-mini-frame{background:#e2f7e9;border:3px solid #75bf9e;border-radius:3px;box-shadow:0 8px 21px #75bf9e46;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-mint .polaroid-caption{color:#75bf9e}
+.photo-lightbox[data-photo-style="sticker-mint"] .photo-lightbox-frame{background:#e2f7e9;border:6px solid #75bf9e;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-mint .polaroid-card,.photo-variant--sticker-mint .polaroid-mini-frame{outline:3px solid #75bf9e;outline-offset:-6px;border-width:5px;border-color:white}
+/* Peach Sticker — Warm label shape */
+.photo-variant--sticker-peach .polaroid-card,.photo-variant--sticker-peach .polaroid-mini-frame{background:#ffeadd;border:3px solid #e3a079;border-radius:6px;box-shadow:0 8px 21px #e3a07946;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-peach .polaroid-caption{color:#e3a079}
+.photo-lightbox[data-photo-style="sticker-peach"] .photo-lightbox-frame{background:#ffeadd;border:6px solid #e3a079;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-peach .polaroid-card,.photo-variant--sticker-peach .polaroid-mini-frame{outline:3px solid #e3a079;outline-offset:-6px;border-width:5px;border-color:white}
+/* Grape Sticker — Grape-tinted frame */
+.photo-variant--sticker-grape .polaroid-card,.photo-variant--sticker-grape .polaroid-mini-frame{background:#f2e5ff;border:3px solid #ac8cca;border-radius:9px;box-shadow:0 8px 21px #ac8cca46;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%);}
+.photo-variant--sticker-grape .polaroid-caption{color:#ac8cca}
+.photo-lightbox[data-photo-style="sticker-grape"] .photo-lightbox-frame{background:#f2e5ff;border:6px solid #ac8cca;clip-path:polygon(5% 0%,95% 0%,100% 7%,100% 91%,94% 100%,7% 100%,0% 92%,0% 9%)}
+
+.photo-variant--sticker-grape .polaroid-card,.photo-variant--sticker-grape .polaroid-mini-frame{outline:3px solid #ac8cca;outline-offset:-6px;border-width:5px;border-color:white}
+/* Rose Postcard — Vintage postcard edge */
+.photo-variant--postcard-rose .polaroid-card,.photo-variant--postcard-rose .polaroid-mini-frame{background:#fff0ea;border:3px solid #ba798d;border-radius:5px;box-shadow:0 8px 21px #ba798d46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-rose .polaroid-caption{color:#ba798d}
+.photo-lightbox[data-photo-style="postcard-rose"] .photo-lightbox-frame{background:#fff0ea;border:6px solid #ba798d;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-rose .polaroid-card,.photo-variant--postcard-rose .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#ba798d13 18px,transparent 19px 20px),#fff0ea;border-style:double;border-width:5px}
+.photo-variant--postcard-rose .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#ba798d;font-size:13px;pointer-events:none}
+/* Sepia Postcard — Classic antique edge */
+.photo-variant--postcard-sepia .polaroid-card,.photo-variant--postcard-sepia .polaroid-mini-frame{background:#f1dfc0;border:3px solid #9c7450;border-radius:11px;box-shadow:0 8px 21px #9c745046;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-sepia .polaroid-caption{color:#9c7450}
+.photo-lightbox[data-photo-style="postcard-sepia"] .photo-lightbox-frame{background:#f1dfc0;border:6px solid #9c7450;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-sepia .polaroid-card,.photo-variant--postcard-sepia .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#9c745013 18px,transparent 19px 20px),#f1dfc0;border-style:double;border-width:5px}
+.photo-variant--postcard-sepia .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#9c7450;font-size:13px;pointer-events:none}
+/* Sea Postcard — Ocean postcard memory */
+.photo-variant--postcard-sea .polaroid-card,.photo-variant--postcard-sea .polaroid-mini-frame{background:#dfedf6;border:3px solid #67a5b9;border-radius:8px;box-shadow:0 8px 21px #67a5b946;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-sea .polaroid-caption{color:#67a5b9}
+.photo-lightbox[data-photo-style="postcard-sea"] .photo-lightbox-frame{background:#dfedf6;border:6px solid #67a5b9;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-sea .polaroid-card,.photo-variant--postcard-sea .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#67a5b913 18px,transparent 19px 20px),#dfedf6;border-style:double;border-width:5px}
+.photo-variant--postcard-sea .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#67a5b9;font-size:13px;pointer-events:none}
+/* Peach Postcard — Warm faded corners */
+.photo-variant--postcard-peach .polaroid-card,.photo-variant--postcard-peach .polaroid-mini-frame{background:#ffe7d8;border:3px solid #ce9a74;border-radius:3px;box-shadow:0 8px 21px #ce9a7446;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-peach .polaroid-caption{color:#ce9a74}
+.photo-lightbox[data-photo-style="postcard-peach"] .photo-lightbox-frame{background:#ffe7d8;border:6px solid #ce9a74;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-peach .polaroid-card,.photo-variant--postcard-peach .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#ce9a7413 18px,transparent 19px 20px),#ffe7d8;border-style:double;border-width:5px}
+.photo-variant--postcard-peach .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#ce9a74;font-size:13px;pointer-events:none}
+/* Night Postcard — Midnight travel stamp */
+.photo-variant--postcard-night .polaroid-card,.photo-variant--postcard-night .polaroid-mini-frame{background:#29304b;border:3px solid #a3aeca;border-radius:6px;box-shadow:0 8px 21px #a3aeca46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-night .polaroid-caption{color:#a3aeca}
+.photo-lightbox[data-photo-style="postcard-night"] .photo-lightbox-frame{background:#29304b;border:6px solid #a3aeca;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-night .polaroid-card,.photo-variant--postcard-night .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#a3aeca13 18px,transparent 19px 20px),#29304b;border-style:double;border-width:5px}
+.photo-variant--postcard-night .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#a3aeca;font-size:13px;pointer-events:none}
+/* Sage Postcard — Botanical postcard */
+.photo-variant--postcard-sage .polaroid-card,.photo-variant--postcard-sage .polaroid-mini-frame{background:#edf2db;border:3px solid #829d7e;border-radius:9px;box-shadow:0 8px 21px #829d7e46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--postcard-sage .polaroid-caption{color:#829d7e}
+.photo-lightbox[data-photo-style="postcard-sage"] .photo-lightbox-frame{background:#edf2db;border:6px solid #829d7e;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--postcard-sage .polaroid-card,.photo-variant--postcard-sage .polaroid-mini-frame{background:repeating-linear-gradient(0deg,transparent 0 17px,#829d7e13 18px,transparent 19px 20px),#edf2db;border-style:double;border-width:5px}
+.photo-variant--postcard-sage .polaroid-card::after{content:'✉';position:absolute;right:5px;bottom:2px;color:#829d7e;font-size:13px;pointer-events:none}
+/* Blush Scallop — Wavy scalloped paper */
+.photo-variant--scallop-blush .polaroid-card,.photo-variant--scallop-blush .polaroid-mini-frame{background:#fff0f8;border:3px solid #e49abe;border-radius:5px;box-shadow:0 8px 21px #e49abe46;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-blush .polaroid-caption{color:#e49abe}
+.photo-lightbox[data-photo-style="scallop-blush"] .photo-lightbox-frame{background:#fff0f8;border:6px solid #e49abe;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-blush .polaroid-card,.photo-variant--scallop-blush .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#e49abe22 2px,transparent 3px) 0 0/21px 18px,#fff0f8}
+/* Cream Scallop — Rounded cut edges */
+.photo-variant--scallop-cream .polaroid-card,.photo-variant--scallop-cream .polaroid-mini-frame{background:#fffaf0;border:3px solid #d4b98e;border-radius:11px;box-shadow:0 8px 21px #d4b98e46;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-cream .polaroid-caption{color:#d4b98e}
+.photo-lightbox[data-photo-style="scallop-cream"] .photo-lightbox-frame{background:#fffaf0;border:6px solid #d4b98e;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-cream .polaroid-card,.photo-variant--scallop-cream .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#d4b98e22 2px,transparent 3px) 0 0/21px 18px,#fffaf0}
+/* Petal Scallop — Floral cut-paper frame */
+.photo-variant--scallop-petal .polaroid-card,.photo-variant--scallop-petal .polaroid-mini-frame{background:#fce8f6;border:3px solid #db8eb6;border-radius:8px;box-shadow:0 8px 21px #db8eb646;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-petal .polaroid-caption{color:#db8eb6}
+.photo-lightbox[data-photo-style="scallop-petal"] .photo-lightbox-frame{background:#fce8f6;border:6px solid #db8eb6;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-petal .polaroid-card,.photo-variant--scallop-petal .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#db8eb622 2px,transparent 3px) 0 0/21px 18px,#fce8f6}
+/* Ice Scallop — Cool frosted edges */
+.photo-variant--scallop-ice .polaroid-card,.photo-variant--scallop-ice .polaroid-mini-frame{background:#edfaff;border:3px solid #83c4db;border-radius:3px;box-shadow:0 8px 21px #83c4db46;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-ice .polaroid-caption{color:#83c4db}
+.photo-lightbox[data-photo-style="scallop-ice"] .photo-lightbox-frame{background:#edfaff;border:6px solid #83c4db;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-ice .polaroid-card,.photo-variant--scallop-ice .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#83c4db22 2px,transparent 3px) 0 0/21px 18px,#edfaff}
+/* Sage Scallop — Gentle leaf edges */
+.photo-variant--scallop-sage .polaroid-card,.photo-variant--scallop-sage .polaroid-mini-frame{background:#e8f6e9;border:3px solid #88b598;border-radius:6px;box-shadow:0 8px 21px #88b59846;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-sage .polaroid-caption{color:#88b598}
+.photo-lightbox[data-photo-style="scallop-sage"] .photo-lightbox-frame{background:#e8f6e9;border:6px solid #88b598;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-sage .polaroid-card,.photo-variant--scallop-sage .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#88b59822 2px,transparent 3px) 0 0/21px 18px,#e8f6e9}
+/* Gold Scallop — Golden doily cut */
+.photo-variant--scallop-gold .polaroid-card,.photo-variant--scallop-gold .polaroid-mini-frame{background:#fff6d8;border:3px solid #caa25c;border-radius:9px;box-shadow:0 8px 21px #caa25c46;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%);}
+.photo-variant--scallop-gold .polaroid-caption{color:#caa25c}
+.photo-lightbox[data-photo-style="scallop-gold"] .photo-lightbox-frame{background:#fff6d8;border:6px solid #caa25c;clip-path:polygon(0% 5%,10% 2%,20% 5%,30% 2%,40% 5%,50% 2%,60% 5%,70% 2%,80% 5%,90% 2%,100% 5%,98% 100%,100% 95%,90% 98%,80% 95%,70% 98%,60% 95%,50% 98%,40% 95%,30% 98%,20% 95%,10% 98%,0% 95%,2% 0%)}
+
+.photo-variant--scallop-gold .polaroid-card,.photo-variant--scallop-gold .polaroid-mini-frame{background:radial-gradient(circle at 9px 6px,#caa25c22 2px,transparent 3px) 0 0/21px 18px,#fff6d8}
+/* Lilac Washi — Craft paper and tape */
+.photo-variant--tape-lilac .polaroid-card,.photo-variant--tape-lilac .polaroid-mini-frame{background:#f1e8ff;border:3px dashed #ac80bd;border-radius:5px;box-shadow:0 8px 21px #ac80bd46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-lilac .polaroid-caption{color:#ac80bd}
+.photo-lightbox[data-photo-style="tape-lilac"] .photo-lightbox-frame{background:#f1e8ff;border:6px dashed #ac80bd;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-lilac .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#ac80bd75;transform:rotate(-14deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-lilac .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#ac80bd99;transform:rotate(-14deg);pointer-events:none}
+/* Pink Washi — Washi tape keepsake */
+.photo-variant--tape-pink .polaroid-card,.photo-variant--tape-pink .polaroid-mini-frame{background:#fff0f7;border:3px dashed #d884af;border-radius:11px;box-shadow:0 8px 21px #d884af46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-pink .polaroid-caption{color:#d884af}
+.photo-lightbox[data-photo-style="tape-pink"] .photo-lightbox-frame{background:#fff0f7;border:6px dashed #d884af;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-pink .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#d884af75;transform:rotate(-9deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-pink .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#d884af99;transform:rotate(-9deg);pointer-events:none}
+/* Gingham Tape — Checked scrapbook detail */
+.photo-variant--tape-check .polaroid-card,.photo-variant--tape-check .polaroid-mini-frame{background:#f8eadb;border:3px dashed #ae827b;border-radius:8px;box-shadow:0 8px 21px #ae827b46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-check .polaroid-caption{color:#ae827b}
+.photo-lightbox[data-photo-style="tape-check"] .photo-lightbox-frame{background:#f8eadb;border:6px dashed #ae827b;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-check .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#ae827b75;transform:rotate(-4deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-check .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#ae827b99;transform:rotate(-4deg);pointer-events:none}
+/* Sun Washi — Golden tape paper */
+.photo-variant--tape-sun .polaroid-card,.photo-variant--tape-sun .polaroid-mini-frame{background:#fff5d6;border:3px dashed #ddb35a;border-radius:3px;box-shadow:0 8px 21px #ddb35a46;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-sun .polaroid-caption{color:#ddb35a}
+.photo-lightbox[data-photo-style="tape-sun"] .photo-lightbox-frame{background:#fff5d6;border:6px dashed #ddb35a;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-sun .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#ddb35a75;transform:rotate(1deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-sun .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#ddb35a99;transform:rotate(1deg);pointer-events:none}
+/* Ocean Washi — Sea-colored tape accent */
+.photo-variant--tape-ocean .polaroid-card,.photo-variant--tape-ocean .polaroid-mini-frame{background:#e2f3ff;border:3px dashed #82b6d4;border-radius:6px;box-shadow:0 8px 21px #82b6d446;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-ocean .polaroid-caption{color:#82b6d4}
+.photo-lightbox[data-photo-style="tape-ocean"] .photo-lightbox-frame{background:#e2f3ff;border:6px dashed #82b6d4;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-ocean .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#82b6d475;transform:rotate(6deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-ocean .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#82b6d499;transform:rotate(6deg);pointer-events:none}
+/* Sage Washi — Green handmade tape */
+.photo-variant--tape-sage .polaroid-card,.photo-variant--tape-sage .polaroid-mini-frame{background:#e3f4e8;border:3px dashed #91bd94;border-radius:9px;box-shadow:0 8px 21px #91bd9446;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%);}
+.photo-variant--tape-sage .polaroid-caption{color:#91bd94}
+.photo-lightbox[data-photo-style="tape-sage"] .photo-lightbox-frame{background:#e3f4e8;border:6px dashed #91bd94;clip-path:polygon(0% 0%,100% 0%,100% 100%,0% 100%)}
+
+.photo-variant--tape-sage .polaroid-card::after{content:'';position:absolute;top:0;left:40%;width:42px;height:13px;background:#91bd9475;transform:rotate(11deg);opacity:.78;pointer-events:none;border-left:2px dashed #fff8;border-right:2px dashed #fff8}
+.photo-variant--tape-sage .polaroid-mini-frame::after{content:'';position:absolute;top:0;left:28%;width:18px;height:7px;background:#91bd9499;transform:rotate(11deg);pointer-events:none}
+.photo-layout--terrace .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--terrace-soft .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--terrace-wide .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--terrace-flip .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--terrace-rose .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--terrace-narrow .polaroid-card{box-shadow:0 7px 18px #bd719e55,0 2px 7px #604c6142;}
+.photo-layout--constellation .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--constellation-east .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--constellation-west .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--constellation-dream .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--constellation-spark .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--constellation-night .polaroid-card{box-shadow:0 7px 18px #897bc455,0 2px 7px #604c6142;}
+.photo-layout--tiles .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--tiles-offset .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--tiles-rhythm .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--tiles-art .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--tiles-corner .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--tiles-window .polaroid-card{box-shadow:0 7px 18px #7daebc55,0 2px 7px #604c6142;}
+.photo-layout--bouquet .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--bouquet-rose .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--bouquet-wide .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--bouquet-daisy .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--bouquet-pink .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--bouquet-ribbon .polaroid-card{box-shadow:0 7px 18px #cd97a955,0 2px 7px #604c6142;}
+.photo-layout--journey .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--journey-hill .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--journey-sunset .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--journey-bridge .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--journey-wave .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--journey-story .polaroid-card{box-shadow:0 7px 18px #b2936855,0 2px 7px #604c6142;}
+.photo-layout--collage .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}
+.photo-layout--collage-soft .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}
+.photo-layout--collage-zine .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}
+.photo-layout--collage-diagonal .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}
+.photo-layout--collage-frame .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}
+.photo-layout--collage-confetti .polaroid-card{box-shadow:0 7px 18px #af7eae55,0 2px 7px #604c6142;}

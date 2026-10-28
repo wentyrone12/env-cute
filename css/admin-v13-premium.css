@@ -1,0 +1,17 @@
+/* Live Premium status and per-user admin actions */
+.admin-premium-status {margin-top:11px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;border-radius:13px;background:#f9f5ff;border:1px solid #eae0f4;color:#785e89;font-size:12px;line-height:1.5}
+.admin-premium-status b {font-size:12px;color:#755077}
+.admin-premium-status .premium-pill {padding:3px 8px;border-radius:999px;background:#f0dfed;color:#945c81;font-size:10px;font-weight:900}
+.admin-premium-status .premium-pill.active {background:#e0f4e8;color:#277b54}
+.admin-premium-status .premium-pill.expired {background:#fce8e8;color:#aa5656}
+.admin-premium-timer{font-variant-numeric:tabular-nums;font-weight:900;color:#6d4c77}
+.admin-premium-actions{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap;width:100%;margin-top:8px}
+.admin-premium-actions select,.admin-duration-label select{padding:9px 11px;border:1px solid #e6d0e1;border-radius:10px;background:#fff;color:#805a7b;font:inherit;font-size:12px;min-height:39px}
+.admin-premium-actions button{border:0;border-radius:11px;padding:10px 12px;min-height:39px;color:white;background:#8d70c9;font-weight:900;cursor:pointer}
+.admin-premium-actions button.pause{background:#e49baa;color:#673447}
+.admin-premium-actions button:disabled{opacity:.5;cursor:wait}
+.admin-premium-help{font-size:11px;color:#987b9a;display:block;margin-top:5px}
+.admin-duration-label {display:flex;flex-direction:column;gap:7px;color:#795b7a;font-weight:900;margin:16px 0}
+.admin-duration-label small{font-weight:500;color:#9d829b}
+.admin-premium-note {font-size:11px;color:#9c7791}
+@media(max-width:720px){.admin-premium-actions{justify-content:stretch}.admin-premium-actions select,.admin-premium-actions button{flex:1 1 auto}.admin-premium-status{width:100%;}}

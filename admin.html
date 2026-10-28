@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
   <link rel="stylesheet" href="css/admin-analytics.css">
+  <link rel="stylesheet" href="css/admin-v13-premium.css">
   <link rel="stylesheet" href="css/v11-admin-gate.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0">
 </head>
 <body class="authenticated admin-page">
   <div class="admin-shell">
@@ -33,7 +35,7 @@
     <div class="admin-main">
       <header class="admin-topbar">
         <div class="admin-heading"><p class="admin-kicker">PREMIUM PAYMENTS</p><h1 id="adminTitle">Dashboard</h1><p id="adminSubtitle">A clear view of your premium requests.</p></div>
-        <div class="admin-top-actions"><span id="adminConnection" class="admin-connection" role="status"><i></i> <span id="adminConnText">Connecting</span></span><a href="index.html" class="admin-website-link">↗ Website</a><span class="admin-user-icon" aria-hidden="true">♡</span></div>
+        <div class="admin-top-actions"><span id="adminConnection" class="admin-connection" role="status"><i></i> <span id="adminConnText">Connecting</span></span><a href="index.html" class="admin-website-link">↗ Website</a><button id="adminSignOut" type="button" class="admin-signout admin-top-signout" hidden>↪ Sign out</button><span class="admin-user-icon" aria-hidden="true">♡</span></div>
       </header>
 
       <div class="admin-content">
@@ -102,7 +104,7 @@
                 <div class="analytics-panel-note">Totals include pending, approved and rejected</div>
               </article>
             </div>
-            <p class="analytics-source-note">Stats update from the records your admin account can access. All registered users, private envelopes, and website visits are not included because those totals are not available through current Firebase rules. Approved value sums reported payment amounts after administrator approval; it is not a bank settlement report.</p>
+            
           </section>
 
           <section id="adminMethodSummary" class="admin-method-summary" aria-label="Payment methods">
@@ -137,7 +139,7 @@
             <ol><li>Use the Google account in Firebase Console → Authentication → Users.</li><li>Check the admin UID in <code>js/payment-config.js</code>.</li><li>Publish <code>database.rules.json</code> in Firebase Console → Realtime Database → Rules.</li><li>Enable Google login and authorize your website domain.</li><li>Use HTTPS or localhost—not a <code>file://</code> URL.</li></ol>
           </div>
         </details>
-        <div class="admin-bottom-actions"><button id="adminSignOut" type="button" class="admin-signout" hidden>↪ Sign out from admin</button><p>Made with ♡ by Wenxyz · W-Envelope Cute Admin</p></div>
+        <div class="admin-bottom-actions"><p>Made with ♡ by Wenxyz · W-Envelope Cute Admin</p></div>
       </div>
     </div>
   </div>
@@ -149,6 +151,10 @@
       <h2 id="reviewDialogTitle">Review payment</h2>
       <p id="reviewDialogDescription">Please check the real transfer before continuing.</p>
       <div class="admin-dialog-details" id="reviewDialogDetails"></div>
+      <label id="reviewDurationRow" class="admin-duration-label" hidden>Premium access duration
+        <select id="reviewDuration"><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option><option value="365">365 days</option></select>
+        <small>Starts at approval time. No automatic renewal.</small>
+      </label>
       <label id="reviewVerificationRow" class="admin-verified-check"><input type="checkbox" id="reviewVerified"><span>I checked my official Maya/GoTyme transaction history and verified the exact transfer details.</span></label>
       <p id="reviewDialogError" class="admin-dialog-error" role="alert" hidden></p>
       <div class="admin-dialog-actions"><button id="reviewCancel" class="admin-dialog-secondary" type="button">Cancel</button><button id="reviewConfirm" class="admin-dialog-primary" type="button" disabled>Confirm</button></div>
@@ -158,6 +164,6 @@
 
   <script src="js/firebase-config.js"></script>
   <script src="js/payment-config.js"></script>
-  <script type="module" src="js/admin.js?v=11.0-authorized-gate"></script>
+  <script type="module" src="js/admin.js?v=13.0-duration-controls"></script>
 </body>
 </html>

@@ -1,0 +1,74 @@
+/* v15 — editable searchable username, cooldown status, and independent mobile photo rail. */
+.account-identity-list{display:grid;gap:10px;margin:15px 0 12px}
+.account-identity-row{display:flex;align-items:center;gap:11px;background:rgba(255,255,255,.86);border:1px solid #eddae6;border-radius:17px;padding:11px 12px;min-width:0}
+.identity-logo{flex:none;width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:#fce0ef;color:#a24b85;font-size:22px;font-weight:900}
+.identity-google{background:#f6f4fb;color:#4285f4;font-size:22px;font-family:Arial,sans-serif}
+.identity-text{display:grid;flex:1;gap:4px;min-width:0}
+.identity-text small{font-size:11px;color:#93748a;line-height:1.3}
+.identity-text strong{font-size:clamp(12px,3vw,15px);color:#68455f;overflow-wrap:anywhere}
+.identity-edit,.identity-readonly{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:13px;border:1px solid #f0d0e2;background:#fff2fa;color:#a65080;transition:transform .18s,background .18s}
+.identity-edit:hover,.identity-edit:focus-visible{background:#fbddeb;transform:translateY(-2px);outline-offset:2px}
+.identity-edit.identity-on-cooldown{background:#f9f1f7;color:#aa8b9f}
+.identity-readonly{background:#f7f4f8;border-color:#ede7ee;font-size:16px}
+.username-edit-panel{padding:14px;border:1px solid #eed3e3;border-radius:17px;background:#fff8fc;margin:8px 0 10px;animation:v15EditIn .22s ease both}
+.username-edit-panel[hidden]{display:none!important}
+.username-edit-panel>label{display:block;font-size:12px;font-weight:900;color:#885c7b;margin-bottom:8px}
+.username-edit-panel>small{display:block;font-size:11px;color:#8d7285;margin-top:9px}
+.username-cooldown{font-size:12px;color:#287963;margin:8px 0;line-height:1.45}
+.username-cooldown.is-waiting{color:#a56889}
+@keyframes v15EditIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+.mobile-photo-picker{display:none}
+@media(max-width:860px){
+  body.create-mobile-mode #create.on .mobile-photo-picker:not([hidden]){
+    position:fixed;z-index:77;left:8px;right:8px;bottom:calc(151px + env(safe-area-inset-bottom));
+    width:min(620px,calc(100% - 16px));margin:0 auto;display:block;
+    padding:12px 11px 8px;border-radius:20px;
+    border:1px solid rgba(247,210,234,.9);
+    background:rgba(255,249,254,.96);backdrop-filter:blur(22px);
+    box-shadow:0 8px 33px #9c5c8c35;
+    animation:v15PickerIn .3s cubic-bezier(.22,1,.36,1) both;
+  }
+  .mobile-photo-picker-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:1px 3px 10px}
+  .mobile-photo-picker-kicker{color:#c281a5;font-size:8px;font-weight:900;letter-spacing:.14em}
+  .mobile-photo-picker-head h3{font-size:15px;color:#895073;margin:2px 0}
+  .mobile-photo-picker-head small{font-size:10px;color:#97758b}
+  .mobile-photo-picker-actions{display:flex;align-items:center;gap:6px;flex:none}
+  .photo-picker-open{border:1px solid #e8c3d8;border-radius:99px;background:#fff;color:#a04d82;padding:7px 9px;white-space:nowrap;font-size:10px;font-weight:900;box-shadow:0 2px 7px #ac63851f}
+  .photo-picker-count{border-radius:99px;background:#f9e3f1;color:#a75a89;padding:7px 9px;white-space:nowrap;font-size:10px;font-weight:900}
+  .mobile-photo-picker-rail{display:flex;gap:10px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding:3px 3px 7px}
+  .mobile-photo-picker-rail::-webkit-scrollbar{display:none}
+  .mobile-photo-choice{flex:0 0 95px;min-width:95px;min-height:111px;border:1.5px solid #e9d5e4;background:#fff;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:7px 5px;scroll-snap-align:center;transition:border-color .19s,box-shadow .19s,transform .19s;color:#926180}
+  .mobile-photo-choice.on{border:2px solid #d078af;box-shadow:0 2px 0 #fffc,0 5px 16px #bf7aa64d;transform:translateY(-1px);background:#fff6fd}
+  .mobile-photo-choice.is-locked{opacity:.78}
+  .mobile-photo-choice:focus-visible{outline:2px solid #ab4f89;outline-offset:2px}
+  .mobile-photo-choice .mobile-choice-frame{width:60px;height:69px;padding:4px 4px 10px;margin:0;border-radius:5px;transform:rotate(-4deg);box-shadow:0 3px 7px #8c568030}
+  .mobile-photo-choice .mobile-choice-picture{width:100%;height:100%;display:block;background-position:center;background-size:cover;background-color:#d3a7c4;border-radius:2px}
+  .mobile-choice-name{max-width:100%;font-size:10px;font-weight:900;line-height:1.13;overflow-wrap:anywhere;text-align:center}
+  .mobile-choice-layout{position:relative;display:block;width:84px;height:72px;background:linear-gradient(135deg,#fbe8f4,#f4f3ff);border-radius:8px;overflow:hidden}
+  .mobile-choice-layout i{display:block;position:absolute;width:34px;height:44px;background-size:cover;background-position:center;border:3px solid #fff;border-bottom-width:7px;border-radius:3px;box-shadow:0 3px 6px #75456b47}
+  /* The independent reel stays visible when the glass panel slides off-screen. */
+  body.create-mobile-mode #create .editor-workbench.studio-is-collapsed+.pv{pointer-events:auto}
+  body.create-mobile-mode[data-studio-tool="borders"] #create #studioDrawerReopen,
+  body.create-mobile-mode[data-studio-tool="layouts"] #create #studioDrawerReopen{opacity:0!important;pointer-events:none!important}
+  body.create-mobile-mode:not([data-studio-tool="borders"]):not([data-studio-tool="layouts"]) #create #studioDrawerReopen{bottom:calc(90px + env(safe-area-inset-bottom))}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-paper-sheet{min-height:242px;max-width:312px;width:min(312px,90vw)}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-paper-writing{display:none}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-paper-pictures{position:relative;width:100%;height:198px;min-height:198px;display:block;overflow:visible;margin:2px auto 0}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-photo-preview-card{position:absolute;display:block;transition:transform .24s ease,top .24s ease;filter:drop-shadow(0 5px 5px #89648825)}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-photo-preview-card .polaroid-mini-frame{width:97px;height:126px;display:block;padding:7px 7px 20px;transform:none;box-shadow:0 6px 13px #674f633e}
+  body.create-mobile-mode #create .studio-photo-preview-mode .studio-photo-preview-card .polaroid-mini-picture{display:block;width:100%;height:100%;background-size:cover;background-position:center;border-radius:2px}
+  body.create-mobile-mode #create .pv:has(.studio-photo-preview-mode:not([hidden])){padding-bottom:12px!important}
+  /* Leave room for both the horizontal photo selector and bottom tools. */
+  body.create-mobile-mode[data-studio-tool="borders"] #create.on,
+  body.create-mobile-mode[data-studio-tool="layouts"] #create.on{padding-bottom:310px!important}
+}
+@media(max-width:480px){
+  .username-edit-panel .username-input-row{display:grid;grid-template-columns:1fr 1fr}
+  .username-edit-panel .username-input-row input{grid-column:1/-1;width:100%}
+  .identity-text strong{font-size:12px}
+  body.create-mobile-mode #create.on .mobile-photo-picker:not([hidden]){bottom:calc(80px + env(safe-area-inset-bottom));padding:9px 9px 7px}
+
+  .mobile-photo-choice{flex-basis:90px;min-width:90px}
+}
+@keyframes v15PickerIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.mobile-photo-choice,.mobile-photo-picker,.username-edit-panel,.identity-edit{animation:none!important;transition:none!important}}

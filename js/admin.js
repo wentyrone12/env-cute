@@ -24,7 +24,42 @@ const sectionMeta = {
   support: ['Contact Support','Private support requests from your users.','Support inbox','Read questions and reply directly.'],
   feedback: ['Feedback','Suggestions and product experience reports.','Feedback inbox','Read what your users think.']
 };
-let auth = null, signIn = null, signOut = null, writeReview = null;
+let auth = null, signIn = null, signOut = null, writeReview = null, writePremium = null;
+const subscriptionByUid = new Map(), subscriptionWatches = new Map();
+const validDurations = [7,30,90,365];
+const durationMs = days => (validDurations.includes(Number(days)) ? Number(days) : 30)*86400000;
+const subscriptionValid = s => !!s && s.enabled === true && Number(s.expiresAt || 0) > Date.now();
+function remainingLabel(ms) {
+  if (ms <= 0) return 'Expired';
+  const days=Math.floor(ms/86400000),hours=Math.floor(ms%86400000/3600000),minutes=Math.floor(ms%3600000/60000),seconds=Math.floor(ms%60000/1000);
+  return days ? `${days}d ${hours}h ${minutes}m` : hours ? `${hours}h ${minutes}m ${seconds}s` : minutes ? `${minutes}m ${seconds}s` : `${seconds}s`;
+}
+function stopSubscriptionWatches() { for(const stop of subscriptionWatches.values())stop(); subscriptionWatches.clear(); subscriptionByUid.clear(); }
+function refreshPremiumWatches({ref,onValue}) {
+  const uids=new Set(requests.filter(x=>x.uid).map(x=>x.uid));
+  for(const [uid,stop] of subscriptionWatches)if(!uids.has(uid)){stop();subscriptionWatches.delete(uid);subscriptionByUid.delete(uid)}
+  for(const uid of uids){
+    if(subscriptionWatches.has(uid))continue;
+    const stop=onValue(ref(`users/${uid}/subscription/paidPremium`),snap=>{
+      if(!current||!isAdmin(current))return;
+      subscriptionByUid.set(uid,snap.val()||null);renderList();
+    },error=>{subscriptionByUid.set(uid,null);console.warn('Cannot read subscription for',uid,error);renderList();});
+    subscriptionWatches.set(uid,stop);
+  }
+}
+function refreshLiveDurations() {
+  let expiredVisible = false;
+  document.querySelectorAll('[data-premium-countdown]').forEach(el=>{
+    const s=subscriptionByUid.get(el.dataset.premiumCountdown);
+    const end=Number(s?.expiresAt||0),ms=end-Date.now();
+    el.textContent= end ? remainingLabel(ms) : 'Not assigned';
+    const pill = el.closest('.admin-premium-status')?.querySelector('.premium-pill');
+    pill?.classList.toggle('expired',!!end && ms<=0);
+    if(s?.enabled && end && ms<=0 && pill?.textContent==='Active') expiredVisible=true;
+  });
+  if(expiredVisible) renderList();
+}
+setInterval(refreshLiveDurations,1000);
 let current = null, requests = [], section = 'dashboard', term = '', statusFilter = 'all';
 let pageSize = 12, stopListening = () => {}, stopSupport = () => {}, stopFeedback = () => {}, supportRecords = [], feedbackRecords = [], updateInbox = null, selectedReview = null, reviewBusy = false, triggerBeforeDialog = null, toastTimer;
 
@@ -84,7 +119,7 @@ $('#adminSignOut').onclick = async () => {
   catch(error) {setStatus('Sign-out failed: ' + error.message, 'error');}
 };
 function onSession(user, { ref, onValue }) {
-  stopListening(); stopListening = () => {}; stopSupport();stopFeedback();stopSupport=stopFeedback=()=>{};supportRecords=[]; feedbackRecords=[];
+  stopListening(); stopListening = () => {}; stopSubscriptionWatches(); stopSupport();stopFeedback();stopSupport=stopFeedback=()=>{};supportRecords=[]; feedbackRecords=[];
   closeReview(true);
   current = null; requests = [];
   setIdentity(user);
@@ -118,6 +153,7 @@ function onSession(user, { ref, onValue }) {
       }
     }
     requests.sort((a,b) => Number(b.submittedAt || 0) - Number(a.submittedAt || 0));
+    refreshPremiumWatches({ref,onValue});
     $('#adminDashboard').hidden = false;
     $('#adminLoginPanel').hidden = true;
     render();
@@ -156,12 +192,14 @@ function setActiveSection(next) {
     selected ? node.setAttribute('aria-current','page') : node.removeAttribute('aria-current');
   });
   const inbox = next === 'support' || next === 'feedback';
-  $('#adminPaymentWorklist').hidden = inbox;
+  $('#adminPaymentWorklist').hidden = inbox || next === 'dashboard';
   $('#adminInboxSection').hidden = !inbox;
   $('#adminStats').hidden = next !== 'dashboard';
-  $('#adminMethodSummary').hidden = next !== 'dashboard';
+  $('#adminMethodSummary').hidden = true; // Dashboard ends at Payment channels; methods remain in their sidebar tabs.
   $('#adminAnalytics').hidden = next !== 'dashboard';
   $('.admin-welcome').hidden = next !== 'dashboard';
+  $('#adminHelp').hidden = next === 'dashboard';
+  $('.admin-bottom-actions').hidden = next === 'dashboard';
   render(); renderAdminInbox();
   if(window.innerWidth <= 720) window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -315,17 +353,48 @@ function renderList() {
     const safeStatus = legalStatuses.includes(item.status) ? item.status : 'unknown';
     const pending = item.status === 'pending';
     const mismatch = !(price() > 0 && Number(item.amount) === price());
+    const s=subscriptionByUid.get(item.uid);
+    const isCurrentRequest=!!s && s.sourceRequest === item.id;
+    const isNewestApproved=requests.find(x=>x.uid===item.uid && x.status==='approved')?.id === item.id;
+    const mayManage=item.status==='approved' && (isCurrentRequest || (!s && isNewestApproved));
+    const active=subscriptionValid(s);
+    const end=Number(s?.expiresAt||0);
+    const stateText=active?'Active':s?.enabled && end && end<=Date.now()?'Expired':s?.enabled?'Needs expiry':'Deactivated';
+    const statusHTML=item.status === 'approved' ? `<div class="admin-premium-status">
+       <span class="premium-pill ${active?'active':end && end<=Date.now()?'expired':''}">${isCurrentRequest?stateText:s && !isCurrentRequest?'Older approval':'Approved'}</span>
+       ${isCurrentRequest ? `<div><b>Premium duration</b><div>Remaining: <span class="admin-premium-timer" data-premium-countdown="${escapeHTML(item.uid)}">${end?remainingLabel(end-Date.now()):'Not assigned'}</span></div><small>Expires: ${escapeHTML(end?prettyDate(end):'Not assigned')}</small></div>`
+           : `<small>${s ? 'Access is managed by another payment approval.' : 'Premium duration not assigned yet.'}</small>`}
+       </div>
+       ${mayManage ? `<div class="admin-premium-actions"><label class="sr-only" for="days-${globalIndex}">Choose Premium duration</label><select id="days-${globalIndex}" data-duration-index="${globalIndex}"><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option><option value="365">365 days</option></select><button type="button" data-premium-action="activate" data-index="${globalIndex}">${active?'↻ Reset duration':'✓ Activate Premium'}</button>${active?`<button type="button" class="pause" data-premium-action="deactivate" data-index="${globalIndex}">Deactivate</button>`:''}</div><small class="admin-premium-help">New activation starts a fresh term; deactivation immediately removes access.</small>` : ''}` : '';
+
     return `<article class="admin-pay-card"><div class="admin-payment-main">
       <div class="admin-payment-head"><h3>${escapeHTML(item.email || 'Unknown customer')}</h3><span class="admin-method-tag ${methodClass}">${bankLogo[methodClass] ? `<img src="${bankLogo[methodClass]}" alt="" class="admin-inline-bank-logo" referrerpolicy="no-referrer">` : ''}${escapeHTML(method)}</span><span class="admin-status-tag ${statusClass}">${escapeHTML(safeStatus[0].toUpperCase()+safeStatus.slice(1))}</span></div>
       <div class="admin-payment-meta"><span>Reference: <code>${escapeHTML(item.reference || '—')}</code></span><span>${escapeHTML(prettyDate(item.submittedAt))}</span></div>
       <div class="admin-payment-amount">${currency(item.amount)}</div>
       ${mismatch && pending ? '<p class="admin-pay-warning">⚠ Amount does not match the configured Premium price. Do not approve.</p>' : ''}
+      ${statusHTML}
       </div><div class="admin-payment-actions">${pending
         ? `<button type="button" class="admin-approve" data-review="approve" data-index="${globalIndex}" ${mismatch ? 'disabled title="Price mismatch"' : ''}>✓ Approve</button><button type="button" class="admin-reject" data-review="reject" data-index="${globalIndex}">✕ Reject</button>`
         : '<span class="admin-readonly">Reviewed request</span>'}</div></article>`;
   }).join('');
 }
-$('#adminList').addEventListener('click', event => {
+$('#adminList').addEventListener('click', async event => {
+  const premiumButton=event.target.closest('[data-premium-action]');
+  if(premiumButton){
+    if(!current||!isAdmin(current)||!writePremium||premiumButton.disabled)return;
+    const item=requests[Number(premiumButton.dataset.index)];
+    if(!item||item.status!=='approved')return;
+    const s=subscriptionByUid.get(item.uid);
+    const latest=requests.find(x=>x.uid===item.uid && x.status==='approved')?.id;
+    if(s?.sourceRequest && s.sourceRequest!==item.id || (!s && item.id!==latest))return flash('Manage the current/latest approved payment instead.');
+    const activate=premiumButton.dataset.premiumAction==='activate';
+    const days=Number(premiumButton.closest('.admin-premium-actions')?.querySelector('select')?.value||30);
+    if(activate&&!validDurations.includes(days))return;
+    premiumButton.disabled=true;premiumButton.textContent='Saving…';
+    try{await writePremium(item,s,activate,days,current.uid);flash(activate?`Premium activated for ${days} days. ✓`:'Premium access deactivated.');}
+    catch(err){flash('Could not update Premium: '+(err?.message||'Check Firebase rules.'));premiumButton.disabled=false;premiumButton.textContent=activate?'Activate Premium':'Deactivate';}
+    return;
+  }
   const button = event.target.closest('[data-review]');
   if(!button || button.disabled) return;
   const item = requests[Number(button.dataset.index)];
@@ -416,6 +485,8 @@ function openReview(item, approved, trigger) {
     : 'This will mark the request as rejected. The customer will not receive Premium access from this request.';
   $('#reviewDialogDetails').innerHTML = detail('Payment method',method) + detail('Reported amount',currency(item.amount)) + detail('Expected price',currency(price())) + detail('Submitted',prettyDate(item.submittedAt)) + detail('Customer email',item.email,true) + detail('Transaction reference',item.reference,true) + detail('Customer UID',item.uid,true);
   $('#reviewVerificationRow').hidden = !approved;
+  $('#reviewDurationRow').hidden = !approved;
+  $('#reviewDuration').value = '30';
   $('#reviewVerified').checked = false;
   $('#reviewDialogError').hidden = true;
   $('#reviewConfirm').textContent = approved ? 'Approve & Activate' : 'Reject Request';
@@ -462,7 +533,7 @@ $('#reviewConfirm').onclick = async () => {
   $('#reviewConfirm').textContent = 'Saving…';
   $('#reviewDialogError').hidden = true;
   try {
-    await writeReview(item, approved, current.uid);
+    await writeReview(item, approved, current.uid,Number($('#reviewDuration').value));
     reviewBusy = false;
     closeReview(true);
     flash(approved ? 'Payment approved. Premium was activated. ✓' : 'Payment request rejected.');
@@ -499,14 +570,24 @@ async function boot() {
     provider.setCustomParameters({prompt:'select_account'});
     signIn=() => authMod.signInWithPopup(auth,provider);
     signOut=() => authMod.signOut(auth);
-    writeReview=async (item, approved, reviewerUid) => {
+    writePremium=async(item,s,activate,days,reviewerUid)=>{
+      const now=Date.now();
+      // Complete object is written as one update, under admin-only Firebase rules.
+      const newValue= activate ? {enabled:true,approvedAt:now,approvedBy:reviewerUid,sourceRequest:item.id,
+          durationDays:days,expiresAt:now+durationMs(days),updatedAt:now}
+        : {...s,enabled:false,approvedAt:Number(s?.approvedAt)||now,approvedBy:reviewerUid,
+          sourceRequest:item.id,expiresAt:Number(s?.expiresAt)||now,updatedAt:now};
+      await dbMod.update(dbMod.ref(db),{[`users/${item.uid}/subscription/paidPremium`]:newValue});
+    };
+    writeReview=async (item, approved, reviewerUid, durationDays=30) => {
+      if(approved && !validDurations.includes(durationDays))throw Error('Invalid duration');
       const now=Date.now();
       const changes={
         [`premiumPayments/${item.uid}/${item.id}/status`]:approved ? 'approved' : 'rejected',
         [`premiumPayments/${item.uid}/${item.id}/reviewedAt`]:now,
         [`premiumPayments/${item.uid}/${item.id}/reviewedBy`]:reviewerUid
       };
-      if(approved) changes[`users/${item.uid}/subscription/paidPremium`]={enabled:true,approvedAt:now,approvedBy:reviewerUid,sourceRequest:item.id};
+      if(approved) changes[`users/${item.uid}/subscription/paidPremium`]={enabled:true,approvedAt:now,approvedBy:reviewerUid,sourceRequest:item.id,durationDays,expiresAt:now+durationMs(durationDays),updatedAt:now};
       await dbMod.update(dbMod.ref(db),changes);
     };
     $('#adminLogin').disabled = false;

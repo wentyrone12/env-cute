@@ -64,6 +64,43 @@ const PHOTO_STYLES = [
   { id: 'retro', name: 'Retro 90s', desc: 'Color-block nostalgia' },
   { id: 'gold', name: 'Golden Hour', desc: 'Golden framed edge' },
   { id: 'frost', name: 'Frosted', desc: 'Icy translucent look' }
+,
+  { id: 'torn-rose', name: 'Torn Rose', desc: 'Hand-ripped blush paper' },
+  { id: 'torn-kraft', name: 'Torn Kraft', desc: 'Recycled deckled paper' },
+  { id: 'torn-cloud', name: 'Cloud Torn', desc: 'Soft fluffy paper edges' },
+  { id: 'torn-lilac', name: 'Lavender Tear', desc: 'Hand-cut lavender cardstock' },
+  { id: 'torn-parchment', name: 'Old Letter', desc: 'Aged uneven parchment' },
+  { id: 'torn-mint', name: 'Mint Tear', desc: 'Fresh pastel ripped edge' },
+  { id: 'ticket-pink', name: 'Pink Ticket', desc: 'Perforated ticket border' },
+  { id: 'ticket-gold', name: 'Golden Ticket', desc: 'Warm concert-ticket edge' },
+  { id: 'ticket-blue', name: 'Blue Ticket', desc: 'Perforated keepsake' },
+  { id: 'ticket-ivory', name: 'Ivory Ticket', desc: 'Vintage ticket stub' },
+  { id: 'ticket-lilac', name: 'Violet Ticket', desc: 'Playful ticket border' },
+  { id: 'ticket-coral', name: 'Coral Ticket', desc: 'Event-style torn receipt' },
+  { id: 'sticker-rose', name: 'Rose Sticker', desc: 'Sticker-cut pink outline' },
+  { id: 'sticker-sky', name: 'Sky Sticker', desc: 'Blue die-cut frame' },
+  { id: 'sticker-honey', name: 'Honey Sticker', desc: 'Golden label outline' },
+  { id: 'sticker-mint', name: 'Mint Sticker', desc: 'Leafy sticker edge' },
+  { id: 'sticker-peach', name: 'Peach Sticker', desc: 'Warm label shape' },
+  { id: 'sticker-grape', name: 'Grape Sticker', desc: 'Grape-tinted frame' },
+  { id: 'postcard-rose', name: 'Rose Postcard', desc: 'Vintage postcard edge' },
+  { id: 'postcard-sepia', name: 'Sepia Postcard', desc: 'Classic antique edge' },
+  { id: 'postcard-sea', name: 'Sea Postcard', desc: 'Ocean postcard memory' },
+  { id: 'postcard-peach', name: 'Peach Postcard', desc: 'Warm faded corners' },
+  { id: 'postcard-night', name: 'Night Postcard', desc: 'Midnight travel stamp' },
+  { id: 'postcard-sage', name: 'Sage Postcard', desc: 'Botanical postcard' },
+  { id: 'scallop-blush', name: 'Blush Scallop', desc: 'Wavy scalloped paper' },
+  { id: 'scallop-cream', name: 'Cream Scallop', desc: 'Rounded cut edges' },
+  { id: 'scallop-petal', name: 'Petal Scallop', desc: 'Floral cut-paper frame' },
+  { id: 'scallop-ice', name: 'Ice Scallop', desc: 'Cool frosted edges' },
+  { id: 'scallop-sage', name: 'Sage Scallop', desc: 'Gentle leaf edges' },
+  { id: 'scallop-gold', name: 'Gold Scallop', desc: 'Golden doily cut' },
+  { id: 'tape-lilac', name: 'Lilac Washi', desc: 'Craft paper and tape' },
+  { id: 'tape-pink', name: 'Pink Washi', desc: 'Washi tape keepsake' },
+  { id: 'tape-check', name: 'Gingham Tape', desc: 'Checked scrapbook detail' },
+  { id: 'tape-sun', name: 'Sun Washi', desc: 'Golden tape paper' },
+  { id: 'tape-ocean', name: 'Ocean Washi', desc: 'Sea-colored tape accent' },
+  { id: 'tape-sage', name: 'Sage Washi', desc: 'Green handmade tape' }
 ];
 const PHOTO_LAYOUTS = [
   { id: 'stack', name: 'Classic Stack', desc: 'Layered keepsakes' },
@@ -90,6 +127,43 @@ const PHOTO_LAYOUTS = [
   { id: 'scatter', name: 'Confetti', desc: 'Playful scattered photos' },
   { id: 'bridge', name: 'Bridge', desc: 'Arch between memories' },
   { id: 'pinwheel', name: 'Pinwheel', desc: 'Rotating blossom layout' }
+,
+  { id: 'terrace', name: 'Terrace', desc: 'Ascending little windows' },
+  { id: 'terrace-soft', name: 'Soft Terrace', desc: 'Gentle diagonal steps' },
+  { id: 'terrace-wide', name: 'Wide Terrace', desc: 'Stretched rhythmic offset' },
+  { id: 'terrace-flip', name: 'Flip Terrace', desc: 'Alternating tilts' },
+  { id: 'terrace-rose', name: 'Rose Terrace', desc: 'Staggered keepsakes' },
+  { id: 'terrace-narrow', name: 'Narrow Terrace', desc: 'Tight staircase' },
+  { id: 'constellation', name: 'Constellation', desc: 'Star-like constellation' },
+  { id: 'constellation-east', name: 'Eastern Stars', desc: 'Stars shifting right' },
+  { id: 'constellation-west', name: 'Western Stars', desc: 'Stars shifting left' },
+  { id: 'constellation-dream', name: 'Dream Stars', desc: 'Orbiting diagonal cards' },
+  { id: 'constellation-spark', name: 'Spark Trail', desc: 'Sparkle trails' },
+  { id: 'constellation-night', name: 'Night Sky', desc: 'Wide star pattern' },
+  { id: 'tiles', name: 'Photo Tiles', desc: 'Compact asymmetrical grid' },
+  { id: 'tiles-offset', name: 'Offset Tiles', desc: 'Gentle staggered grid' },
+  { id: 'tiles-rhythm', name: 'Rhythm Tiles', desc: 'Alternating grid edges' },
+  { id: 'tiles-art', name: 'Art Tiles', desc: 'Editorial tiled wall' },
+  { id: 'tiles-corner', name: 'Corner Tiles', desc: 'Angular mosaic layout' },
+  { id: 'tiles-window', name: 'Window Tiles', desc: 'Cozy window collection' },
+  { id: 'bouquet', name: 'Memory Bouquet', desc: 'Radiating flowers' },
+  { id: 'bouquet-rose', name: 'Rose Bouquet', desc: 'Tight floral fan' },
+  { id: 'bouquet-wide', name: 'Wide Bouquet', desc: 'Spread petals' },
+  { id: 'bouquet-daisy', name: 'Daisy Bouquet', desc: 'Circle of memories' },
+  { id: 'bouquet-pink', name: 'Pink Bouquet', desc: 'Swirled paper petals' },
+  { id: 'bouquet-ribbon', name: 'Ribbon Bouquet', desc: 'Soft pinwheel fan' },
+  { id: 'journey', name: 'Journey', desc: 'Adventure trail photographs' },
+  { id: 'journey-hill', name: 'Hill Trail', desc: 'Hiking photograph trail' },
+  { id: 'journey-sunset', name: 'Sunset Trail', desc: 'Curved sunset memories' },
+  { id: 'journey-bridge', name: 'Memory Bridge', desc: 'Arch to arch sequence' },
+  { id: 'journey-wave', name: 'Winding Trail', desc: 'Meandering pictures' },
+  { id: 'journey-story', name: 'Story Trail', desc: 'A flowing photo story' },
+  { id: 'collage', name: 'Art Collage', desc: 'Artfully scattered frames' },
+  { id: 'collage-soft', name: 'Soft Collage', desc: 'Little overlapping pieces' },
+  { id: 'collage-zine', name: 'Zine Collage', desc: 'Editorial magazine arrangement' },
+  { id: 'collage-diagonal', name: 'Diagonal Collage', desc: 'Dynamic diagonal design' },
+  { id: 'collage-frame', name: 'Gallery Collage', desc: 'Tidy curated spread' },
+  { id: 'collage-confetti', name: 'Party Collage', desc: 'Playful dancing cards' }
 ];
 // Each premium layout defines card positions, rotation and layering.
 // Keep the coordinates bounded for narrow mobile paper previews.
@@ -198,7 +272,7 @@ function clean(d) {
   };
 }
 let store = [], receivedStore = [], currentUser = null, accountKey = null;
-let mailboxView = 'recent', editingId = null, premiumApproved = false, premiumPayments = [];
+let mailboxView = 'recent', editingId = null, premiumApproved = false, premiumState = null, premiumPayments = [];
 let stopReceived = () => { }, stopSubscription = () => { };
 let stopSupport = () => { }, stopFeedback = () => { }, supportInbox = {}, feedbackInbox = {};
 const inquiryDate = ts => { const d = new Date(Number(ts)); return Number.isFinite(d.getTime()) ? d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' }) : 'Date unknown'; };
@@ -235,7 +309,9 @@ function wireInquiryForm(kind) {
 }
 wireInquiryForm('support'); wireInquiryForm('feedback');
 
-const isPremium = () => premiumApproved === true;
+const isPremium = () => premiumApproved === true && Number(premiumState?.expiresAt || 0) > Date.now();
+const premiumRemaining = () => Math.max(0,Number(premiumState?.expiresAt || 0)-Date.now());
+const premiumLeftText = ms => { const d=Math.floor(ms/86400000),h=Math.floor(ms%86400000/3600000),m=Math.floor(ms%3600000/60000); return d ? `${d}d ${h}h` : h ? `${h}h ${m}m` : `${m}m`; };
 const pageLimit = () => isPremium() ? 10 : 8;
 const photoLimit = () => isPremium() ? 4 : 2;
 function updatePageOptions() {
@@ -293,7 +369,7 @@ function updateSubscriptionUI() {
   $('#premiumPriceDisplay').innerHTML = Number(window.WENV_PAYMENT?.premiumPricePHP) > 0
     ? '₱' + Number(window.WENV_PAYMENT.premiumPricePHP).toLocaleString('en-PH', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' <small>· one-time manual approval</small>'
     : 'Set price <small>· in payment-config.js</small>';
-  $('#premiumAccountStatus').textContent = isPremium() ? '✓ Premium access verified by the owner.'
+  $('#premiumAccountStatus').textContent = isPremium() ? `✓ Premium active · ${premiumLeftText(premiumRemaining())} remaining · until ${new Date(premiumState.expiresAt).toLocaleString('en-PH')}`
     : premiumPayments.some(v => v.status === 'pending') ? '⏳ Payment reference submitted; awaiting manual verification.'
       : 'Free plan. Select a payment method to request Premium.';
   renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); renderColorPalettes(); updateCoverEditorLock(); updatePaperMagicEditor(); renderAccountDashboard();
@@ -302,6 +378,7 @@ function watchPremium(uid) {
   stopSubscription();
   stopSubscription = window.WENV_DB.subscribePremium(uid, data => {
     if (currentUser?.uid !== uid) return;
+    premiumState = data || null;
     premiumApproved = !!(data && data.enabled === true);
     updateSubscriptionUI();
   }, err => console.warn('Premium status:', err));
@@ -364,10 +441,20 @@ async function submitPaymentRequest(method) {
 function recordReceived(key, e, code = '') {
   if (!currentUser || !e) return;
   if (store.some(m => m.id === e.id)) return; // your own letter, not a received letter
+  if (code && receivedStore.some(m => m.senderUid && m.code === code)) return; // direct deliveries already live in this inbox
   const item = { title: e.title, from: e.from || '', createdAt: e.createdAt || '', receivedAt: new Date().toISOString(), code, envelope: code ? null : clean(e) };
   window.WENV_DB.saveReceived(currentUser.uid, key, item).catch(err => console.warn('Received history save:', err));
 }
-function watchReceived(uid) { stopReceived(); stopReceived = window.WENV_DB.subscribeReceived(uid, data => { if (currentUser?.uid !== uid) return; receivedStore = Object.entries(data || {}).map(([key, item]) => ({ ...item, key })).sort((a, b) => String(b.receivedAt || '').localeCompare(String(a.receivedAt || ''))); renderDash() }, err => console.warn('Received collection sync:', err)); }
+function watchReceived(uid) {
+  stopReceived(); let initialSync = true, priorKeys = new Set();
+  stopReceived = window.WENV_DB.subscribeReceived(uid, data => {
+    if (currentUser?.uid !== uid) return;
+    const incoming = Object.entries(data || {}).map(([key,item])=>({ ...item,key })).sort((a,b)=>String(b.receivedAt||'').localeCompare(String(a.receivedAt||'')));
+    if (!initialSync && incoming.some(item=>(item.senderUid || item.anonymous) && !item.readAt && !priorKeys.has(item.key))) toast('💌 A new envelope has arrived!');
+    initialSync = false; priorKeys = new Set(incoming.map(v=>v.key));
+    receivedStore = incoming; renderDash();
+  }, err => console.warn('Received collection sync:',err));
+}
 
 let cloudReady = false, stopCloud = () => { }, connectionUid = null, cloudConnected = false;
 function cloudState(msg, status = 'loading') {
@@ -454,7 +541,7 @@ const STUDIO_TOOLS = [
   { id: 'signature', name: 'Sign', icon: '❣', heading: 'Signature', hint: 'Add a lovely personal sign-off.' },
   { id: 'seal', name: 'Seal', icon: '✓', heading: 'Seal and save', hint: 'Review your letter and save it to your account.' }
 ];
-let studioTool = 'title', studioCollapsed = false;
+let studioTool = 'title', studioCollapsed = (() => { try { return sessionStorage.getItem('wenv-mobile-studio-closed') === '1' } catch { return false } })();
 let introCategory = 'All';
 const createWizardMobile = () => matchMedia('(max-width: 860px)').matches;
 const studioPageTools = new Set(['paper', 'write', 'photos', 'borders', 'layouts', 'effects']);
@@ -480,10 +567,25 @@ function updateStudioCanvas() {
   if (sheet) sheet.style.background = active?.color || '#fffaf2';
   $('#studioPaperBadge').textContent = `Page ${activeLetterPage + 1} of ${n()}`;
   const photosEl = $('#studioPaperPictures');
+  const photoDesignMode=studioTool==='borders'||studioTool==='layouts';
+  canvas.classList.toggle('studio-photo-preview-mode',photoDesignMode);
   if (photosEl) {
-    const sources = (active?.photos || []).filter(safeImage);
-    if (photosEl.children.length !== sources.length || sources.some((src, i) => photosEl.children[i]?.getAttribute('src') !== src)) {
-      photosEl.replaceChildren(...sources.map((src, i) => { const img = document.createElement('img'); img.src = src; img.alt = `Photo ${i + 1}`; img.loading = 'lazy'; return img; }));
+    const sources=(active?.photos||[]).filter(safeImage);
+    if (photoDesignMode) {
+      const photos=Array.from({length:3},(_,i)=>sources.length?sources[i%sources.length]:'assets/photo-preview-sample.jpg');
+      const key=[activeLetterPage,active?.photoStyle,active?.photoLayout,photos.join('|')].join(':');
+      if(photosEl.dataset.previewKey!==key) {
+        photosEl.dataset.previewKey=key;
+        photosEl.innerHTML=Array.from({length:Math.min(3,Math.max(1,photos.length))},(_,i)=>{
+          const [x,y,r]=photoCoordinates(active.photoLayout,i,Math.min(3,Math.max(1,photos.length)));
+          return `<div class="studio-photo-preview-card photo-variant--${safePhotoStyle(active.photoStyle)}" style="left:calc(50% + ${Math.max(-110,Math.min(110,Math.round(x*.75)))}px);top:${Math.max(2,Math.min(68,Math.round(y*.47)))}px;transform:translateX(-50%) rotate(${r}deg);z-index:${i+1}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture" style="background-image:url('${photos[i%photos.length]}')"></span></span></div>`;
+        }).join('');
+      }
+    } else {
+      photosEl.dataset.previewKey='';
+      if (photosEl.children.length !== sources.length || sources.some((src, i) => photosEl.children[i]?.getAttribute('src') !== src)) {
+        photosEl.replaceChildren(...sources.map((src,i)=>{const img=document.createElement('img');img.src=src;img.alt=`Photo ${i+1}`;img.loading='lazy';return img;}));
+      }
     }
   }
   $('#studioPreviewCaption').textContent = magicMode ? 'Watch every animation live as you choose ♡' : paperMode ? 'Live paper preview · changes appear above ♡' : 'Live envelope preview ♡';
@@ -504,6 +606,8 @@ function updateStudioTool() {
   $('#studioPanelHead').hidden = false;
   $('#studioPanelFooter').hidden = false;
   sheet.classList.toggle('studio-is-collapsed', mobile && studioCollapsed);
+  document.body.classList.toggle('studio-drawer-closed', mobile && studioCollapsed);
+  $('#studioDrawerReopen').setAttribute('aria-expanded', String(mobile && !studioCollapsed));
   $('#studioPanelCollapse').setAttribute('aria-expanded', String(!studioCollapsed));
   $('#studioPanelCollapse').textContent = studioCollapsed ? '⌃' : '⌄';
   $('#studioToolTitle').textContent = item.heading;
@@ -516,16 +620,124 @@ function updateStudioTool() {
     btn.setAttribute('aria-current', active ? 'step' : 'false');
   });
   updateStudioCanvas();
+  renderMobilePhotoPicker();
 }
 function selectStudioTool(id) {
   if (!STUDIO_TOOLS.some(t => t.id === id)) return;
-  studioTool = id; studioCollapsed = false;
+  if(studioTool!==id) mobilePickerDismissed=false;
+  studioTool = id; // Tool changes preserve closed state unless user opens the drawer.
+  // Borders/Layouts are a photo-first mode: auto-hide the glass sheet and keep a swipeable strip outside it.
+  if (createWizardMobile() && (id === 'borders' || id === 'layouts')) {
+    studioCollapsed = true;
+    try { sessionStorage.setItem('wenv-mobile-studio-closed','1') } catch {}
+  }
+  $('#editorWorkbench').style.removeProperty('--studio-drag-y');
   updateStudioTool();
   const panel = $('#studioPanelScroll');
   if (panel) panel.scrollTop = 0;
   const chosen = $(`#studioToolRail [data-studio-switch="${id}"]`);
   if (chosen) chosen.scrollIntoView({ block: 'nearest', inline: 'center', behavior: calm ? 'auto' : 'smooth' });
 }
+// The mobile photo rail lives OUTSIDE .editor-workbench; drawer collapse cannot hide it.
+let mobilePickerSignature = '';
+let mobilePickerDismissed = false;
+let mobilePickerGesture = null;
+const photoThumbnail = () => (pages[activeLetterPage]?.photos || []).find(safeImage) || 'assets/photo-preview-sample.jpg';
+function mobilePhotoSample(i=0) {
+  const actual=(pages[activeLetterPage]?.photos || []).filter(safeImage);
+  return actual.length ? actual[i % actual.length] : 'assets/photo-preview-sample.jpg';
+}
+function mobilePhotoOptionsMarkup(type) {
+  const p=pages[activeLetterPage] || pages[0];
+  if (type==='borders') return PHOTO_STYLES.map((v,i)=>{
+    const selected=p.photoStyle===v.id, locked=!isPremium() && i>0;
+    return `<button type="button" class="mobile-photo-choice photo-variant--${v.id}${selected?' on':''}${locked?' is-locked':''}" data-mobile-photo-style="${v.id}" aria-pressed="${selected}" aria-label="${esc(v.name)}${locked?' Premium required':''}"><span class="mobile-choice-frame polaroid-mini-frame"><span class="mobile-choice-picture polaroid-mini-picture" style="background-image:url('${mobilePhotoSample(i)}')"></span></span>${locked?'<span class="mobile-choice-lock" aria-hidden="true">🔒 Premium</span>':''}<span class="mobile-choice-name">${locked?'🔒 ':''}${esc(v.name)}</span></button>`;
+  }).join('');
+  return PHOTO_LAYOUTS.map((v,i)=>{
+    const selected=p.photoLayout===v.id, locked=!isPremium() && i>0;
+    const preview=[0,1,2].map(k=>{
+      const [x,y,r]=photoCoordinates(v.id,k,3);
+      return `<i style="left:calc(50% + ${Math.max(-63,Math.min(63,Math.round(x*.60)))}px);top:${Math.max(3,Math.min(34,Math.round(y*.26)))}px;transform:translateX(-50%) rotate(${r}deg);z-index:${k+1};background-image:url('${mobilePhotoSample(k)}')"></i>`;
+    }).join('');
+    return `<button type="button" class="mobile-photo-choice mobile-layout-choice${selected?' on':''}${locked?' is-locked':''}" data-mobile-photo-layout="${v.id}" aria-pressed="${selected}" aria-label="${esc(v.name)}${locked?' Premium required':''}"><span class="mobile-choice-layout">${preview}</span>${locked?'<span class="mobile-choice-lock" aria-hidden="true">🔒 Premium</span>':''}<span class="mobile-choice-name">${locked?'🔒 ':''}${esc(v.name)}</span></button>`;
+  }).join('');
+}
+function renderMobilePhotoPicker() {
+  const picker=$('#mobilePhotoPicker'), rail=$('#mobilePhotoPickerRail');
+  if (!picker || !rail) return;
+  const mode=createWizardMobile() && studioCollapsed && (studioTool==='borders'||studioTool==='layouts');
+  picker.hidden=!mode;
+  const showPicker=$('#mobilePhotoPickerShow');
+  if (!mode) {mobilePickerSignature='';mobilePickerDismissed=false;if(showPicker)showPicker.hidden=true;return;}
+  picker.classList.toggle('is-picker-dismissed',mobilePickerDismissed);
+  if(showPicker){showPicker.hidden=!mobilePickerDismissed;showPicker.setAttribute('aria-expanded',String(!mobilePickerDismissed));}
+  const count=n();
+  const pageNav=$('#mobilePhotoPageNav');
+  pageNav.hidden=count<=1;
+  $('#mobilePhotoPageLabel').textContent=`Page ${activeLetterPage+1} of ${count}`;
+  $('#mobilePhotoPagePrevious').disabled=activeLetterPage===0;
+  $('#mobilePhotoPageNext').disabled=activeLetterPage>=count-1;
+  const border=studioTool==='borders';
+  $('#mobilePhotoPickerTitle').textContent=border?'Choose a border':'Choose a photo layout';
+  $('#mobilePhotoPickerHint').textContent='← Swipe styles · Tap to apply · Pull down to hide';
+  $('#mobilePhotoPickerCount').textContent=(border?PHOTO_STYLES:PHOTO_LAYOUTS).length+' styles';
+  const p=pages[activeLetterPage]||pages[0];
+  const sig=`${studioTool}:${activeLetterPage}:${isPremium()}:${p.photos?.join('|')||''}`;
+  if(sig!==mobilePickerSignature){
+    const oldX=rail.scrollLeft;
+    rail.innerHTML=mobilePhotoOptionsMarkup(studioTool);
+    rail.scrollLeft=mobilePickerSignature?.startsWith(studioTool+':')?oldX:0;
+    mobilePickerSignature=sig;
+  }
+  const current=border?p.photoStyle:p.photoLayout;
+  rail.querySelectorAll('button').forEach(btn=>{
+    const on=(btn.dataset.mobilePhotoStyle||btn.dataset.mobilePhotoLayout)===current;
+    btn.classList.toggle('on',on);btn.setAttribute('aria-pressed',String(on));
+  });
+}
+// Page arrows only show for an envelope with more than one letter page.
+$('#mobilePhotoPagePrevious').addEventListener('click',()=>selectLetterPage(activeLetterPage-1));
+$('#mobilePhotoPageNext').addEventListener('click',()=>selectLetterPage(activeLetterPage+1));
+function setMobilePickerDismissed(value){
+  mobilePickerDismissed=Boolean(value);
+  renderMobilePhotoPicker();
+}
+$('#mobilePhotoPickerHide').addEventListener('click',()=>setMobilePickerDismissed(true));
+$('#mobilePhotoPickerShow').addEventListener('click',()=>setMobilePickerDismissed(false));
+// Swipe down to hide the independent picker; keep sideways swiping styles intact.
+const mobilePickerEl=$('#mobilePhotoPicker');
+mobilePickerEl.addEventListener('touchstart',e=>{
+  if(e.touches.length!==1 || e.target.closest('.mobile-photo-page-nav,.mobile-picker-hide'))return;
+  mobilePickerGesture={x:e.touches[0].clientX,y:e.touches[0].clientY};
+},{passive:true});
+mobilePickerEl.addEventListener('touchend',e=>{
+  if(!mobilePickerGesture)return;
+  const dy=e.changedTouches[0].clientY-mobilePickerGesture.y;
+  const dx=e.changedTouches[0].clientX-mobilePickerGesture.x;
+  mobilePickerGesture=null;
+  if(dy>54 && Math.abs(dy)>Math.abs(dx)*1.25)setMobilePickerDismissed(true);
+},{passive:true});
+mobilePickerEl.addEventListener('touchcancel',()=>{mobilePickerGesture=null;},{passive:true});
+let pickerShowStart=null;
+$('#mobilePhotoPickerShow').addEventListener('touchstart',e=>{pickerShowStart=e.touches[0]?.clientY??null;},{passive:true});
+$('#mobilePhotoPickerShow').addEventListener('touchend',e=>{
+  if(pickerShowStart!==null && pickerShowStart-e.changedTouches[0].clientY>25)setMobilePickerDismissed(false);
+  pickerShowStart=null;
+},{passive:true});
+$('#mobilePhotoPickerRail').addEventListener('click',e=>{
+  const card=e.target.closest('[data-mobile-photo-style],[data-mobile-photo-layout]');
+  if (!card || !createWizardMobile()) return;
+  const p=pages[activeLetterPage]; if(!p)return;
+  const id=card.dataset.mobilePhotoStyle || card.dataset.mobilePhotoLayout;
+  const border=Boolean(card.dataset.mobilePhotoStyle);
+  if(!isPremium() && id!==(border?'classic':'stack'))return lockedDesignNotice();
+  if(border) p.photoStyle=safePhotoStyle(id); else p.photoLayout=safePhotoLayout(id);
+  studioCollapsed=true; // Choosing another thumbnail must not reopen the bottom sheet.
+  try { sessionStorage.setItem('wenv-mobile-studio-closed','1') } catch {}
+  updateStudioTool();
+  // Keep user's horizontal scroll position and show live selection on the canvas.
+  toast(border?'Photo border applied ♡':'Photo layout applied ♡');
+});
 function studioMove(dir) {
   const i = STUDIO_TOOLS.findIndex(t => t.id === studioTool);
   if (dir > 0 && i === STUDIO_TOOLS.length - 1) {
@@ -538,7 +750,6 @@ function applyCreateWizard() {
   const mobile = createWizardMobile();
   document.body.classList.toggle('create-mobile-mode', mobile);
   buildStudioRail();
-  if (!mobile) studioCollapsed = false;
   updateStudioTool();
 }
 
@@ -606,7 +817,12 @@ const envHTML = (c, cols, o = {}) => `<div class="env${o.float ? " float" : ""}"
 
 /* nav */
 function go(n) {
-  if (!currentUser) return;
+  if (!currentUser && n !== 'recv' && n !== 'ask' && !(n === 'create' && window.WENV_ANON?.composing)) {
+    document.body.classList.remove('guest-receiving');
+    $('#authGate').hidden = false;
+    authStatus('Continue with Google to create your own envelope.');
+    return;
+  }
   if (n !== 'recv' && recv) clearPaperTurn();
   $$(".screen").forEach(s => s.classList.toggle("on", s.id === n)); $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.go === n));
   document.body.classList.toggle("receiving", n === "recv"); scrollTo({ top: 0, behavior: calm || document.body.classList.contains("reduce-motion") ? "auto" : "smooth" }); if (n === "dash") renderDash(); if (n === "create") applyCreateWizard()
@@ -776,9 +992,40 @@ function preserveDesignScroll(pageIndex, attribute, value) {
   }
 }
 function lockedDesignNotice() {
-  modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all 24 photo borders and 24 photo layouts with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
+  modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all 60 photo borders and 60 photo layouts with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
+}
+
+// Six original geometry families × six deliberate variations each.
+// Existing 24 layouts keep their original positions for saved envelopes.
+function advancedPhotoCoordinates(layout, index, count) {
+  const families = ['terrace','constellation','tiles','bouquet','journey','collage'];
+  const family = families.find(v => layout === v || layout.startsWith(v+'-'));
+  if (!family) return null;
+  if (count <= 1) return [0,12,0];
+  const options = PHOTO_LAYOUTS.filter(l => l.id === family || l.id.startsWith(family+'-'));
+  const variation = Math.max(0,options.findIndex(l => l.id === layout));
+  const base = {
+    terrace:[[-50,2,-14],[-17,13,-4],[19,27,7],[50,44,14]],
+    constellation:[[-47,10,-22],[28,1,13],[-7,34,6],[47,49,-16]],
+    tiles:[[-40,3,-4],[39,3,4],[-39,41,4],[40,41,-4]],
+    bouquet:[[-47,33,-23],[-17,4,-9],[18,4,9],[48,33,23]],
+    journey:[[-49,44,-13],[-17,10,-4],[18,30,7],[50,3,15]],
+    collage:[[-45,6,14],[40,0,-16],[-27,43,-13],[49,42,17]]
+  }[family];
+  const picks = count === 2 ? [0,3] : count === 3 ? [0,1,3] : [0,1,2,3];
+  const chosen = picks.map((pick,k) => {
+    const [x,y,r] = base[pick];
+    const widen = [1,.76,1.09,.9,1.02,.84][variation];
+    const bend = [0,11,-9,5,-6,9][variation];
+    const lift = [0,3,7,-5,4,-3][variation];
+    return [Math.round(x*widen+(k%2 ? bend:-bend)*.55),Math.max(0,Math.min(55,y+(k%2 ? lift:-lift))),r+(k%2 ? bend:-bend)];
+  });
+  const midpoint = (Math.min(...chosen.map(p=>p[0]))+Math.max(...chosen.map(p=>p[0])))/2;
+  return [chosen[index][0]-midpoint,chosen[index][1],chosen[index][2]];
 }
 function photoCoordinates(layout, index, count) {
+  const designed = advancedPhotoCoordinates(layout, index, count);
+  if (designed) return designed;
   const middle = (count - 1) / 2;
   if (layout === 'fan') return [(index - middle) * 46, 13 + Math.abs(index - middle) * 11, (index - middle) * 13];
   if (layout === 'stair') return [(index - middle) * 40, 10 + index * 16, (index - middle) * -3];
@@ -879,12 +1126,12 @@ function renderPages() {
             </div>
             <div class="photo-design-duo" aria-label="Photo styling choices">
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid border style for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Border <em class="photo-design-count">24 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Classic free · 23 Premium ✦'}</small></div>
-                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 24 border styles">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Border <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Classic free · 59 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 border styles">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid layering format for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Layout <em class="photo-design-count">24 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Stack free · 23 Premium ✦'}</small></div>
-                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 24 photo layouts">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}">${layoutMiniMarkup(v.id)}<span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Layout <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Stack free · 59 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 photo layouts">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}">${layoutMiniMarkup(v.id)}<span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
             </div>
             <div class="photo-previews">${photoStackMarkup(p.photos, 'editor', i, p.photoStyle, p.photoLayout)}${!p.photos.length ? '' : ''}${p.photos.length ? `<div class="photo-remove-list">${p.photos.map((_, k) => `<button type="button" data-remove-photo="${i}:${k}" aria-label="Remove photo ${k + 1}">✕ Photo ${k + 1}</button>`).join('')}</div>` : ''}</div>
@@ -924,6 +1171,7 @@ function renderPages() {
   });
   updPreview();
   updateStudioCanvas();
+  renderMobilePhotoPicker();
 }
 async function compressPhoto(file) {
   if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw Error('Choose JPG, PNG or WebP only');
@@ -946,7 +1194,7 @@ function resetLetterEditor() {
   $('#title').value = $('#from').value = $('#signatureText').value = ''; $('#coverText').value = DEFAULT_COVER_TEXT; signatureStyle = 0; signatureAlign = 'right';
   $('#editorTitle').textContent = 'Design your envelope';
   $('#editorSubtitle').textContent = 'Pick the colors, then write each page.';
-  $('#editBanner').hidden = true; $('#make').textContent = '💌 Seal my envelope';
+  $('#editBanner').hidden = true; $('#make').textContent = window.WENV_ANON?.composing ? '💌 Send envelope message' : '💌 Seal my envelope';
   updatePageOptions(); $('#count').value = '1'; renderColorPalettes(); renderPages(); renderSignatureStyles(); updateCoverEditorLock(); updatePaperMagicEditor(); applyCreateWizard();
 }
 function editEnv(id) {
@@ -983,6 +1231,7 @@ async function refreshPublishedLinks(e) {
 }
 let creating = false;
 async function create() {
+  if (window.WENV_ANON?.composing) return window.WENV_ANON.beginSend();
   if (!currentUser) return;
   if (!cloudReady) return toast('Cloud sync is not connected yet. Please check Firebase settings.');
   if (photoBusy || creating) return toast('Finish uploading your pictures first');
@@ -1019,21 +1268,247 @@ async function create() {
 }
 
 
+
+/* v14 Username directory & direct mail (Firebase RTDB; no hardcoded demo users). */
+const validUsername = value => /^[a-z0-9_]{3,20}$/.test(value);
+const normalizeUsername = value => String(value || '').toLowerCase().replace(/^@/, '').trim();
+const USERNAME_CHANGE_INTERVAL = 7 * 24 * 60 * 60 * 1000;
+let myUsername = '', usernameChangedAt = 0, usernameEditing = false, usernameBusy = false;
+let pickedRecipient = null, searchToken = 0, selectedMailId = null;
+function usernameAvailableAt() { return myUsername ? usernameChangedAt + USERNAME_CHANGE_INTERVAL : 0; }
+function usernameRemainingMs() { return Math.max(0, usernameAvailableAt() - Date.now()); }
+function usernameRemainingText(ms) {
+  if (ms <= 0) return 'You can update your username now.';
+  const days = Math.floor(ms / 86400000), hours = Math.floor((ms % 86400000) / 3600000), minutes = Math.ceil((ms % 3600000) / 60000);
+  return days ? `${days}d ${hours}h` : hours ? `${hours}h ${minutes}m` : `${Math.max(1,minutes)}m`;
+}
+function setUsernameLabel() {
+  const label = $('#myUsernameLabel');
+  if (label) label.textContent = myUsername ? '@' + myUsername : 'Not set yet';
+  const edit = $('#editMyUsername');
+  const panel = $('#usernameEditPanel');
+  const field = $('#myUsernameInput');
+  const button = $('#saveMyUsername');
+  const cooldown = $('#usernameCooldown');
+  const remaining = usernameRemainingMs();
+  if (edit) {
+    edit.disabled = usernameBusy;
+    edit.setAttribute('aria-label', myUsername ? 'Edit username' : 'Claim a username');
+    edit.title = remaining ? 'Username editing unlocks after 7 days' : 'Edit username';
+    edit.classList.toggle('identity-on-cooldown', remaining > 0);
+    edit.setAttribute('aria-expanded', String(usernameEditing));
+  }
+  if (panel) panel.hidden = !usernameEditing;
+  const overlay=$('#usernameModalBackdrop');
+  if (overlay) overlay.hidden=!usernameEditing;
+  if (field) { field.disabled = usernameBusy; if (!usernameEditing) field.value = myUsername; }
+  if (button) {
+    button.disabled = usernameBusy || remaining > 0;
+    if (!usernameBusy) button.textContent = myUsername ? 'Save changes' : 'Claim username';
+  }
+  if (cooldown) {
+    cooldown.textContent = myUsername
+      ? (remaining ? `🔒 Username changes unlock in ${usernameRemainingText(remaining)}. You can change it once every 7 days.` : '✓ You can change your username. After saving, the next change is available in 7 days.')
+      : 'Claim your unique username to receive envelopes through Send Envelope.';
+    cooldown.classList.toggle('is-waiting', remaining > 0);
+  }
+}
+async function loadMyUsername(uid) {
+  myUsername = ''; usernameChangedAt = 0; usernameEditing = false; setUsernameLabel();
+  try {
+    const profile = await window.WENV_DB.getMyProfile(uid);
+    if (currentUser?.uid !== uid) return;
+    myUsername = validUsername(profile?.username) ? profile.username : '';
+    // v14 accounts didn't have the timestamp; use their original username reservation time.
+    usernameChangedAt = Number(profile?.usernameChangedAt) || 0;
+    if (myUsername && !usernameChangedAt) {
+      const directory = await window.WENV_DB.getUsername(myUsername);
+      if (currentUser?.uid !== uid) return;
+      if (directory?.uid === uid) usernameChangedAt = Number(directory.createdAt) || Date.now();
+    }
+    setUsernameLabel();
+    // An interrupted rename cannot strand an old searchable username indefinitely.
+    if (validUsername(profile?.previousUsername) && profile.previousUsername !== myUsername) {
+      try {
+        await window.WENV_DB.releaseOldUsername(profile.previousUsername,uid);
+        await window.WENV_DB.clearPreviousUsername(uid);
+      } catch (cleanupErr) { console.warn('Pending old username cleanup',cleanupErr); }
+    }
+  } catch(err) { console.warn('Username profile unavailable',err); }
+}
+function usernameStatus(message,error=false) {
+  const node = $('#usernameStatus'); node.textContent=message; node.classList.toggle('is-error',error);
+  const dialogNode=$('#usernameModalStatus');
+  if (dialogNode){dialogNode.textContent=message; dialogNode.classList.toggle('is-error',error);}
+}
+$('#editMyUsername').addEventListener('click',()=>{
+  if (!currentUser || usernameBusy) return;
+  usernameEditing = !usernameEditing;
+  usernameStatus(usernameRemainingMs() ? `Your next username change is available in ${usernameRemainingText(usernameRemainingMs())}.` : '');
+  setUsernameLabel();
+  if (usernameEditing) { $('#myUsernameInput').value = myUsername; $('#myUsernameInput').focus(); }
+});
+$('#cancelUsernameEdit').addEventListener('click',()=>{
+  usernameEditing=false;usernameStatus('');setUsernameLabel();
+});
+function cancelUsernameDialog(){
+  if(usernameBusy)return;
+  usernameEditing=false;usernameStatus('');setUsernameLabel();
+  $('#editMyUsername').focus({preventScroll:true});
+}
+$('#usernameModalClose').addEventListener('click',cancelUsernameDialog);
+$('#usernameModalBackdrop').addEventListener('click',e=>{if(e.target.id==='usernameModalBackdrop')cancelUsernameDialog();});
+document.addEventListener('keydown',e=>{
+  if($('#usernameModalBackdrop').hidden)return;
+  if(e.key==='Escape'){e.preventDefault();cancelUsernameDialog();}
+  if(e.key==='Enter' && e.target.id==='myUsernameInput'){$('#saveMyUsername').click();}
+  if(e.key==='Tab'){
+    const focusable=[...$('#usernameModalBackdrop').querySelectorAll('button:not(:disabled),input:not(:disabled)')];
+    if(!focusable.length)return;
+    if(e.shiftKey && document.activeElement===focusable[0]){e.preventDefault();focusable.at(-1).focus();}
+    else if(!e.shiftKey && document.activeElement===focusable.at(-1)){e.preventDefault();focusable[0].focus();}
+  }
+});
+// The database enforces the 7-day cooldown too; no localStorage-based limit.
+$('#saveMyUsername').addEventListener('click',async()=>{
+  if (!currentUser || !window.WENV_DB?.reserveUsername || usernameBusy) return;
+  if (usernameRemainingMs()) return usernameStatus('Your 7-day username cooldown is still active.',true);
+  const name = normalizeUsername($('#myUsernameInput').value);
+  if (!validUsername(name)) return usernameStatus('Use 3–20 lowercase letters, numbers, or underscores.',true);
+  if (name===myUsername) { usernameEditing=false;setUsernameLabel();return usernameStatus('No changes to save.'); }
+  usernameBusy=true; setUsernameLabel();
+  const button=$('#saveMyUsername');button.textContent='Saving…';
+  const oldName=myUsername, currentUid=currentUser.uid;
+  let claimed=false,profileSaved=false;
+  try {
+    const saved=await window.WENV_DB.reserveUsername(name,currentUid,String(currentUser.displayName||'Envelope friend').slice(0,60));
+    if (!saved) return usernameStatus('That username is taken. Try another one.',true);
+    claimed=true;
+    // Reserve first, then update profile (rules check reservation ownership), finally retire old username.
+    await window.WENV_DB.setMyProfile(currentUid,{username:name,usernameChangedAt:window.WENV_DB.serverTimestamp(),...(oldName?{previousUsername:oldName}:{})});
+    profileSaved=true;
+    if (currentUser?.uid!==currentUid) return;
+    myUsername=name;usernameChangedAt=Date.now();usernameEditing=false;
+    let retired = true;
+    if (oldName && oldName!==name) {
+      try {
+        retired = await window.WENV_DB.releaseOldUsername(oldName,currentUid);
+        if (retired) await window.WENV_DB.clearPreviousUsername(currentUid);
+      } catch(cleanupError) {retired = false; console.warn('Old username cleanup pending',cleanupError);}
+    }
+    usernameStatus(retired
+      ? `✓ @${name} is now your searchable username. Next change available in 7 days.`
+      : `✓ @${name} saved, but old username cleanup is pending. Reopen Account & Data when online.`,!retired);
+    toast(oldName ? 'Username updated ♡' : 'Username claimed ♡');
+  } catch(err) {
+    console.error('Username update failed',err);
+    usernameStatus(err?.code === 'PERMISSION_DENIED' || String(err?.message||'').includes('PERMISSION_DENIED') ? 'Permission denied by Firebase. Deploy database.rules.json and confirm your 7-day cooldown.' : 'Could not update username: ' + String(err?.message||'Please retry when online.').slice(0,130),true);
+    if (claimed && !profileSaved && name!==oldName) {
+      try {await window.WENV_DB.releaseOldUsername(name,currentUid)} catch(cleanupError){console.warn('Reservation cleanup failed',cleanupError)}
+    }
+  } finally {usernameBusy=false;setUsernameLabel();}
+});
+setInterval(()=>{if(currentUser && $('#settings-account')?.classList.contains('on'))setUsernameLabel();},60000);
+const searchResults = $('#usernameSearchResults');
+let usernameDebounce=0;
+$('#recipientSearchInput').addEventListener('input',()=>{
+  clearTimeout(usernameDebounce);const token=++searchToken;
+  const query=normalizeUsername($('#recipientSearchInput').value);
+  pickedRecipient=null;selectedMailId=null;
+  $('#sendEnvelopeStep').hidden=true;
+  if(query.length<2){searchResults.innerHTML='<p class="mail-empty">Type at least 2 characters to find a username.</p>';return}
+  if(!/^[a-z0-9_]{2,20}$/.test(query)){searchResults.innerHTML='<p class="mail-empty">Use letters, numbers, or underscores.</p>';return}
+  searchResults.innerHTML='<p class="mail-empty">Searching usernames…</p>';
+  usernameDebounce=setTimeout(async()=>{
+    if(!window.WENV_DB?.searchUsernames){searchResults.innerHTML='<p class="mail-empty">Connecting to Firebase…</p>';return}
+    try{
+      const matches=await window.WENV_DB.searchUsernames(query);
+      if(token!==searchToken || !currentUser)return;
+      searchResults.innerHTML=matches.length ? matches.map(v=>`<button type="button" class="mail-user-result" data-recipient-name="${esc(v.username)}"><span class="mail-user-avatar">@</span><span><strong>@${esc(v.username)}</strong><small>${esc(v.displayName||'W-Envelope member')}</small></span><span>Choose ›</span></button>`).join('') : '<p class="mail-empty">No usernames found. Ask your friend to claim a username in Settings → Account & Data.</p>';
+    }catch(err){console.warn(err);searchResults.innerHTML='<p class="mail-empty">Search unavailable. Make sure the database rules are published.</p>'}
+  },260);
+});
+searchResults.addEventListener('click',async e=>{
+  const btn=e.target.closest('[data-recipient-name]');if(!btn)return;
+  const username=btn.dataset.recipientName;
+  // Resolve fresh; never trust user-supplied UID or stale search cards.
+  try{
+    const found=await window.WENV_DB.getUsername(username);
+    if(!found?.uid){toast('That username is no longer available');return}
+    if(found.uid===currentUser?.uid){toast('Choose a different recipient ♡');return}
+    pickedRecipient={uid:found.uid,username,displayName:found.displayName||username};
+    $('#selectedRecipient').textContent='Send to @'+username;
+    $('#sendEnvelopeStep').hidden=false;
+    $('#recipientEnvelopeChoices').innerHTML=store.length ? store.map(env=>`<button class="mail-envelope-choice" type="button" data-pick-envelope="${esc(env.id)}"><span class="mail-letter-icon">💌</span><span><strong>${esc(env.title)}</strong><small>${env.pages.length} pages · ${esc(fmt(env.createdAt))}</small></span><span class="mail-check">○</span></button>`).join('') : '<p class="mail-empty">No recent envelopes yet. Create and save an envelope first.</p>';
+    selectedMailId=null;$('#prepareEnvelopeSend').disabled=true;
+    $('#recipientEnvelopeChoices').scrollIntoView({block:'nearest',behavior:calm?'auto':'smooth'});
+  }catch(err){console.error(err);toast('Could not load recipient. Try again.')}
+});
+$('#recipientEnvelopeChoices').addEventListener('click',e=>{
+  const card=e.target.closest('[data-pick-envelope]');if(!card)return;
+  selectedMailId=card.dataset.pickEnvelope;
+  $$('#recipientEnvelopeChoices [data-pick-envelope]').forEach(btn=>{
+    btn.classList.toggle('selected',btn===card);
+    btn.querySelector('.mail-check').textContent=btn===card?'✓':'○';
+  });
+  $('#prepareEnvelopeSend').disabled=false;
+});
+$('#prepareEnvelopeSend').addEventListener('click',()=>{
+  if(!pickedRecipient || !store.some(e=>e.id===selectedMailId))return;
+  const real=String(currentUser?.displayName||currentUser?.email?.split('@')[0]||myUsername||'Someone').slice(0,50);
+  modal(`<div class="mail-send-modal"><div class="big">💌</div><h2>Before you send…</h2><p>How should <b>@${esc(pickedRecipient.username)}</b> see your sender name?</p><div class="sender-options"><label class="sender-option"><input type="radio" name="senderMode" value="real" checked><span><b>My real Google display name</b><small>${esc(real)}</small></span></label><label class="sender-option"><input type="radio" name="senderMode" value="anonymous"><span><b>Random anonymous name</b><small>We will choose a cute mystery name.</small></span></label><label class="sender-option ${isPremium()?'':'sender-option-locked'}"><input type="radio" name="senderMode" value="custom" ${isPremium()?'':'disabled'}><span><b>✦ My custom sender name ${isPremium()?'':'🔒 Premium'}</b><small>Personalize your signature for this delivery.</small></span></label></div><label class="mail-custom-field" id="mailCustomField" hidden>Custom sender name<input id="customSenderName" maxlength="40" placeholder="e.g. A Secret Admirer" autocomplete="off"></label><p id="mailSendError" class="mail-error" role="alert"></p><div class="row"><button class="btn sec" onclick="closeModal()">Cancel</button><button class="btn pri" type="button" id="confirmEnvelopeSend">Send envelope 💌</button></div></div>`);
+  $$('#mc input[name="senderMode"]').forEach(input=>input.onchange=()=>{$('#mailCustomField').hidden=input.value!=='custom'});
+  $('#confirmEnvelopeSend').onclick=()=>deliverEnvelope(real);
+});
+const anonymousNames=['Secret Star ✨','Moonlight Messenger 🌙','Hidden Rose 🌹','Mystery Heart 💗','Anonymous Butterfly 🦋','Secret Sunbeam ☀️','Dreamy Stranger 💌'];
+async function deliverEnvelope(realName){
+  if(!currentUser || !pickedRecipient || !selectedMailId)return;
+  const envelope=store.find(e=>e.id===selectedMailId);if(!envelope)return;
+  const chosen=$('#mc input[name="senderMode"]:checked')?.value||'real';
+  if(chosen==='custom' && !isPremium()){ $('#mailSendError').textContent='Custom sender names require Premium.';return }
+  const custom=$('#customSenderName')?.value.trim()||'';
+  if(chosen==='custom' && (custom.length<2||custom.length>40)){ $('#mailSendError').textContent='Custom name must be 2–40 characters.';return }
+  const displayName=chosen==='anonymous' ? anonymousNames[Math.floor(Math.random()*anonymousNames.length)] : chosen==='custom'?custom:realName;
+  const to={...pickedRecipient};const button=$('#confirmEnvelopeSend');button.disabled=true;
+  modal(`<div class="mail-progress" role="status" aria-live="polite"><div class="mail-spinner"></div><h2>Sending your envelope…</h2><p>Securing your letter and delivering it to @${esc(to.username)}.</p></div>`);
+  try{
+    if(!cloudReady)throw Error('Your envelopes are not yet synced');
+    const code=await ensureCode(envelope);
+    // Check recipient again to avoid accidentally sending to a renamed username.
+    const latest=await window.WENV_DB.getUsername(to.username);
+    if(!latest || latest.uid!==to.uid)throw Error('Recipient username changed. Search again.');
+    await window.WENV_DB.sendDirectEnvelope(to.uid,{
+      title:envelope.title,code,from:displayName,senderMode:chosen,
+      senderUid:currentUser.uid,senderUsername:myUsername||'',recipientUid:to.uid,
+      receivedAt:new Date().toISOString(),createdAt:envelope.createdAt
+    });
+    modal(`<div class="big">💌</div><h2>Envelope delivered!</h2><p><strong>${esc(envelope.title)}</strong> is now in <b>@${esc(to.username)}</b>'s Received Envelopes, with a new-mail badge.</p><button type="button" class="btn pri wide" onclick="closeModal()">Lovely! ♡</button>`);
+    $('#recipientSearchInput').value='';searchResults.innerHTML='<p class="mail-empty">Search another username to send again.</p>';
+    $('#sendEnvelopeStep').hidden=true;pickedRecipient=null;selectedMailId=null;
+  }catch(err){console.error('Direct send:',err);modal(`<div class="big">✉️</div><h2>Couldn’t deliver the letter</h2><p>${esc(err?.message || 'Please try again. Ensure the updated database rules are published.')}</p><button class="btn pri wide" type="button" onclick="closeModal()">Try again</button>`)}
+}
+
 /* dashboard */
 function renderDash() {
   const L = $('#list');
   $('#recentCount').textContent = store.length; $('#receivedCount').textContent = receivedStore.length;
+  const unread = receivedStore.filter(e => (e.senderUid || e.anonymous) && !e.readAt).length;
+  $('#receivedUnread').hidden = unread === 0; $('#receivedUnread').textContent = unread > 99 ? '99+' : String(unread);
+  const navCount = $('#mailboxNavBadge'); if (navCount) { navCount.hidden = !unread; navCount.textContent = unread > 99 ? '99+' : String(unread); }
+  document.title = unread ? `(${unread}) 💌 W-Envelope Cute` : 'W-Envelope Cute';
   $('#total').textContent = `${store.length} created · ${receivedStore.length} received`;
   renderAccountDashboard();
-  $('#recentTab').classList.toggle('on', mailboxView === 'recent'); $('#receivedTab').classList.toggle('on', mailboxView === 'received');
-  $('#recentTab').setAttribute('aria-selected', String(mailboxView === 'recent')); $('#receivedTab').setAttribute('aria-selected', String(mailboxView === 'received'));
-  $('#mailboxNote').textContent = mailboxView === 'recent' ? 'Letters you created. Edit them anytime, then share the same short link.' : 'Letters people sent you through shared links. Open them here without searching old chats.';
+  $('#recentTab').classList.toggle('on', mailboxView === 'recent'); $('#receivedTab').classList.toggle('on', mailboxView === 'received'); $('#sendTab').classList.toggle('on', mailboxView === 'send');
+  $('#mailboxSend').hidden = mailboxView !== 'send'; $('#list').hidden = mailboxView === 'send';
+  $('#recentTab').setAttribute('aria-selected', String(mailboxView === 'recent')); $('#receivedTab').setAttribute('aria-selected', String(mailboxView === 'received')); $('#sendTab').setAttribute('aria-selected', String(mailboxView === 'send'));
+  $('#mailboxNote').textContent = mailboxView === 'recent' ? 'Letters you created. Edit them anytime, then share the same short link.' : mailboxView === 'received' ? 'Letters people sent you. New deliveries are marked until you read them.' : 'Search a username, choose a saved envelope, and send it straight to their mailbox.';
+  if (mailboxView === 'send') { L.innerHTML = ''; return; }
   if (mailboxView === 'recent') {
     if (!store.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big brand-big"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h3>No recent envelopes</h3><p class="soft">Start with your first letter.</p><button class="btn pri" data-go="create">Create envelope</button></div>'; return }
     L.innerHTML = store.map(e => `<article class="card"><div class="thumb" style="background:${shade(e.envelopeColor, .72)}">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { coverText: e.coverText })}</div><div class="info"><h3>${esc(e.title)}</h3><div class="meta"><span class="chip">${e.pages.length} pages</span><small>${fmt(e.updatedAt || e.createdAt)}</small></div><div class="acts"><button type="button" class="btn sec" data-envelope-action="view" data-envelope-id="${esc(e.id)}">View</button><button type="button" class="btn sec edit-envelope-btn" data-envelope-action="edit" data-envelope-id="${esc(e.id)}" aria-label="Edit ${esc(e.title)}">Edit</button><button type="button" class="btn pri" data-envelope-action="share" data-envelope-id="${esc(e.id)}">Share</button><button type="button" class="btn dng" data-envelope-action="delete" data-envelope-id="${esc(e.id)}" aria-label="Delete ${esc(e.title)}">🗑</button></div></div></article>`).join('');
   } else {
     if (!receivedStore.length) { L.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="big">📭</div><h3>No received envelopes yet</h3><p class="soft">Open a shared envelope link and it will be saved to this collection.</p></div>'; return }
-    L.innerHTML = receivedStore.map(e => `<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><img class="received-brand-logo" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"></div><div class="info"><h3>${esc(e.title || 'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from || 'Someone')}</span><small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
+    L.innerHTML = receivedStore.map(e => `<article class="card"><div class="thumb" style="background:linear-gradient(135deg,#ffe1f0,#eadfff)"><img class="received-brand-logo" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"></div><div class="info"><h3>${esc(e.title || 'Lovely letter')}</h3><div class="meta"><span class="chip">From ${esc(e.from || 'Someone')}</span>${(e.senderUid || e.anonymous) && !e.readAt ? '<span class="unread-chip">● New</span>' : ''}<small>${fmt(e.receivedAt)}</small></div><div class="acts"><button class="btn pri" data-received="${esc(e.key)}">Read letter</button><button class="btn dng" data-remove-received="${esc(e.key)}" aria-label="Remove from received">Remove</button></div></div></article>`).join('');
   }
 }
 function renderAccountDashboard() {
@@ -1060,7 +1535,7 @@ function renderAccountDashboard() {
   $('#accLatestUpdate').textContent = latest && !isNaN(Date.parse(latest)) ? fmt(latest) : 'No envelopes yet';
   $('#accountPlanBadge').textContent = isPremium() ? '✦ Premium active' : 'Free plan';
   $('#accountPlanBadge').classList.toggle('is-premium', isPremium());
-  $('#accPremiumDetail').textContent = isPremium() ? 'Active · owner-approved' : pending ? 'Free · payment under review' : 'Free · upgrade available';
+  $('#accPremiumDetail').textContent = isPremium() ? 'Active · ' + premiumLeftText(premiumRemaining()) + ' remaining' : pending ? 'Free · payment under review' : 'Free · upgrade available';
   const uid = currentUser?.uid || '';
   $('#accUidMasked').textContent = uid ? uid.slice(0, 6) + '…' + uid.slice(-4) : '—';
   const signed = currentUser?.metadata?.lastSignInTime;
@@ -1072,10 +1547,12 @@ function renderAccountDashboard() {
 function setMailbox(view) { mailboxView = view; renderDash(); }
 $('#recentTab').onclick = () => setMailbox('recent');
 $('#receivedTab').onclick = () => setMailbox('received');
+$('#sendTab').onclick = () => setMailbox('send');
 document.addEventListener('click', async event => {
   const view = event.target.closest('[data-received]');
   if (view) {
     const item = receivedStore.find(v => v.key === view.dataset.received); if (!item) return;
+    if ((item.senderUid || item.anonymous) && !item.readAt) window.WENV_DB.markReceivedRead(currentUser.uid, item.key).catch(console.warn);
     if (item.code) { location.hash = 'e=' + encodeURIComponent(item.code); checkHash() }
     else if (item.envelope) { setup(clean(item.envelope), true) }
     return;
@@ -1349,6 +1826,16 @@ function paintPage(i, animateOldStyle = 0) {
   el.className = 'page' + (animateOldStyle > 0 ? ' fn' : animateOldStyle < 0 ? ' fp' : '');
   $('#pgTxt').textContent = '';
   $('#pgTxt').setAttribute('aria-label', String(p.text || ''));
+  // Reserve only the height needed for this letter; avoid jumping while it types.
+  const measure = $('#pgTxt').cloneNode(false);
+  measure.removeAttribute('id');
+  measure.textContent = String(p.text || '');
+  measure.style.cssText = 'height:auto;min-height:0;max-height:none;visibility:hidden;position:absolute;pointer-events:none;white-space:pre-wrap;overflow-wrap:anywhere;overflow:visible;';
+  $('#page').append(measure);
+  measure.style.width = $('#pgTxt').getBoundingClientRect().width + 'px';
+  const requiredHeight = Math.ceil(measure.getBoundingClientRect().height);
+  measure.remove();
+  $('#pgTxt').style.minHeight = Math.max(24,requiredHeight)+'px';
   $('#pgNo').textContent = `Page ${i + 1} of ${recv.pages.length}`;
   const photos = $('#pgPhotos'); photos.innerHTML = photoStackMarkup(p.photos, 'reader', i, p.photoStyle, p.photoLayout);
   photos.hidden = !(p.photos || []).length;
@@ -1444,16 +1931,23 @@ function next() {
 function leave(c) { clearPaperTurn(); hideBouquetIntro(true); closeModal(); history.replaceState(null, '', location.pathname + location.search); recv = null; go(c ? 'create' : 'dash') }
 let hashRequest = 0;
 function checkHash() {
-  if (!currentUser) return false;
   const h = location.hash;
+  if (window.WENV_ANON?.checkHash?.()) return true;
+  const hasPublicLetter = h.startsWith('#e=') || h.startsWith('#envelope=');
+  if (!currentUser) {
+    document.body.classList.toggle('guest-receiving', hasPublicLetter);
+    $('#authGate').hidden = hasPublicLetter;
+    if (!hasPublicLetter) return false;
+  }
   if (h.startsWith('#e=')) {
+    if (!window.WENV_DB?.getPublic) return false;
     const code = decodeURIComponent(h.slice(3));
     const request = ++hashRequest;
     if (!safeCode(code)) { toast('Invalid short link'); go('home'); return true }
     clearPaperTurn(); recv = null; go('recv'); $('#recvHead').hidden = false; $('#recvTitle').textContent = 'Opening your letter...'; $('#recvSub').textContent = 'Finding your envelope in Firebase 💌';
     $('#recvScene').innerHTML = ''; hideBouquetIntro(true); $('#hint').style.display = 'none'; $('#reader').hidden = true; $('#back').hidden = true;
     window.WENV_DB.getPublic(code).then(raw => {
-      if (request !== hashRequest || currentUser === null || location.hash !== h) return;
+      if (request !== hashRequest || location.hash !== h) return;
       const obj = clean(raw && raw.envelope);
       if (!obj) { toast('This short link does not exist'); history.replaceState(null, '', location.pathname + location.search); go('home'); return }
       setup(obj, false);
@@ -1463,7 +1957,7 @@ function checkHash() {
   }
   if (!h.startsWith('#envelope=')) return false;
   const d = clean(dec(h.slice(10)));
-  if (!d) { toast('This older envelope link looks broken'); return false }
+  if (!d) { toast('This older envelope link looks broken'); go('home'); return false }
   setup(d, false); recordReceived('legacy-' + String(h).split('').reduce((v, c) => (Math.imul(v, 31) + c.charCodeAt(0)) >>> 0, 7).toString(36), d, ''); return true;
 }
 
@@ -1553,13 +2047,11 @@ function renderUser(user) {
   $("#navName").textContent = name;
   $("#accountName").textContent = name;
   $("#accountEmail").textContent = user.email || "Signed in with Google";
+  $("#accountEmailValue").textContent = user.email || "Google email unavailable";
   $("#navAvatar").src = $("#accountAvatar").src = safePhoto(user.photoURL);
 }
 function openAccountData() { if (!currentUser) return; go('settings'); setSettingsPage('account'); }
 $('#accountNavTrigger').onclick = openAccountData;
-$('#accountManagePremium').onclick = () => { go('settings'); setSettingsPage('subscription'); };
-$('#accountOpenMail').onclick = () => go('dash');
-$('#accountCreateNew').onclick = () => go('create');
 $('#accCopyUid').onclick = async () => {
   const id = currentUser?.uid;
   if (!id) return;
@@ -1594,20 +2086,25 @@ function showAuthControls() {
 function setSignedInUser(user) {
   const oldUid = currentUser && currentUser.uid;
   currentUser = user || null;
+  window.WENV_ANON?.userChanged?.(currentUser);
   updateAdminShortcut(user);
   document.body.classList.toggle('authenticated', !!user);
-  $('#authGate').hidden = !!user;
+  const guestLink = !user && (location.hash.startsWith('#e=') || location.hash.startsWith('#envelope=') || location.hash.startsWith('#ask='));
+  document.body.classList.toggle('guest-receiving', guestLink);
+  $('#authGate').hidden = !!user || guestLink;
   if (!user) {
-    stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopSupport(); stopFeedback(); stopCloud = stopReceived = stopSubscription = stopPayments = stopSupport = stopFeedback = () => { }; supportInbox = {}; feedbackInbox = {}; cloudReady = false; cloudConnected = false; receivedStore = []; premiumApproved = false; premiumPayments = []; editingId = null;
+    stopCloud(); stopReceived(); stopSubscription(); stopPayments(); stopSupport(); stopFeedback(); stopCloud = stopReceived = stopSubscription = stopPayments = stopSupport = stopFeedback = () => { }; supportInbox = {}; feedbackInbox = {}; cloudReady = false; cloudConnected = false; receivedStore = []; myUsername = ''; usernameChangedAt = 0; usernameEditing = false; setUsernameLabel(); premiumApproved = false; premiumState = null; premiumPayments = []; editingId = null;
     clearPaperTurn(); accountKey = null; appearanceKey = null; store = []; recv = null; connectionUid = null;
+    if (guestLink) checkHash();
     $('#googleRedirect').hidden = true;
     updateSubscriptionUI(); showAuthControls(); return;
   }
   if (oldUid !== user.uid) {
-    premiumApproved = false; premiumPayments = [];
+    premiumApproved = false; premiumState = null; premiumPayments = [];
     loadAccount(user.uid); loadAppearance(user.uid); renderUser(user); renderDash();
-    watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid); watchInquiries(user.uid);
-    if (!checkHash()) go('home');
+    loadMyUsername(user.uid); watchReceived(user.uid); watchPremium(user.uid); watchPayments(user.uid); watchInquiries(user.uid);
+    if (window.WENV_ANON?.composing) { $('#authGate').hidden = true; }
+    else if (!checkHash()) go('home');
     watchCloud(user.uid);
   }
 }
@@ -1617,7 +2114,7 @@ window.WENV_AUTH = {
   signIn: null, signOut: null, redirect: null,
   ready(actions) { Object.assign(this, actions); showAuthControls() },
   user: setSignedInUser,
-  fail(error) { $("#googleSignIn").disabled = true; authStatus("Firebase did not load. Check your connection and reload the site.", true); console.error("Firebase load failed:", error) },
+  fail(error) { $("#googleSignIn").disabled = true; authStatus("Firebase did not load. Check your connection and reload the site.", true); console.error("Firebase load failed:", error); if(location.hash.startsWith('#envelope=') || location.hash.startsWith('#ask=')) setSignedInUser(null) },
   redirectError: authError
 };
 $("#googleSignIn").onclick = async () => {
@@ -1698,7 +2195,7 @@ document.addEventListener("click", e => {
     if (action === 'delete') return askDelete(id);
     return;
   }
-  const g = e.target.closest("[data-go]"); if (g) { if (g.dataset.go === 'create' && editingId) resetLetterEditor(); return go(g.dataset.go) }
+  const g = e.target.closest("[data-go]"); if (g) { if (g.dataset.go === 'create' && editingId) resetLetterEditor(); if (window.WENV_ANON?.composing && g.dataset.go !== 'create') window.WENV_ANON.cancelCompose(); return go(g.dataset.go) }
   const v = e.target.closest(".env[data-play]"); if (!v) return;
   if (v.id === "recvEnv") return openRecv();
   const o = v.classList.toggle("open"); if (o) burst(v, 10)
@@ -1742,50 +2239,114 @@ $('#introPreview').onclick = () => previewIntroSelection(paperMagic.introStyle, 
 $('#skipTyping').onclick = finishTyping;
 $('#studioBack').onclick = () => studioMove(-1);
 $('#studioNext').onclick = () => studioMove(1);
-$('#studioPanelCollapse').onclick = () => { studioCollapsed = !studioCollapsed; updateStudioTool(); };
+$('#studioPanelCollapse').onclick = () => studioSetCollapsed(!studioCollapsed);
 $('#studioPanelScroll').addEventListener('input', () => requestAnimationFrame(updateStudioCanvas));
 $('#studioPanelScroll').addEventListener('change', () => requestAnimationFrame(updateStudioCanvas));
 $('#studioPanelScroll').addEventListener('click', e => { if (e.target.closest('.sw button, [data-photo-style], [data-photo-layout], [data-remove-photo], [data-intro-choice], [data-align], [data-effect]')) requestAnimationFrame(updateStudioCanvas); });
 $('#studioReplayIntro').onclick = () => renderStudioIntroPreview();
-// Swipe on the grip/header, not inputs or inner lists: downward folds panel; upward opens.
-let studioSwipeY = null, studioSwipeX = null;
+// Mobile studio bottom sheet: continuous drag on header, snap shut / snap open.
+// Dismissal moves the WHOLE editor-workbench, not just its content/header.
 const swipeHead = $('#studioPanelHead');
-swipeHead.addEventListener('touchstart', e => {
-  if (!createWizardMobile() || e.touches.length !== 1) return;
-  studioSwipeY = e.touches[0].clientY; studioSwipeX = e.touches[0].clientX;
-}, { passive: true });
-swipeHead.addEventListener('touchend', e => {
-  if (studioSwipeY === null) return;
-  const dy = e.changedTouches[0].clientY - studioSwipeY;
-  const dx = e.changedTouches[0].clientX - studioSwipeX;
-  studioSwipeY = studioSwipeX = null;
-  if (Math.abs(dy) > 42 && Math.abs(dy) > Math.abs(dx) * 1.3) {
-    studioCollapsed = dy > 0;
-    updateStudioTool();
-  }
-}, { passive: true });
-swipeHead.addEventListener('click', e => {
-  if (!createWizardMobile() || e.target.closest('button')) return;
-  studioCollapsed = !studioCollapsed;
+const sheet = $('#editorWorkbench');
+const reopenStudio = $('#studioDrawerReopen');
+let studioGesture = null, skipStudioHeadClick = false;
+function studioSetCollapsed(value) {
+  studioCollapsed = Boolean(value);
+  try { sessionStorage.setItem('wenv-mobile-studio-closed', studioCollapsed ? '1' : '0') } catch {}
+  sheet.style.removeProperty('--studio-drag-y');
+  sheet.classList.remove('studio-is-dragging');
   updateStudioTool();
+}
+function studioBegin(y) {
+  if (!createWizardMobile()) return;
+  studioGesture = { startY:y, lastY:y, dragged:false };
+  sheet.classList.add('studio-is-dragging');
+}
+function studioDrag(y) {
+  if (!studioGesture) return;
+  const dy = y - studioGesture.startY;
+  studioGesture.lastY = y;
+  if (Math.abs(dy) > 5) studioGesture.dragged = true;
+  // Pulling upward beyond the fully open position should not overshoot.
+  sheet.style.setProperty('--studio-drag-y', Math.max(-22,Math.min(sheet.offsetHeight,dy))+'px');
+}
+function studioFinish(y) {
+  if (!studioGesture) return;
+  const dy = y - studioGesture.startY;
+  const dragged = studioGesture.dragged;
+  studioGesture = null;
+  sheet.classList.remove('studio-is-dragging');
+  if (dragged && dy > Math.min(98,sheet.offsetHeight*.21)) studioSetCollapsed(true);
+  else studioSetCollapsed(studioCollapsed); // cancelled gesture retains previous state
+  if (dragged) {skipStudioHeadClick=true;setTimeout(()=>{skipStudioHeadClick=false},0)}
+}
+swipeHead.addEventListener('pointerdown',e => {
+  if (!createWizardMobile() || e.target.closest('button') || !e.isPrimary) return;
+  studioBegin(e.clientY);
+  try {swipeHead.setPointerCapture(e.pointerId)} catch (_) {}
 });
-// When the panel is at its top or bottom, a deliberate pull also folds/opens it.
+swipeHead.addEventListener('pointermove',e => {if(studioGesture) studioDrag(e.clientY)});
+swipeHead.addEventListener('pointerup',e => {if(studioGesture) studioFinish(e.clientY)});
+swipeHead.addEventListener('pointercancel',()=> {studioGesture=null;sheet.classList.remove('studio-is-dragging');sheet.style.removeProperty('--studio-drag-y')});
+swipeHead.addEventListener('click',e => {
+  if (!createWizardMobile() || e.target.closest('button') || skipStudioHeadClick) return;
+  studioSetCollapsed(!studioCollapsed);
+});
+// Pull down at the top of editor content (outside buttons/fields) to close.
 const scrollPanel = $('#studioPanelScroll');
-let panelStart = null;
-scrollPanel.addEventListener('touchstart', e => {
-  if (!createWizardMobile() || e.touches.length !== 1) return;
-  panelStart = { x: e.touches[0].clientX, y: e.touches[0].clientY, atTop: scrollPanel.scrollTop <= 2 };
-}, { passive: true });
-scrollPanel.addEventListener('touchend', e => {
-  if (!panelStart) return;
-  const dy = e.changedTouches[0].clientY - panelStart.y;
-  const dx = e.changedTouches[0].clientX - panelStart.x;
-  if (panelStart.atTop && dy > 115 && Math.abs(dy) > 1.5 * Math.abs(dx) && !e.target.closest('input,textarea,select,button')) {
-    studioCollapsed = true;
-    updateStudioTool();
+let panelPull = null;
+scrollPanel.addEventListener('touchstart',e => {
+  if (!createWizardMobile() || e.touches.length !== 1 || studioCollapsed ||
+      e.target.closest('input,textarea,select,button,[contenteditable],.polaroid-options,.intro-choice-grid')) return;
+  panelPull = {x:e.touches[0].clientX,y:e.touches[0].clientY,atTop:scrollPanel.scrollTop<=2,dragging:false};
+},{passive:true});
+scrollPanel.addEventListener('touchmove',e=>{
+  if(!panelPull || !panelPull.atTop || e.touches.length!==1) return;
+  const dy=e.touches[0].clientY-panelPull.y,dx=e.touches[0].clientX-panelPull.x;
+  if(dy>12 && Math.abs(dy)>Math.abs(dx)*1.4){
+    panelPull.dragging=true;
+    e.preventDefault();
+    sheet.classList.add('studio-is-dragging');
+    sheet.style.setProperty('--studio-drag-y',Math.min(sheet.offsetHeight,dy)+'px');
   }
-  panelStart = null;
-}, { passive: true });
+},{passive:false});
+scrollPanel.addEventListener('touchend',e=>{
+  if(!panelPull)return;
+  const dy=e.changedTouches[0].clientY-panelPull.y;
+  const shouldClose=panelPull.dragging && dy>Math.min(110,sheet.offsetHeight*.24);
+  panelPull=null;
+  sheet.classList.remove('studio-is-dragging');
+  studioSetCollapsed(shouldClose || studioCollapsed);
+},{passive:true});
+scrollPanel.addEventListener('touchcancel',()=>{panelPull=null;sheet.classList.remove('studio-is-dragging');sheet.style.removeProperty('--studio-drag-y')});
+// Visible reopening grip remains outside of the closed drawer.
+reopenStudio.addEventListener('click',()=>studioSetCollapsed(false));
+let reopenY=null, reopenTravel=0;
+reopenStudio.addEventListener('touchstart',e=>{
+  if(!createWizardMobile() || !studioCollapsed)return;
+  reopenY=e.touches[0]?.clientY??null;
+  reopenTravel=0;
+  if(reopenY===null)return;
+  sheet.classList.remove('studio-is-collapsed');
+  sheet.classList.add('studio-is-dragging');
+  sheet.style.setProperty('--studio-drag-y',(sheet.offsetHeight+125)+'px');
+},{passive:true});
+reopenStudio.addEventListener('touchmove',e=>{
+  if(reopenY===null || e.touches.length!==1)return;
+  reopenTravel=reopenY-e.touches[0].clientY;
+  sheet.style.setProperty('--studio-drag-y',Math.max(0,sheet.offsetHeight+125-Math.max(0,reopenTravel)*2.3)+'px');
+  if(reopenTravel>8)e.preventDefault();
+},{passive:false});
+reopenStudio.addEventListener('touchend',()=>{
+  if(reopenY===null)return;
+  const open=reopenTravel>45;
+  reopenY=null;
+  reopenTravel=0;
+  studioSetCollapsed(!open);
+},{passive:true});
+reopenStudio.addEventListener('touchcancel',()=>{
+  reopenY=null;reopenTravel=0;studioSetCollapsed(true);
+},{passive:true});
 addEventListener('resize', () => applyCreateWizard());
 $('#count').onchange = () => { activeLetterPage = 0; renderPages(); updPreview(); };
 $('#letterPageTabs').addEventListener('scroll', updatePageTabArrows, { passive: true });
@@ -1793,6 +2354,18 @@ $('#letterPageLeft').onclick = () => $('#letterPageTabs').scrollBy({ left: -$('#
 $('#letterPageRight').onclick = () => $('#letterPageTabs').scrollBy({ left: $('#letterPageTabs').clientWidth * .75, behavior: 'smooth' });
 $('#signatureText').oninput = renderSignatureStyles;
 addEventListener("hashchange", checkHash);
+
+/* Expiration checks use the same stored Firebase expiry; no background writes. */
+let lastPremiumActive = false;
+setInterval(() => {
+  if (!currentUser || !premiumState) return;
+  const active = isPremium();
+  if (active !== lastPremiumActive) {lastPremiumActive=active;updateSubscriptionUI()}
+  else if (active) {
+    $('#premiumAccountStatus').textContent = `✓ Premium active · ${premiumLeftText(premiumRemaining())} remaining · until ${new Date(premiumState.expiresAt).toLocaleString('en-PH')}`;
+    $('#accPremiumDetail').textContent = 'Active · ' + premiumLeftText(premiumRemaining()) + ' remaining';
+  }
+},1000);
 
 /* init */
 const bg = $("#bg"); for (let i = 0; i < 9; i++) {
