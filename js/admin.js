@@ -21,6 +21,7 @@ const sectionMeta = {
   maya: ['Maya Payments','Manage Maya premium transfers separately.','Maya payment requests','Only Maya transaction submissions appear here.'],
   gotyme: ['GoTyme Payments','Manage GoTyme premium transfers separately.','GoTyme payment requests','Only GoTyme transaction submissions appear here.'],
   all: ['All Payments','Browse every payment request in one place.','All payment requests','Filter by status or search customer details.'],
+  reveals: ['Identity Reveal · ₱10','Consent-based email reveals after manual payment approval.','Identity reveal requests','Check the payment reference independently.'],
   support: ['Contact Support','Private support requests from your users.','Support inbox','Read questions and reply directly.'],
   feedback: ['Feedback','Suggestions and product experience reports.','Feedback inbox','Read what your users think.']
 };
@@ -61,6 +62,7 @@ function refreshLiveDurations() {
 }
 setInterval(refreshLiveDurations,1000);
 let current = null, requests = [], section = 'dashboard', term = '', statusFilter = 'all';
+let revealRequests=[],stopReveals=()=>{},writeReveal=null;
 let pageSize = 12, stopListening = () => {}, stopSupport = () => {}, stopFeedback = () => {}, supportRecords = [], feedbackRecords = [], updateInbox = null, selectedReview = null, reviewBusy = false, triggerBeforeDialog = null, toastTimer;
 
 function setStatus(message, type = 'info', title) {
@@ -119,7 +121,7 @@ $('#adminSignOut').onclick = async () => {
   catch(error) {setStatus('Sign-out failed: ' + error.message, 'error');}
 };
 function onSession(user, { ref, onValue }) {
-  stopListening(); stopListening = () => {}; stopSubscriptionWatches(); stopSupport();stopFeedback();stopSupport=stopFeedback=()=>{};supportRecords=[]; feedbackRecords=[];
+  stopListening(); stopListening = () => {};stopReveals();stopReveals=()=>{};revealRequests=[];renderReveals(); stopSubscriptionWatches(); stopSupport();stopFeedback();stopSupport=stopFeedback=()=>{};supportRecords=[]; feedbackRecords=[];
   closeReview(true);
   current = null; requests = [];
   setIdentity(user);
@@ -141,6 +143,11 @@ function onSession(user, { ref, onValue }) {
   }
   current = user;
   watchAdminInboxes({ref,onValue});
+  stopReveals=onValue(ref('identityRevealPayments'),snap=>{
+    if(!current || current.uid!==user.uid)return;
+    revealRequests=Object.entries(snap.val()||{}).flatMap(([ownerUid,items])=>Object.entries(items||{}).map(([messageId,item])=>({ownerUid,messageId,...item}))).sort((a,b)=>Number(b.submittedAt||0)-Number(a.submittedAt||0));
+    renderReveals();
+  },err=>{console.error('Identity payments:',err);$('#adminRevealList').textContent='Unable to load identity payment requests. Publish the included Firebase rules.';});
   setStatus('Your UID matches. Checking Realtime Database read permissions…');
   $('#adminWelcomeName').textContent = 'Welcome back, ' + (user.displayName ? user.displayName.split(' ')[0] : 'Admin') + ' ✨';
   stopListening = onValue(ref('premiumPayments'), snapshot => {
@@ -173,6 +180,31 @@ function onSession(user, { ref, onValue }) {
   });
 }
 
+function renderReveals(){
+ const box=$('#adminRevealList');if(!box)return;
+ const count=revealRequests.filter(r=>r.status==='pending').length;
+ $('#adminRevealCount').textContent=revealRequests.length+' requests';
+ $('#revealBadge').hidden=count===0;$('#revealBadge').textContent=count;
+ if(!revealRequests.length){box.innerHTML='<p class="admin-empty">No identity reveal payment requests yet.</p>';return;}
+ box.innerHTML=revealRequests.map((r,i)=>{
+  const pending=r.status==='pending';
+  return `<article class="admin-reveal-card"><h3>🔎 ${escapeHTML(r.status||'pending').toUpperCase()} · ${currency(r.amount)}</h3><p><strong>Recipient UID:</strong> ${escapeHTML(r.ownerUid)}<br><strong>Letter:</strong> ${escapeHTML(r.messageId)}<br><strong>Method:</strong> ${escapeHTML(r.method==='maya'?'Maya':'GoTyme')}<br><strong>Reference:</strong> <code>${escapeHTML(r.reference)}</code><br><strong>Submitted:</strong> ${escapeHTML(prettyDate(r.submittedAt))}</p>${pending?`<label class="admin-verified-check"><input type="checkbox" data-reveal-verified="${i}"><span>I independently verified the exact ₱10 deposit and reference in the official bank or wallet history.</span></label><div class="admin-reveal-actions"><button type="button" data-reveal-action="approve" data-reveal-index="${i}" disabled>✓ Approve</button><button class="reject" type="button" data-reveal-action="reject" data-reveal-index="${i}">✕ Reject</button></div>`:'<small>Already reviewed · no further changes</small>'}<p data-reveal-status></p></article>`;
+ }).join('');
+}
+$('#adminRevealList').addEventListener('change',e=>{
+ const input=e.target.closest('[data-reveal-verified]');if(!input)return;
+ const card=input.closest('.admin-reveal-card');const approve=card.querySelector('[data-reveal-action="approve"]');if(approve)approve.disabled=!input.checked;
+});
+$('#adminRevealList').addEventListener('click',async e=>{
+ const btn=e.target.closest('[data-reveal-action]');if(!btn || !current || !isAdmin(current)||!writeReveal)return;
+ const item=revealRequests[Number(btn.dataset.revealIndex)];if(!item||item.status!=='pending')return;
+ const card=btn.closest('.admin-reveal-card');const status=card.querySelector('[data-reveal-status]');
+ const approved=btn.dataset.revealAction==='approve';
+ if(approved&&!card.querySelector('[data-reveal-verified]').checked){status.textContent='Check the actual bank transaction first.';return;}
+ card.querySelectorAll('button').forEach(x=>x.disabled=true);status.textContent='Saving admin review…';
+ try{await writeReveal(item,approved);flash(approved?'₱10 reveal payment approved.':'Reveal request rejected.');}
+ catch(err){status.textContent='Review failed: '+(err?.message||err);card.querySelectorAll('button').forEach(x=>x.disabled=false);}
+});
 // Navigation is intentionally independent from the authentication state, but data remains guarded.
 $$('.admin-nav').forEach(button => button.addEventListener('click', () => {setActiveSection(button.dataset.section); }));
 $$('[data-open-method]').forEach(button => button.addEventListener('click', () => setActiveSection(button.dataset.openMethod)));
@@ -192,7 +224,9 @@ function setActiveSection(next) {
     selected ? node.setAttribute('aria-current','page') : node.removeAttribute('aria-current');
   });
   const inbox = next === 'support' || next === 'feedback';
-  $('#adminPaymentWorklist').hidden = inbox || next === 'dashboard';
+  const reveal = next === 'reveals';
+  $('#adminRevealPanel').hidden = !reveal;
+  $('#adminPaymentWorklist').hidden = inbox || reveal || next === 'dashboard';
   $('#adminInboxSection').hidden = !inbox;
   $('#adminStats').hidden = next !== 'dashboard';
   $('#adminMethodSummary').hidden = true; // Dashboard ends at Payment channels; methods remain in their sidebar tabs.
@@ -565,6 +599,7 @@ async function boot() {
     const app=appMod.initializeApp(firebaseConfig);
     auth=authMod.getAuth(app);
     const db=dbMod.getDatabase(app);
+    writeReveal=(item,approved)=>dbMod.update(dbMod.ref(db,'identityRevealPayments/'+item.ownerUid+'/'+item.messageId),{status:approved?'approved':'rejected',reviewedAt:Date.now(),reviewedBy:current.uid});
     updateInbox=(kind,uid,id,changes)=>dbMod.update(dbMod.ref(db,(kind==='support'?'supportTickets':'feedbackEntries')+'/'+uid+'/'+id),{...changes,updatedAt:Date.now()});
     const provider=new authMod.GoogleAuthProvider();
     provider.setCustomParameters({prompt:'select_account'});

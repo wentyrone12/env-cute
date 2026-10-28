@@ -1,0 +1,32 @@
+{
+  "name": "W-Envelope Cute — Anonymous Letters",
+  "short_name": "W-Envelope",
+  "description": "Create cute paper envelopes and share anonymous message pages.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#fff4f8",
+  "theme_color": "#f5dcea",
+  "icons": [
+    {
+      "src": "assets/pwa-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/pwa-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": [
+    "social",
+    "lifestyle"
+  ]
+}

@@ -373,6 +373,7 @@ function updateSubscriptionUI() {
     : premiumPayments.some(v => v.status === 'pending') ? '⏳ Payment reference submitted; awaiting manual verification.'
       : 'Free plan. Select a payment method to request Premium.';
   renderPaymentHistory(); updatePageOptions(); renderPages(); renderSignatureStyles(); renderColorPalettes(); updateCoverEditorLock(); updatePaperMagicEditor(); renderAccountDashboard();
+  window.WENV_ANON?.refreshPremium?.();
 }
 function watchPremium(uid) {
   stopSubscription();
@@ -548,7 +549,7 @@ const studioPageTools = new Set(['paper', 'write', 'photos', 'borders', 'layouts
 function buildStudioRail() {
   const rail = $('#studioToolRail');
   if (rail.children.length) return;
-  rail.innerHTML = STUDIO_TOOLS.map(tool => `<button type="button" class="studio-tool" data-studio-switch="${tool.id}" aria-label="${tool.heading}" title="${tool.heading}"><span class="studio-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.name}</span></button>`).join('');
+  rail.innerHTML = STUDIO_TOOLS.map(tool => `<button type="button" class="studio-tool${tool.id === 'magic' && !isPremium() ? ' is-premium-locked' : ''}" data-studio-switch="${tool.id}" aria-label="${tool.heading}${tool.id === 'magic' && !isPremium() ? ' - Premium locked' : ''}" title="${tool.heading}"><span class="studio-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.name}${tool.id === 'magic' && !isPremium() ? ' 🔒' : ''}</span></button>`).join('');
   rail.querySelectorAll('[data-studio-switch]').forEach(btn => btn.addEventListener('click', () => selectStudioTool(btn.dataset.studioSwitch)));
 }
 function updateStudioCanvas() {
@@ -615,6 +616,11 @@ function updateStudioTool() {
   $('#studioBack').disabled = i === 0;
   $('#studioNext').textContent = i === STUDIO_TOOLS.length - 1 ? '💌 Seal now' : i === STUDIO_TOOLS.length - 2 ? 'Review ›' : 'Next ›';
   $$('#studioToolRail .studio-tool').forEach(btn => {
+    const locked = btn.dataset.studioSwitch === 'magic' && !isPremium();
+    btn.classList.toggle('is-premium-locked', locked);
+    const name=STUDIO_TOOLS.find(t=>t.id===btn.dataset.studioSwitch);
+    if (name) btn.lastElementChild.textContent=name.name+(locked?' 🔒':'');
+    btn.setAttribute('aria-label', (name?.heading||'Tool')+(locked?' - Premium locked':''));
     const active = btn.dataset.studioSwitch === item.id;
     btn.classList.toggle('active', active);
     btn.setAttribute('aria-current', active ? 'step' : 'false');
@@ -624,6 +630,10 @@ function updateStudioTool() {
 }
 function selectStudioTool(id) {
   if (!STUDIO_TOOLS.some(t => t.id === id)) return;
+  if (id === 'magic' && !isPremium()) {
+    modal('<div class="big">🔒</div><h2>Premium Paper Magic</h2><p>Typewriter, page transitions, and other Magic effects are exclusive to Premium. Your other editing tools are still available.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go(\'settings\');setSettingsPage(\'subscription\')">✦ See Premium</button></div>');
+    return;
+  }
   if(studioTool!==id) mobilePickerDismissed=false;
   studioTool = id; // Tool changes preserve closed state unless user opens the drawer.
   // Borders/Layouts are a photo-first mode: auto-hide the glass sheet and keep a swipeable strip outside it.
@@ -650,11 +660,11 @@ function mobilePhotoSample(i=0) {
 function mobilePhotoOptionsMarkup(type) {
   const p=pages[activeLetterPage] || pages[0];
   if (type==='borders') return PHOTO_STYLES.map((v,i)=>{
-    const selected=p.photoStyle===v.id, locked=!isPremium() && i>0;
+    const selected=p.photoStyle===v.id, locked=!isPremium() && i>=4;
     return `<button type="button" class="mobile-photo-choice photo-variant--${v.id}${selected?' on':''}${locked?' is-locked':''}" data-mobile-photo-style="${v.id}" aria-pressed="${selected}" aria-label="${esc(v.name)}${locked?' Premium required':''}"><span class="mobile-choice-frame polaroid-mini-frame"><span class="mobile-choice-picture polaroid-mini-picture" style="background-image:url('${mobilePhotoSample(i)}')"></span></span>${locked?'<span class="mobile-choice-lock" aria-hidden="true">🔒 Premium</span>':''}<span class="mobile-choice-name">${locked?'🔒 ':''}${esc(v.name)}</span></button>`;
   }).join('');
   return PHOTO_LAYOUTS.map((v,i)=>{
-    const selected=p.photoLayout===v.id, locked=!isPremium() && i>0;
+    const selected=p.photoLayout===v.id, locked=!isPremium() && i>=4;
     const preview=[0,1,2].map(k=>{
       const [x,y,r]=photoCoordinates(v.id,k,3);
       return `<i style="left:calc(50% + ${Math.max(-63,Math.min(63,Math.round(x*.60)))}px);top:${Math.max(3,Math.min(34,Math.round(y*.26)))}px;transform:translateX(-50%) rotate(${r}deg);z-index:${k+1};background-image:url('${mobilePhotoSample(k)}')"></i>`;
@@ -730,7 +740,7 @@ $('#mobilePhotoPickerRail').addEventListener('click',e=>{
   const p=pages[activeLetterPage]; if(!p)return;
   const id=card.dataset.mobilePhotoStyle || card.dataset.mobilePhotoLayout;
   const border=Boolean(card.dataset.mobilePhotoStyle);
-  if(!isPremium() && id!==(border?'classic':'stack'))return lockedDesignNotice();
+  if(!isPremium() && (border?PHOTO_STYLES:PHOTO_LAYOUTS).findIndex(v=>v.id===id)>=4)return lockedDesignNotice();
   if(border) p.photoStyle=safePhotoStyle(id); else p.photoLayout=safePhotoLayout(id);
   studioCollapsed=true; // Choosing another thumbnail must not reopen the bottom sheet.
   try { sessionStorage.setItem('wenv-mobile-studio-closed','1') } catch {}
@@ -992,7 +1002,7 @@ function preserveDesignScroll(pageIndex, attribute, value) {
   }
 }
 function lockedDesignNotice() {
-  modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Classic border and Stack layout are included with Free. Unlock all 60 photo borders and 60 photo layouts with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
+  modal(`<div class="big">🔒</div><h2>Premium photo designs</h2><p>Four border styles and four photo layouts are included with Free. Unlock the remaining 56 of each with Premium.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go('settings');setSettingsPage('subscription')">✦ View subscription</button></div>`);
 }
 
 // Six original geometry families × six deliberate variations each.
@@ -1126,12 +1136,12 @@ function renderPages() {
             </div>
             <div class="photo-design-duo" aria-label="Photo styling choices">
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid border style for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Border <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Classic free · 59 Premium ✦'}</small></div>
-                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 border styles">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Border <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : '4 free · 56 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 border styles">${PHOTO_STYLES.map((v, j) => `<button type="button" class="polaroid-style-option photo-variant--${v.id}${safePhotoStyle(p.photoStyle) === v.id ? ' on' : ''}${!isPremium() && j>=4 ? ' is-locked' : ''}" data-photo-style="${v.id}" data-page="${i}" aria-pressed="${safePhotoStyle(p.photoStyle) === v.id}" aria-label="${v.name}${!isPremium() && j>=4 ? ' - Premium locked' : ''}" title="${v.desc}"><span class="polaroid-mini-frame"><span class="polaroid-mini-picture">♡</span><span class="polaroid-mini-foot"></span></span><span class="polaroid-style-name">${!isPremium() && j>=4 ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
               <div class="polaroid-chooser photo-design-side" role="group" aria-label="Polaroid layering format for page ${i + 1}">
-                <div class="polaroid-chooser-title"><b>Layout <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : 'Stack free · 59 Premium ✦'}</small></div>
-                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 photo layouts">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j ? ' - Premium locked' : ''}" title="${v.desc}">${layoutMiniMarkup(v.id)}<span class="polaroid-style-name">${!isPremium() && j ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
+                <div class="polaroid-chooser-title"><b>Layout <em class="photo-design-count">60 designs</em></b><small>${isPremium() ? '← Swipe to explore →' : '4 free · 56 Premium ✦'}</small></div>
+                <div class="polaroid-options" tabindex="0" aria-label="Scroll through 60 photo layouts">${PHOTO_LAYOUTS.map((v, j) => `<button type="button" class="polaroid-style-option layer-style-option${safePhotoLayout(p.photoLayout) === v.id ? ' on' : ''}${!isPremium() && j>=4 ? ' is-locked' : ''}" data-photo-layout="${v.id}" data-page="${i}" aria-pressed="${safePhotoLayout(p.photoLayout) === v.id}" aria-label="${v.name}${!isPremium() && j>=4 ? ' - Premium locked' : ''}" title="${v.desc}">${layoutMiniMarkup(v.id)}<span class="polaroid-style-name">${!isPremium() && j>=4 ? '🔒 ' : ''}${v.name}</span></button>`).join('')}</div>
               </div>
             </div>
             <div class="photo-previews">${photoStackMarkup(p.photos, 'editor', i, p.photoStyle, p.photoLayout)}${!p.photos.length ? '' : ''}${p.photos.length ? `<div class="photo-remove-list">${p.photos.map((_, k) => `<button type="button" data-remove-photo="${i}:${k}" aria-label="Remove photo ${k + 1}">✕ Photo ${k + 1}</button>`).join('')}</div>` : ''}</div>
@@ -1145,12 +1155,12 @@ function renderPages() {
   }).join('');
   $$('#pages [data-photo-style]').forEach(b => b.onclick = () => {
     const id = safePhotoStyle(b.dataset.photoStyle), i = Number(b.dataset.page);
-    if (!isPremium() && id !== 'classic') return lockedDesignNotice();
+    if (!isPremium() && PHOTO_STYLES.findIndex(v=>v.id===id)>=4) return lockedDesignNotice();
     pages[i].photoStyle = id; renderPages(); preserveDesignScroll(i, 'photo-style', id); toast('Border style updated ♡');
   });
   $$('#pages [data-photo-layout]').forEach(b => b.onclick = () => {
     const id = safePhotoLayout(b.dataset.photoLayout), i = Number(b.dataset.page);
-    if (!isPremium() && id !== 'stack') return lockedDesignNotice();
+    if (!isPremium() && PHOTO_LAYOUTS.findIndex(v=>v.id===id)>=4) return lockedDesignNotice();
     pages[i].photoLayout = id; renderPages(); preserveDesignScroll(i, 'photo-layout', id); toast('Photo layout updated ♡');
   });
   $$('#pages [data-effect]').forEach(select => select.onchange = () => { pages[+select.dataset.effect].effect = select.value; refreshPageTabMarkers() });
@@ -1247,7 +1257,7 @@ async function create() {
     createdAt: original?.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString(),
     shortCode: original?.shortCode, customCode: original?.customCode, linkCodes: original?.linkCodes,
     signature: { text: $('#signatureText').value.trim(), style: signatureStyle, align: isPremium() ? signatureAlign : (original?.signature?.align || 'right') },
-    pages: pages.slice(0, n()).map((p, pageIndex) => ({ text: p.text.trim() || 'A little message just for you. ♡', color: p.color, photos: p.photos, effect: p.effect || 'none', photoStyle: isPremium() ? safePhotoStyle(p.photoStyle) : (p.photoStyle === 'classic' ? 'classic' : (original ? safePhotoStyle(original.pages?.[pageIndex]?.photoStyle) : 'classic')), photoLayout: isPremium() ? safePhotoLayout(p.photoLayout) : (p.photoLayout === 'stack' ? 'stack' : (original ? safePhotoLayout(original.pages?.[pageIndex]?.photoLayout) : 'stack')) }))
+    pages: pages.slice(0, n()).map((p, pageIndex) => ({ text: p.text.trim() || 'A little message just for you. ♡', color: p.color, photos: p.photos, effect: p.effect || 'none', photoStyle: isPremium() || PHOTO_STYLES.slice(0,4).some(x=>x.id===p.photoStyle) ? safePhotoStyle(p.photoStyle) : (original ? safePhotoStyle(original.pages?.[pageIndex]?.photoStyle) : 'classic'), photoLayout: isPremium() || PHOTO_LAYOUTS.slice(0,4).some(x=>x.id===p.photoLayout) ? safePhotoLayout(p.photoLayout) : (original ? safePhotoLayout(original.pages?.[pageIndex]?.photoLayout) : 'stack') }))
   });
   creating = true; $('#make').disabled = true; $('#make').textContent = editingId ? '☁️ Updating envelope...' : '☁️ Saving envelope...';
   try {
@@ -1367,7 +1377,9 @@ async function loadMyUsername(uid) {
       if (directory?.uid === uid) usernameChangedAt = Number(directory.createdAt) || Date.now();
     }
     setUsernameLabel();
-    if(!myUsername)offerUsernameOnboarding(uid);
+    // A guest who opens an anonymous link only needs an anonymous nickname.
+    // Don't interrupt that send flow with the account's searchable-username wizard.
+    if(!myUsername && !window.WENV_ANON?.isGuestFlow?.())offerUsernameOnboarding(uid);
     // An interrupted rename cannot strand an old searchable username indefinitely.
     if (validUsername(profile?.previousUsername) && profile.previousUsername !== myUsername) {
       try {
@@ -1540,7 +1552,8 @@ function renderDash() {
   $('#total').textContent = `${store.length} created · ${receivedStore.length} received`;
   renderAccountDashboard();
   $('#recentTab').classList.toggle('on', mailboxView === 'recent'); $('#receivedTab').classList.toggle('on', mailboxView === 'received'); $('#sendTab').classList.toggle('on', mailboxView === 'send');
-  $('#mailboxSend').hidden = mailboxView !== 'send'; $('#list').hidden = mailboxView === 'send';
+  const viewingAnonInbox = !$('#askMessageCenter').hidden;
+  $('#mailboxSend').hidden = mailboxView !== 'send' || viewingAnonInbox; $('#list').hidden = mailboxView === 'send' || viewingAnonInbox;
   $('#recentTab').setAttribute('aria-selected', String(mailboxView === 'recent')); $('#receivedTab').setAttribute('aria-selected', String(mailboxView === 'received')); $('#sendTab').setAttribute('aria-selected', String(mailboxView === 'send'));
   $('#mailboxNote').textContent = mailboxView === 'recent' ? 'Letters you created. Edit them anytime, then share the same short link.' : mailboxView === 'received' ? 'Letters people sent you. New deliveries are marked until you read them.' : 'Search a username, choose a saved envelope, and send it straight to their mailbox.';
   if (mailboxView === 'send') { L.innerHTML = ''; return; }

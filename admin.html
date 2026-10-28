@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="css/admin-v13-premium.css">
   <link rel="stylesheet" href="css/v11-admin-gate.css">
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0">
+  <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0"><link rel="stylesheet" href="css/v20-anonymous-inbox.css?v=20">
 </head>
 <body class="authenticated admin-page">
   <div class="admin-shell">
@@ -23,6 +23,7 @@
         <button class="admin-nav" type="button" data-section="maya"><span class="admin-nav-icon"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e6/Maya_logo.svg/960px-Maya_logo.svg.png" alt="" class="bank-nav-logo"></span><span style="margin-left: 10px;">Maya</span><span id="mayaBadge" class="admin-nav-badge" hidden>0</span></button>
         <button class="admin-nav" type="button" data-section="gotyme"><span class="admin-nav-icon"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d5/GoTyme_Bank_logo.svg/1280px-GoTyme_Bank_logo.svg.png" alt="" class="bank-nav-logo"></span><span style="margin-left: 10px;">GoTyme</span><span id="gotymeBadge" class="admin-nav-badge" hidden>0</span></button>
         <button class="admin-nav" type="button" data-section="all"><span class="admin-nav-icon">☷</span><span>All Payments</span></button>
+        <button class="admin-nav" type="button" data-section="reveals"><span class="admin-nav-icon">🔎</span><span>Identity Reveal · ₱10</span><span class="admin-nav-badge" id="revealBadge" hidden>0</span></button>
         <button class="admin-nav" type="button" data-section="support"><span class="admin-nav-icon">✉</span><span>Contact Support</span><span class="admin-nav-badge" id="supportBadge" hidden>0</span></button>
         <button class="admin-nav" type="button" data-section="feedback"><span class="admin-nav-icon">✧</span><span>Feedback</span><span class="admin-nav-badge" id="feedbackBadge" hidden>0</span></button>
       </nav>
@@ -118,6 +119,7 @@
             <div id="adminList" class="admin-list" aria-live="polite"></div>
             <button id="loadMorePayments" type="button" class="admin-load-more" hidden>Show more requests ↓</button>
           </section>
+          <section class="admin-worklist" id="adminRevealPanel" hidden aria-labelledby="adminRevealTitle"><div class="admin-list-heading"><div><p class="admin-kicker">CONSENT-BASED IDENTITY · ₱10</p><h2 id="adminRevealTitle">Identity Reveal Payments</h2><p>Verify bank transfers before granting access. Requests only exist for senders who opted in.</p></div><span id="adminRevealCount" class="admin-count">0 requests</span></div><div id="adminRevealList" class="admin-reveal-list" aria-live="polite"></div></section>
           <section class="admin-worklist admin-inbox-section" id="adminInboxSection" hidden aria-labelledby="adminInboxHeading">
             <div class="admin-list-heading"><div><p class="admin-kicker" id="adminInboxEyebrow">INBOX</p><h2 id="adminInboxHeading">Contact support requests</h2><p id="adminInboxSubtitle">Messages from signed-in users.</p></div><span id="inboxCount" class="admin-count">0 messages</span></div>
             <div class="admin-inbox-tools"><label class="admin-search-wrap"><span aria-hidden="true">⌕</span><span class="sr-only">Search messages</span><input id="adminInboxSearch" type="search" placeholder="Search subject or email…" autocomplete="off"></label><label class="admin-filter-wrap"><span class="sr-only">Filter inbox status</span><select id="adminInboxFilter"><option value="all">All statuses</option><option value="open">Open</option><option value="resolved">Resolved</option></select></label></div>

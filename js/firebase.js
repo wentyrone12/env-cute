@@ -12,11 +12,12 @@
         window.WENV_DB = {
           // Public NGL-style pages. Ownership is enforced by Realtime Database rules.
           getAnonymousPage(code) { return dbModule.get(dbModule.ref(db,'anonymousPages/'+code)).then(s=>s.val()||null) },
-          async claimAnonymousPage(code, page, ownerUid) {
+          async claimAnonymousPage(code, page, ownerUid, ownerUsername = "") {
+            const label = /^[a-z0-9_]{3,20}$/.test(ownerUsername) ? ownerUsername : "";
             const target=dbModule.ref(db,'anonymousPages/'+code);
             const result=await dbModule.runTransaction(target,old=>{
-              if (!old) return {ownerUid,design:page,createdAt:Date.now()};
-              if (old.ownerUid === ownerUid) return { ...old, design:page, updatedAt:Date.now() };
+              if (!old) return {ownerUid,ownerUsername:label,design:page,createdAt:Date.now()};
+              if (old.ownerUid === ownerUid) return { ...old, ownerUsername:label || old.ownerUsername || "", design:page, updatedAt:Date.now() };
               return;
             },{applyLocally:false});
             return result.committed;
@@ -25,7 +26,13 @@
           getAnonymousPointers(uid) { return dbModule.get(dbModule.ref(db,'users/'+uid+'/anonymousPages')).then(s=>s.val()||{}) },
           subscribeAnonymousPointers(uid,next,fail) { return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousPages'),s=>next(s.val()||{}),fail) },
           // The anonymous inbox write is directly authorized by page ownership rules.
-          sendAnonymousEnvelope(recipientUid, payload) { return dbModule.set(dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/received')), payload) },
+          newAnonymousMessageId(recipientUid){ return dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/received')).key },
+          sendAnonymousEnvelope(recipientUid, payload, messageId){ return dbModule.set(dbModule.ref(db,'users/'+recipientUid+'/received/'+messageId),payload) },
+          saveAnonymousConsent(recipientUid,messageId,code,email){return dbModule.set(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId),{senderUid:auth.currentUser.uid,code,email,consented:true,createdAt:Date.now()})},
+          revokeAnonymousConsent(recipientUid,messageId){return dbModule.remove(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId))},
+          getAnonymousConsent(recipientUid,messageId){return dbModule.get(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId)).then(s=>s.val()||null)},
+          subscribeRevealRequests(uid,next,fail){return dbModule.onValue(dbModule.ref(db,'identityRevealPayments/'+uid),s=>next(s.val()||{}),fail)},
+          submitRevealRequest(uid,messageId,data){return dbModule.set(dbModule.ref(db,'identityRevealPayments/'+uid+'/'+messageId),data)},
           getMyProfile(uid) { return dbModule.get(dbModule.ref(db,'users/'+uid+'/profile')).then(s=>s.val()||null) },
           setMyProfile(uid, profile) { return dbModule.update(dbModule.ref(db,'users/'+uid+'/profile'),profile) },
           async reserveUsername(username, uid, displayName) {

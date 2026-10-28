@@ -4,7 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#fff1f7">
+  <meta name="theme-color" content="#f5dcea">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="W-Envelope">
+  <link rel="apple-touch-icon" href="assets/pwa-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
   <title>W-Envelope Cute</title>
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,24 +30,38 @@
   <link rel="stylesheet" href="css/v16-picker-account.css?v=16.0">
   <link rel="stylesheet" href="css/v17-anonymous.css?v=18-mobile-sheet">
   <link rel="stylesheet" href="css/v18-ask-mobile.css?v=18.0">
+  <link rel="stylesheet" href="css/v19-ask-experience.css?v=19.0">
+  <link rel="stylesheet" href="css/v20-anonymous-inbox.css?v=20">
+  <link rel="stylesheet" href="css/v21-enhancements.css?v=21">
 </head>
 
 <body>
   <div class="bg" id="bg" aria-hidden="true"></div>
   <header class="nav">
-    <div class="logo"><img class="brand-mark" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"><span>W - Envelope Cute</span></div>
+    <div class="logo"><img class="brand-mark" src="assets/w-envelope-icon.png" alt="W-Envelope Cute logo"><span>W -
+        Envelope Cute</span></div>
     <nav class="tabs" aria-label="Main">
       <button class="tab" data-go="home">Home</button>
-      <button class="tab tab-create" data-go="create" aria-label="Create an envelope"><span class="tab-create-text">Created</span></button>
-      <button class="tab" data-go="dash">My envelopes <span class="nav-mail-badge" id="mailboxNavBadge" hidden>0</span></button>
+      <button class="tab tab-create" data-go="create" aria-label="Create an envelope"><span
+          class="tab-create-text">Created</span></button>
+      <button class="tab" data-go="dash">My envelopes <span class="nav-mail-badge" id="mailboxNavBadge"
+          hidden>0</span></button>
       <button class="tab tab-settings" data-go="settings">Settings</button>
     </nav>
     <div class="nav-user" title="Account and profile">
-      <a class="admin-quick-link" id="adminQuickLink" href="admin.html" hidden aria-label="Open Admin Dashboard" title="Open Admin Dashboard">
-        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+      <a class="admin-quick-link" id="adminQuickLink" href="admin.html" hidden aria-label="Open Admin Dashboard"
+        title="Open Admin Dashboard">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
         <span>Admin</span>
       </a>
-      <button type="button" class="account-nav-trigger" id="accountNavTrigger" aria-label="Open Account and Data" title="Open Account & Data"><img class="nav-avatar" id="navAvatar" alt="Account photo" referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span><span class="account-nav-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="account-nav-trigger" id="accountNavTrigger" aria-label="Open Account and Data"
+        title="Open Account & Data"><img class="nav-avatar" id="navAvatar" alt="Account photo"
+          referrerpolicy="no-referrer"><span class="nav-name" id="navName"></span><span class="account-nav-chevron"
+          aria-hidden="true">⌄</span></button>
     </div>
   </header>
   <main>
@@ -63,8 +82,10 @@
     </section>
 
     <section class="screen" id="create">
-      <button id="anonComposeBack" type="button" class="btn sec anon-compose-back" hidden>‹ Back to anonymous page</button>
-      <div class="anon-send-dock" id="anonSendDock" hidden><span>♡ Your secret envelope</span><button type="button" class="btn pri" id="anonSendDockButton">💌 Send envelope</button></div>
+      <button id="anonComposeBack" type="button" class="btn sec anon-compose-back" hidden>‹ Back to anonymous
+        page</button>
+      <div class="anon-send-dock" id="anonSendDock" hidden><span>♡ Your secret envelope</span><button type="button"
+          class="btn pri" id="anonSendDockButton">💌 Send envelope</button></div>
       <div class="make">
         <div class="glass editor-workbench" id="editorWorkbench">
           <h2 id="editorTitle">Design your envelope</h2>
@@ -74,9 +95,12 @@
           <section class="create-mobile-wizard" id="createWizard" hidden aria-label="Mobile create flow">
             <div class="create-mobile-wizard-shell">
               <aside class="create-mobile-sidebar" aria-label="Create envelope steps">
-                <button type="button" class="create-step-btn active" data-create-step="0"><span>1</span><small>Basics</small></button>
-                <button type="button" class="create-step-btn" data-create-step="1"><span>2</span><small>Photos</small></button>
-                <button type="button" class="create-step-btn" data-create-step="2"><span>3</span><small>Finish</small></button>
+                <button type="button" class="create-step-btn active"
+                  data-create-step="0"><span>1</span><small>Basics</small></button>
+                <button type="button" class="create-step-btn"
+                  data-create-step="1"><span>2</span><small>Photos</small></button>
+                <button type="button" class="create-step-btn"
+                  data-create-step="2"><span>3</span><small>Finish</small></button>
               </aside>
               <div class="create-mobile-stage-head">
                 <span class="create-mobile-kicker">Mobile creator</span>
@@ -87,92 +111,137 @@
           </section>
           <div class="studio-panel-head" id="studioPanelHead" hidden>
             <span class="studio-swipe-grip" aria-hidden="true"></span>
-            <div><span class="studio-panel-eyebrow">✦ ENVELOPE DESIGN STUDIO</span><h3 id="studioToolTitle">Envelope title</h3><p id="studioToolDesc">Give your letter a lovely name.</p></div>
-            <button type="button" id="studioPanelCollapse" aria-label="Collapse Studio Panel" aria-expanded="true">⌄</button>
+            <div><span class="studio-panel-eyebrow">✦ ENVELOPE DESIGN STUDIO</span>
+              <h3 id="studioToolTitle">Envelope title</h3>
+              <p id="studioToolDesc">Give your letter a lovely name.</p>
+            </div>
+            <button type="button" id="studioPanelCollapse" aria-label="Collapse Studio Panel"
+              aria-expanded="true">⌄</button>
           </div>
           <div class="studio-panel-scroll" id="studioPanelScroll">
-          <div class="grid editor-step-block" data-editor-step="0">
-            <label class="full" data-mobile-field="title">Envelope title<input id="title" maxlength="60" placeholder="e.g. For someone special ♡"
-                autocomplete="off"></label>
-            <label data-mobile-field="from">From<input id="from" maxlength="30" placeholder="Your name (optional)" autocomplete="off"></label>
-            <label data-mobile-field="pages">Pages<select id="count"></select></label>
-            <div class="full" data-mobile-field="envelope"> <span class="lb color-palette-heading">Envelope color <small id="envColorCount" class="palette-count">8 colors</small></span>
-              <div class="sw palette-swatches" id="envSw" role="group" aria-label="Envelope colors"></div>
-            </div>
-            <div class="full" data-mobile-field="paper"> <span class="lb color-palette-heading">Paper color <small id="paperColorCount" class="palette-count">6 colors</small></span>
-              <div class="sw palette-swatches" id="paperSw" role="group" aria-label="Paper colors"></div>
-            </div>
-          </div>
-          <section class="cover-customizer editor-step-block" data-editor-step="0" aria-labelledby="coverTextTitle">
-            <div class="cover-customizer-heading">
-              <div><h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3></div>
-              <span id="coverPlanLabel" class="cover-plan-label">Free default</span>
-            </div>
-            <label for="coverText">Greeting on the envelope sheets</label>
-            <div class="cover-input-row">
-              <input id="coverText" maxlength="64" value="Welcome to W-Envelope Cute" autocomplete="off"
-                aria-describedby="coverTextNote" disabled />
-              <button type="button" class="btn sec cover-upgrade" id="coverUpgrade">✦ Unlock</button>
-            </div>
-            <p class="soft cover-note" id="coverTextNote">Subscribe to Premium to customize the greeting.</p>
-          </section>
-          <section class="paper-magic-editor editor-step-block" data-editor-step="2" aria-labelledby="paperMagicTitle">
-            <div class="paper-magic-heading">
-              <div><span class="paper-magic-eyebrow">✦ THE LETTER EXPERIENCE</span><h3 id="paperMagicTitle">Paper Magic</h3>
-                <p>Give your pages the feeling of a real handwritten letter.</p></div>
-              <span class="paper-magic-badge" id="paperMagicBadge">🔒 Premium</span>
-            </div>
-            <div class="paper-magic-options">
-              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">⌨</span><span class="paper-magic-option-copy"><strong>Live typewriter</strong><small>Words appear letter-by-letter, left to right.</small></span><input id="paperMagicTypewriter" type="checkbox" disabled></label>
-              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">📖</span><span class="paper-magic-option-copy"><strong>Realistic page turning</strong><small>3D folds, paper shadows and a book-like turn.</small></span><input id="paperMagicTurn" type="checkbox" disabled></label>
-              <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">💐</span><span class="paper-magic-option-copy"><strong>Animated intro</strong><small>Choose from 36 different full-screen reveals before the envelope appears.</small></span><input id="paperMagicBouquet" type="checkbox" disabled></label>
-            </div>
-            <div class="intro-studio" id="introStudio" aria-labelledby="introStudioTitle">
-              <div class="intro-studio-head"><div><h4 id="introStudioTitle">Choose your intro <span class="intro-total">36 animations</span></h4><p>Choose any design to see it animate instantly on the canvas.</p></div><button type="button" class="btn sec intro-preview-btn" id="introPreview">▶ Preview</button></div>
-              <div class="intro-inline-demo" id="introInlineDemo" aria-label="Instant animation preview"></div>
-              <div class="intro-category-rail" id="introCategories" role="group" aria-label="Filter intro animations"></div>
-              <div class="intro-choice-grid" id="introChoices" role="group" aria-label="Premium intro animation choices"></div>
-              <p class="intro-current" id="introCurrent" aria-live="polite">Selected: Bouquet reveal</p>
-            </div>
-            <div class="paper-magic-footer"><label for="paperMagicSpeed">Typing speed</label><select id="paperMagicSpeed" disabled><option value="gentle">Gentle & romantic</option><option value="classic" selected>Classic</option><option value="quick">Quick</option></select><button type="button" class="btn sec" id="paperMagicUpgrade">✦ Unlock Premium</button></div>
-            <p class="paper-magic-help" id="paperMagicHelp">Available with Premium, and visible to everyone who opens your shared letter.</p>
-          </section>
-          <section class="letter-page-switcher editor-step-block" data-editor-step="1" aria-label="Letter page editor navigation">
-            <div class="letter-page-heading">
-              <h3>Your letter pages</h3>
-              <span class="letter-page-count" id="letterPageCount" aria-live="polite"></span>
-            </div>
-            <div class="letter-page-rail">
-              <button type="button" class="letter-page-arrow" id="letterPageLeft" aria-label="Scroll page tabs left"
-                hidden>‹</button>
-              <div class="letter-page-tabs" id="letterPageTabs" role="tablist" aria-label="Choose which page to edit">
+            <div class="grid editor-step-block" data-editor-step="0">
+              <label class="full" data-mobile-field="title">Envelope title<input id="title" maxlength="60"
+                  placeholder="e.g. For someone special ♡" autocomplete="off"></label>
+              <label data-mobile-field="from">From<input id="from" maxlength="30" placeholder="Your name (optional)"
+                  autocomplete="off"></label>
+              <label data-mobile-field="pages">Pages<select id="count"></select></label>
+              <div class="full" data-mobile-field="envelope"> <span class="lb color-palette-heading">Envelope color
+                  <small id="envColorCount" class="palette-count">8 colors</small></span>
+                <div class="sw palette-swatches" id="envSw" role="group" aria-label="Envelope colors"></div>
               </div>
-              <button type="button" class="letter-page-arrow" id="letterPageRight" aria-label="Scroll page tabs right"
-                hidden>›</button>
+              <div class="full" data-mobile-field="paper"> <span class="lb color-palette-heading">Paper color <small
+                    id="paperColorCount" class="palette-count">6 colors</small></span>
+                <div class="sw palette-swatches" id="paperSw" role="group" aria-label="Paper colors"></div>
+              </div>
             </div>
-            <p class="letter-page-hint" id="letterPageHint"></p>
-          </section>
-          <div id="pages" class="editor-step-block" data-editor-step="1"></div>
-          <section class="glass signature-studio editor-step-block" data-editor-step="2" aria-labelledby="signatureTitle">
-            <div class="sig-heading">
-              <h3 id="signatureTitle">Signature studio</h3>
-            </div>
-            <label>Signature text <input id="signatureText" maxlength="45" autocomplete="off"
-                placeholder="e.g. Always yours, Wen" /></label>
-            <div class="sig-nav"><button type="button" class="sig-arrow" id="signaturePrev"
-                aria-label="Scroll signature choices left">‹</button>
-              <div class="sig-styles" id="signatureStyles" role="tablist" aria-label="Choose a signature style"></div>
-              <button type="button" class="sig-arrow" id="signatureNext"
-                aria-label="Scroll signature choices right">›</button>
-            </div>
-            <div class="sig-placement"><div class="sig-placement-head"><b>Signature position</b><small id="sigAlignHint">Free: Right only</small></div><div class="sig-position-tabs" role="group" aria-label="Signature alignment"><button type="button" class="sig-position" data-align="left" aria-pressed="false">⇤ Left <span class="sig-lock">🔒</span></button><button type="button" class="sig-position" data-align="center" aria-pressed="false">↔ Center <span class="sig-lock">🔒</span></button><button type="button" class="sig-position active" data-align="right" aria-pressed="true">⇥ Right</button></div></div>
-            <div class="sig-preview" id="signaturePreview">Your signature ♡</div>
-          </section>
-          <section class="studio-seal-summary" id="studioSealSummary" aria-live="polite">
-            <span class="studio-seal-heart">💌</span><h3>Ready to seal your letter?</h3>
-            <p id="studioSealDetails">Your envelope is ready for the finishing touch.</p>
-          </section>
-          <button class="btn pri wide editor-step-block" data-editor-step="2" id="make">💌 Seal my envelope</button>
+            <section class="cover-customizer editor-step-block" data-editor-step="0" aria-labelledby="coverTextTitle">
+              <div class="cover-customizer-heading">
+                <div>
+                  <h3 id="coverTextTitle">Envelope greeting <span class="cover-premium-mark">✦ Premium</span></h3>
+                </div>
+                <span id="coverPlanLabel" class="cover-plan-label">Free default</span>
+              </div>
+              <label for="coverText">Greeting on the envelope sheets</label>
+              <div class="cover-input-row">
+                <input id="coverText" maxlength="64" value="Welcome to W-Envelope Cute" autocomplete="off"
+                  aria-describedby="coverTextNote" disabled />
+                <button type="button" class="btn sec cover-upgrade" id="coverUpgrade">✦ Unlock</button>
+              </div>
+              <p class="soft cover-note" id="coverTextNote">Subscribe to Premium to customize the greeting.</p>
+            </section>
+            <section class="paper-magic-editor editor-step-block" data-editor-step="2"
+              aria-labelledby="paperMagicTitle">
+              <div class="paper-magic-heading">
+                <div><span class="paper-magic-eyebrow">✦ THE LETTER EXPERIENCE</span>
+                  <h3 id="paperMagicTitle">Paper Magic</h3>
+                  <p>Give your pages the feeling of a real handwritten letter.</p>
+                </div>
+                <span class="paper-magic-badge" id="paperMagicBadge">🔒 Premium</span>
+              </div>
+              <div class="paper-magic-options">
+                <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">⌨</span><span
+                    class="paper-magic-option-copy"><strong>Live typewriter</strong><small>Words appear
+                      letter-by-letter, left to right.</small></span><input id="paperMagicTypewriter" type="checkbox"
+                    disabled></label>
+                <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">📖</span><span
+                    class="paper-magic-option-copy"><strong>Realistic page turning</strong><small>3D folds, paper
+                      shadows and a book-like turn.</small></span><input id="paperMagicTurn" type="checkbox"
+                    disabled></label>
+                <label class="paper-magic-option"><span class="paper-magic-icon" aria-hidden="true">💐</span><span
+                    class="paper-magic-option-copy"><strong>Animated intro</strong><small>Choose from 36 different
+                      full-screen reveals before the envelope appears.</small></span><input id="paperMagicBouquet"
+                    type="checkbox" disabled></label>
+              </div>
+              <div class="intro-studio" id="introStudio" aria-labelledby="introStudioTitle">
+                <div class="intro-studio-head">
+                  <div>
+                    <h4 id="introStudioTitle">Choose your intro <span class="intro-total">36 animations</span></h4>
+                    <p>Choose any design to see it animate instantly on the canvas.</p>
+                  </div><button type="button" class="btn sec intro-preview-btn" id="introPreview">▶ Preview</button>
+                </div>
+                <div class="intro-inline-demo" id="introInlineDemo" aria-label="Instant animation preview"></div>
+                <div class="intro-category-rail" id="introCategories" role="group" aria-label="Filter intro animations">
+                </div>
+                <div class="intro-choice-grid" id="introChoices" role="group"
+                  aria-label="Premium intro animation choices"></div>
+                <p class="intro-current" id="introCurrent" aria-live="polite">Selected: Bouquet reveal</p>
+              </div>
+              <div class="paper-magic-footer"><label for="paperMagicSpeed">Typing speed</label><select
+                  id="paperMagicSpeed" disabled>
+                  <option value="gentle">Gentle & romantic</option>
+                  <option value="classic" selected>Classic</option>
+                  <option value="quick">Quick</option>
+                </select><button type="button" class="btn sec" id="paperMagicUpgrade">✦ Unlock Premium</button></div>
+              <p class="paper-magic-help" id="paperMagicHelp">Available with Premium, and visible to everyone who opens
+                your shared letter.</p>
+            </section>
+            <section class="letter-page-switcher editor-step-block" data-editor-step="1"
+              aria-label="Letter page editor navigation">
+              <div class="letter-page-heading">
+                <h3>Your letter pages</h3>
+                <span class="letter-page-count" id="letterPageCount" aria-live="polite"></span>
+              </div>
+              <div class="letter-page-rail">
+                <button type="button" class="letter-page-arrow" id="letterPageLeft" aria-label="Scroll page tabs left"
+                  hidden>‹</button>
+                <div class="letter-page-tabs" id="letterPageTabs" role="tablist" aria-label="Choose which page to edit">
+                </div>
+                <button type="button" class="letter-page-arrow" id="letterPageRight" aria-label="Scroll page tabs right"
+                  hidden>›</button>
+              </div>
+              <p class="letter-page-hint" id="letterPageHint"></p>
+            </section>
+            <div id="pages" class="editor-step-block" data-editor-step="1"></div>
+            <section class="glass signature-studio editor-step-block" data-editor-step="2"
+              aria-labelledby="signatureTitle">
+              <div class="sig-heading">
+                <h3 id="signatureTitle">Signature studio</h3>
+              </div>
+              <label>Signature text <input id="signatureText" maxlength="45" autocomplete="off"
+                  placeholder="e.g. Always yours, Wen" /></label>
+              <div class="sig-nav"><button type="button" class="sig-arrow" id="signaturePrev"
+                  aria-label="Scroll signature choices left">‹</button>
+                <div class="sig-styles" id="signatureStyles" role="tablist" aria-label="Choose a signature style"></div>
+                <button type="button" class="sig-arrow" id="signatureNext"
+                  aria-label="Scroll signature choices right">›</button>
+              </div>
+              <div class="sig-placement">
+                <div class="sig-placement-head"><b>Signature position</b><small id="sigAlignHint">Free: Right
+                    only</small></div>
+                <div class="sig-position-tabs" role="group" aria-label="Signature alignment"><button type="button"
+                    class="sig-position" data-align="left" aria-pressed="false">⇤ Left <span
+                      class="sig-lock">🔒</span></button><button type="button" class="sig-position" data-align="center"
+                    aria-pressed="false">↔ Center <span class="sig-lock">🔒</span></button><button type="button"
+                    class="sig-position active" data-align="right" aria-pressed="true">⇥ Right</button></div>
+              </div>
+              <div class="sig-preview" id="signaturePreview">Your signature ♡</div>
+            </section>
+            <section class="studio-seal-summary" id="studioSealSummary" aria-live="polite">
+              <span class="studio-seal-heart">💌</span>
+              <h3>Ready to seal your letter?</h3>
+              <p id="studioSealDetails">Your envelope is ready for the finishing touch.</p>
+            </section>
+            <button class="btn pri wide editor-step-block" data-editor-step="2" id="make">💌 Seal my envelope</button>
           </div>
           <div class="studio-panel-footer" id="studioPanelFooter" hidden>
             <button class="studio-flow-btn studio-flow-back" type="button" id="studioBack">‹ Back</button>
@@ -189,27 +258,48 @@
             <div class="tilt" id="pvEnv"></div>
           </div>
           <div class="studio-paper-canvas" id="studioPaperCanvas" hidden aria-label="Current page preview">
-            <div class="studio-paper-sheet"><div class="studio-paper-badge" id="studioPaperBadge">Page 1</div>
+            <div class="studio-paper-sheet">
+              <div class="studio-paper-badge" id="studioPaperBadge">Page 1</div>
               <div class="studio-paper-writing" id="studioPaperWriting">Your sweet message will appear here ♡</div>
-              <div class="studio-paper-pictures" id="studioPaperPictures"></div></div>
+              <div class="studio-paper-pictures" id="studioPaperPictures"></div>
+            </div>
           </div>
           <div class="studio-intro-canvas" id="studioIntroCanvas" hidden aria-label="Live intro animation preview">
             <div class="studio-intro-scene" id="studioIntroScene"></div>
-            <div class="studio-intro-canvas-foot"><span id="studioIntroLabel">Live animation preview</span><button type="button" id="studioReplayIntro" aria-label="Replay intro animation">↻ Replay</button></div>
-            <div class="studio-motion-samples" id="studioMotionSamples"><div class="studio-mini-typewriter" id="studioMiniTypewriter">Love, one letter at a time ♡</div><span class="studio-mini-page" id="studioMiniPage" aria-hidden="true">▱</span></div>
+            <div class="studio-intro-canvas-foot"><span id="studioIntroLabel">Live animation preview</span><button
+                type="button" id="studioReplayIntro" aria-label="Replay intro animation">↻ Replay</button></div>
+            <div class="studio-motion-samples" id="studioMotionSamples">
+              <div class="studio-mini-typewriter" id="studioMiniTypewriter">Love, one letter at a time ♡</div><span
+                class="studio-mini-page" id="studioMiniPage" aria-hidden="true">▱</span>
+            </div>
           </div>
           <h3 id="pvTitle">Your envelope</h3>
           <p class="soft" id="studioPreviewCaption">Live preview. Tap it to peek.</p>
         </aside>
       </div>
-      <section class="mobile-photo-picker" id="mobilePhotoPicker" aria-label="Swipeable photo border and layout previews" hidden>
-        <div class="mobile-photo-picker-head" id="mobilePhotoPickerDrag" aria-label="Swipe down to hide photo styles"><div><span class="mobile-photo-picker-kicker">✦ LIVE PHOTO STYLES</span><h3 id="mobilePhotoPickerTitle">Photo borders</h3><small id="mobilePhotoPickerHint">Swipe styles sideways · swipe down to hide</small></div><div class="mobile-photo-picker-actions"><span class="photo-picker-count" id="mobilePhotoPickerCount">60 styles</span><button type="button" class="mobile-picker-hide" id="mobilePhotoPickerHide" aria-label="Hide photo styles" title="Hide photo styles">⌄</button></div></div>
-        <div class="mobile-photo-page-nav" id="mobilePhotoPageNav" aria-label="Switch envelope paper pages" hidden><button type="button" id="mobilePhotoPagePrevious" aria-label="Previous paper page">‹ Previous</button><strong id="mobilePhotoPageLabel" aria-live="polite">Page 1 of 1</strong><button type="button" id="mobilePhotoPageNext" aria-label="Next paper page">Next ›</button></div>
-        <div class="mobile-photo-picker-rail" id="mobilePhotoPickerRail" role="group" aria-label="Swipe through photo styles"></div>
+      <section class="mobile-photo-picker" id="mobilePhotoPicker"
+        aria-label="Swipeable photo border and layout previews" hidden>
+        <div class="mobile-photo-picker-head" id="mobilePhotoPickerDrag" aria-label="Swipe down to hide photo styles">
+          <div><span class="mobile-photo-picker-kicker">✦ LIVE PHOTO STYLES</span>
+            <h3 id="mobilePhotoPickerTitle">Photo borders</h3><small id="mobilePhotoPickerHint">Swipe styles sideways ·
+              swipe down to hide</small>
+          </div>
+          <div class="mobile-photo-picker-actions"><span class="photo-picker-count" id="mobilePhotoPickerCount">60
+              styles</span><button type="button" class="mobile-picker-hide" id="mobilePhotoPickerHide"
+              aria-label="Hide photo styles" title="Hide photo styles">⌄</button></div>
+        </div>
+        <div class="mobile-photo-page-nav" id="mobilePhotoPageNav" aria-label="Switch envelope paper pages" hidden>
+          <button type="button" id="mobilePhotoPagePrevious" aria-label="Previous paper page">‹ Previous</button><strong
+            id="mobilePhotoPageLabel" aria-live="polite">Page 1 of 1</strong><button type="button"
+            id="mobilePhotoPageNext" aria-label="Next paper page">Next ›</button></div>
+        <div class="mobile-photo-picker-rail" id="mobilePhotoPickerRail" role="group"
+          aria-label="Swipe through photo styles"></div>
         <span class="mobile-picker-pull-guide" aria-hidden="true"></span>
       </section>
-      <button class="mobile-photo-picker-show" type="button" id="mobilePhotoPickerShow" hidden aria-controls="mobilePhotoPicker" aria-expanded="false">⌃ &nbsp; Show photo styles</button>
-      <button type="button" id="studioDrawerReopen" aria-label="Open envelope design studio" aria-controls="editorWorkbench" aria-expanded="false">⌃ &nbsp; Open Design Studio</button>
+      <button class="mobile-photo-picker-show" type="button" id="mobilePhotoPickerShow" hidden
+        aria-controls="mobilePhotoPicker" aria-expanded="false">⌃ &nbsp; Show photo styles</button>
+      <button type="button" id="studioDrawerReopen" aria-label="Open envelope design studio"
+        aria-controls="editorWorkbench" aria-expanded="false">⌃ &nbsp; Open Design Studio</button>
       <nav class="studio-bottom-dock" id="studioBottomDock" aria-label="Envelope creation tools" hidden>
         <div class="studio-tool-rail" id="studioToolRail"></div>
       </nav>
@@ -221,51 +311,180 @@
           <h2>My envelopes</h2>
           <p class="soft" id="total"></p>
           <p class="sync-line" id="cloudStatus" data-state="loading">Connecting to cloud...</p>
-        </div><button class="btn pri" type="button" id="openAnonymousStudio">💌 Create anonymous page</button>
+        </div>
+        <div class="ask-dash-actions"><button class="btn sec" type="button" id="askOpenMessages">💗 Messages <span
+              id="askMessagesBadge">0</span></button><button class="btn pri" type="button" id="openAnonymousStudio">💌
+            Create anonymous page</button></div>
       </div>
       <div class="mailbox-tabs" role="tablist" aria-label="Envelope collections">
         <button class="mailbox-tab on" type="button" id="recentTab" role="tab" aria-selected="true">Recent Envelopes
           <span id="recentCount">0</span></button>
         <button class="mailbox-tab" type="button" id="receivedTab" role="tab" aria-selected="false">Received
-          Envelopes <span id="receivedCount">0</span> <span class="unread-counter" id="receivedUnread" hidden>0</span></button>
+          Envelopes <span id="receivedCount">0</span> <span class="unread-counter" id="receivedUnread"
+            hidden>0</span></button>
         <button class="mailbox-tab" type="button" id="sendTab" role="tab" aria-selected="false">✉ Send Envelope</button>
       </div>
       <section class="mailbox-send glass" id="mailboxSend" aria-labelledby="mailboxSendTitle" hidden>
-        <div class="mailbox-send-head"><span class="mailbox-send-icon">💌</span><div><h3 id="mailboxSendTitle">Send an envelope to a username</h3><p>Find a friend and choose one of your recent envelopes.</p></div></div>
+        <div class="mailbox-send-head"><span class="mailbox-send-icon">💌</span>
+          <div>
+            <h3 id="mailboxSendTitle">Send an envelope to a username</h3>
+            <p>Find a friend and choose one of your recent envelopes.</p>
+          </div>
+        </div>
         <label class="mail-search-label" for="recipientSearchInput">Recipient username</label>
-        <div class="mail-search-wrap"><span>@</span><input id="recipientSearchInput" maxlength="20" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Search username…" /></div>
-        <div id="usernameSearchResults" class="mail-search-results" aria-live="polite"><p class="mail-empty">Type at least 2 characters to find a username.</p></div>
-        <div id="sendEnvelopeStep" hidden><h4 id="selectedRecipient">Select a recipient</h4><p class="mail-step-help">Choose a letter from your Recent Envelopes:</p><div id="recipientEnvelopeChoices" class="mail-envelope-choices"></div><button type="button" class="btn pri wide" id="prepareEnvelopeSend" disabled>Continue to send ›</button></div>
+        <div class="mail-search-wrap"><span>@</span><input id="recipientSearchInput" maxlength="20" autocomplete="off"
+            autocapitalize="off" spellcheck="false" placeholder="Search username…" /></div>
+        <div id="usernameSearchResults" class="mail-search-results" aria-live="polite">
+          <p class="mail-empty">Type at least 2 characters to find a username.</p>
+        </div>
+        <div id="sendEnvelopeStep" hidden>
+          <h4 id="selectedRecipient">Select a recipient</h4>
+          <p class="mail-step-help">Choose a letter from your Recent Envelopes:</p>
+          <div id="recipientEnvelopeChoices" class="mail-envelope-choices"></div><button type="button"
+            class="btn pri wide" id="prepareEnvelopeSend" disabled>Continue to send ›</button>
+        </div>
       </section>
       <p class="mailbox-note" id="mailboxNote">Letters you created. Open, edit, share or remove them.</p>
       <div class="cards" id="list" role="tabpanel"></div>
+      <section class="ask-message-center" id="askMessageCenter" hidden aria-label="Anonymous message inbox">
+        <div class="ask-message-header">
+          <div><span class="ask-kicker">YOUR SECRET LETTER BOX ♡</span>
+            <h2>Anonymous Messages</h2>
+            <p>Open the papers your friends sent you.</p>
+          </div><button type="button" class="btn sec" id="askMessagesBack">← Back</button>
+        </div>
+        <div class="ask-message-grid" id="askMessageItems" aria-live="polite">
+          <p class="ask-message-empty">Loading your letters…</p>
+        </div>
+      </section>
     </section>
 
 
     <!-- NGL-inspired shareable anonymous question page: owner studio and public view. -->
     <section class="screen" id="ask" aria-label="Anonymous envelope page">
       <div class="ask-layout" id="askOwner" hidden>
-        <div class="ask-editor-head"><div><span class="ask-kicker">♡ YOUR ANONYMOUS SPACE</span><h2>Make your anonymous page</h2><p>Design a little paper that friends can open from your link.</p></div><button class="btn sec" id="askBackToMailbox" type="button">‹ My envelopes</button></div>
+        <div class="ask-editor-head">
+          <div><span class="ask-kicker">♡ YOUR ANONYMOUS SPACE</span>
+            <h2>Make your anonymous page</h2>
+            <p>Design a little paper that friends can open from your link.</p>
+          </div><button class="btn sec" id="askBackToMailbox" type="button">‹ My envelopes</button>
+        </div>
         <div class="ask-studio-grid">
-          <div class="ask-stage" id="askStage"><div class="ask-decor ask-decor-a">✿</div><div class="ask-decor ask-decor-b">✦</div><div class="ask-paper" id="askPaper">
-            <span class="ask-paper-sticker" id="askSticker">💌</span>
-            <span class="ask-paper-kicker">a little note for you ♡</span>
-            <h3 id="askPaperHeading">Send me an anonymous message</h3>
-            <p id="askPaperSubtitle">Tell me something sweet, funny, or a secret you never got to say…</p>
-            <img id="askPaperImage" alt="Your page photo" hidden>
-            <div class="ask-signature" id="askPaperSignature">with love ♡</div>
-          </div></div>
-          <div class="ask-tool-card" id="askToolCard" aria-label="Paper editing controls"><div class="ask-tool-header" id="askSheetHandle"><div class="ask-sheet-grip" aria-hidden="true"></div><div class="ask-tool-heading-copy"><strong id="askToolHeading">Edit your message</strong><small>Changes appear instantly on the paper</small></div><button type="button" class="ask-sheet-close" id="askSheetClose" aria-label="Hide editor panel">⌄</button></div>
-            <div class="ask-tool-section" data-ask-panel="text"><label>Big text on paper<input id="askHeading" maxlength="75" placeholder="Send me an anonymous message"></label><label>Little note<textarea id="askSubtitle" rows="3" maxlength="220" placeholder="Write a welcoming message…"></textarea></label><label>Paper sticker<select id="askStickerInput"><option value="💌">💌 Love letter</option><option value="🎀">🎀 Ribbon</option><option value="🌸">🌸 Sakura</option><option value="🧸">🧸 Teddy</option><option value="🦋">🦋 Butterfly</option><option value="✨">✨ Sparkles</option></select></label></div>
-            <div class="ask-tool-section" data-ask-panel="theme" hidden><span class="ask-input-label">Background style</span><div class="ask-theme-grid" id="askThemeGrid"></div><label>Paper tint<input id="askPaperColor" type="color" value="#fffaf7"></label><label>Accent color<input id="askAccentColor" type="color" value="#bd6995"></label></div>
-            <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">📷 Add a picture below the message <input id="askPhotoInput" type="file" accept="image/jpeg,image/png,image/webp" hidden></label><small>Automatically resized to save cloud space.</small><button class="btn sec" id="askRemovePhoto" type="button">Remove picture</button></div>
-            <div class="ask-tool-section" data-ask-panel="signature" hidden><label>Your signature<input id="askSignature" maxlength="55" placeholder="with love ♡"></label><label>Handwriting style<select id="askSignatureFont"><option value="dancing">Dancing Script</option><option value="caveat">Caveat</option><option value="pacifico">Pacifico</option><option value="classic">Classic</option></select></label></div>
+          <div class="ask-stage" id="askStage">
+            <div class="ask-decor ask-decor-a">✿</div>
+            <div class="ask-decor ask-decor-b">✦</div>
+            <div class="ask-paper" id="askPaper">
+              <span class="ask-paper-sticker" id="askSticker">💌</span>
+              <span class="ask-paper-kicker">a little note for you ♡</span>
+              <h3 id="askPaperHeading">Send me an anonymous message</h3>
+              <p id="askPaperSubtitle">Tell me something sweet, funny, or a secret you never got to say…</p>
+              <div class="ask-photo-gallery" id="askPaperGallery" role="group" aria-label="Page photos"></div><img
+                id="askPaperImage" alt="Photo preview" hidden>
+              <div class="ask-signature" id="askPaperSignature">with love ♡</div>
+            </div>
+          </div>
+          <div class="ask-tool-card" id="askToolCard" aria-label="Paper editing controls">
+            <div class="ask-tool-header" id="askSheetHandle">
+              <div class="ask-sheet-grip" aria-hidden="true"></div>
+              <div class="ask-tool-heading-copy"><strong id="askToolHeading">Edit your message</strong><small>Changes
+                  appear instantly on the paper</small></div><button type="button" class="ask-sheet-close"
+                id="askSheetClose" aria-label="Hide editor panel">⌄</button>
+            </div>
+            <div class="ask-tool-section" data-ask-panel="text"><label>Big text on paper<input id="askHeading"
+                  maxlength="75" placeholder="Send me an anonymous message"></label><label>Little note<textarea
+                  id="askSubtitle" rows="3" maxlength="220"
+                  placeholder="Write a welcoming message…"></textarea></label><label class="ask-toggle-option"><input
+                  type="checkbox" id="askTypewriter"><span>⌨️ Animated typewriter heading <strong
+                    class="ask-premium-tag">✦ Premium</strong><small>Letters appear one by one for
+                    visitors.</small></span></label><label>Typewriter speed <select id="askTypeSpeed">
+                  <option value="gentle">Gentle</option>
+                  <option value="classic">Classic</option>
+                  <option value="quick">Quick</option>
+                </select></label><label>Paper sticker<select id="askStickerInput">
+                  <option value="💌">💌 Love letter</option>
+                  <option value="🎀">🎀 Ribbon</option>
+                  <option value="🌸">🌸 Sakura</option>
+                  <option value="🧸">🧸 Teddy</option>
+                  <option value="🦋">🦋 Butterfly</option>
+                  <option value="✨">✨ Sparkles</option>
+                </select></label></div>
+            <div class="ask-tool-section" data-ask-panel="theme" hidden><span class="ask-input-label">Immersive
+                3D-inspired backgrounds <small>40 scenes · first 4 free · 36 Premium</small></span>
+              <div class="ask-theme-grid" id="askThemeGrid"></div><label>Paper tint<input id="askPaperColor"
+                  type="color" value="#fffaf7"></label><label>Accent color<input id="askAccentColor" type="color"
+                  value="#bd6995"></label>
+            </div>
+            <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">📷 Add pictures
+                below the message <input id="askPhotoInput" type="file" accept="image/jpeg,image/png,image/webp"
+                  multiple hidden></label><small id="askPhotoCounter">0/1 photos · Premium can add 5</small>
+              <div class="ask-photo-thumbnails" id="askPhotoThumbnails"></div><button class="btn sec"
+                id="askRemovePhoto" type="button">Remove all pictures</button>
+            </div>
+            <div class="ask-tool-section" data-ask-panel="signature" hidden><label>Your signature<input
+                  id="askSignature" maxlength="55" placeholder="with love ♡"></label><label>Handwriting style<select
+                  id="askSignatureFont">
+                  <option value="dancing">Dancing Script</option>
+                  <option value="caveat">Caveat</option>
+                  <option value="pacifico">Pacifico</option>
+                  <option value="classic">Classic</option>
+                </select></label><label>Signature position<select id="askSignatureAlign">
+                  <option value="left">Left</option>
+                  <option value="center">Center</option>
+                  <option value="right">Right</option>
+                </select></label></div>
           </div>
         </div>
 
       </div>
-      <div class="ask-public-wrap" id="askGuest" hidden><div class="ask-public-intro"><span class="ask-kicker">♡ SOMEONE LEFT A NOTE FOR YOU</span><h2>It's your turn to send a secret</h2><p>Make their day with a little mystery message.</p></div><div class="ask-stage ask-public-stage" id="askPublicStage"><div class="ask-paper" id="askPublicPaper"><span class="ask-paper-sticker" id="askPublicSticker">💌</span><span class="ask-paper-kicker">an anonymous little note ♡</span><h3 id="askPublicHeading">Send me an anonymous message</h3><p id="askPublicSubtitle"></p><img id="askPublicImage" hidden alt="Personalized page photo"><div class="ask-signature" id="askPublicSignature"></div></div></div><button class="btn pri ask-public-send" type="button" id="askStartEnvelope">💌 Send envelope message</button><p class="ask-privacy">Your name appears only as the anonymous nickname you choose. Google sign-in is required to send and help prevent abuse.</p></div>
-      <button type="button" id="askSheetReopen" class="ask-sheet-reopen" hidden>↑ Open editor</button><nav class="ask-toolbar" id="askToolbar" aria-label="Anonymous page editing toolbar" hidden><div class="ask-toolbar-scroll" id="askToolbarScroll"><button type="button" data-ask-tool="text" class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span> Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save" type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div></nav>
+      <div class="ask-public-wrap" id="askGuest" hidden>
+        <div class="ask-guest-top">
+          <span class="ask-guest-brand"><img src="assets/w-envelope-icon.png" alt="" aria-hidden="true"> Secret letter
+            box ♡</span>
+          <button type="button" class="ask-guest-owner" id="askGuestUsername" title="Copy the page owner's username"
+            disabled>
+            <span>shared by</span> <strong id="askPublicUsername">Anonymous friend</strong> <span
+              aria-hidden="true">⧉</span>
+          </button>
+        </div>
+        <div class="ask-public-intro"><span class="ask-kicker">A LITTLE SPACE FOR HONEST WORDS</span>
+          <h2>Leave a sweet secret 💌</h2>
+          <p>Only your chosen anonymous nickname will show.</p>
+        </div>
+        <div class="ask-stage ask-public-stage" id="askPublicStage">
+          <div class="ask-paper" id="askPublicPaper"><span class="ask-paper-sticker"
+              id="askPublicSticker">💌</span><span class="ask-paper-kicker">an anonymous little note ♡</span>
+            <h3 id="askPublicHeading">Send me an anonymous message</h3>
+            <p id="askPublicSubtitle"></p>
+            <div class="ask-photo-gallery" id="askPublicGallery" role="group" aria-label="Shared page photos"></div><img
+              id="askPublicImage" alt="Photo preview" hidden>
+            <div class="ask-signature" id="askPublicSignature"></div>
+          </div>
+        </div>
+        <button type="button" class="btn pri ask-guest-launcher" id="askGuestLaunch" disabled>💌 Send Message <span
+            aria-hidden="true">♡</span></button>
+        <div class="ask-composer-shade" id="askComposerShade" hidden></div>
+        <form class="ask-guest-composer" id="askGuestForm" role="dialog" aria-modal="true"
+          aria-label="Write an anonymous message" hidden>
+          <div class="ask-compose-head"><span>💌 Your secret letter</span><button type="button" id="askCloseComposer"
+              aria-label="Close message composer">×</button></div>
+          <label for="askGuestMessage">Your anonymous message <span aria-hidden="true">✎</span></label>
+          <textarea id="askGuestMessage" maxlength="600" rows="3" placeholder="Type something sweet, funny, or honest…"
+            required aria-describedby="askMessageCount"></textarea>
+          <div class="ask-composer-actions"><small id="askMessageCount" aria-live="polite">0 / 600</small><button
+              class="btn pri ask-public-send" type="submit" id="askStartEnvelope">Send message <span
+                aria-hidden="true">💌</span></button></div>
+        </form>
+        <p class="ask-privacy">Only your chosen nickname appears on the letter. Revealing your email is always optional
+          and requires your separate consent.</p>
+      </div>
+      <button type="button" id="askSheetReopen" class="ask-sheet-reopen" hidden>↑ Open editor</button>
+      <nav class="ask-toolbar" id="askToolbar" aria-label="Anonymous page editing toolbar" hidden>
+        <div class="ask-toolbar-scroll" id="askToolbarScroll"><button type="button" data-ask-tool="text"
+            class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span>
+            Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button
+            type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save"
+            type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div>
+      </nav>
     </section>
 
     <section class="screen" id="settings">
@@ -283,6 +502,7 @@
             Subscription <span class="settings-premium-pill" id="settingsPlanStatus">Free</span></button>
           <button class="settings-nav" data-settings="support" aria-pressed="false">Contact Support</button>
           <button class="settings-nav" data-settings="feedback" aria-pressed="false">Feedback</button>
+          <button class="settings-nav" data-settings="install" aria-pressed="false">Install App</button>
           <button class="settings-nav" data-settings="about" aria-pressed="false">About</button>
         </aside>
         <div>
@@ -328,31 +548,77 @@
                 <div><strong id="accountName">Google account</strong><small id="accountEmail"></small></div>
               </div>
               <div class="account-profile-details">
-                <div><span>Subscription</span><strong id="accountPlanBadge" class="account-plan-badge">Free plan</strong></div>
+                <div><span>Subscription</span><strong id="accountPlanBadge" class="account-plan-badge">Free
+                    plan</strong></div>
                 <div><span>Google sign-in</span><strong id="accountAuthState">Signed in</strong></div>
                 <div><span>Last sign-in</span><strong id="accountLastLogin">—</strong></div>
               </div>
-              <div class="account-identity-heading"><h3>Username & Gmail</h3><p>Friends find you by your envelope username. Your Google email stays private.</p></div>
-              <div class="account-identity-list">
-                <div class="account-identity-row"><div class="identity-logo">@</div><div class="identity-text"><small>Envelope username · searchable by friends</small><strong id="myUsernameLabel">Not set yet</strong></div><button type="button" class="identity-edit" id="editMyUsername" aria-label="Edit envelope username" title="Edit username"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L9 17l-4 1 1-4Z"/></svg></button></div>
-                <div class="account-identity-row"><div class="identity-logo identity-google">G</div><div class="identity-text"><small>Google email · linked account</small><strong id="accountEmailValue">Sign in with Google</strong></div><span class="identity-readonly" title="Managed by Google" aria-label="Google email is read only">🔒</span></div>
+              <div class="account-identity-heading">
+                <h3>Username & Gmail</h3>
+                <p>Friends find you by your envelope username. Your Google email stays private.</p>
               </div>
-              <p id="usernameCooldown" class="username-cooldown" aria-live="polite">Claim your username so friends can send envelopes to you.</p>
+              <div class="account-identity-list">
+                <div class="account-identity-row">
+                  <div class="identity-logo">@</div>
+                  <div class="identity-text"><small>Envelope username · searchable by friends</small><strong
+                      id="myUsernameLabel">Not set yet</strong></div><button type="button" class="identity-edit"
+                    id="editMyUsername" aria-label="Edit envelope username" title="Edit username"><svg width="19"
+                      height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M12 20h9" />
+                      <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L9 17l-4 1 1-4Z" />
+                    </svg></button>
+                </div>
+                <div class="account-identity-row">
+                  <div class="identity-logo identity-google">G</div>
+                  <div class="identity-text"><small>Google email · linked account</small><strong
+                      id="accountEmailValue">Sign in with Google</strong></div><span class="identity-readonly"
+                    title="Managed by Google" aria-label="Google email is read only">🔒</span>
+                </div>
+              </div>
+              <p id="usernameCooldown" class="username-cooldown" aria-live="polite">Claim your username so friends can
+                send envelopes to you.</p>
               <p id="usernameStatus" role="status" aria-live="polite"></p>
               <div class="settings-actions"><button class="btn dng" id="signOutBtn">↪ Sign out of Google</button></div>
             </div>
             <div class="glass settings-section account-insights" aria-labelledby="accountInsightsTitle">
-              <div class="account-insights-head"><div><span class="account-eyebrow">YOUR ACTIVITY</span><h2 id="accountInsightsTitle">Account statistics</h2><p>Based on your own synced envelopes and payment records.</p></div><span class="account-sync-status" id="accountCloudState">Checking sync…</span></div>
-              <div class="account-stats-grid">
-                <div class="account-stat"><span>Created envelopes</span><strong id="accCreated">0</strong><small>Letters you've made</small></div>
-                <div class="account-stat"><span>Received envelopes</span><strong id="accReceived">0</strong><small>Saved to your inbox</small></div>
-                <div class="account-stat"><span>Paper pages</span><strong id="accPages">0</strong><small>Across created letters</small></div>
-                <div class="account-stat"><span>Uploaded photos</span><strong id="accPhotos">0</strong><small>Across created letters</small></div>
-                <div class="account-stat"><span>Shared links</span><strong id="accLinks">0</strong><small>Published link aliases</small></div>
-                <div class="account-stat"><span>Premium requests</span><strong id="accRequests">0</strong><small id="accRequestStatus">No payment requests</small></div>
+              <div class="account-insights-head">
+                <div><span class="account-eyebrow">YOUR ACTIVITY</span>
+                  <h2 id="accountInsightsTitle">Account statistics</h2>
+                  <p>Based on your own synced envelopes and payment records.</p>
+                </div><span class="account-sync-status" id="accountCloudState">Checking sync…</span>
               </div>
-              <div class="account-activity-visual"><div class="account-activity-head"><strong>Envelope activity</strong><small id="accActivityTotal">No saved activity yet</small></div><div class="account-activity-track" aria-label="Created versus received envelope distribution"><div id="accCreatedBar" class="account-activity-created" style="width:0%"></div><div id="accReceivedBar" class="account-activity-received" style="width:0%"></div></div><div class="account-activity-legend"><span><i class="acc-legend-created"></i>Created</span><span><i class="acc-legend-received"></i>Received</span></div></div>
-              <div class="account-account-info"><div><span>Account ID</span><code id="accUidMasked">—</code><button type="button" class="account-copy-btn" id="accCopyUid">Copy ID</button></div><div><span>Latest envelope update</span><strong id="accLatestUpdate">—</strong></div><div><span>Storage</span><strong>Cloudflare Realtime Database</strong></div><div><span>Premium access</span><strong id="accPremiumDetail">Free plan</strong></div></div>
+              <div class="account-stats-grid">
+                <div class="account-stat"><span>Created envelopes</span><strong id="accCreated">0</strong><small>Letters
+                    you've made</small></div>
+                <div class="account-stat"><span>Received envelopes</span><strong id="accReceived">0</strong><small>Saved
+                    to your inbox</small></div>
+                <div class="account-stat"><span>Paper pages</span><strong id="accPages">0</strong><small>Across created
+                    letters</small></div>
+                <div class="account-stat"><span>Uploaded photos</span><strong id="accPhotos">0</strong><small>Across
+                    created letters</small></div>
+                <div class="account-stat"><span>Shared links</span><strong id="accLinks">0</strong><small>Published link
+                    aliases</small></div>
+                <div class="account-stat"><span>Premium requests</span><strong id="accRequests">0</strong><small
+                    id="accRequestStatus">No payment requests</small></div>
+              </div>
+              <div class="account-activity-visual">
+                <div class="account-activity-head"><strong>Envelope activity</strong><small id="accActivityTotal">No
+                    saved activity yet</small></div>
+                <div class="account-activity-track" aria-label="Created versus received envelope distribution">
+                  <div id="accCreatedBar" class="account-activity-created" style="width:0%"></div>
+                  <div id="accReceivedBar" class="account-activity-received" style="width:0%"></div>
+                </div>
+                <div class="account-activity-legend"><span><i class="acc-legend-created"></i>Created</span><span><i
+                      class="acc-legend-received"></i>Received</span></div>
+              </div>
+              <div class="account-account-info">
+                <div><span>Account ID</span><code id="accUidMasked">—</code><button type="button"
+                    class="account-copy-btn" id="accCopyUid">Copy ID</button></div>
+                <div><span>Latest envelope update</span><strong id="accLatestUpdate">—</strong></div>
+                <div><span>Storage</span><strong>Cloudflare Realtime Database</strong></div>
+                <div><span>Premium access</span><strong id="accPremiumDetail">Free plan</strong></div>
+              </div>
             </div>
             <div class="glass settings-section">
               <h2>My envelope data</h2>
@@ -399,37 +665,94 @@
                 </ul><button class="btn pri wide" id="premiumPlanBtn" type="button">Choose payment method</button>
               </article>
             </div>
-            <div class="glass premium-status-area"><h3>Payment status</h3><p id="premiumAccountStatus" aria-live="polite">Sign in to view your payment status.</p><div id="paymentRequestList" class="payment-request-list"></div></div>
+            <div class="glass premium-status-area">
+              <h3>Payment status</h3>
+              <p id="premiumAccountStatus" aria-live="polite">Sign in to view your payment status.</p>
+              <div id="paymentRequestList" class="payment-request-list"></div>
+            </div>
           </section>
 
           <section class="settings-panel" id="settings-support" aria-label="Contact support">
             <div class="glass settings-section inquiry-panel">
-              <span class="inquiry-eyebrow">WE’RE HERE TO HELP</span><h2>Contact Support</h2>
+              <span class="inquiry-eyebrow">WE’RE HERE TO HELP</span>
+              <h2>Contact Support</h2>
               <form id="supportForm" class="inquiry-form">
                 <label>What do you need help with?
-                  <select id="supportTopic" required><option value="Account & Login">Account & Login</option><option value="My Envelopes">My Envelopes</option><option value="Sharing Links">Sharing Links</option><option value="Premium & Payments">Premium & Payments</option><option value="Bug / Technical Issue">Bug / Technical Issue</option><option value="Other">Other</option></select></label>
-                <label>Subject <input id="supportSubject" required minlength="3" maxlength="90" placeholder="A quick summary" autocomplete="off"></label>
-                <label>Your message <textarea id="supportMessage" required minlength="10" maxlength="1500" rows="4" placeholder="Describe what happened and what you need help with…"></textarea></label>
-                <button type="submit" class="btn pri inquiry-submit" id="supportSubmit">Send support request</button><p class="inquiry-status" id="supportStatus" role="status" aria-live="polite"></p>
+                  <select id="supportTopic" required>
+                    <option value="Account & Login">Account & Login</option>
+                    <option value="My Envelopes">My Envelopes</option>
+                    <option value="Sharing Links">Sharing Links</option>
+                    <option value="Premium & Payments">Premium & Payments</option>
+                    <option value="Bug / Technical Issue">Bug / Technical Issue</option>
+                    <option value="Other">Other</option>
+                  </select></label>
+                <label>Subject <input id="supportSubject" required minlength="3" maxlength="90"
+                    placeholder="A quick summary" autocomplete="off"></label>
+                <label>Your message <textarea id="supportMessage" required minlength="10" maxlength="1500" rows="4"
+                    placeholder="Describe what happened and what you need help with…"></textarea></label>
+                <button type="submit" class="btn pri inquiry-submit" id="supportSubmit">Send support request</button>
+                <p class="inquiry-status" id="supportStatus" role="status" aria-live="polite"></p>
               </form>
             </div>
-            <div class="glass settings-section inquiry-panel"><h3>Your support requests</h3><p>Check the status and responses from our team.</p><div class="inquiry-history" id="supportHistory"><p class="soft">Checking for your messages…</p></div></div>
+            <div class="glass settings-section inquiry-panel">
+              <h3>Your support requests</h3>
+              <p>Check the status and responses from our team.</p>
+              <div class="inquiry-history" id="supportHistory">
+                <p class="soft">Checking for your messages…</p>
+              </div>
+            </div>
           </section>
           <section class="settings-panel" id="settings-feedback" aria-label="Feedback">
             <div class="glass settings-section inquiry-panel">
-              <span class="inquiry-eyebrow">YOUR VOICE MATTERS</span><h2>Share Feedback</h2>
+              <span class="inquiry-eyebrow">YOUR VOICE MATTERS</span>
+              <h2>Share Feedback</h2>
               <form id="feedbackForm" class="inquiry-form">
-                <label>Feedback category<select id="feedbackTopic" required><option value="Feature Suggestion">Feature Suggestion</option><option value="Design & Experience">Design & Experience</option><option value="Bug Report">Bug Report</option><option value="General Feedback">General Feedback</option></select></label>
-                <label>How is your experience?<select id="feedbackRating" required><option value="5">5 — Love it!</option><option value="4">4 — Pretty good</option><option value="3">3 — Okay</option><option value="2">2 — Needs work</option><option value="1">1 — Not great</option></select></label>
-                <label>Your feedback<textarea id="feedbackMessage" required minlength="10" maxlength="1200" rows="4" placeholder="Your ideas and suggestions…"></textarea></label>
-                <button type="submit" class="btn pri inquiry-submit" id="feedbackSubmit">Submit feedback</button><p class="inquiry-status" id="feedbackStatus" role="status" aria-live="polite"></p>
+                <label>Feedback category<select id="feedbackTopic" required>
+                    <option value="Feature Suggestion">Feature Suggestion</option>
+                    <option value="Design & Experience">Design & Experience</option>
+                    <option value="Bug Report">Bug Report</option>
+                    <option value="General Feedback">General Feedback</option>
+                  </select></label>
+                <label>How is your experience?<select id="feedbackRating" required>
+                    <option value="5">5 — Love it!</option>
+                    <option value="4">4 — Pretty good</option>
+                    <option value="3">3 — Okay</option>
+                    <option value="2">2 — Needs work</option>
+                    <option value="1">1 — Not great</option>
+                  </select></label>
+                <label>Your feedback<textarea id="feedbackMessage" required minlength="10" maxlength="1200" rows="4"
+                    placeholder="Your ideas and suggestions…"></textarea></label>
+                <button type="submit" class="btn pri inquiry-submit" id="feedbackSubmit">Submit feedback</button>
+                <p class="inquiry-status" id="feedbackStatus" role="status" aria-live="polite"></p>
               </form>
             </div>
-            <div class="glass settings-section inquiry-panel"><h3>Your feedback history</h3><p>Thank you for helping us improve.</p><div class="inquiry-history" id="feedbackHistory"><p class="soft">Checking for your feedback…</p></div></div>
+            <div class="glass settings-section inquiry-panel">
+              <h3>Your feedback history</h3>
+              <p>Thank you for helping us improve.</p>
+              <div class="inquiry-history" id="feedbackHistory">
+                <p class="soft">Checking for your feedback…</p>
+              </div>
+            </div>
+          </section>
+          <section class="settings-panel" id="settings-install" aria-label="Install W Envelope Cute">
+            <div class="glass settings-section wenv-install-panel">
+              <div class="wenv-install-icon"><img src="assets/pwa-192.png" alt="W-Envelope Cute app icon"></div>
+              <h2>Install W-Envelope Cute 💌</h2>
+              <p>Open your envelopes like a real phone app from your home screen. Public anonymous links will open in
+                the installed app when supported by your device.</p><button type="button" id="wenvInstallBtn"
+                class="btn pri">Install on this device</button>
+              <p id="wenvInstallStatus" role="status" aria-live="polite">Checking install options…</p>
+              <div class="wenv-install-tips"><strong>Manual installation</strong>
+                <p><b>iPhone:</b> Open in Safari → Share → Add to Home Screen.</p>
+                <p><b>Android:</b> Open in Chrome or Edge → browser menu ⋮ → Install app / Add to Home screen.</p>
+                <p><b>Desktop:</b> Use the Install icon in the Chrome/Edge address bar, if available.</p>
+              </div>
+            </div>
           </section>
           <section class="settings-panel" id="settings-about" aria-label="About W Envelope Cute">
             <div class="glass settings-section">
-              <div class="about-symbol brand-about brand-about-wide"><img src="assets/w-envelope-cute-logo.png" alt="W-Envelope Cute full logo"></div>
+              <div class="about-symbol brand-about brand-about-wide"><img src="assets/w-envelope-cute-logo.png"
+                  alt="W-Envelope Cute full logo"></div>
               <h2>W - Envelope Cute</h2>
               <div class="about-features">
                 <div class="about-feature">
@@ -439,7 +762,8 @@
                 </div>
                 <div class="about-feature">
                   <div><b>Share your memories</b>
-                    <p>Short links for everyone, plus custom link names, photo frames and opening effects with Premium.</p>
+                    <p>Short links for everyone, plus custom link names, photo frames and opening effects with Premium.
+                    </p>
                   </div>
                 </div>
                 <div class="about-feature">
@@ -467,7 +791,8 @@
       <button class="btn sec" id="back" data-go="dash" hidden>‹ My envelopes</button>
       <div class="rc">
         <div id="recvHead">
-          <div class="badge badge-branded"><img src="assets/w-envelope-icon.png" alt=""> Someone left something for you</div>
+          <div class="badge badge-branded"><img src="assets/w-envelope-icon.png" alt=""> Someone left something for you
+          </div>
           <h1 id="recvTitle"></h1>
           <p class="soft" id="recvSub"></p>
         </div>
@@ -476,7 +801,9 @@
         <p class="hint" id="hint">Tap the heart to open ✨</p>
         <div class="reader" id="reader" hidden>
           <div class="paper-stage" id="paperStage">
-            <article class="page" id="page"><div class="paper-page-top"><small id="pgNo"></small><button class="skip-typing" id="skipTyping" type="button" hidden>Show full text ↗</button></div>
+            <article class="page" id="page">
+              <div class="paper-page-top"><small id="pgNo"></small><button class="skip-typing" id="skipTyping"
+                  type="button" hidden>Show full text ↗</button></div>
               <div class="txt" id="pgTxt" aria-live="off"></div>
               <div class="paper-photos" id="pgPhotos" hidden></div>
               <div class="emoji-overlay" id="paperEmoji" aria-hidden="true"></div>
@@ -491,16 +818,22 @@
     </section>
   </main>
   <div class="username-modal-backdrop" id="usernameModalBackdrop" hidden>
-    <section class="username-modal-card" role="dialog" aria-modal="true" aria-labelledby="usernameModalTitle" aria-describedby="usernameModalDescription" tabindex="-1">
-      <button type="button" class="username-modal-close" id="usernameModalClose" aria-label="Close username editor">×</button>
+    <section class="username-modal-card" role="dialog" aria-modal="true" aria-labelledby="usernameModalTitle"
+      aria-describedby="usernameModalDescription" tabindex="-1">
+      <button type="button" class="username-modal-close" id="usernameModalClose"
+        aria-label="Close username editor">×</button>
       <div class="username-modal-icon" aria-hidden="true">@</div>
       <h2 id="usernameModalTitle">Edit envelope username</h2>
-      <p id="usernameModalDescription">A unique username helps friends send envelopes directly to you. You can change it again after 7 days.</p>
-              <div class="username-edit-panel" id="usernameEditPanel" hidden>
-                <label for="myUsernameInput">New username</label>
-                <div class="username-input-row"><input type="text" id="myUsernameInput" minlength="3" maxlength="20" placeholder="e.g. sweet_wen" autocapitalize="off" autocomplete="off" spellcheck="false" /><button type="button" class="btn pri" id="saveMyUsername">Save username</button><button type="button" class="btn sec" id="cancelUsernameEdit">Cancel</button></div>
-                <small>3–20 lowercase letters, numbers, or underscores. Usernames are unique.</small>
-              </div>
+      <p id="usernameModalDescription">A unique username helps friends send envelopes directly to you. You can change it
+        again after 7 days.</p>
+      <div class="username-edit-panel" id="usernameEditPanel" hidden>
+        <label for="myUsernameInput">New username</label>
+        <div class="username-input-row"><input type="text" id="myUsernameInput" minlength="3" maxlength="20"
+            placeholder="e.g. sweet_wen" autocapitalize="off" autocomplete="off" spellcheck="false" /><button
+            type="button" class="btn pri" id="saveMyUsername">Save username</button><button type="button"
+            class="btn sec" id="cancelUsernameEdit">Cancel</button></div>
+        <small>3–20 lowercase letters, numbers, or underscores. Usernames are unique.</small>
+      </div>
 
       <p class="username-modal-status" id="usernameModalStatus" role="status" aria-live="polite"></p>
     </section>
@@ -528,6 +861,22 @@
 
   <footer class="credit">Made by <strong>Wenxyz</strong>|<span id="footerYear"></span></footer>
 
+  <div class="ask-photo-lightbox" id="askPhotoLightbox" role="dialog" aria-modal="true" aria-label="Full photo preview"
+    hidden>
+    <button type="button" id="askPhotoLightboxClose" aria-label="Close photo preview">×</button>
+    <img id="askPhotoLightboxImage" alt="Enlarged anonymous page photo">
+  </div>
+  <div class="ask-welcome" id="askWelcome" role="dialog" aria-modal="true" aria-labelledby="askWelcomeTitle" hidden>
+    <div class="ask-welcome-petals" aria-hidden="true">♡ ✦ 🌸 ♡ ✦ 💌</div>
+    <div class="ask-welcome-card">
+      <div class="ask-welcome-logo"><img src="assets/w-envelope-cute-logo.png" alt="W-Envelope Cute"></div>
+      <span class="ask-welcome-kicker">DELIVERED WITH A LITTLE LOVE</span>
+      <h2 id="askWelcomeTitle">Your secret has been sent! 💌</h2>
+      <p>Welcome to W-Envelope Cute — a place for heartfelt little letters, memories, and surprises.</p>
+      <button id="askWelcomeContinue" type="button" class="btn pri">Click to continue <span
+          aria-hidden="true">♡</span></button>
+    </div>
+  </div>
   <!-- Auth gate is visible from the first paint; page content stays hidden until Firebase confirms login. -->
   <section class="auth-gate" id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
     <div class="auth-card">
@@ -545,10 +894,12 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=18-mobile-ask-username" defer></script>
-  <script src="js/anonymous.js?v=18-mobile-ask-username" defer></script>
+  <script src="js/app.js?v=21-four-free-designs" defer></script>
+  <script src="js/anonymous.js?v=21-studio-premium" defer></script>
+  <script src="js/pwa.js?v=21" defer></script>
+  <script src="js/anon-inbox.js?v=20" defer></script>
 
-  <script type="module" src="js/firebase.js"></script>
+  <script type="module" src="js/firebase.js?v=20"></script>
 </body>
 
 </html>
