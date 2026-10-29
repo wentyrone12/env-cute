@@ -36,22 +36,47 @@
    if(!messages.length){box.innerHTML='<p class="ask-message-empty"><img class="wenv-empty-logo" src="assets/w-envelope-icon.png" alt="">No anonymous messages yet. Share your page to receive your first secret.</p>';return;}
    box.innerHTML=messages.map(({key,...m})=>{
      const t=clean(m.envelope?.pages?.[0]?.text||'');
-     return `<button type="button" class="ask-message-tile" data-ask-letter="${esc(key)}"><span class="ask-tile-kicker"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> SECRET MESSAGE · ${m.readAt?'OPENED':'NEW'}</span><span class="ask-tile-intro">${esc(t.slice(0,96))}${t.length>96?'…':''}</span><span class="ask-tile-meta">${esc(fmt(m.from)||'Anonymous')} · ${esc(date(m.receivedAt))}</span></button>`;
+     return `<article class="ask-message-entry"><button type="button" class="ask-message-tile" data-ask-letter="${esc(key)}"><span class="ask-tile-kicker"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> SECRET MESSAGE · ${m.readAt?'OPENED':'NEW'}</span><span class="ask-tile-intro">${esc(t.slice(0,96))}${t.length>96?'…':''}</span><span class="ask-tile-meta">${esc(fmt(m.from)||'Anonymous')} · ${esc(date(m.receivedAt))}</span></button><button type="button" class="ask-delete-message" data-ask-remove="${esc(key)}" aria-label="Delete anonymous message" title="Tear up and delete"><img src="assets/w-envelope-icon.png" alt=""> Delete</button></article>`;
    }).join('');
  }
  async function openLetter(key){
    selected=messages.find(m=>m.key===key);if(!selected)return;
    const m=selected,txt=clean(m.envelope?.pages?.[0]?.text||'');
    const consent=m.source==='legacy' && !!m.identityOptIn,req=requests[key];
-   const helper=req?.status==='approved'?'Approved — you can view the email the sender consented to share.':req?.status==='pending'?'Your ₱10 transfer is awaiting manual admin verification.':req?.status==='rejected'?'The payment request was rejected. Contact support if you sent the transfer.':consent?'Only with the sender’s explicit permission and a verified ₱10 payment.':'This sender chose full anonymity. Their email cannot be revealed.';
-   showOverlay(`<section class="ask-letter-dialog" role="dialog" aria-modal="true" aria-label="Anonymous paper letter"><div class="ask-letter-toolbar"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> A letter just for you</span><button type="button" data-close-letter aria-label="Close letter">×</button></div><div class="ask-letter-paper"><span class="ask-letter-kicker">AN ANONYMOUS LITTLE NOTE ♡</span><h2>Dear you,</h2><blockquote>${esc(txt)}</blockquote><small>From ${esc(fmt(m.from)||'Anonymous')}<br>${esc(date(m.receivedAt))}</small></div><div class="ask-letter-bottom"><button type="button" class="btn pri" id="askRevealAction">View who is this · ₱10</button><small>${esc(helper)}</small></div></section>`);
-   const btn=el('askRevealAction');
-   if(!consent){btn.disabled=true;btn.textContent='Sender kept their identity private';}
+   const helper=req?.status==='approved'?'Payment verified. Sender-approved email is available.':req?.status==='pending'?'Your ₱10 transfer is awaiting admin verification.':req?.status==='rejected'?'The payment request was rejected.':consent?'₱10 payment unlocks the email shared voluntarily by this sender.':'Email reveal requires the sender’s advance permission. No payment will be collected without it.';
+   showOverlay(`<section class="ask-letter-dialog" role="dialog" aria-modal="true" aria-label="Anonymous paper letter"><div class="ask-letter-toolbar"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> A letter just for you</span><button type="button" data-close-letter aria-label="Close letter">×</button></div><div class="ask-letter-paper"><span class="ask-letter-kicker">AN ANONYMOUS LITTLE NOTE ♡</span><h2>Dear you,</h2><blockquote>${esc(txt)}</blockquote><small>From ${esc(fmt(m.from)||'Anonymous')}<br>${esc(date(m.receivedAt))}</small></div><div class="ask-letter-bottom"><button type="button" class="btn pri" id="askRevealAction">View who is this · ₱10</button><small>${esc(helper)}</small><button type="button" class="ask-letter-delete btn sec" id="askDeleteFromLetter">Tear up & delete letter</button></div></section>`);
+   const btn=el('askRevealAction');el('askDeleteFromLetter').onclick=()=>confirmDelete(key);
+   if(!consent){btn.disabled=false;btn.textContent='View who is this · ₱10';}
    else if(req?.status==='pending'){btn.disabled=true;btn.textContent='Payment under review';}
    else if(req?.status==='rejected'){btn.disabled=true;btn.textContent='Payment rejected';}
    else if(req?.status==='approved')btn.textContent='Reveal consented email';
-   btn.onclick=()=>req?.status==='approved'?revealEmail(key):openPayment(key);
+   btn.onclick=()=>!consent?explainPrivateMessage():req?.status==='approved'?revealEmail(key):openPayment(key);
    if(!m.readAt){(m.source==='fresh'?window.WENV_DB?.markAnonymousMessageRead?.(uid,key):window.WENV_DB?.markReceivedRead?.(uid,key))?.catch(console.warn);}
+ }
+ function explainPrivateMessage(){
+   showOverlay(`<section class="ask-reveal-dialog" role="dialog" aria-modal="true" aria-label="Identity reveal unavailable"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt=""></div><h2>Who sent this?</h2><p>This note was sent anonymously, and Google sign-in did not authorize sharing the sender’s email.</p><p><strong>No payment is needed or accepted</strong> because this message has no sender-approved identity reveal. Only a sender who explicitly agrees in advance can have their email revealed after a verified ₱10 payment.</p><button type="button" class="btn pri" data-close-letter>Got it</button></section>`);
+ }
+ async function deleteLetter(key){
+   const m=messages.find(item=>item.key===key);
+   if(!m || busy || !uid)return;
+   busy=true;
+   const tile=Array.from(el('askMessageItems').querySelectorAll('[data-ask-letter]')).find(b=>b.dataset.askLetter===key)?.closest('.ask-message-entry');
+   try{
+     dismiss();
+     await window.WENV_TEAR?.(tile);
+     if(m.source==='fresh')await window.WENV_DB.removeAnonymousMessage(uid,key);
+     else await window.WENV_DB.removeReceived(uid,key);
+     messages=messages.filter(item=>item.key!==key);render();
+   }catch(err){
+     if(tile)tile.style.visibility='visible';
+     render();
+     showOverlay(`<section class="ask-reveal-dialog" role="alertdialog" aria-modal="true"><h2>Could not delete this message</h2><p>${esc(err?.message||'Please retry after checking your connection.')}</p><button type="button" class="btn pri" data-close-letter>Close</button></section>`);
+   }finally{busy=false;}
+ }
+ function confirmDelete(key){
+   if(!messages.some(m=>m.key===key))return;
+   showOverlay(`<section class="ask-reveal-dialog" role="alertdialog" aria-modal="true" aria-label="Confirm deleting message"><h2>Tear up this letter?</h2><p>This anonymous message will be permanently removed from your inbox and cannot be restored.</p><button type="button" class="btn dng" id="askConfirmTear">Tear up & delete</button><button type="button" class="btn sec" data-close-letter>Keep message</button></section>`);
+   el('askConfirmTear').onclick=()=>deleteLetter(key);
  }
  async function revealEmail(key){
   try{
@@ -92,6 +117,6 @@
  }
  el('askOpenMessages').onclick=()=>viewing?restoreDashboard():openMessages();
  el('askMessagesBack').onclick=restoreDashboard;
- el('askMessageItems').addEventListener('click',e=>{const b=e.target.closest('[data-ask-letter]');if(b)openLetter(b.dataset.askLetter);});
+ el('askMessageItems').addEventListener('click',e=>{const d=e.target.closest('[data-ask-remove]');if(d){confirmDelete(d.dataset.askRemove);return;}const b=e.target.closest('[data-ask-letter]');if(b)openLetter(b.dataset.askLetter);});
  document.addEventListener('wenv-user-ready',e=>{const owner=e.detail?.uid;if(owner&&window.WENV_DB)subscribe(owner);else if(owner){let tries=0;const timer=setInterval(()=>{if(window.WENV_DB){clearInterval(timer);subscribe(owner);}else if(++tries>30)clearInterval(timer);},200);}});
 })();

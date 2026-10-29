@@ -1,0 +1,26 @@
+/* v23: torn-paper deletes, Premium Effects lock and reversible reader */
+.wenv-tear-overlay{z-index:10005;pointer-events:none!important;overflow:visible!important;isolation:isolate;filter:drop-shadow(0 6px 10px #763a5e45)}
+.wenv-tear-overlay .wenv-tear-half{pointer-events:none!important;will-change:transform,opacity,filter;transform-origin:50% 50%;border-radius:inherit}
+.wenv-tear-overlay.wenv-tearing .wenv-tear-left{animation:wenv-tear-away-left .78s cubic-bezier(.2,.65,.4,1) forwards}
+.wenv-tear-overlay.wenv-tearing .wenv-tear-right{animation:wenv-tear-away-right .78s cubic-bezier(.2,.65,.4,1) forwards}
+@keyframes wenv-tear-away-left{0%{transform:none;opacity:1;filter:brightness(1)}18%{transform:translateX(-7px) rotate(-3deg);opacity:1}55%{filter:brightness(.96)}100%{transform:translate(-130px,52px) rotate(-19deg) scale(.81);opacity:0;filter:blur(4px)}}
+@keyframes wenv-tear-away-right{0%{transform:none;opacity:1;filter:brightness(1)}18%{transform:translateX(8px) rotate(3deg);opacity:1}100%{transform:translate(135px,56px) rotate(19deg) scale(.81);opacity:0;filter:blur(4px)}}
+#dash .ask-message-entry{position:relative;min-width:0;min-height:0;display:flex;flex-direction:column;gap:8px}
+#dash .ask-message-entry>.ask-message-tile{width:100%;flex:1 1 auto;min-width:0}
+#dash .ask-delete-message{align-self:flex-end;border:1px solid #f2cbdc;border-radius:999px;color:#a4577d;background:#fff7fb;display:flex;gap:6px;align-items:center;justify-content:center;padding:7px 12px;font:850 12px/1.2 'Nunito',sans-serif;cursor:pointer;transition:transform .2s,background .2s}
+#dash .ask-delete-message:hover{background:#ffe3ed;transform:translateY(-2px)}
+#dash .ask-delete-message img{width:19px;height:19px;object-fit:contain}
+.ask-letter-delete{border:1px solid #e8c7d8!important;background:#fff7fa!important;color:#a9577c!important;min-height:37px!important;font-size:12px!important;margin-top:5px!important}
+#studioToolRail [data-studio-switch="effects"].is-premium-locked{opacity:.64;cursor:not-allowed}
+#recv .reader{position:relative;transform-origin:50% 80%}
+#recv .reader-close-paper{display:flex;gap:8px;align-items:center;justify-content:center;margin:0 auto 14px;border:1px solid #f4c8e0;border-radius:999px;background:#fff7fb;color:#854f77;min-height:38px;padding:8px 17px;cursor:pointer;font-weight:850;box-shadow:0 5px 14px #a6577f20}
+#recv .reader-close-paper[hidden]{display:none!important}
+#recv .reader.letter-entering{animation:wenv-paper-enter .57s cubic-bezier(.19,.8,.3,1) both}
+#recv .reader.letter-closing{animation:wenv-paper-return .47s cubic-bezier(.4,0,.7,.2) both;pointer-events:none}
+@keyframes wenv-paper-enter{from{opacity:0;transform:translateY(-100px) scale(.7) rotate(-6deg);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes wenv-paper-return{from{opacity:1;transform:none;filter:blur(0)}to{opacity:0;transform:translateY(-100px) scale(.7) rotate(-6deg);filter:blur(8px)}}
+#recv .scene.letter-returning{animation:wenv-envelope-return .4s ease-out both}
+@keyframes wenv-envelope-return{from{opacity:0;transform:translateY(38px) scale(.87)}to{opacity:1;transform:none}}
+#recv .scene.letter-returning .env:not(.open) .sh{transition:transform 1s cubic-bezier(.3,1.3,.5,1) .18s}
+@media(max-width:580px){#recv .reader-close-paper{margin-bottom:10px}#dash .ask-delete-message{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.wenv-tear-overlay.wenv-tearing .wenv-tear-left,.wenv-tear-overlay.wenv-tearing .wenv-tear-right,#recv .reader.letter-entering,#recv .reader.letter-closing,#recv .scene.letter-returning{animation:none!important}}

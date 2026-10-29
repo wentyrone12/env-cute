@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="css/v20-anonymous-inbox.css?v=20">
   <link rel="stylesheet" href="css/v21-enhancements.css?v=21">
   <link rel="stylesheet" href="css/v22-responsive-intro.css?v=22">
+  <link rel="stylesheet" href="css/v23-tear-fold.css?v=23">
   <script>if(!/^#(?:ask|e|envelope)=/.test(location.hash))document.documentElement.classList.add("wenv-booting");</script>
 </head>
 
@@ -798,7 +799,7 @@
         <div class="scene" id="recvScene" data-tilt></div>
         <div class="bouquet-screen" id="bouquetScreen" hidden aria-hidden="true"></div>
         <p class="hint" id="hint">Tap the heart to open ✨</p>
-        <div class="reader" id="reader" hidden>
+        <div class="reader" id="reader" hidden><button class="reader-close-paper" type="button" id="closeReadPaper" hidden aria-label="Close paper and fold it back into the envelope"><span aria-hidden="true">⌄</span> Close letter</button>
           <div class="paper-stage" id="paperStage">
             <article class="page" id="page">
               <div class="paper-page-top"><small id="pgNo"></small><button class="skip-typing" id="skipTyping"
@@ -900,13 +901,13 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=22-separate-message" defer></script>
+  <script src="js/app.js?v=23-tear-fold" defer></script>
   <script src="js/anonymous.js?v=22-separate-message" defer></script>
   <script src="js/pwa.js?v=21" defer></script>
-  <script src="js/anon-inbox.js?v=22" defer></script>
+  <script src="js/anon-inbox.js?v=23-tear" defer></script>
   <script src="js/v22-intro.js?v=22" defer></script>
 
-  <script type="module" src="js/firebase.js?v=22"></script>
+  <script type="module" src="js/firebase.js?v=23"></script>
 </body>
 
 </html>

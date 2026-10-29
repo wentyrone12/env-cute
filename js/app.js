@@ -549,7 +549,7 @@ const studioPageTools = new Set(['paper', 'write', 'photos', 'borders', 'layouts
 function buildStudioRail() {
   const rail = $('#studioToolRail');
   if (rail.children.length) return;
-  rail.innerHTML = STUDIO_TOOLS.map(tool => `<button type="button" class="studio-tool${tool.id === 'magic' && !isPremium() ? ' is-premium-locked' : ''}" data-studio-switch="${tool.id}" aria-label="${tool.heading}${tool.id === 'magic' && !isPremium() ? ' - Premium locked' : ''}" title="${tool.heading}"><span class="studio-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.name}${tool.id === 'magic' && !isPremium() ? ' 🔒' : ''}</span></button>`).join('');
+  rail.innerHTML = STUDIO_TOOLS.map(tool => `<button type="button" class="studio-tool${['magic','effects'].includes(tool.id) && !isPremium() ? ' is-premium-locked' : ''}" data-studio-switch="${tool.id}" aria-label="${tool.heading}${['magic','effects'].includes(tool.id) && !isPremium() ? ' - Premium locked' : ''}" title="${tool.heading}"><span class="studio-tool-icon" aria-hidden="true">${tool.icon}</span><span>${tool.name}${['magic','effects'].includes(tool.id) && !isPremium() ? ' 🔒' : ''}</span></button>`).join('');
   rail.querySelectorAll('[data-studio-switch]').forEach(btn => btn.addEventListener('click', () => selectStudioTool(btn.dataset.studioSwitch)));
 }
 function updateStudioCanvas() {
@@ -616,7 +616,7 @@ function updateStudioTool() {
   $('#studioBack').disabled = i === 0;
   $('#studioNext').textContent = i === STUDIO_TOOLS.length - 1 ? '💌 Seal now' : i === STUDIO_TOOLS.length - 2 ? 'Review ›' : 'Next ›';
   $$('#studioToolRail .studio-tool').forEach(btn => {
-    const locked = btn.dataset.studioSwitch === 'magic' && !isPremium();
+    const locked = ['magic','effects'].includes(btn.dataset.studioSwitch) && !isPremium();
     btn.classList.toggle('is-premium-locked', locked);
     const name=STUDIO_TOOLS.find(t=>t.id===btn.dataset.studioSwitch);
     if (name) btn.lastElementChild.textContent=name.name+(locked?' 🔒':'');
@@ -630,8 +630,8 @@ function updateStudioTool() {
 }
 function selectStudioTool(id) {
   if (!STUDIO_TOOLS.some(t => t.id === id)) return;
-  if (id === 'magic' && !isPremium()) {
-    modal('<div class="big">🔒</div><h2>Premium Paper Magic</h2><p>Typewriter, page transitions, and other Magic effects are exclusive to Premium. Your other editing tools are still available.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go(\'settings\');setSettingsPage(\'subscription\')">✦ See Premium</button></div>');
+  if (['magic','effects'].includes(id) && !isPremium()) {
+    modal('<div class="big">🔒</div><h2>Premium creative tools</h2><p>Magic and animated Page Effects are exclusive to Premium. Your other editing tools are still available.</p><div class="row"><button class="btn sec" onclick="closeModal()">Maybe later</button><button class="btn pri" onclick="closeModal();go(\'settings\');setSettingsPage(\'subscription\')">✦ See Premium</button></div>');
     return;
   }
   if(studioTool!==id) mobilePickerDismissed=false;
@@ -1163,7 +1163,7 @@ function renderPages() {
     if (!isPremium() && PHOTO_LAYOUTS.findIndex(v=>v.id===id)>=4) return lockedDesignNotice();
     pages[i].photoLayout = id; renderPages(); preserveDesignScroll(i, 'photo-layout', id); toast('Photo layout updated ♡');
   });
-  $$('#pages [data-effect]').forEach(select => select.onchange = () => { pages[+select.dataset.effect].effect = select.value; refreshPageTabMarkers() });
+  $$('#pages [data-effect]').forEach(select => select.onchange = () => { if (!isPremium()) { select.value='none'; return; } pages[+select.dataset.effect].effect = select.value; refreshPageTabMarkers() });
   $$('#pages .sw').forEach(el => { const i = +el.dataset.i; swatches(el, availableColors('paper', pages[i].color), pages[i].color, c => { pages[i].color = c; if (i === 0) { paper = c; renderColorPalettes(); } updPreview() }) });
   $$('#pages textarea').forEach(t => t.oninput = () => { const i = +t.dataset.i; pages[i].text = t.value; $('#cc' + i).textContent = t.value.length + '/600'; refreshPageTabMarkers(); updateStudioCanvas(); });
   $$('#pages [data-photo]').forEach(input => input.onchange = async e => {
@@ -1257,7 +1257,7 @@ async function create() {
     createdAt: original?.createdAt || new Date().toISOString(), updatedAt: new Date().toISOString(),
     shortCode: original?.shortCode, customCode: original?.customCode, linkCodes: original?.linkCodes,
     signature: { text: $('#signatureText').value.trim(), style: signatureStyle, align: isPremium() ? signatureAlign : (original?.signature?.align || 'right') },
-    pages: pages.slice(0, n()).map((p, pageIndex) => ({ text: p.text.trim() || 'A little message just for you. ♡', color: p.color, photos: p.photos, effect: p.effect || 'none', photoStyle: isPremium() || PHOTO_STYLES.slice(0,4).some(x=>x.id===p.photoStyle) ? safePhotoStyle(p.photoStyle) : (original ? safePhotoStyle(original.pages?.[pageIndex]?.photoStyle) : 'classic'), photoLayout: isPremium() || PHOTO_LAYOUTS.slice(0,4).some(x=>x.id===p.photoLayout) ? safePhotoLayout(p.photoLayout) : (original ? safePhotoLayout(original.pages?.[pageIndex]?.photoLayout) : 'stack') }))
+    pages: pages.slice(0, n()).map((p, pageIndex) => ({ text: p.text.trim() || 'A little message just for you. ♡', color: p.color, photos: p.photos, effect: isPremium() ? (p.effect || 'none') : (original?.pages?.[pageIndex]?.effect || 'none'), photoStyle: isPremium() || PHOTO_STYLES.slice(0,4).some(x=>x.id===p.photoStyle) ? safePhotoStyle(p.photoStyle) : (original ? safePhotoStyle(original.pages?.[pageIndex]?.photoStyle) : 'classic'), photoLayout: isPremium() || PHOTO_LAYOUTS.slice(0,4).some(x=>x.id===p.photoLayout) ? safePhotoLayout(p.photoLayout) : (original ? safePhotoLayout(original.pages?.[pageIndex]?.photoLayout) : 'stack') }))
   });
   creating = true; $('#make').disabled = true; $('#make').textContent = editingId ? '☁️ Updating envelope...' : '☁️ Saving envelope...';
   try {
@@ -1614,17 +1614,47 @@ document.addEventListener('click', async event => {
   const remove = event.target.closest('[data-remove-received]');
   if (remove) {
     const key = remove.dataset.removeReceived;
-    try { await window.WENV_DB.removeReceived(currentUser.uid, key); toast('Removed from received letters') }
-    catch (err) { console.error(err); toast('Could not remove received letter') }
+    try { const tile=remove.closest('.card'); remove.disabled=true; await animateEnvelopeTear(tile); await window.WENV_DB.removeReceived(currentUser.uid, key); toast('Received letter torn and removed') }
+    catch (err) { console.error(err); renderDash(); toast('Could not remove received letter') }
   }
 });
+/* v23: Two-sided torn-paper removal. Runs BEFORE the database removal so users see the tear. */
+async function animateEnvelopeTear(element) {
+  if (!element || !element.isConnected) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const r=element.getBoundingClientRect();
+  if (!r.width || !r.height) return;
+  const overlay=document.createElement('div');
+  overlay.className='wenv-tear-overlay';
+  overlay.style.cssText=`position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`;
+  const masks=[
+    'polygon(0 0,50% 0,47% 12%,53% 22%,47% 35%,52% 47%,46% 60%,52% 73%,48% 85%,50% 100%,0 100%)',
+    'polygon(50% 0,100% 0,100% 100%,50% 100%,48% 85%,52% 73%,46% 60%,52% 47%,47% 35%,53% 22%,47% 12%)'
+  ];
+  for(let i=0;i<2;i++){
+    const clone=element.cloneNode(true);
+    clone.removeAttribute('id');clone.setAttribute('aria-hidden','true');clone.inert=true;
+    clone.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));
+    clone.classList.add('wenv-tear-half',i===0?'wenv-tear-left':'wenv-tear-right');
+    clone.style.cssText=`position:absolute!important;inset:0!important;width:100%!important;height:100%!important;margin:0!important;min-height:0!important;box-sizing:border-box!important;clip-path:${masks[i]};overflow:hidden!important`;
+    overlay.appendChild(clone);
+  }
+  (document.querySelector('#dash')||document.body).appendChild(overlay);
+  element.style.visibility='hidden';
+  overlay.offsetHeight;
+  overlay.classList.add('wenv-tearing');
+  await new Promise(resolve=>setTimeout(resolve,800));
+  overlay.remove();
+}
+window.WENV_TEAR=animateEnvelopeTear;
+
 function askDelete(id) {
   modal(`<div class="big">🥺</div><h2>Delete this envelope?</h2><p>Remove it from your synced collection? Existing shared links will keep working; only share envelopes you trust others to read.</p><div class="row"><button class="btn sec" onclick="closeModal()">Keep it</button><button class="btn dng" onclick="delEnv('${id}')">Delete</button></div>`)
 }
 async function delEnv(id) {
   if (!cloudReady) return toast('Cloud unavailable. Try again when synced.');
-  try { await cloudRemove(id); closeModal(); toast('Envelope removed from your cloud collection') }
-  catch (err) { console.error(err); toast('Could not delete the envelope from Firebase') }
+  try { const tile=Array.from(document.querySelectorAll('#list [data-envelope-id]')).find(b=>b.dataset.envelopeId===id)?.closest('.card'); closeModal(); await animateEnvelopeTear(tile); await cloudRemove(id); toast('Envelope torn and removed from your collection') }
+  catch (err) { console.error(err); renderDash(); toast('Could not delete the envelope from Firebase') }
 }
 
 /* short links: Firebase stores envelope payload, never in the link itself */
@@ -1858,7 +1888,7 @@ function setup(e, prev) {
   recv = e; idx = 0; preview = prev; $('#recvTitle').textContent = e.title;
   $('#recvSub').textContent = e.from ? `From ${e.from}` : 'Someone prepared a little surprise for you.';
   const s = $('#recvScene'); s.className = 'scene'; s.innerHTML = `<div class="tilt">${envHTML(e.envelopeColor, e.pages.map(p => p.color), { float: 1, play: 1, id: 'recvEnv', coverText: e.coverText })}</div>`;
-  $('#reader').hidden = true; $('#back').hidden = !prev; go('recv');
+  $('#reader').hidden = true; $('#reader').classList.remove('letter-closing','letter-entering'); $('#closeReadPaper').hidden=true; $('#back').hidden = !prev; go('recv');
   playBouquetIntro(safePaperMagic(e.paperMagic));
 }
 function previewEnv(id) { if (!currentUser) return; const e = store.find(x => x.id === id); if (e) { closeModal(); setup(e, true); } }
@@ -1869,9 +1899,32 @@ function openRecv() {
   setTimeout(() => { if (seq === readerSequence) $('#recvScene').classList.add('done'); }, 1900);
   setTimeout(() => {
     if (seq !== readerSequence) return;
-    $('#recvScene').classList.add('gone'); $('#reader').hidden = false; show(0, 0);
+    $('#recvScene').classList.add('gone'); $('#reader').hidden = false; $('#closeReadPaper').hidden=false; $('#reader').classList.add('letter-entering'); setTimeout(()=>$('#reader').classList.remove('letter-entering'),590); show(0, 0);
   }, 2550);
 }
+let closingReadPaper=false;
+function closeReadPaper() {
+  if(!recv || $('#reader').hidden || closingReadPaper) return;
+  closingReadPaper=true;
+  finishTyping();clearPaperTurn();
+  const scene=$('#recvScene'),reader=$('#reader');
+  const seq=++readerSequence;
+  reader.classList.add('letter-closing');
+  $('#closeReadPaper').disabled=true;
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  setTimeout(()=>{
+    if(seq!==readerSequence){closingReadPaper=false;return;}
+    reader.hidden=true;reader.classList.remove('letter-closing');
+    $('#closeReadPaper').hidden=true;$('#closeReadPaper').disabled=false;
+    scene.classList.remove('gone','done');
+    scene.classList.add('letter-returning');
+    const envelope=$('#recvEnv');
+    if(envelope){envelope.classList.remove('float');envelope.offsetHeight;envelope.classList.remove('open');}
+    setTimeout(()=>{if(seq===readerSequence){scene.classList.remove('letter-returning');$('#hint').style.display='';}closingReadPaper=false;},reduce?70:1510);
+  },reduce?40:480);
+}
+$('#closeReadPaper').addEventListener('click',closeReadPaper);
+
 function paintPage(i, animateOldStyle = 0) {
   idx = i;
   const p = recv.pages[i], el = $('#page'), last = i === recv.pages.length - 1;

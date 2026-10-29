@@ -30,6 +30,7 @@
           sendAnonymousEnvelope(recipientUid, payload, messageId){ return dbModule.set(dbModule.ref(db,'users/'+recipientUid+'/anonymousMessages/'+messageId),payload) },
           subscribeAnonymousMessages(uid, next, fail){return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousMessages'),snap=>next(snap.val()||{}),fail)},
           markAnonymousMessageRead(uid,key){return dbModule.update(dbModule.ref(db,'users/'+uid+'/anonymousMessages/'+key),{readAt:Date.now()})},
+          removeAnonymousMessage(uid,key){return dbModule.remove(dbModule.ref(db,'users/'+uid+'/anonymousMessages/'+key))},
           saveAnonymousConsent(recipientUid,messageId,code,email){return dbModule.set(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId),{senderUid:auth.currentUser.uid,code,email,consented:true,createdAt:Date.now()})},
           revokeAnonymousConsent(recipientUid,messageId){return dbModule.remove(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId))},
           getAnonymousConsent(recipientUid,messageId){return dbModule.get(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId)).then(s=>s.val()||null)},
