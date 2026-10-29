@@ -1,0 +1,67 @@
+/* v22 — mobile overflow containment, cohesive icons, and welcome splash */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+*{box-sizing:border-box}
+body>main,body>main>.screen,body>.nav,.auth-gate,.modal,.mcard{min-width:0;max-width:100%}
+img,video,canvas,svg{max-width:100%}
+#dash .dtop,#dash .cards,#dash .card,#ask .ask-layout,#ask .ask-studio-grid,#ask .ask-tool-card,#ask .ask-paper,#ask .ask-public-wrap{min-width:0}
+#dash .card .info,#dash .card .acts,#ask .ask-tool-section,#ask .ask-link-row,#ask .ask-share-modal{min-width:0;overflow-wrap:anywhere}
+#dash .anonymous-hub{display:flex;flex:1 1 100%;width:100%;min-width:0;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;border:1px solid #f5d5e7;border-radius:24px;background:linear-gradient(135deg,#fffafd,#ffeef7);box-shadow:0 12px 28px #9c638025}
+#dash .anonymous-hub-identity{display:flex;align-items:center;min-width:0;gap:12px;flex:1 1 auto}
+#dash .anonymous-hub-identity>img{display:block;width:52px;height:52px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 5px 7px #a0648c44)}
+#dash .anonymous-hub-identity>div{display:grid;gap:4px;min-width:0}
+#dash .anonymous-hub-identity strong{color:#81496e;font-size:clamp(15px,2vw,19px)}
+#dash .anonymous-hub-identity small{color:#9d708c;font-size:12px;line-height:1.35}
+#dash .anonymous-hub-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;flex:0 1 auto}
+#dash .anonymous-hub-actions .btn{white-space:normal;min-height:43px;display:inline-flex;align-items:center;gap:5px;justify-content:center;font-size:13px}
+.wenv-inline-mark{width:20px!important;height:20px!important;display:inline-block!important;vertical-align:middle;flex:0 0 auto;object-fit:contain!important}
+.wenv-empty-logo{display:block;width:65px;height:65px;object-fit:contain;margin:0 auto 12px}
+#dash .ask-message-tile .ask-tile-kicker{display:flex;align-items:center;gap:5px}
+#dash .ask-message-center,#dash .ask-message-grid,#dash .ask-message-header{min-width:0;max-width:100%}
+#ask .ask-public-intro h2 .wenv-inline-mark{width:30px!important;height:30px!important}
+#ask .ask-guest-launcher{display:flex;align-items:center;gap:8px;justify-content:center}
+#ask .ask-guest-composer .ask-compose-head>span{display:inline-flex;align-items:center;gap:6px;min-width:0}
+#ask .ask-paper-sticker{display:block!important;font-size:0!important;width:42px!important;height:42px!important;min-height:30px;background:url('../assets/w-envelope-icon.png') center / contain no-repeat;filter:drop-shadow(0 4px 6px #a3578455);margin-inline:auto}
+#ask .ask-theme-grid button span{font-size:0!important}
+#ask .ask-theme-grid button.ask-theme-locked:after{content:'PREMIUM';font-size:8px;width:auto;min-width:40px;padding:0 3px}
+#ask .ask-tool-section label.ask-photo-drop{overflow-wrap:anywhere}
+.ask-send-modal .ask-modal-brand{display:flex;justify-content:center;margin:2px 0 7px}
+.ask-send-modal .ask-modal-brand img{width:75px;height:75px;object-fit:contain;filter:drop-shadow(0 6px 10px #a0648c3f)}
+.ask-send-loading .ask-loader img{width:56px;height:56px;object-fit:contain;animation:wenv-loading-rotate 1.35s ease-in-out infinite alternate}
+@keyframes wenv-loading-rotate{to{transform:rotateY(180deg) translateY(-4px)}}
+/* Welcome intro visible before the login card. JS skips it for public links. */
+html.wenv-booting #authGate{visibility:hidden!important;pointer-events:none!important}
+.wenv-boot-intro[hidden]{display:none!important}
+.wenv-boot-intro{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:20px;background:radial-gradient(ellipse at 22% 18%,#fff6fd 0,transparent 55%),radial-gradient(ellipse at 75% 82%,#f1cce9 0,transparent 55%),linear-gradient(145deg,#fff4f9,#f4ddeb 70%,#e8d3ee);overflow:hidden;isolation:isolate}
+.wenv-boot-glow{position:absolute;width:min(85vmin,450px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fffaffc7,transparent 72%);filter:blur(8px);pointer-events:none}
+.wenv-boot-center{position:relative;display:grid;justify-items:center;gap:8px;max-width:360px;text-align:center}
+.wenv-boot-logo{width:clamp(145px,40vw,260px);max-height:230px;object-fit:contain;filter:drop-shadow(0 18px 30px #a3648940);backface-visibility:visible;animation:wenv-brand-intro 3.25s cubic-bezier(.23,.83,.25,1) both}
+.wenv-boot-welcome{display:grid;gap:4px;align-items:center;color:#875172;opacity:0;transform:translateY(20px) scale(.92);animation:wenv-welcome-text 3.25s ease both}
+.wenv-boot-welcome span{font:900 clamp(26px,6vw,41px)/1.06 'Fredoka',sans-serif;color:#a45287}
+.wenv-boot-welcome strong{font:800 clamp(18px,4vw,25px)/1.2 'Nunito',sans-serif}
+.wenv-boot-welcome small{font:700 12px/1.4 'Nunito',sans-serif;letter-spacing:.09em}
+@keyframes wenv-brand-intro{0%{opacity:0;transform:translateY(100dvh) scale(.65) rotateY(0)}22%{opacity:1;transform:translateY(0) scale(1) rotateY(0)}44%{transform:translateY(-8px) scale(1.08) rotateY(180deg)}62%{transform:translateY(0) scale(1) rotateY(360deg)}79%{opacity:1;transform:translateY(0) scale(1) rotateY(360deg)}100%{opacity:0;transform:translateY(100dvh) scale(.75) rotateY(360deg)}}
+@keyframes wenv-welcome-text{0%,46%{opacity:0;transform:translateY(20px) scale(.92)}58%,82%{opacity:1;transform:none}100%{opacity:0;transform:translateY(18px) scale(.98)}}
+@media(max-width:820px){
+  #dash .dtop{flex-wrap:wrap;gap:12px}
+  #dash .anonymous-hub{flex-wrap:wrap;padding:13px;gap:12px}
+  #dash .anonymous-hub-actions{width:100%;justify-content:stretch}
+  #dash .anonymous-hub-actions .btn{flex:1 1 125px}
+  #ask .ask-stage,#ask .ask-public-stage,#ask .ask-paper{min-width:0;max-width:100%}
+  #ask .ask-tool-card,#ask .ask-tool-section{width:100%;max-width:100%}
+  #ask .ask-toolbar-scroll{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch;max-width:100vw}
+  #ask .ask-tool-section input,#ask .ask-tool-section textarea,#ask .ask-tool-section select{max-width:100%}
+  .modal .mcard{max-width:calc(100vw - 20px);max-height:calc(100dvh - 24px);overflow-y:auto;overscroll-behavior:contain}
+  .ask-letter-overlay{overflow:auto;overscroll-behavior:contain}
+}
+@media(max-width:440px){
+  #dash .anonymous-hub-identity>img{width:45px;height:45px}
+  #dash .anonymous-hub-actions .btn{font-size:12px;padding:9px 8px}
+  #dash .ask-message-header{flex-wrap:wrap}
+  #dash .ask-message-header .btn{margin-left:auto}
+  #ask .ask-paper{overflow-wrap:anywhere}
+  #ask .ask-guest-top{min-width:0}
+  #ask .ask-public-wrap{width:100%;min-width:0}
+  #ask .ask-guest-brand{min-width:0;max-width:50%}
+  #ask .ask-guest-owner{max-width:50%;min-width:0}
+}
+@media(prefers-reduced-motion:reduce){.wenv-boot-logo{animation:wenv-brand-intro 1.2s linear both}.wenv-boot-welcome{animation:wenv-welcome-text 1.2s linear both}}

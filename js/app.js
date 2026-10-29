@@ -450,7 +450,7 @@ function watchReceived(uid) {
   stopReceived(); let initialSync = true, priorKeys = new Set();
   stopReceived = window.WENV_DB.subscribeReceived(uid, data => {
     if (currentUser?.uid !== uid) return;
-    const incoming = Object.entries(data || {}).map(([key,item])=>({ ...item,key })).sort((a,b)=>String(b.receivedAt||'').localeCompare(String(a.receivedAt||'')));
+    const incoming = Object.entries(data || {}).filter(([,item])=>!(item?.anonymous===true && item?.anonymousPageCode)).map(([key,item])=>({ ...item,key })).sort((a,b)=>String(b.receivedAt||'').localeCompare(String(a.receivedAt||'')));
     if (!initialSync && incoming.some(item=>(item.senderUid || item.anonymous) && !item.readAt && !priorKeys.has(item.key))) toast('💌 A new envelope has arrived!');
     initialSync = false; priorKeys = new Set(incoming.map(v=>v.key));
     receivedStore = incoming; renderDash();

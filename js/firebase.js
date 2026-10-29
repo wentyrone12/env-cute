@@ -26,8 +26,10 @@
           getAnonymousPointers(uid) { return dbModule.get(dbModule.ref(db,'users/'+uid+'/anonymousPages')).then(s=>s.val()||{}) },
           subscribeAnonymousPointers(uid,next,fail) { return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousPages'),s=>next(s.val()||{}),fail) },
           // The anonymous inbox write is directly authorized by page ownership rules.
-          newAnonymousMessageId(recipientUid){ return dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/received')).key },
-          sendAnonymousEnvelope(recipientUid, payload, messageId){ return dbModule.set(dbModule.ref(db,'users/'+recipientUid+'/received/'+messageId),payload) },
+          newAnonymousMessageId(recipientUid){ return dbModule.push(dbModule.ref(db,'users/'+recipientUid+'/anonymousMessages')).key },
+          sendAnonymousEnvelope(recipientUid, payload, messageId){ return dbModule.set(dbModule.ref(db,'users/'+recipientUid+'/anonymousMessages/'+messageId),payload) },
+          subscribeAnonymousMessages(uid, next, fail){return dbModule.onValue(dbModule.ref(db,'users/'+uid+'/anonymousMessages'),snap=>next(snap.val()||{}),fail)},
+          markAnonymousMessageRead(uid,key){return dbModule.update(dbModule.ref(db,'users/'+uid+'/anonymousMessages/'+key),{readAt:Date.now()})},
           saveAnonymousConsent(recipientUid,messageId,code,email){return dbModule.set(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId),{senderUid:auth.currentUser.uid,code,email,consented:true,createdAt:Date.now()})},
           revokeAnonymousConsent(recipientUid,messageId){return dbModule.remove(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId))},
           getAnonymousConsent(recipientUid,messageId){return dbModule.get(dbModule.ref(db,'anonymousSenderConsents/'+recipientUid+'/'+messageId)).then(s=>s.val()||null)},

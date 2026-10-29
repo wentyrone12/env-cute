@@ -215,7 +215,7 @@
   function savedPagesHTML(){
     const ids=Object.keys(pointers).filter(validCode).sort((a,b)=>(pointers[b]||0)-(pointers[a]||0));
     if(code && !ids.includes(code))ids.unshift(code);
-    return `<div class="ask-saved-head"><strong>My published pages</strong><small>Choose a page to edit or share</small></div><div class="ask-saved-cards">${ids.length?ids.map(id=>`<div class="ask-saved-item"><span>💌 <strong>${id===code?'Current page':'Anonymous page'}</strong><small>${esc(id)}</small></span><div><button type="button" data-ask-edit="${esc(id)}" class="btn sec">Edit</button><button type="button" data-ask-share="${esc(id)}" class="btn pri">Share</button></div></div>`).join(''):'<p class="ask-no-saved">Save your first page to get a shareable link ♡</p>'}</div>`;
+    return `<div class="ask-saved-head"><strong>My published pages</strong><small>Choose a page to edit or share</small></div><div class="ask-saved-cards">${ids.length?ids.map(id=>`<div class="ask-saved-item"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> <strong>${id===code?'Current page':'Anonymous page'}</strong><small>${esc(id)}</small></span><div><button type="button" data-ask-edit="${esc(id)}" class="btn sec">Edit</button><button type="button" data-ask-share="${esc(id)}" class="btn pri">Share</button></div></div>`).join(''):'<p class="ask-no-saved">Save your first page to get a shareable link ♡</p>'}</div>`;
   }
   function renderSaved(){const node=$a('askModalSaved');if(node)node.innerHTML=savedPagesHTML();}
   function userChanged(user){
@@ -235,9 +235,10 @@
   }
   function popupShare(c){
     const link=getLink(c);
-    modal(`<div class="ask-share-modal"><div class="big">💌</div><h2>${dirty?'Share your anonymous page':'Your anonymous link is ready!'}</h2><p>Your page is cloud-saved. Edit it anytime, then press Save & Share again to update this same link.</p><div class="ask-link-row"><input id="askShareLink" readonly aria-label="Public anonymous link" value="${esc(link)}"><button class="btn pri" id="askCopyLink" type="button">Copy</button></div><div class="ask-modal-actions"><button type="button" class="btn sec" id="askNativeShare">↗ Share link</button><button type="button" class="btn sec" id="askPreviewLink">Preview</button></div><p class="ask-share-warning">Anyone with this link can see your page and send an envelope after Google sign-in.</p><div class="ask-modal-saved" id="askModalSaved">${savedPagesHTML()}</div></div>`);
+    modal(`<div class="ask-share-modal"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>${dirty?'Share your anonymous page':'Your anonymous link is ready!'}</h2><p>Your page is cloud-saved. Edit it anytime, then press Save & Share again to update this same link.</p><div class="ask-link-row"><input id="askShareLink" readonly aria-label="Public anonymous link" value="${esc(link)}"><button class="btn pri" id="askCopyLink" type="button">Copy</button></div><div class="ask-modal-actions"><button type="button" class="btn sec" id="askNativeShare">↗ Share link</button><button type="button" class="btn sec" id="askPreviewLink">Preview</button></div><p class="ask-share-warning">Anyone with this link can see your page and send an envelope after Google sign-in.</p><div class="ask-modal-saved" id="askModalSaved">${savedPagesHTML()}</div><button class="btn sec wide" type="button" id="askShareOpenInbox">View anonymous messages</button></div>`);
     $a('askCopyLink').onclick=()=>copyLink(link);
-    $a('askNativeShare').onclick=async()=>{if(navigator.share){try{await navigator.share({title:'Send me an anonymous envelope 💌',url:link});}catch(err){if(err?.name!=='AbortError')copyLink(link);}}else copyLink(link);};
+    $a('askShareOpenInbox').onclick=()=>{closeModal();go('dash');$a('askOpenMessages').click();};
+    $a('askNativeShare').onclick=async()=>{if(navigator.share){try{await navigator.share({title:'Send me an anonymous envelope',url:link});}catch(err){if(err?.name!=='AbortError')copyLink(link);}}else copyLink(link);};
     $a('askPreviewLink').onclick=()=>window.open(link,'_blank','noopener,noreferrer');
     $a('askModalSaved').addEventListener('click',e=>{
       const edit=e.target.closest('[data-ask-edit]');if(edit){if(dirty){toast('Save your changes before switching pages ♡');return;}editPage(edit.dataset.askEdit);return;}
@@ -332,7 +333,7 @@
   function signInModal(){
     if(!pendingMessage || !activePublic)return;
     closeGuestComposer();
-    modal(`<div class="ask-send-modal ask-auth-step"><div class="big">🔐</div><span class="ask-dialog-step">STEP 1 OF 2</span><h2>Continue with Google</h2><p>Sign in to send your note safely — even if you already have an account. Only the anonymous nickname you choose next will appear on the envelope.</p><button class="google-button" id="askGoogleLogin" type="button"><span class="google-mark">G</span><span>Continue with Google</span></button><p class="ask-modal-status" id="askLoginStatus" role="status" aria-live="polite"></p><button class="btn sec wide" type="button" id="askCancelLogin">Cancel</button></div>`);
+    modal(`<div class="ask-send-modal ask-auth-step"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><span class="ask-dialog-step">STEP 1 OF 2</span><h2>Continue with Google</h2><p>Sign in to send your note safely — even if you already have an account. Only the anonymous nickname you choose next will appear on the envelope.</p><button class="google-button" id="askGoogleLogin" type="button"><span class="google-mark">G</span><span>Continue with Google</span></button><p class="ask-modal-status" id="askLoginStatus" role="status" aria-live="polite"></p><button class="btn sec wide" type="button" id="askCancelLogin">Cancel</button></div>`);
     $a('askCancelLogin').onclick=()=>closeModal();
     $a('askGoogleLogin').onclick=async()=>{
       const button=$a('askGoogleLogin'),status=$a('askLoginStatus');
@@ -362,16 +363,17 @@
     };
   }
   function nicknameModal(){
-    modal(`<div class="ask-send-modal ask-nick-step"><div class="big">🎀</div><span class="ask-dialog-step">STEP 2 OF 2</span><h2>Choose your secret name</h2><p>This nickname is for <strong>this message only</strong>. Your Google email is private unless you separately choose to allow a paid reveal.</p><label>Anonymous nickname<input id="askNick" maxlength="40" minlength="2" placeholder="e.g. Secret Butterfly" autocomplete="off" value=""></label><label class="ask-email-consent"><input id="askIdentityConsent" type="checkbox"><span><strong>Optional: I agree to share my Google email with this recipient</strong> only if they pay ₱10 and an admin verifies the payment. Leaving this unchecked keeps my email private.</span></label><p id="askSendStatus" class="ask-modal-status" role="status" aria-live="polite"></p><button class="btn pri wide" id="askConfirmSend" type="button">💌 Send my message</button><button class="btn sec wide" id="askGoBack" type="button">Back</button></div>`);
+    modal(`<div class="ask-send-modal ask-nick-step"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><span class="ask-dialog-step">STEP 2 OF 2</span><h2>Choose your anonymous name</h2><p>Only this nickname and your message will appear to the page owner. Your Google email stays private.</p><label for="askNick">Anonymous username<input id="askNick" maxlength="40" minlength="2" placeholder="e.g. secret_admirer" autocomplete="off" value=""></label><p id="askSendStatus" class="ask-modal-status" role="status" aria-live="polite"></p><button class="btn pri wide" id="askConfirmSend" type="button">Send anonymous message</button><button class="btn sec wide" id="askGoBack" type="button">Back</button></div>`);
     $a('askConfirmSend').onclick=deliver;
     $a('askNick').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();deliver();}});
     $a('askGoBack').onclick=signInModal;
+    $a('askNick').focus({preventScroll:true});
   }
   function beginSend(){startCompose();}
   function shortEnvelope(text,alias){
     const nowIso=new Date().toISOString();
     return clean({
-      id:uid(),title:'A little anonymous secret 💌',from:alias,
+      id:uid(),title:'A little anonymous secret',from:alias,
       coverText:'For you, with a little mystery ♡',envelopeColor:'#e7a3c6',createdAt:nowIso,
       paperMagic:{typewriter:true,pageTurn:true,bouquetIntro:false},
       signature:{text:'with a little mystery ♡',style:0,align:'right'},
@@ -383,13 +385,8 @@
     const alias=cleanText($a('askNick')?.value,40);
     if(alias.length<2){$a('askSendStatus').textContent='Enter at least 2 characters for your anonymous nickname.';return;}
     if(currentUser.uid===activePublic.ownerUid){$a('askSendStatus').textContent='You cannot message your own page.';return;}
-    const allowReveal=!!$a('askIdentityConsent')?.checked;
-    const senderEmail=allowReveal?String(currentUser.email||''):'';
-    if(allowReveal && (!senderEmail || currentUser.emailVerified!==true)){
-      $a('askSendStatus').textContent='Your Google account must have a verified email before you can opt in.';return;
-    }
     sending=true;
-    modal('<div class="ask-send-loading" role="status" aria-live="polite"><div class="ask-loader">💌</div><h2>Sending your little secret…</h2><p>Delivering your message with love ♡</p></div>');
+    modal('<div class="ask-send-loading" role="status" aria-live="polite"><div class="ask-loader"><img src="assets/w-envelope-icon.png" alt=""></div><h2>Sending your little secret…</h2><p>Your anonymous message is on its way.</p></div>');
     try{
       const targetCode=activePublic.code;
       const live=await window.WENV_DB.getAnonymousPage(targetCode);
@@ -397,19 +394,11 @@
       const envelope=shortEnvelope(pendingMessage,alias);
       if(!envelope)throw new Error('Unable to prepare your message.');
       const messageId=window.WENV_DB.newAnonymousMessageId(live.ownerUid);
-      if(allowReveal){
-        await window.WENV_DB.saveAnonymousConsent(live.ownerUid,messageId,targetCode,senderEmail);
-      }
-      try{
-        await window.WENV_DB.sendAnonymousEnvelope(live.ownerUid,{
-          title:envelope.title,from:alias,senderMode:'anonymous',anonymous:true,
-          anonymousPageCode:targetCode,recipientUid:live.ownerUid,
-          identityOptIn:allowReveal,receivedAt:new Date().toISOString(),envelope
-        },messageId);
-      }catch(error){
-        if(allowReveal)await window.WENV_DB.revokeAnonymousConsent(live.ownerUid,messageId).catch(console.warn);
-        throw error;
-      }
+      await window.WENV_DB.sendAnonymousEnvelope(live.ownerUid,{
+        title:envelope.title,from:alias,senderMode:'anonymous',anonymous:true,
+        anonymousPageCode:targetCode,recipientUid:live.ownerUid,
+        identityOptIn:false,receivedAt:new Date().toISOString(),envelope
+      },messageId);
       pendingMessage='';closeGuestComposer();$a('askGuestMessage').value='';updateMessageCount();
       closeModal();history.replaceState(null,'',location.pathname+location.search);
       document.body.classList.remove('guest-receiving');
@@ -417,7 +406,7 @@
       $a('askWelcomeContinue').focus({preventScroll:true});
     }catch(err){
       console.error('Anonymous message failed:',err);
-      modal(`<div class="ask-send-modal"><div class="big">🥺</div><h2>Message not delivered</h2><p>${esc(err?.message||'Please check your connection.')}</p><p>Your message is still in the editor, so you can try again.</p><button class="btn pri wide" type="button" id="askRetry">Try again</button><button class="btn sec wide" type="button" id="askSendClose">Cancel</button></div>`);
+      modal(`<div class="ask-send-modal"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>Message not delivered</h2><p>${esc(err?.message||'Please check your connection.')}</p><p>Your message is still in the editor, so you can try again.</p><button class="btn pri wide" type="button" id="askRetry">Try again</button><button class="btn sec wide" type="button" id="askSendClose">Cancel</button></div>`);
       $a('askRetry').onclick=nicknameModal;$a('askSendClose').onclick=closeModal;
     }finally{sending=false;}
   }

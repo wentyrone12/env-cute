@@ -33,6 +33,8 @@
   <link rel="stylesheet" href="css/v19-ask-experience.css?v=19.0">
   <link rel="stylesheet" href="css/v20-anonymous-inbox.css?v=20">
   <link rel="stylesheet" href="css/v21-enhancements.css?v=21">
+  <link rel="stylesheet" href="css/v22-responsive-intro.css?v=22">
+  <script>if(!/^#(?:ask|e|envelope)=/.test(location.hash))document.documentElement.classList.add("wenv-booting");</script>
 </head>
 
 <body>
@@ -312,9 +314,10 @@
           <p class="soft" id="total"></p>
           <p class="sync-line" id="cloudStatus" data-state="loading">Connecting to cloud...</p>
         </div>
-        <div class="ask-dash-actions"><button class="btn sec" type="button" id="askOpenMessages">💗 Messages <span
-              id="askMessagesBadge">0</span></button><button class="btn pri" type="button" id="openAnonymousStudio">💌
-            Create anonymous page</button></div>
+        <div class="anonymous-hub glass" aria-label="My anonymous pages">
+          <div class="anonymous-hub-identity"><img src="assets/w-envelope-icon.png" alt="" aria-hidden="true"><div><strong>My Anonymous Pages</strong><small>Design your page and read your secret messages in one place.</small></div></div>
+          <div class="anonymous-hub-actions"><button class="btn sec" type="button" id="askOpenMessages"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Messages <span id="askMessagesBadge">0</span></button><button class="btn pri" type="button" id="openAnonymousStudio">Create / Edit Page</button></div>
+        </div>
       </div>
       <div class="mailbox-tabs" role="tablist" aria-label="Envelope collections">
         <button class="mailbox-tab on" type="button" id="recentTab" role="tab" aria-selected="true">Recent Envelopes
@@ -371,10 +374,10 @@
         </div>
         <div class="ask-studio-grid">
           <div class="ask-stage" id="askStage">
-            <div class="ask-decor ask-decor-a">✿</div>
-            <div class="ask-decor ask-decor-b">✦</div>
+            <div class="ask-decor ask-decor-a" aria-hidden="true"></div>
+            <div class="ask-decor ask-decor-b" aria-hidden="true"></div>
             <div class="ask-paper" id="askPaper">
-              <span class="ask-paper-sticker" id="askSticker">💌</span>
+              <span class="ask-paper-sticker" id="askSticker" aria-hidden="true"></span>
               <span class="ask-paper-kicker">a little note for you ♡</span>
               <h3 id="askPaperHeading">Send me an anonymous message</h3>
               <p id="askPaperSubtitle">Tell me something sweet, funny, or a secret you never got to say…</p>
@@ -394,19 +397,19 @@
                   maxlength="75" placeholder="Send me an anonymous message"></label><label>Little note<textarea
                   id="askSubtitle" rows="3" maxlength="220"
                   placeholder="Write a welcoming message…"></textarea></label><label class="ask-toggle-option"><input
-                  type="checkbox" id="askTypewriter"><span>⌨️ Animated typewriter heading <strong
+                  type="checkbox" id="askTypewriter"><span>Animated typewriter heading <strong
                     class="ask-premium-tag">✦ Premium</strong><small>Letters appear one by one for
                     visitors.</small></span></label><label>Typewriter speed <select id="askTypeSpeed">
                   <option value="gentle">Gentle</option>
                   <option value="classic">Classic</option>
                   <option value="quick">Quick</option>
                 </select></label><label>Paper sticker<select id="askStickerInput">
-                  <option value="💌">💌 Love letter</option>
-                  <option value="🎀">🎀 Ribbon</option>
-                  <option value="🌸">🌸 Sakura</option>
-                  <option value="🧸">🧸 Teddy</option>
-                  <option value="🦋">🦋 Butterfly</option>
-                  <option value="✨">✨ Sparkles</option>
+                  <option value="💌">Love letter</option>
+                  <option value="🎀">Ribbon</option>
+                  <option value="🌸">Sakura</option>
+                  <option value="🧸">Teddy</option>
+                  <option value="🦋">Butterfly</option>
+                  <option value="✨">Sparkles</option>
                 </select></label></div>
             <div class="ask-tool-section" data-ask-panel="theme" hidden><span class="ask-input-label">Immersive
                 3D-inspired backgrounds <small>40 scenes · first 4 free · 36 Premium</small></span>
@@ -414,7 +417,7 @@
                   type="color" value="#fffaf7"></label><label>Accent color<input id="askAccentColor" type="color"
                   value="#bd6995"></label>
             </div>
-            <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">📷 Add pictures
+            <div class="ask-tool-section" data-ask-panel="photo" hidden><label class="ask-photo-drop">Add pictures
                 below the message <input id="askPhotoInput" type="file" accept="image/jpeg,image/png,image/webp"
                   multiple hidden></label><small id="askPhotoCounter">0/1 photos · Premium can add 5</small>
               <div class="ask-photo-thumbnails" id="askPhotoThumbnails"></div><button class="btn sec"
@@ -447,12 +450,12 @@
           </button>
         </div>
         <div class="ask-public-intro"><span class="ask-kicker">A LITTLE SPACE FOR HONEST WORDS</span>
-          <h2>Leave a sweet secret 💌</h2>
-          <p>Only your chosen anonymous nickname will show.</p>
+          <h2>Leave a sweet secret <img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""></h2>
+          <p>Share a kind thought using a nickname of your choice.</p>
         </div>
         <div class="ask-stage ask-public-stage" id="askPublicStage">
           <div class="ask-paper" id="askPublicPaper"><span class="ask-paper-sticker"
-              id="askPublicSticker">💌</span><span class="ask-paper-kicker">an anonymous little note ♡</span>
+              id="askPublicSticker" aria-hidden="true"></span><span class="ask-paper-kicker">an anonymous little note ♡</span>
             <h3 id="askPublicHeading">Send me an anonymous message</h3>
             <p id="askPublicSubtitle"></p>
             <div class="ask-photo-gallery" id="askPublicGallery" role="group" aria-label="Shared page photos"></div><img
@@ -460,29 +463,25 @@
             <div class="ask-signature" id="askPublicSignature"></div>
           </div>
         </div>
-        <button type="button" class="btn pri ask-guest-launcher" id="askGuestLaunch" disabled>💌 Send Message <span
-            aria-hidden="true">♡</span></button>
+        <button type="button" class="btn pri ask-guest-launcher" id="askGuestLaunch" disabled><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Send Message</button>
         <div class="ask-composer-shade" id="askComposerShade" hidden></div>
         <form class="ask-guest-composer" id="askGuestForm" role="dialog" aria-modal="true"
           aria-label="Write an anonymous message" hidden>
-          <div class="ask-compose-head"><span>💌 Your secret letter</span><button type="button" id="askCloseComposer"
+          <div class="ask-compose-head"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Your secret letter</span><button type="button" id="askCloseComposer"
               aria-label="Close message composer">×</button></div>
           <label for="askGuestMessage">Your anonymous message <span aria-hidden="true">✎</span></label>
           <textarea id="askGuestMessage" maxlength="600" rows="3" placeholder="Type something sweet, funny, or honest…"
             required aria-describedby="askMessageCount"></textarea>
           <div class="ask-composer-actions"><small id="askMessageCount" aria-live="polite">0 / 600</small><button
-              class="btn pri ask-public-send" type="submit" id="askStartEnvelope">Send message <span
-                aria-hidden="true">💌</span></button></div>
+              class="btn pri ask-public-send" type="submit" id="askStartEnvelope">Send message</button></div>
         </form>
-        <p class="ask-privacy">Only your chosen nickname appears on the letter. Revealing your email is always optional
-          and requires your separate consent.</p>
+        <p class="ask-privacy">Your Google account is for sign-in. Your email is not shared with the page owner.</p>
       </div>
       <button type="button" id="askSheetReopen" class="ask-sheet-reopen" hidden>↑ Open editor</button>
       <nav class="ask-toolbar" id="askToolbar" aria-label="Anonymous page editing toolbar" hidden>
         <div class="ask-toolbar-scroll" id="askToolbarScroll"><button type="button" data-ask-tool="text"
-            class="on"><span>✎</span> Text</button><button type="button" data-ask-tool="theme"><span>🎨</span>
-            Background</button><button type="button" data-ask-tool="photo"><span>📷</span> Picture</button><button
-            type="button" data-ask-tool="signature"><span>✒</span> Signature</button><button class="ask-toolbar-save"
+            class="on"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Text</button><button type="button" data-ask-tool="theme"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Background</button><button type="button" data-ask-tool="photo"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Picture</button><button
+            type="button" data-ask-tool="signature"><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> Signature</button><button class="ask-toolbar-save"
             type="button" id="askSaveShare"><span>↗</span> Save & Share</button></div>
       </nav>
     </section>
@@ -867,14 +866,21 @@
     <img id="askPhotoLightboxImage" alt="Enlarged anonymous page photo">
   </div>
   <div class="ask-welcome" id="askWelcome" role="dialog" aria-modal="true" aria-labelledby="askWelcomeTitle" hidden>
-    <div class="ask-welcome-petals" aria-hidden="true">♡ ✦ 🌸 ♡ ✦ 💌</div>
+    <div class="ask-welcome-petals" aria-hidden="true"></div>
     <div class="ask-welcome-card">
       <div class="ask-welcome-logo"><img src="assets/w-envelope-cute-logo.png" alt="W-Envelope Cute"></div>
       <span class="ask-welcome-kicker">DELIVERED WITH A LITTLE LOVE</span>
-      <h2 id="askWelcomeTitle">Your secret has been sent! 💌</h2>
+      <h2 id="askWelcomeTitle">Your secret has been sent!</h2>
       <p>Welcome to W-Envelope Cute — a place for heartfelt little letters, memories, and surprises.</p>
       <button id="askWelcomeContinue" type="button" class="btn pri">Click to continue <span
           aria-hidden="true">♡</span></button>
+    </div>
+  </div>
+  <div class="wenv-boot-intro" id="wenvBootIntro" aria-label="Welcome to W-Envelope Cute" role="status" aria-live="polite" hidden>
+    <div class="wenv-boot-glow" aria-hidden="true"></div>
+    <div class="wenv-boot-center">
+      <img class="wenv-boot-logo" src="assets/w-envelope-cute-logo.png" alt="W-Envelope Cute">
+      <div class="wenv-boot-welcome"><span>Welcome</span><strong>W-Envelope Cute</strong><small>Little letters, lovely moments</small></div>
     </div>
   </div>
   <!-- Auth gate is visible from the first paint; page content stays hidden until Firebase confirms login. -->
@@ -894,12 +900,13 @@
 
   <script src="js/firebase-config.js" defer></script>
   <script src="js/payment-config.js" defer></script>
-  <script src="js/app.js?v=21-four-free-designs" defer></script>
-  <script src="js/anonymous.js?v=21-studio-premium" defer></script>
+  <script src="js/app.js?v=22-separate-message" defer></script>
+  <script src="js/anonymous.js?v=22-separate-message" defer></script>
   <script src="js/pwa.js?v=21" defer></script>
-  <script src="js/anon-inbox.js?v=20" defer></script>
+  <script src="js/anon-inbox.js?v=22" defer></script>
+  <script src="js/v22-intro.js?v=22" defer></script>
 
-  <script type="module" src="js/firebase.js?v=20"></script>
+  <script type="module" src="js/firebase.js?v=22"></script>
 </body>
 
 </html>

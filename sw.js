@@ -1,6 +1,6 @@
-/* W-Envelope Cute v21: only cache same-origin static assets, never Firebase data or auth. */
-const CACHE='wenv-static-v21.0';
-const CORE=['./','./index.html','./manifest.webmanifest','./assets/pwa-192.png','./assets/pwa-512.png','./css/style.css','./css/v21-enhancements.css','./js/app.js','./js/anonymous.js','./js/pwa.js'];
+/* W-Envelope Cute v22: only cache same-origin static assets, never Firebase data or auth. */
+const CACHE='wenv-static-v22.0';
+const CORE=['./','./index.html','./manifest.webmanifest','./assets/pwa-192.png','./assets/pwa-512.png','./css/style.css','./css/v21-enhancements.css','./css/v22-responsive-intro.css','./js/app.js','./js/anonymous.js','./js/anon-inbox.js','./js/v22-intro.js','./js/pwa.js'];
 self.addEventListener('install',evt=>{
  evt.waitUntil(caches.open(CACHE).then(async c=>{for(const url of CORE){try{await c.add(new Request(url,{cache:'reload'}));}catch(e){/* Some static files may not be available during initial install. */}}}));self.skipWaiting();
 });
