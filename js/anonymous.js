@@ -363,9 +363,10 @@
     };
   }
   function nicknameModal(){
-    modal(`<div class="ask-send-modal ask-nick-step"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><span class="ask-dialog-step">STEP 2 OF 2</span><h2>Choose your anonymous name</h2><p>Only this nickname and your message will appear to the page owner. Your Google email stays private.</p><label for="askNick">Anonymous username<input id="askNick" maxlength="40" minlength="2" placeholder="e.g. secret_admirer" autocomplete="off" value=""></label><p id="askSendStatus" class="ask-modal-status" role="status" aria-live="polite"></p><button class="btn pri wide" id="askConfirmSend" type="button">Send anonymous message</button><button class="btn sec wide" id="askGoBack" type="button">Back</button></div>`);
-    $a('askConfirmSend').onclick=deliver;
-    $a('askNick').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();deliver();}});
+    modal(`<div class="ask-send-modal ask-nick-step"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><span class="ask-dialog-step">STEP 2 OF 2</span><h2>Choose your anonymous name</h2><p>Choose a nickname, then how privately to send. Google sign-in alone never permits revealing your email.</p><label for="askNick">Anonymous username<input id="askNick" maxlength="40" minlength="2" placeholder="e.g. secret_admirer" autocomplete="off" value=""></label><p id="askSendStatus" class="ask-modal-status" role="status" aria-live="polite"></p><button class="btn pri wide" id="askConfirmSend" type="button">Send privately</button><div class="ask-consent-choice"><strong>Optional: reveal my Gmail after payment</strong><p>If you choose this, the page owner can pay ₱10 and, after admin approval, see the Google email you signed in with. This is not anonymous to that recipient after approval.</p><button class="btn sec wide" id="askAllowRevealSend" type="button">I agree — send & allow email reveal</button></div><button class="btn sec wide" id="askGoBack" type="button">Back</button></div>`);
+    $a('askConfirmSend').onclick=()=>deliver(false);
+    $a('askAllowRevealSend').onclick=()=>deliver(true);
+    $a('askNick').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();deliver(false);}});
     $a('askGoBack').onclick=signInModal;
     $a('askNick').focus({preventScroll:true});
   }
@@ -380,13 +381,18 @@
       pages:[{text,color:'#fff6fa',photos:[],effect:'hearts',photoStyle:'classic',photoLayout:'single'}]
     });
   }
-  async function deliver(){
+  async function deliver(allowEmailReveal=false){
     if(sending || !activePublic || !currentUser || !pendingMessage)return;
     const alias=cleanText($a('askNick')?.value,40);
     if(alias.length<2){$a('askSendStatus').textContent='Enter at least 2 characters for your anonymous nickname.';return;}
     if(currentUser.uid===activePublic.ownerUid){$a('askSendStatus').textContent='You cannot message your own page.';return;}
+    // Consent is an explicit sender action, not inferred from Google authentication.
+    if(allowEmailReveal && (!currentUser.email || !currentUser.emailVerified)){
+      $a('askSendStatus').textContent='A verified Google email is required if you choose identity reveal. You can still send privately.';return;
+    }
     sending=true;
-    modal('<div class="ask-send-loading" role="status" aria-live="polite"><div class="ask-loader"><img src="assets/w-envelope-icon.png" alt=""></div><h2>Sending your little secret…</h2><p>Your anonymous message is on its way.</p></div>');
+    modal('<div class="ask-send-loading" role="status" aria-live="polite"><div class="ask-loader"><img src="assets/w-envelope-icon.png" alt=""></div><h2>Sending your little secret…</h2><p>Your message is on its way.</p></div>');
+    let consentSaved=false,consentOwner='',consentMessageId='';
     try{
       const targetCode=activePublic.code;
       const live=await window.WENV_DB.getAnonymousPage(targetCode);
@@ -394,17 +400,25 @@
       const envelope=shortEnvelope(pendingMessage,alias);
       if(!envelope)throw new Error('Unable to prepare your message.');
       const messageId=window.WENV_DB.newAnonymousMessageId(live.ownerUid);
+      // Consent is stored in a separate, restricted Firebase location before the
+      // message. Owner cannot read it until an admin-approved payment exists.
+      if(allowEmailReveal){
+        await window.WENV_DB.saveAnonymousConsent(live.ownerUid,messageId,targetCode,currentUser.email);
+        consentSaved=true;consentOwner=live.ownerUid;consentMessageId=messageId;
+      }
       await window.WENV_DB.sendAnonymousEnvelope(live.ownerUid,{
         title:envelope.title,from:alias,senderMode:'anonymous',anonymous:true,
         anonymousPageCode:targetCode,recipientUid:live.ownerUid,
-        identityOptIn:false,receivedAt:new Date().toISOString(),envelope
+        identityOptIn:allowEmailReveal,receivedAt:new Date().toISOString(),envelope
       },messageId);
+      consentSaved=false;
       pendingMessage='';closeGuestComposer();$a('askGuestMessage').value='';updateMessageCount();
       closeModal();history.replaceState(null,'',location.pathname+location.search);
       document.body.classList.remove('guest-receiving');
       $a('askWelcome').hidden=false;
       $a('askWelcomeContinue').focus({preventScroll:true});
     }catch(err){
+      if(consentSaved){try{await window.WENV_DB.revokeAnonymousConsent(consentOwner,consentMessageId);}catch(cleanupErr){console.warn('Consent cleanup failed:',cleanupErr);}}
       console.error('Anonymous message failed:',err);
       modal(`<div class="ask-send-modal"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt="W-Envelope Cute"></div><h2>Message not delivered</h2><p>${esc(err?.message||'Please check your connection.')}</p><p>Your message is still in the editor, so you can try again.</p><button class="btn pri wide" type="button" id="askRetry">Try again</button><button class="btn sec wide" type="button" id="askSendClose">Cancel</button></div>`);
       $a('askRetry').onclick=nicknameModal;$a('askSendClose').onclick=closeModal;

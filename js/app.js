@@ -2307,7 +2307,16 @@ document.addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) { if (g.dataset.go === 'create' && editingId) resetLetterEditor(); if (window.WENV_ANON?.composing && g.dataset.go !== 'create') window.WENV_ANON.cancelCompose(); return go(g.dataset.go) }
   const v = e.target.closest(".env[data-play]"); if (!v) return;
   if (v.id === "recvEnv") return openRecv();
-  const o = v.classList.toggle("open"); if (o) burst(v, 10)
+  if(v.classList.contains('wenv-is-closing'))return;
+  if(v.classList.contains('open')){
+    // The letter retreats inside while the flap stays open, then seal closes.
+    v.classList.add('wenv-is-closing');
+    v.classList.remove('open');
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(()=>{v.classList.remove('wenv-is-closing');},reduced?40:780);
+  }else{
+    v.classList.add('open');burst(v,10);
+  }
 });
 document.addEventListener("pointermove", e => {
   if (calm || e.pointerType === "touch") return; const s = e.target.closest("[data-tilt]");

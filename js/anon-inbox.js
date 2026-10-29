@@ -42,19 +42,48 @@
  async function openLetter(key){
    selected=messages.find(m=>m.key===key);if(!selected)return;
    const m=selected,txt=clean(m.envelope?.pages?.[0]?.text||'');
-   const consent=m.source==='legacy' && !!m.identityOptIn,req=requests[key];
-   const helper=req?.status==='approved'?'Payment verified. Sender-approved email is available.':req?.status==='pending'?'Your ₱10 transfer is awaiting admin verification.':req?.status==='rejected'?'The payment request was rejected.':consent?'₱10 payment unlocks the email shared voluntarily by this sender.':'Email reveal requires the sender’s advance permission. No payment will be collected without it.';
-   showOverlay(`<section class="ask-letter-dialog" role="dialog" aria-modal="true" aria-label="Anonymous paper letter"><div class="ask-letter-toolbar"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> A letter just for you</span><button type="button" data-close-letter aria-label="Close letter">×</button></div><div class="ask-letter-paper"><span class="ask-letter-kicker">AN ANONYMOUS LITTLE NOTE ♡</span><h2>Dear you,</h2><blockquote>${esc(txt)}</blockquote><small>From ${esc(fmt(m.from)||'Anonymous')}<br>${esc(date(m.receivedAt))}</small></div><div class="ask-letter-bottom"><button type="button" class="btn pri" id="askRevealAction">View who is this · ₱10</button><small>${esc(helper)}</small><button type="button" class="ask-letter-delete btn sec" id="askDeleteFromLetter">Tear up & delete letter</button></div></section>`);
+   const consent=m.identityOptIn===true,req=requests[key];
+   const helper=req?.status==='approved'?'Approved by admin. You can now view the sender-approved Google email.':req?.status==='pending'?'Payment pending — admin must verify the transfer before an email can be shown.':req?.status==='rejected'?'Payment rejected. Contact support if you need help.':consent?'Sender opted in to email reveal. ₱10 manual payment, subject to admin approval.':'This message is private. The sender did not opt in to identity reveal; no payment is available.';
+   showOverlay(`<section class="ask-letter-dialog" role="dialog" aria-modal="true" aria-label="Anonymous paper letter"><div class="ask-letter-toolbar"><span><img class="wenv-inline-mark" src="assets/w-envelope-icon.png" alt=""> A letter just for you</span><button type="button" data-close-letter aria-label="Close letter">×</button></div><div class="ask-letter-paper"><span class="ask-letter-kicker">AN ANONYMOUS LITTLE NOTE ♡</span><h2>Dear you,</h2><blockquote>${esc(txt)}</blockquote><small>From ${esc(fmt(m.from)||'Anonymous')}<br>${esc(date(m.receivedAt))}</small></div><div class="ask-letter-bottom"><button type="button" class="btn pri" id="askRevealAction">View who is this · ₱10</button><small id="askRevealHelper">${esc(helper)}</small><div id="askUnlockedEmail" class="ask-unlocked-email" hidden><strong>Sender-approved Google email</strong><span id="askUnlockedEmailValue"></span></div><button type="button" class="ask-letter-delete btn sec" id="askDeleteFromLetter">Tear up & delete letter</button></div></section>`);
    const btn=el('askRevealAction');el('askDeleteFromLetter').onclick=()=>confirmDelete(key);
-   if(!consent){btn.disabled=false;btn.textContent='View who is this · ₱10';}
+   if(!consent){btn.hidden=true;}
    else if(req?.status==='pending'){btn.disabled=true;btn.textContent='Payment under review';}
    else if(req?.status==='rejected'){btn.disabled=true;btn.textContent='Payment rejected';}
    else if(req?.status==='approved')btn.textContent='Reveal consented email';
-   btn.onclick=()=>!consent?explainPrivateMessage():req?.status==='approved'?revealEmail(key):openPayment(key);
+   btn.onclick=()=>!consent?explainPrivateMessage():requests[key]?.status==='approved'?revealEmail(key):openPayment(key);
+   syncActivePaymentStatus();
    if(!m.readAt){(m.source==='fresh'?window.WENV_DB?.markAnonymousMessageRead?.(uid,key):window.WENV_DB?.markReceivedRead?.(uid,key))?.catch(console.warn);}
  }
+ function syncActivePaymentStatus(){
+   const btn=el('askRevealAction'),helper=el('askRevealHelper');
+   if(!btn || !selected || !helper)return;
+   const m=selected,req=requests[m.key],canReveal=m.identityOptIn===true;
+   if(!canReveal){btn.hidden=true;helper.textContent='This message was sent privately. Only the chosen nickname and message are visible.';return;}
+   btn.hidden=false;
+   const approvedBox=el('askUnlockedEmail');
+   if(approvedBox)approvedBox.hidden=true;
+   if(req?.status==='approved'){
+     btn.textContent='Show approved Google email';btn.disabled=false;
+     helper.textContent='Admin approved this payment. Your verified sender-approved email is now available.';
+     const ownerAtRequest=uid, keyAtRequest=m.key;
+     window.WENV_DB?.getAnonymousConsent?.(ownerAtRequest,keyAtRequest).then(consent=>{
+       const box=el('askUnlockedEmail'),value=el('askUnlockedEmailValue');
+       if(!box||!value||!selected||selected.key!==keyAtRequest||uid!==ownerAtRequest||requests[keyAtRequest]?.status!=='approved')return;
+       if(consent?.consented===true && consent.email){value.textContent=consent.email;box.hidden=false;}
+     }).catch(()=>{/* Firebase permissions still apply; manual reveal button remains available */});
+   }else if(req?.status==='pending'){
+     btn.textContent='Payment pending admin review';btn.disabled=true;
+     helper.textContent='Payment is pending. An admin must verify the transfer before the sender-approved email is released.';
+   }else if(req?.status==='rejected'){
+     btn.textContent='Payment rejected';btn.disabled=true;
+     helper.textContent='The payment was rejected. Contact support if you believe this is a mistake.';
+   }else{
+     btn.textContent='View who is this · ₱10';btn.disabled=false;
+     helper.textContent='The sender opted in. Choose Maya or GoTyme and submit a real ₱10 transfer reference for admin verification.';
+   }
+ }
  function explainPrivateMessage(){
-   showOverlay(`<section class="ask-reveal-dialog" role="dialog" aria-modal="true" aria-label="Identity reveal unavailable"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt=""></div><h2>Who sent this?</h2><p>This note was sent anonymously, and Google sign-in did not authorize sharing the sender’s email.</p><p><strong>No payment is needed or accepted</strong> because this message has no sender-approved identity reveal. Only a sender who explicitly agrees in advance can have their email revealed after a verified ₱10 payment.</p><button type="button" class="btn pri" data-close-letter>Got it</button></section>`);
+   showOverlay(`<section class="ask-reveal-dialog" role="dialog" aria-modal="true" aria-label="Private message"><div class="ask-modal-brand"><img src="assets/w-envelope-icon.png" alt=""></div><h2>A private little note</h2><p>The sender chose to stay anonymous. Their Google email is not available for this letter.</p><p>No ₱10 payment will be collected for this message. Payment is offered only when a sender chooses the optional email-reveal permission before sending.</p><button type="button" class="btn pri" data-close-letter>Back to my messages</button></section>`);
  }
  async function deleteLetter(key){
    const m=messages.find(item=>item.key===key);
@@ -90,7 +119,7 @@
    const m=messages.find(x=>x.key===key);
    if(!m?.identityOptIn)return;
    const payment=window.WENV_PAYMENT||{};
-   showOverlay(`<section class="ask-reveal-dialog" role="dialog" aria-modal="true" aria-label="Identity reveal payment"><h2>View who sent this</h2><p><strong>₱10 one-time manual payment</strong> for this specific letter. Only available because the sender agreed to share their email with you after payment.</p><label>Payment method<select id="askRevealMethod"><option value="maya">Maya</option><option value="gotyme">GoTyme</option></select></label><div class="ask-reveal-bank" id="askRevealBank"></div><label>Transaction reference number<input id="askRevealReference" type="text" maxlength="64" autocomplete="off" placeholder="Enter real payment reference"></label><p class="ask-reveal-status" id="askRevealStatus" role="status"></p><button type="button" class="btn pri" id="askSubmitReveal">Submit ₱10 for admin review</button><button type="button" class="btn sec" data-close-letter>Cancel</button></section>`);
+   showOverlay(`<section class="ask-reveal-dialog" role="dialog" aria-modal="true" aria-label="Identity reveal payment"><h2>View who sent this</h2><p><strong>₱10 one-time manual payment</strong> for this specific letter. Available only because the sender expressly agreed to reveal their verified email if you pay and the admin approves.</p><label>Payment method<select id="askRevealMethod"><option value="maya">Maya</option><option value="gotyme">GoTyme</option></select></label><div class="ask-reveal-bank" id="askRevealBank"></div><label>Transaction reference number<input id="askRevealReference" type="text" maxlength="64" autocomplete="off" placeholder="Enter real payment reference"></label><p class="ask-reveal-status" id="askRevealStatus" role="status"></p><button type="button" class="btn pri" id="askSubmitReveal">Submit ₱10 for admin review</button><button type="button" class="btn sec" data-close-letter>Cancel</button></section>`);
    const bank=el('askRevealBank');
    const renderBank=()=>{const method=el('askRevealMethod').value;const dest=payment[method]||{};bank.textContent=(method==='maya'?'Maya':'GoTyme')+' · '+(dest.accountName||'Receiving account not configured')+' · '+(dest.accountNumber||'Set up account number in payment-config.js')+' · ₱10.00';};
    el('askRevealMethod').onchange=renderBank;renderBank();
@@ -113,7 +142,7 @@
    const merge=()=>{messages=[...Object.entries(fresh).map(([key,v])=>({key,...v,source:'fresh'})),...Object.entries(legacy).filter(([,v])=>v?.anonymous===true&&v?.anonymousPageCode).map(([key,v])=>({key,...v,source:'legacy'}))].sort((a,b)=>Date.parse(b.receivedAt||0)-Date.parse(a.receivedAt||0));render();};
    stopInbox=window.WENV_DB.subscribeAnonymousMessages(uid,data=>{if(uid!==owner)return;fresh=data||{};merge();},console.warn);
    stopLegacy=window.WENV_DB.subscribeReceived(uid,data=>{if(uid!==owner)return;legacy=data||{};merge();},console.warn);
-   stopPay=window.WENV_DB.subscribeRevealRequests(uid,data=>{if(uid===owner)requests=data||{};},console.warn);
+   stopPay=window.WENV_DB.subscribeRevealRequests(uid,data=>{if(uid===owner){requests=data||{};syncActivePaymentStatus();}},console.warn);
  }
  el('askOpenMessages').onclick=()=>viewing?restoreDashboard():openMessages();
  el('askMessagesBack').onclick=restoreDashboard;
